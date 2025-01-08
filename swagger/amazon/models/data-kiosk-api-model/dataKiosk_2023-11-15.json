@@ -1,15 +1,15 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "The Selling Partner API for Data Kiosk lets you submit GraphQL queries from a variety of schemas to help selling partners manage their businesses.",
+    "description": "Data Kiosk的销售合作伙伴API允许您从各种模式提交GraphQL查询，以帮助销售合作伙伴管理其业务。",
     "version": "2023-11-15",
     "title": "Selling Partner API for Data Kiosk",
     "contact": {
-      "name": "Selling Partner API Developer Support",
+      "name": "销售合作伙伴API开发人员支持",
       "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
     },
     "license": {
-      "name": "Apache License 2.0",
+      "name": "Apache许可证2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0"
     }
   },
@@ -30,12 +30,12 @@
           "queries"
         ],
         "operationId": "getQueries",
-        "description": "Returns details for the Data Kiosk queries that match the specified filters. See the `createQuery` operation for details about query retention.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0222 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).",
+        "description": "返回与指定筛选器匹配的数据亭查询的详细信息。有关查询保留的详细信息，请参阅 “createquery” 操作。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0222 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
         "parameters": [
           {
             "name": "processingStatuses",
             "in": "query",
-            "description": "A list of processing statuses used to filter queries.",
+            "description": "用于筛选查询的处理状态列表。",
             "required": false,
             "type": "array",
             "minItems": 1,
@@ -51,31 +51,31 @@
               "x-docgen-enum-table-extension": [
                 {
                   "value": "CANCELLED",
-                  "description": "The query was cancelled before it began processing."
+                  "description": "查询在开始处理之前已被取消。"
                 },
                 {
                   "value": "DONE",
-                  "description": "The query has completed processing."
+                  "description": "查询已完成处理。"
                 },
                 {
                   "value": "FATAL",
-                  "description": "The query was aborted due to a fatal error."
+                  "description": "由于发生致命错误，查询已中止。"
                 },
                 {
                   "value": "IN_PROGRESS",
-                  "description": "The query is being processed."
+                  "description": "正在处理查询。"
                 },
                 {
                   "value": "IN_QUEUE",
-                  "description": "The query has not yet started processing. It may be waiting for another `IN_PROGRESS` query."
+                  "description": "查询尚未开始处理。它可能正在等待另一个 “IN_PROGRESS” 查询。"
                 }
               ]
             }
           },
           {
-            "name": "pageSize",
+            "name": "页面大小",
             "in": "query",
-            "description": "The maximum number of queries to return in a single call.",
+            "description": "在单次调用中返回的最大查询数。",
             "required": false,
             "type": "integer",
             "minimum": 1,
@@ -85,7 +85,7 @@
           {
             "name": "createdSince",
             "in": "query",
-            "description": "The earliest query creation date and time for queries to include in the response, in ISO 8601 date time format. The default is 90 days ago.",
+            "description": "要包含在响应中的查询的最早查询创建日期和时间，采用ISO 8601日期时间格式。默认值为90天前。",
             "required": false,
             "type": "string",
             "format": "date-time"
@@ -93,7 +93,7 @@
           {
             "name": "createdUntil",
             "in": "query",
-            "description": "The latest query creation date and time for queries to include in the response, in ISO 8601 date time format. The default is the time of the `getQueries` request.",
+            "description": "要包含在响应中的查询的最新查询创建日期和时间，采用ISO 8601日期时间格式。默认值为 “getqueries” 请求的时间。",
             "required": false,
             "type": "string",
             "format": "date-time"
@@ -101,25 +101,25 @@
           {
             "name": "paginationToken",
             "in": "query",
-            "description": "A token to fetch a certain page of results when there are multiple pages of results available. The value of this token is fetched from the `pagination.nextToken` field returned in the `GetQueriesResponse` object. All other parameters must be provided with the same values that were provided with the request that generated this token, with the exception of `pageSize` which can be modified between calls to `getQueries`. In the absence of this token value, `getQueries` returns the first page of results.",
+            "description": "当有多页结果可用时，用于获取某一页结果的令牌。此标记的值是从 “getqueriesresponse” 对象中返回的 “pagination.Nexttoken” 字段中获取的。必须为所有其他参数提供与生成此令牌的请求一起提供的值相同的值，但 “pagesize” 除外，它可以在调用 “getqueries” 之间进行修改。如果没有此标记值，“getqueries” 将返回结果的第一页。",
             "required": false,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Success.",
+            "description": "成功。",
             "schema": {
               "$ref": "#/definitions/GetQueriesResponse"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -188,18 +188,18 @@
             }
           },
           "400": {
-            "description": "Request has missing or invalid parameters and cannot be parsed.",
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -228,90 +228,90 @@
             }
           },
           "403": {
-            "description": "Indicates that access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "404": {
-            "description": "The resource specified does not exist.",
+            "description": "指定的资源不存在。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "413": {
-            "description": "The request size exceeded the maximum accepted size.",
+            "description": "请求大小超过了可接受的最大大小。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
-                  "description": "Unique request reference identifier.",
-                  "type": "string"
-                }
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
             }
           },
           "415": {
-            "description": "The request payload is in an unsupported format.",
+            "description": "请求负载的格式不受支持。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "429": {
-            "description": "The frequency of requests was greater than allowed.",
+            "description": "请求的频率大于允许的频率。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "500": {
-            "description": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+            "description": "发生了阻止服务器完成请求的意外情况。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "503": {
-            "description": "Temporary overloading or maintenance of the server.",
+            "description": "服务器的临时过载或维护。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           }
@@ -322,12 +322,12 @@
           "queries"
         ],
         "operationId": "createQuery",
-        "description": "Creates a Data Kiosk query request.\n\n**Note:** The retention of a query varies based on the fields requested. Each field within a schema is annotated with a `@resultRetention` directive that defines how long a query containing that field will be retained. When a query contains multiple fields with different retentions, the shortest (minimum) retention is applied. The retention of a query's resulting documents always matches the retention of the query.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 15 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).",
+        "description": "创建数据Kiosk查询请求。\n\n** 注意: ** 查询的保留根据请求的字段而有所不同。架构中的每个字段都使用 “@ resultretention” 指令进行注释，该指令定义包含该字段的查询将保留多长时间。当查询包含具有不同保留的多个字段时，将应用最短 (最小) 保留。查询生成的文档的保留始终与查询的保留相匹配。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0167 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
         "parameters": [
           {
-            "name": "body",
+            "name": "车身",
             "in": "body",
-            "description": "The body of the request.",
+            "description": "请求的正文。",
             "required": true,
             "schema": {
               "$ref": "#/definitions/CreateQuerySpecification"
@@ -336,18 +336,18 @@
         ],
         "responses": {
           "202": {
-            "description": "Success.",
+            "description": "成功。",
             "schema": {
               "$ref": "#/definitions/CreateQueryResponse"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -370,18 +370,18 @@
             }
           },
           "400": {
-            "description": "Request has missing or invalid parameters and cannot be parsed.",
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -410,90 +410,90 @@
             }
           },
           "403": {
-            "description": "Indicates that access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "404": {
-            "description": "The resource specified does not exist.",
+            "description": "指定的资源不存在。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "413": {
-            "description": "The request size exceeded the maximum accepted size.",
+            "description": "请求大小超过了可接受的最大大小。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
-                "description": "Unique request reference identifier.",
+                "description": "唯一请求引用标识符。",
                 "type": "string"
               }
             }
           },
           "415": {
-            "description": "The request payload is in an unsupported format.",
+            "description": "请求负载的格式不受支持。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "429": {
-            "description": "The frequency of requests was greater than allowed.",
+            "description": "请求的频率大于允许的频率。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "500": {
-            "description": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+            "description": "发生了阻止服务器完成请求的意外情况。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "503": {
-            "description": "Temporary overloading or maintenance of the server.",
+            "description": "服务器的临时过载或维护。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           }
@@ -507,27 +507,27 @@
           "queries"
         ],
         "operationId": "cancelQuery",
-        "description": "Cancels the query specified by the `queryId` parameter. Only queries with a non-terminal `processingStatus` (`IN_QUEUE`, `IN_PROGRESS`) can be cancelled. Cancelling a query that already has a `processingStatus` of `CANCELLED` will no-op. Cancelled queries are returned in subsequent calls to the `getQuery` and `getQueries` operations.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0222 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).",
+        "description": "取消由 “queryid” 参数指定的查询。只能取消具有非终端 “processingstatus” (“IN_QUEUE” 、 “IN_PROGRESS”) 的查询。取消已经具有 “processingstatus” 为 “cancelled” 的查询将无操作。在对 “getquery” 和 “getqueries” 操作的后续调用中返回取消的查询。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0222 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
         "parameters": [
           {
             "name": "queryId",
             "in": "path",
-            "description": "The identifier for the query. This identifier is unique only in combination with a selling partner account ID.",
+            "description": "查询的标识符。此标识符仅在与销售合作伙伴帐户ID组合时是唯一的。",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "204": {
-            "description": "Success.",
+            "description": "成功。",
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -546,18 +546,18 @@
             }
           },
           "400": {
-            "description": "Request has missing or invalid parameters and cannot be parsed.",
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -584,30 +584,30 @@
             }
           },
           "403": {
-            "description": "Indicates that access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "404": {
-            "description": "The resource specified does not exist.",
+            "description": "指定的资源不存在。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -633,62 +633,62 @@
             }
           },
           "413": {
-            "description": "The request size exceeded the maximum accepted size.",
+            "description": "请求大小超过了可接受的最大大小。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
-                "description": "Unique request reference identifier.",
+                "description": "唯一请求引用标识符。",
                 "type": "string"
               }
             }
           },
           "415": {
-            "description": "The request payload is in an unsupported format.",
+            "description": "请求负载的格式不受支持。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "429": {
-            "description": "The frequency of requests was greater than allowed.",
+            "description": "请求的频率大于允许的频率。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "500": {
-            "description": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+            "description": "发生了阻止服务器完成请求的意外情况。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "503": {
-            "description": "Temporary overloading or maintenance of the server.",
+            "description": "服务器的临时过载或维护。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           }
@@ -699,30 +699,30 @@
           "queries"
         ],
         "operationId": "getQuery",
-        "description": "Returns query details for the query specified by the `queryId` parameter. See the `createQuery` operation for details about query retention.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 2.0 | 15 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).",
+        "description": "返回由 “queryid” 参数指定的查询详细信息。有关查询保留的详细信息，请参阅 “createquery” 操作。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2.0 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
         "parameters": [
           {
             "name": "queryId",
             "in": "path",
             "required": true,
-            "description": "The query identifier.",
+            "description": "查询标识符。",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Success.",
+            "description": "成功。",
             "schema": {
               "$ref": "#/definitions/Query"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -749,18 +749,18 @@
             }
           },
           "400": {
-            "description": "Request has missing or invalid parameters and cannot be parsed.",
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -787,30 +787,30 @@
             }
           },
           "403": {
-            "description": "Indicates that access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "404": {
-            "description": "The resource specified does not exist.",
+            "description": "指定的资源不存在。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -836,62 +836,62 @@
             }
           },
           "413": {
-            "description": "The request size exceeded the maximum accepted size.",
+            "description": "请求大小超过了可接受的最大大小。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
-                "description": "Unique request reference identifier.",
+                "description": "唯一请求引用标识符。",
                 "type": "string"
               }
             }
           },
           "415": {
-            "description": "The request payload is in an unsupported format.",
+            "description": "请求负载的格式不受支持。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "429": {
-            "description": "The frequency of requests was greater than allowed.",
+            "description": "请求的频率大于允许的频率。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "500": {
-            "description": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+            "description": "发生了阻止服务器完成请求的意外情况。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "503": {
-            "description": "Temporary overloading or maintenance of the server.",
+            "description": "服务器的临时过载或维护。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           }
@@ -904,31 +904,31 @@
         "tags": [
           "queries"
         ],
-        "description": "Returns the information required for retrieving a Data Kiosk document's contents. See the `createQuery` operation for details about document retention.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 15 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).",
+        "description": "返回检索Data Kiosk文档内容所需的信息。有关文档保留的详细信息，请参阅 “createquery” 操作。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0167 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
         "operationId": "getDocument",
         "parameters": [
           {
-            "name": "documentId",
+            "name": "文档id",
             "in": "path",
-            "description": "The identifier for the Data Kiosk document.",
+            "description": "数据亭文档的标识符。",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Success.",
+            "description": "成功。",
             "schema": {
               "$ref": "#/definitions/GetDocumentResponse"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -950,18 +950,18 @@
             }
           },
           "400": {
-            "description": "Request has missing or invalid parameters and cannot be parsed.",
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -988,30 +988,30 @@
             }
           },
           "403": {
-            "description": "Indicates that access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "404": {
-            "description": "The resource specified does not exist.",
+            "description": "指定的资源不存在。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
-                "description": "Your rate limit (requests per second) for this operation.",
+                "description": "此操作的速率限制 (每秒请求数)。",
                 "type": "string"
               },
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             },
             "x-amzn-api-sandbox": {
@@ -1037,62 +1037,62 @@
             }
           },
           "413": {
-            "description": "The request size exceeded the maximum accepted size.",
+            "description": "请求大小超过了可接受的最大大小。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
-                "description": "Unique request reference identifier.",
+                "description": "唯一请求引用标识符。",
                 "type": "string"
               }
             }
           },
           "415": {
-            "description": "The request payload is in an unsupported format.",
+            "description": "请求负载的格式不受支持。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "429": {
-            "description": "The frequency of requests was greater than allowed.",
+            "description": "请求的频率大于允许的频率。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "500": {
-            "description": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+            "description": "发生了阻止服务器完成请求的意外情况。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           },
           "503": {
-            "description": "Temporary overloading or maintenance of the server.",
+            "description": "服务器的临时过载或维护。",
             "schema": {
               "$ref": "#/definitions/ErrorList"
             },
             "headers": {
               "x-amzn-RequestId": {
                 "type": "string",
-                "description": "Unique request reference identifier."
+                "description": "唯一请求引用标识符。"
               }
             }
           }
@@ -1103,13 +1103,13 @@
   "definitions": {
     "ErrorList": {
       "type": "object",
-      "description": "A list of error responses returned when a request is unsuccessful.",
+      "description": "请求不成功时返回的错误响应列表。",
       "required": [
         "errors"
       ],
       "properties": {
         "errors": {
-          "description": "Error response returned when the request is unsuccessful.",
+          "description": "请求不成功时返回的错误响应。",
           "type": "array",
           "items": {
             "$ref": "#/definitions/Error"
@@ -1119,7 +1119,7 @@
     },
     "Error": {
       "type": "object",
-      "description": "Error response returned when the request is unsuccessful.",
+      "description": "请求不成功时返回的错误响应。",
       "required": [
         "code",
         "message"
@@ -1127,21 +1127,21 @@
       "properties": {
         "code": {
           "type": "string",
-          "description": "An error code that identifies the type of error that occurred."
+          "description": "标识发生的错误类型的错误代码。"
         },
         "message": {
           "type": "string",
-          "description": "A message that describes the error condition."
+          "description": "描述错误情况的消息。"
         },
         "details": {
           "type": "string",
-          "description": "Additional details that can help the caller understand or fix the issue."
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
         }
       }
     },
     "Query": {
       "type": "object",
-      "description": "Detailed information about the query.",
+      "description": "有关查询的详细信息。",
       "required": [
         "processingStatus",
         "queryId",
@@ -1150,20 +1150,20 @@
       ],
       "properties": {
         "queryId": {
-          "description": "The query identifier. This identifier is unique only in combination with a selling partner account ID.",
+          "description": "查询标识符。此标识符仅在与销售合作伙伴帐户ID组合时是唯一的。",
           "type": "string"
         },
         "query": {
-          "description": "The submitted query.",
+          "description": "提交的查询。",
           "type": "string"
         },
         "createdTime": {
-          "description": "The date and time when the query was created, in ISO 8601 date time format.",
+          "description": "创建查询的日期和时间，采用ISO 8601日期时间格式。",
           "type": "string",
           "format": "date-time"
         },
         "processingStatus": {
-          "description": "The processing status of the query.",
+          "description": "查询的处理状态。",
           "type": "string",
           "enum": [
             "CANCELLED",
@@ -1175,51 +1175,51 @@
           "x-docgen-enum-table-extension": [
             {
               "value": "CANCELLED",
-              "description": "The query was cancelled before it began processing."
+              "description": "查询在开始处理之前已被取消。"
             },
             {
               "value": "DONE",
-              "description": "The query has completed processing."
+              "description": "查询已完成处理。"
             },
             {
               "value": "FATAL",
-              "description": "The query was aborted due to a fatal error."
+              "description": "由于发生致命错误，查询已中止。"
             },
             {
               "value": "IN_PROGRESS",
-              "description": "The query is being processed."
+              "description": "正在处理查询。"
             },
             {
               "value": "IN_QUEUE",
-              "description": "The query has not yet started processing. It may be waiting for another `IN_PROGRESS` query."
+              "description": "查询尚未开始处理。它可能正在等待另一个 “IN_PROGRESS” 查询。"
             }
           ]
         },
         "processingStartTime": {
-          "description": "The date and time when the query processing started, in ISO 8601 date time format.",
+          "description": "查询处理开始的日期和时间，采用ISO 8601日期时间格式。",
           "type": "string",
           "format": "date-time"
         },
         "processingEndTime": {
-          "description": "The date and time when the query processing completed, in ISO 8601 date time format.",
+          "description": "查询处理完成的日期和时间，采用ISO 8601日期时间格式。",
           "type": "string",
           "format": "date-time"
         },
         "dataDocumentId": {
-          "description": "The data document identifier. This identifier is only present when there is data available as a result of the query. This identifier is unique only in combination with a selling partner account ID. Pass this identifier into the `getDocument` operation to get the information required to retrieve the data document's contents.",
+          "description": "数据文档标识符。此标识符仅在存在作为查询结果的可用数据时才存在。此标识符仅在与销售合作伙伴帐户ID组合时是唯一的。将此标识符传递到 “getdocument” 操作中，以获取检索数据文档内容所需的信息。",
           "type": "string"
         },
         "errorDocumentId": {
-          "description": "The error document identifier. This identifier is only present when an error occurs during query processing. This identifier is unique only in combination with a selling partner account ID. Pass this identifier into the `getDocument` operation to get the information required to retrieve the error document's contents.",
+          "description": "错误文档标识符。此标识符仅在查询处理期间发生错误时才存在。此标识符仅在与销售合作伙伴帐户ID组合时是唯一的。将此标识符传递到 “getdocument” 操作中，以获取检索错误文档内容所需的信息。",
           "type": "string"
         },
         "pagination": {
           "type": "object",
-          "description": "When a query produces results that are not included in the data document, pagination occurs. This means the results are divided into pages. To retrieve the next page, you must pass a `CreateQuerySpecification` object with `paginationToken` set to this object's `nextToken` and with `query` set to this object's `query` in the subsequent `createQuery` request. When there are no more pages to fetch, the `nextToken` field will be absent.",
+          "description": "当查询生成的结果未包含在数据文档中时，将发生分页。这意味着结果被分成页。要检索下一页，您必须传递一个 “createqueryspecification” 对象，其中 “paginationtoken” 设置为此对象的 “nexttoken”，而 “query” 设置为此对象的 “query” 在随后的 “createquery” 请求中。当没有更多要获取的页面时，“nexttoken” 字段将不存在。",
           "properties": {
             "nextToken": {
               "type": "string",
-              "description": "A token that can be used to fetch the next page of results."
+              "description": "可用于获取下一页结果的令牌。"
             }
           }
         }
@@ -1227,59 +1227,59 @@
     },
     "QueryList": {
       "type": "array",
-      "description": "A list of queries.",
+      "description": "查询列表。",
       "items": {
         "$ref": "#/definitions/Query"
       }
     },
     "CreateQuerySpecification": {
       "type": "object",
-      "description": "Information required to create the query.",
+      "description": "创建查询所需的信息。",
       "required": [
         "query"
       ],
       "properties": {
         "query": {
-          "description": "The GraphQL query to submit. A query must be at most 8000 characters after unnecessary whitespace is removed.",
+          "description": "要提交的GraphQL查询。删除不必要的空格后，查询必须最多为8000个字符。",
           "type": "string"
         },
-        "paginationToken":{
-          "description": "A token to fetch a certain page of query results when there are multiple pages of query results available. The value of this token must be fetched from the `pagination.nextToken` field of the `Query` object, and the `query` field for this object must also be set to the `query` field of the same `Query` object. A `Query` object can be retrieved from either the `getQueries` or `getQuery` operation. In the absence of this token value, the first page of query results will be requested.",
+        "paginationToken": {
+          "description": "当有多页查询结果可用时，用于获取某一页查询结果的令牌。此标记的值必须从 “query” 对象的 “pagination.Nexttoken” 字段中获取，并且此对象的 “query” 字段也必须设置为同一 “query” 对象的 “query” 字段。可以从 “getqueries” 或 “getquery” 操作中检索 “query” 对象。如果没有此令牌值，将请求查询结果的第一页。",
           "type": "string"
         }
       }
     },
     "CreateQueryResponse": {
       "type": "object",
-      "description": "The response for the `createQuery` operation.",
+      "description": "“Createquery” 操作的响应。",
       "required": [
         "queryId"
       ],
       "properties": {
         "queryId": {
-          "description": "The identifier for the query. This identifier is unique only in combination with a selling partner account ID.",
+          "description": "查询的标识符。此标识符仅在与销售合作伙伴帐户ID组合时是唯一的。",
           "type": "string"
         }
       }
     },
     "GetQueriesResponse": {
       "type": "object",
-      "description": "The response for the `getQueries` operation.",
+      "description": "“Getqueries” 操作的响应。",
       "required": [
         "queries"
       ],
       "properties": {
         "queries": {
-          "description": "The Data Kiosk queries.",
+          "description": "数据亭查询。",
           "$ref": "#/definitions/QueryList"
         },
         "pagination": {
           "type": "object",
-          "description": "When a request has results that are not included in this response, pagination occurs. This means the results are divided into pages. To retrieve the next page, you must pass the `nextToken` as the `paginationToken` query parameter in the subsequent `getQueries` request. All other parameters must be provided with the same values that were provided with the request that generated this token, with the exception of `pageSize` which can be modified between calls to `getQueries`. When there are no more pages to fetch, the `nextToken` field will be absent.",
+          "description": "当请求具有未包含在此响应中的结果时，将发生分页。这意味着结果被分成页。要检索下一页，必须在随后的 “getqueries” 请求中将 “nexttoken” 作为 “paginationtoken” 查询参数传递。必须为所有其他参数提供与生成此令牌的请求一起提供的值相同的值，但 “pagesize” 除外，它可以在调用 “getqueries” 之间进行修改。当没有更多要获取的页面时，“nexttoken” 字段将不存在。",
           "properties": {
             "nextToken": {
               "type": "string",
-              "description": "A token that can be used to fetch the next page of results."
+              "description": "可用于获取下一页结果的令牌。"
             }
           }
         }
@@ -1287,18 +1287,18 @@
     },
     "GetDocumentResponse": {
       "type": "object",
-      "description": "The response for the `getDocument` operation.",
+      "description": "“Getdocument” 操作的响应。",
       "required": [
         "documentId",
         "documentUrl"
       ],
       "properties": {
         "documentId": {
-          "description": "The identifier for the Data Kiosk document. This identifier is unique only in combination with a selling partner account ID.",
+          "description": "数据亭文档的标识符。此标识符仅在与销售合作伙伴帐户ID组合时是唯一的。",
           "type": "string"
         },
         "documentUrl": {
-          "description": "A presigned URL that can be used to retrieve the Data Kiosk document. This URL expires after 5 minutes. If the Data Kiosk document is compressed, the `Content-Encoding` header will indicate the compression algorithm.\n\n**Note:** Most HTTP clients are capable of automatically decompressing downloaded files based on the `Content-Encoding` header.",
+          "description": "可用于检索Data Kiosk文档的预签名URL。此URL将在5分钟后过期。如果数据信息亭文档是压缩的，则 “Content-encoding” 标头将指示压缩算法。\n\n** 注意: ** 大多数HTTP客户端都能够根据 “Content-encoding” 标头自动解压缩下载的文件。",
           "type": "string"
         }
       }
