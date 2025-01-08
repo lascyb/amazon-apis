@@ -1,0 +1,1350 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "用于零售采购付款的销售合作伙伴API提供了对供应商付款数据的编程访问。",
+    "version": "v1",
+    "title": "供应商发票v1",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/vendor/payments/v1/invoices": {
+      "post": {
+        "tags": [
+          "Vendor Invoices"
+        ],
+        "description": "向亚马逊提交新发票。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "submitInvoices",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoicesRequest",
+              "example": {
+                "payload": {
+                  "invoices": [
+                    {
+                      "invoiceType": "Invoice",
+                      "id": "0136981234",
+                      "date": "2019-07-24T21:17:59.821Z",
+                      "remitToParty": {
+                        "partyId": "XYZ12345",
+                        "address": {
+                          "name": "ANYCOMPANY MANUFACTURING",
+                          "addressLine1": "123 ANY STREET",
+                          "city": "ANYTOWN",
+                          "stateOrRegion": "AZ",
+                          "postalOrZipCode": "12345",
+                          "countryCode": "USA"
+                        },
+                        "taxRegistrationDetails": [
+                          {
+                            "taxRegistrationType": "VAT",
+                            "taxRegistrationNumber": "VENDORVATID"
+                          }
+                        ]
+                      },
+                      "shipToParty": {
+                        "partyId": "XYZ12345",
+                        "address": {
+                          "name": "ANYCOMPANY MANUFACTURING",
+                          "addressLine1": "123 ANY STREET",
+                          "city": "ANYTOWN",
+                          "stateOrRegion": "AZ",
+                          "countryCode": "USA"
+                        }
+                      },
+                      "shipFromParty": {
+                        "partyId": "XYZ12345",
+                        "address": {
+                          "name": "ANYCOMPANY MANUFACTURING",
+                          "addressLine1": "123 ANY STREET",
+                          "city": "ANYTOWN",
+                          "stateOrRegion": "AZ",
+                          "postalOrZipCode": "12345",
+                          "countryCode": "USA"
+                        }
+                      },
+                      "billToParty": {
+                        "partyId": "XYZ12345",
+                        "address": {
+                          "name": "ANYCOMPANY MANUFACTURING",
+                          "addressLine1": "123 ANY STREET",
+                          "addressLine2": "",
+                          "city": "ANYTOWN",
+                          "stateOrRegion": "AZ",
+                          "postalOrZipCode": "12345",
+                          "countryCode": "USA"
+                        },
+                        "taxRegistrationDetails": [
+                          {
+                            "taxRegistrationType": "VAT",
+                            "taxRegistrationNumber": "AMAZONVATNUMBER"
+                          }
+                        ]
+                      },
+                      "paymentTerms": {
+                        "type": "Basic",
+                        "discountPercent": "5",
+                        "discountDueDays": 15,
+                        "netDueDays": 30
+                      },
+                      "invoiceTotal": {
+                        "currencyCode": "INR",
+                        "amount": "259678.39"
+                      },
+                      "taxDetails": [
+                        {
+                          "taxType": "SGST",
+                          "taxRate": "9",
+                          "taxAmount": {
+                            "currencyCode": "INR",
+                            "amount": "19697.98"
+                          },
+                          "taxableAmount": {
+                            "currencyCode": "INR",
+                            "amount": "218866.43"
+                          }
+                        },
+                        {
+                          "taxType": "CGST",
+                          "taxRate": "9",
+                          "taxAmount": {
+                            "currencyCode": "INR",
+                            "amount": "19697.98"
+                          },
+                          "taxableAmount": {
+                            "currencyCode": "INR",
+                            "amount": "218866.43"
+                          }
+                        }
+                      ],
+                      "chargeDetails": [
+                        {
+                          "type": "Freight",
+                          "description": "运费",
+                          "chargeAmount": {
+                            "currencyCode": "INR",
+                            "amount": "1200.00"
+                          },
+                          "taxDetails": [
+                            {
+                              "taxType": "CGST",
+                              "taxRate": "9",
+                              "taxAmount": {
+                                "currencyCode": "INR",
+                                "amount": "108.00"
+                              },
+                              "taxableAmount": {
+                                "currencyCode": "INR",
+                                "amount": "1200.00"
+                              }
+                            },
+                            {
+                              "taxType": "SGST",
+                              "taxRate": "9",
+                              "taxAmount": {
+                                "currencyCode": "INR",
+                                "amount": "108.00"
+                              },
+                              "taxableAmount": {
+                                "currencyCode": "INR",
+                                "amount": "1200.00"
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "items": [
+                        {
+                          "itemSequenceNumber": 1,
+                          "amazonProductIdentifier": "ABC123434",
+                          "vendorProductIdentifier": "809281-5100",
+                          "invoicedQuantity": {
+                            "amount": 2,
+                            "unitOfMeasure": "Eaches"
+                          },
+                          "netCost": {
+                            "currencyCode": "INR",
+                            "amount": "21060.34"
+                          },
+                          "purchaseOrderNumber": "3DY3TK6T",
+                          "hsnCode": "76.06.92.99.00",
+                          "taxDetails": [
+                            {
+                              "taxType": "SGST",
+                              "taxRate": "9",
+                              "taxAmount": {
+                                "currencyCode": "INR",
+                                "amount": "1895.43"
+                              },
+                              "taxableAmount": {
+                                "currencyCode": "INR",
+                                "amount": "21060.34"
+                              }
+                            },
+                            {
+                              "taxType": "CGST",
+                              "taxRate": "9",
+                              "taxAmount": {
+                                "currencyCode": "INR",
+                                "amount": "1895.43"
+                              },
+                              "taxableAmount": {
+                                "currencyCode": "INR",
+                                "amount": "21060.34"
+                              }
+                            }
+                          ],
+                          "chargeDetails": [
+                            {
+                              "type": "Freight",
+                              "description": "运费",
+                              "chargeAmount": {
+                                "currencyCode": "INR",
+                                "amount": "600.00"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "itemSequenceNumber": 2,
+                          "amazonProductIdentifier": "ABC123435",
+                          "vendorProductIdentifier": "795000-0001",
+                          "invoicedQuantity": {
+                            "amount": 3,
+                            "unitOfMeasure": "Eaches"
+                          },
+                          "netCost": {
+                            "currencyCode": "INR",
+                            "amount": "58915.25"
+                          },
+                          "purchaseOrderNumber": "3DY3TK6T",
+                          "taxDetails": [
+                            {
+                              "taxType": "SGST",
+                              "taxRate": "9",
+                              "taxAmount": {
+                                "currencyCode": "INR",
+                                "amount": "5302.37"
+                              },
+                              "taxableAmount": {
+                                "currencyCode": "INR",
+                                "amount": "58915.25"
+                              }
+                            },
+                            {
+                              "taxType": "CGST",
+                              "taxRate": "9",
+                              "taxAmount": {
+                                "currencyCode": "INR",
+                                "amount": "5302.37"
+                              },
+                              "taxableAmount": {
+                                "currencyCode": "INR",
+                                "amount": "58915.25"
+                              }
+                            }
+                          ],
+                          "chargeDetails": [
+                            {
+                              "type": "Freight",
+                              "description": "运费",
+                              "chargeAmount": {
+                                "currencyCode": "INR",
+                                "amount": "600.00"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "包含要提交的发票数据的请求正文。"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoicesResponse"
+            },
+            "examples": {
+              "application/json": {
+                "payload": {
+                  "transactionId": "20190904171225-e1275c33-d75b-4bfe-b95c-15a9abfc09cc"
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "invoices": [
+                            {
+                              "id": "TestInvoice202",
+                              "date": "2020-06-08T12:00:00.000Z",
+                              "billToParty": {
+                                "partyId": "TES1"
+                              },
+                              "invoiceType": "Invoice",
+                              "remitToParty": {
+                                "partyId": "ABCDE"
+                              },
+                              "invoiceTotal": {
+                                "amount": "112.05",
+                                "currencyCode": "USD"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "transactionId": "20190904171225-e1275c33-d75b-4bfe-b95c-15a9abfc09cc"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoicesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "invoices": [
+                            {
+                              "invoiceType": "Invoic"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Value 'Invoic' is not valid with respect to enumeration '[CreditNote, Invoice]'. It must be a value from the enumeration.",
+                        "details": ""
+                      },
+                      {
+                        "code": "InvalidInput",
+                        "message": "The value 'Invoic' of element 'invoiceType' is not valid.",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoicesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "submitInvoices"
+      }
+    }
+  },
+  "definitions": {
+    "SubmitInvoicesResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "submitInvoices操作的响应负载。",
+          "$ref": "#/definitions/TransactionId"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "submitInvoices操作的响应架构。"
+    },
+    "TransactionId": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "description": "用于标识此事务的GUID。此值可与事务状态API一起使用，以返回此事务的状态。"
+        }
+      },
+      "description": "包含事务ID的响应。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "SubmitInvoicesRequest": {
+      "type": "object",
+      "properties": {
+        "invoices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Invoice"
+          },
+          "description": "表示要提交的发票或贷方票据的发票对象数组。"
+        }
+      },
+      "description": "submitInvoices操作的请求架构。"
+    },
+    "Invoice": {
+      "type": "object",
+      "required": [
+        "date",
+        "id",
+        "invoiceTotal",
+        "invoiceType",
+        "remitToParty"
+      ],
+      "properties": {
+        "invoiceType": {
+          "type": "string",
+          "description": "标识发票的类型。",
+          "enum": [
+            "Invoice",
+            "CreditNote"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Invoice",
+              "description": "卖方向买方签发的与销售交易有关的商业文件，表明卖方向买方提供的产品，数量和产品或服务的商定价格。"
+            },
+            {
+              "value": "CreditNote",
+              "description": "卖方签发给买方的商业单据。这是销售减少的证据。"
+            }
+          ]
+        },
+        "id": {
+          "type": "string",
+          "description": "与本文档中定义的费用相关的唯一编号。如果单据类型为发票，则为发票编号; 如果单据类型为贷方票据，则为贷方票据编号。未能提供此参考将导致拒绝。"
+        },
+        "referenceNumber": {
+          "type": "string",
+          "description": "用于监管或其他目的的额外唯一参考编号。"
+        },
+        "date": {
+          "description": "在原产地的会计系统中生成发票/贷方票据信息的日期。发票日期应在采购订单创建日期或之后。",
+          "$ref": "#/definitions/DateTime"
+        },
+        "remitToParty": {
+          "description": "接受此发票付款的一方的名称，地址和税务详细信息。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipToParty": {
+          "description": "接收产品装运方的名称、地址和税务详细信息。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipFromParty": {
+          "description": "发送产品装运方的名称、地址和税务详细信息。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "billToParty": {
+          "description": "开具此发票的一方的名称、地址和税务详细信息。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "paymentTerms": {
+          "description": "发票的付款条件。",
+          "$ref": "#/definitions/PaymentTerms"
+        },
+        "invoiceTotal": {
+          "description": "发票中收取的货币总额或应支付的贷方票据的全部价值，包括所有相关税费。它是在条款折扣 (如果折扣适用) 之前的发票总金额 (包括费用，减去津贴)。",
+          "$ref": "#/definitions/Money"
+        },
+        "taxDetails": {
+          "type": "array",
+          "description": "所有行项目的总税额详细信息。",
+          "items": {
+            "$ref": "#/definitions/TaxDetails"
+          }
+        },
+        "additionalDetails": {
+          "type": "array",
+          "description": "销售方提供的其他详细信息，用于税收相关或其他目的。",
+          "items": {
+            "$ref": "#/definitions/AdditionalDetails"
+          }
+        },
+        "chargeDetails": {
+          "type": "array",
+          "description": "所有行项目的总费用金额详细信息。",
+          "items": {
+            "$ref": "#/definitions/ChargeDetails"
+          }
+        },
+        "allowanceDetails": {
+          "type": "array",
+          "description": "所有行项目的总限额详细信息。",
+          "items": {
+            "$ref": "#/definitions/AllowanceDetails"
+          }
+        },
+        "items": {
+          "type": "array",
+          "description": "发票项目的列表。",
+          "items": {
+            "$ref": "#/definitions/InvoiceItem"
+          }
+        }
+      },
+      "description": "表示发票或贷方票据文档，其中包含有关事务处理、所涉及的交易方以及行项的详细信息。"
+    },
+    "PartyIdentification": {
+      "description": "一方的名称、地址和税务细节。",
+      "type": "object",
+      "required": [
+        "partyId"
+      ],
+      "properties": {
+        "partyId": {
+          "type": "string",
+          "description": "为该方指定的标识。"
+        },
+        "address": {
+          "description": "通过地址识别当事人。",
+          "$ref": "#/definitions/Address"
+        },
+        "taxRegistrationDetails": {
+          "type": "array",
+          "description": "方的税务登记详细信息。",
+          "items": {
+            "$ref": "#/definitions/TaxRegistrationDetails"
+          }
+        }
+      }
+    },
+    "TaxRegistrationDetails": {
+      "type": "object",
+      "required": [
+        "taxRegistrationNumber",
+        "taxRegistrationType"
+      ],
+      "properties": {
+        "taxRegistrationType": {
+          "type": "string",
+          "description": "实体的税务登记类型。",
+          "enum": [
+            "VAT",
+            "GST"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "VAT",
+              "description": "增值税。"
+            },
+            {
+              "value": "GST",
+              "description": "Goods and services tax."
+            }
+          ]
+        },
+        "taxRegistrationNumber": {
+          "type": "string",
+          "description": "实体的税务登记编号。例如，增值税ID，消费税ID。"
+        }
+      },
+      "description": "实体的税务登记详细信息。"
+    },
+    "Address": {
+      "type": "object",
+      "required": [
+        "addressLine1",
+        "countryCode",
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "该地址的个人、企业或机构的名称。"
+        },
+        "addressLine1": {
+          "type": "string",
+          "description": "街道地址的第一行。"
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "其他地址信息 (如果需要)。"
+        },
+        "addressLine3": {
+          "type": "string",
+          "description": "其他地址信息 (如果需要)。"
+        },
+        "city": {
+          "type": "string",
+          "description": "个人、企业或机构所在的城市。"
+        },
+        "county": {
+          "type": "string",
+          "description": "个人、企业或机构所在的县。"
+        },
+        "district": {
+          "type": "string",
+          "description": "个人、企业或机构所在的地区。"
+        },
+        "stateOrRegion": {
+          "type": "string",
+          "description": "个人、企业或机构所在的州或地区。"
+        },
+        "postalOrZipCode": {
+          "type": "string",
+          "description": "该地址的邮政编码或邮政编码。它包含一系列字母或数字或两者，有时包括空格或标点符号。"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "两位数的国家代码。ISO 3166-1 alpha-2格式。",
+          "maxLength": 2
+        },
+        "phone": {
+          "type": "string",
+          "description": "位于该地址的个人、企业或机构的电话号码。"
+        }
+      },
+      "description": "物理地址。"
+    },
+    "InvoiceItem": {
+      "type": "object",
+      "required": [
+        "invoicedQuantity",
+        "itemSequenceNumber",
+        "netCost"
+      ],
+      "properties": {
+        "itemSequenceNumber": {
+          "type": "integer",
+          "description": "与此行项目相关的唯一编号。"
+        },
+        "amazonProductIdentifier": {
+          "type": "string",
+          "description": "商品的Amazon标准标识号 (ASIN)。"
+        },
+        "vendorProductIdentifier": {
+          "type": "string",
+          "description": "供应商选择的项目的产品标识符。应与采购订单中提供的相同。"
+        },
+        "invoicedQuantity": {
+          "description": "此项目的开票数量。数量必须大于零。",
+          "$ref": "#/definitions/ItemQuantity"
+        },
+        "netCost": {
+          "description": "亚马逊的商品成本，应该与订单上的成本相匹配。价格信息不应为零或负数。它表示净单价。净成本是指增值税不包括在成本中。如果项目按重量定价，则需要将此成本与netCostUnitOfMeasure结合起来考虑。例如: 5美元/磅",
+          "$ref": "#/definitions/Money"
+        },
+        "netCostUnitOfMeasure": {
+          "description": "此字段表示按案例订购并支持按重量定价的项目的重量单位。",
+          "$ref": "#/definitions/NetCostUnitOfMeasure"
+        },
+        "purchaseOrderNumber": {
+          "type": "string",
+          "description": "此已开票行项目的Amazon采购订单编号。格式说明: 8字符字母数字代码。仅当invoiceType为Invoice时，此值是必需的，而当invoiceType为CreditNote时，此值不是必需的。"
+        },
+        "hsnCode": {
+          "type": "string",
+          "description": "HSN税法。HSN编号不能包含字母。"
+        },
+        "creditNoteDetails": {
+          "description": "处理贷方票据所需的详细信息。仅当invoiceType为CreditNote时才需要此信息。",
+          "$ref": "#/definitions/CreditNoteDetails"
+        },
+        "taxDetails": {
+          "type": "array",
+          "description": "每个行项目的个人所得税详细信息。",
+          "items": {
+            "$ref": "#/definitions/TaxDetails"
+          }
+        },
+        "chargeDetails": {
+          "type": "array",
+          "description": "每个行项目的单独费用详细信息。",
+          "items": {
+            "$ref": "#/definitions/ChargeDetails"
+          }
+        },
+        "allowanceDetails": {
+          "type": "array",
+          "description": "每个行项目的个人津贴详细信息。",
+          "items": {
+            "$ref": "#/definitions/AllowanceDetails"
+          }
+        }
+      },
+      "description": "正在开票的项目的详细信息。"
+    },
+    "TaxDetails": {
+      "type": "object",
+      "required": [
+        "taxAmount",
+        "taxType"
+      ],
+      "properties": {
+        "taxType": {
+          "type": "string",
+          "description": "应用的税的类型。",
+          "enum": [
+            "CGST",
+            "SGST",
+            "CESS",
+            "UTGST",
+            "IGST",
+            "MwSt.",
+            "PST",
+            "TVA",
+            "VAT",
+            "GST",
+            "ST",
+            "Consumption",
+            "MutuallyDefined",
+            "DomesticVAT"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "CGST",
+              "description": "中央商品和服务税 (CGST) 由印度政府征收，用于商品和服务的州内流动。"
+            },
+            {
+              "value": "SGST",
+              "description": "国家商品和服务税 (SGST) 是印度州政府对州内供应征收的间接税。"
+            },
+            {
+              "value": "CESS",
+              "description": "A CESS is a form of tax levied by the government on tax with specific purposes till the time the government gets enough money for that purpose."
+            },
+            {
+              "value": "UTGST",
+              "description": "印度的联合领地商品和服务税。"
+            },
+            {
+              "value": "IGST",
+              "description": "综合商品和服务税 (IGST) 是对印度所有国家间商品和/或服务供应征收的税。"
+            },
+            {
+              "value": "MwSt.",
+              "description": "Mehrwertsteuer，MwSt，是德国的增值税。"
+            },
+            {
+              "value": "PST",
+              "description": "在加拿大许多省份，对商品和特定服务的消费者征收省销售税 (PST)。"
+            },
+            {
+              "value": "TVA",
+              "description": "Taxe sur la Valeur ajoutee (TVA) 是法国的增值税。"
+            },
+            {
+              "value": "VAT",
+              "description": "增值税。"
+            },
+            {
+              "value": "GST",
+              "description": "对出售给国内消费的大多数商品和服务征收的税。"
+            },
+            {
+              "value": "ST",
+              "description": "销售税。"
+            },
+            {
+              "value": "Consumption",
+              "description": "对商品和服务的消费支出征收的税。"
+            },
+            {
+              "value": "MutuallyDefined",
+              "description": "亚马逊和供应商之间相互商定的税收部分。"
+            },
+            {
+              "value": "DomesticVAT",
+              "description": "Domestic value-added tax."
+            }
+          ]
+        },
+        "taxRate": {
+          "description": "应用的税收百分比。百分比必须以十进制表示。",
+          "$ref": "#/definitions/Decimal"
+        },
+        "taxAmount": {
+          "description": "对发票总额或项目总额应用的总税额。",
+          "$ref": "#/definitions/Money"
+        },
+        "taxableAmount": {
+          "description": "应按 “税率” 字段中指定的税率纳税的发票金额。",
+          "$ref": "#/definitions/Money"
+        }
+      },
+      "description": "已应用税额的详细信息。"
+    },
+    "Money": {
+      "type": "object",
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "ISO 4217格式的三位数货币代码。"
+        },
+        "amount": {
+          "$ref": "#/definitions/Decimal"
+        }
+      },
+      "description": "货币的数量，包括货币形式的单位。"
+    },
+    "AdditionalDetails": {
+      "type": "object",
+      "required": [
+        "detail",
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "销售方提供的附加信息的类型。",
+          "enum": [
+            "SUR",
+            "OCR",
+            "CartonCount"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "SUR",
+              "description": "对已经征税的东西征收的附加税，例如对超过一定水平的收入征收更高的税率。"
+            },
+            {
+              "value": "OCR",
+              "description": "OCR。"
+            },
+            {
+              "value": "CartonCount",
+              "description": "开具发票的纸箱总数。"
+            }
+          ]
+        },
+        "detail": {
+          "type": "string",
+          "description": "卖方提供的附加信息的详细信息。"
+        },
+        "languageCode": {
+          "type": "string",
+          "description": "附加信息详细信息的语言代码。"
+        }
+      },
+      "description": "出售方为与税收相关或任何其他目的而提供的附加信息。"
+    },
+    "ChargeDetails": {
+      "type": "object",
+      "required": [
+        "chargeAmount",
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "应用的费用类型。",
+          "enum": [
+            "Freight",
+            "Packing",
+            "Duty",
+            "Service",
+            "SmallOrder",
+            "InsurancePlacementCost",
+            "InsuranceFee",
+            "SpecialHandlingService",
+            "CollectionAndRecyclingService",
+            "EnvironmentalProtectionService",
+            "TaxCollectedAtSource"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Freight",
+              "description": "运费。"
+            },
+            {
+              "value": "Packing",
+              "description": "包装费。"
+            },
+            {
+              "value": "Duty",
+              "description": "关税。"
+            },
+            {
+              "value": "Service",
+              "description": "服务费。"
+            },
+            {
+              "value": "SmallOrder",
+              "description": "小订单费用。"
+            },
+            {
+              "value": "InsurancePlacementCost",
+              "description": "保险安置费用。"
+            },
+            {
+              "value": "InsuranceFee",
+              "description": "保险费。"
+            },
+            {
+              "value": "SpecialHandlingService",
+              "description": "特殊处理服务费。"
+            },
+            {
+              "value": "CollectionAndRecyclingService",
+              "description": "收集和回收服务费。"
+            },
+            {
+              "value": "EnvironmentalProtectionService",
+              "description": "环保服务费。"
+            },
+            {
+              "value": "TaxCollectedAtSource",
+              "description": "在源头征收的税款。"
+            }
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "费用的描述。"
+        },
+        "chargeAmount": {
+          "description": "与此费用相关的总货币金额。",
+          "$ref": "#/definitions/Money"
+        },
+        "taxDetails": {
+          "type": "array",
+          "description": "对此费用应用的税额详细信息。",
+          "items": {
+            "$ref": "#/definitions/TaxDetails"
+          }
+        }
+      },
+      "description": "费用的货币和税收细节。"
+    },
+    "AllowanceDetails": {
+      "type": "object",
+      "required": [
+        "allowanceAmount",
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "应用的津贴的类型。",
+          "enum": [
+            "Discount",
+            "DiscountIncentive",
+            "Defective",
+            "Promotional",
+            "UnsaleableMerchandise",
+            "Special"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Discount",
+              "description": "折扣津贴。"
+            },
+            {
+              "value": "DiscountIncentive",
+              "description": "折扣奖励津贴。"
+            },
+            {
+              "value": "Defective",
+              "description": "为缺陷项目申请的津贴。"
+            },
+            {
+              "value": "Promotional",
+              "description": "促销津贴。"
+            },
+            {
+              "value": "UnsaleableMerchandise",
+              "description": "因无法销售的商品而申请的津贴。"
+            },
+            {
+              "value": "Special",
+              "description": "特别津贴。"
+            }
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "津贴的说明。"
+        },
+        "allowanceAmount": {
+          "description": "与此津贴相关的货币总额。",
+          "$ref": "#/definitions/Money"
+        },
+        "taxDetails": {
+          "type": "array",
+          "description": "应用于此免税额的税额详细信息。",
+          "items": {
+            "$ref": "#/definitions/TaxDetails"
+          }
+        }
+      },
+      "description": "津贴的货币和税收细节。"
+    },
+    "PaymentTerms": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "发票的付款条件类型。",
+          "enum": [
+            "Basic",
+            "EndOfMonth",
+            "FixedDate",
+            "Proximo",
+            "PaymentDueUponReceiptOfInvoice",
+            "LetterofCredit"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Basic",
+              "description": "买方和卖方已同意的付款条件。"
+            },
+            {
+              "value": "EndOfMonth",
+              "description": "卖方在月底获得付款的付款期限。"
+            },
+            {
+              "value": "FixedDate",
+              "description": "卖方在与买方约定的固定日期获得付款的付款期限。"
+            },
+            {
+              "value": "Proximo",
+              "description": "卖方在下个月底获得付款的付款期限。"
+            },
+            {
+              "value": "PaymentDueUponReceiptOfInvoice",
+              "description": "卖方在买方收到发票后获得付款的付款期限。"
+            },
+            {
+              "value": "LetterofCredit",
+              "description": "银行向卖方发出的付款承诺，并代表申请人即买方发出。"
+            }
+          ]
+        },
+        "discountPercent": {
+          "description": "折扣百分比值，在折扣到期日之前都是有效的。",
+          "$ref": "#/definitions/Decimal"
+        },
+        "discountDueDays": {
+          "type": "number",
+          "description": "从基准日期 (发票日期) 到折扣不再有效的日历天数。"
+        },
+        "netDueDays": {
+          "type": "number",
+          "description": "从基准日期 (发票日期) 到发票上的总金额到期的日历天数。"
+        }
+      },
+      "description": "发票的付款条件。付款条件的基础是发票日期。"
+    },
+    "CreditNoteDetails": {
+      "type": "object",
+      "properties": {
+        "referenceInvoiceNumber": {
+          "type": "string",
+          "description": "发送与现有发票相关的贷方票据时的原始发票编号。每张贷方票据只处理一张发票。这对于AP信用票据是强制性的。"
+        },
+        "debitNoteNumber": {
+          "type": "string",
+          "description": "亚马逊生成的借方票据编号。推荐用于退货和COOP信用票据。"
+        },
+        "returnsReferenceNumber": {
+          "type": "string",
+          "description": "标识退货通知编号。所有退货信用票据都是强制性的。"
+        },
+        "goodsReturnDate": {
+          "description": "供应商收到退货的日期。对于退货信用票据是强制性的。",
+          "$ref": "#/definitions/DateTime"
+        },
+        "rmaId": {
+          "type": "string",
+          "description": "标识返回的商品授权ID (如果生成)。"
+        },
+        "coopReferenceNumber": {
+          "type": "string",
+          "description": "标识用于COOP协议的COOP参考。未能提供COOP参考编号或借方票据编号可能导致贷方票据被拒绝。"
+        },
+        "consignorsReferenceNumber": {
+          "type": "string",
+          "description": "标识发货人参考编号 (VRET编号) (如果由Amazon生成)。"
+        }
+      },
+      "description": "处理贷方票据所需的参考资料。仅当InvoiceType为CreditNote时才需要此信息。"
+    },
+    "NetCostUnitOfMeasure": {
+      "type": "string",
+      "description": "此字段表示按案例订购并支持按重量定价的项目的重量单位。",
+      "enum": [
+        "POUNDS",
+        "OUNCES",
+        "GRAMS",
+        "KILOGRAMS"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "POUNDS",
+          "description": "每磅定价。"
+        },
+        {
+          "value": "OUNCES",
+          "description": "每盎司定价。"
+        },
+        {
+          "value": "GRAMS",
+          "description": "每克定价。"
+        },
+        {
+          "value": "KILOGRAMS",
+          "description": "每公斤价格。"
+        }
+      ]
+    },
+    "ItemQuantity": {
+      "type": "object",
+      "required": [
+        "amount",
+        "unitOfMeasure"
+      ],
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "description": "项目的数量。此值不应为零。"
+        },
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "数量的度量单位。",
+          "enum": [
+            "Cases",
+            "Eaches"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Cases",
+              "description": "将单个物品包装到箱子中。"
+            },
+            {
+              "value": "Eaches",
+              "description": "个别项目。"
+            }
+          ]
+        },
+        "unitSize": {
+          "type": "integer",
+          "description": "案例大小，如果度量值的单位是案例。"
+        },
+        "totalWeight": {
+          "$ref": "#/definitions/TotalWeight"
+        }
+      },
+      "description": "数量的详细信息。"
+    },
+    "TotalWeight": {
+      "type": "object",
+      "required": [
+        "amount",
+        "unitOfMeasure"
+      ],
+      "properties": {
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "按重量出售的物品的计量单位。",
+          "enum": [
+            "POUNDS",
+            "OUNCES",
+            "GRAMS",
+            "KILOGRAMS"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "POUNDS",
+              "description": "以磅为单位的重量。"
+            },
+            {
+              "value": "OUNCES",
+              "description": "重量 (盎司)。"
+            },
+            {
+              "value": "GRAMS",
+              "description": "重量 (克)。"
+            },
+            {
+              "value": "KILOGRAMS",
+              "description": "重量 (千克)。"
+            }
+          ]
+        },
+        "amount": {
+          "$ref": "#/definitions/Decimal"
+        }
+      },
+      "description": "此项目的总重量。此信息将适用于按重量出售的物品。"
+    },
+    "Decimal": {
+      "type": "string",
+      "description": "无精度损失的十进制数。当精度损失不可接受时很有用，就像货币一样。遵循RFC7159的数字表示。<br>** 模式 **: '^-？(0 |([1-9]\\ d * ))(\\.\\ d )？( [eE][ -]？\\ d )？$'。"
+    },
+    "DateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "根据iso8601定义日期和时间。"
+    }
+  }
+}

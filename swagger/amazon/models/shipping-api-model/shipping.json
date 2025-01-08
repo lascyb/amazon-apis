@@ -1,0 +1,3925 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "提供对Amazon Shipping api的编程访问。\n\n** 注意: ** 如果您是Amazon Shipping API的新手，请参阅 <a href = \"https:// developer-docs.amazon.com/amazon shipping/docs/shipping-api-v2-reference\">Amazon Shipping API (v2)</a> 的最新版本 <a href = \"https:// developer-docs.amazon.com/amazon-shipping/\">Amazon Shipping开发人员文档 </a> 站点。",
+    "version": "v1",
+    "title": "Selling Partner API for Shipping",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/shipping/v1/shipments": {
+      "post": {
+        "tags": [
+          "shipping"
+        ],
+        "description": "创建新的货件。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createShipment",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentRequest",
+              "example": {
+                "clientReferenceId": "911-7267646-6348616",
+                "shipFrom": {
+                  "name": "test name 1",
+                  "addressLine1": "some Test address 1",
+                  "postalCode": "90013",
+                  "city": "Los Angeles",
+                  "countryCode": "US",
+                  "stateOrRegion": "CA",
+                  "email": "testEmail1@amazon.com",
+                  "phoneNumber": "1234567890"
+                },
+                "shipTo": {
+                  "name": "test name 2",
+                  "addressLine1": "some Test address 2",
+                  "postalCode": "90013-1805",
+                  "city": "LOS ANGELES",
+                  "countryCode": "US",
+                  "stateOrRegion": "CA",
+                  "email": "testEmail2@amazon.com",
+                  "phoneNumber": "1234567890"
+                },
+                "containers": [
+                  {
+                    "containerType": "PACKAGE",
+                    "containerReferenceId": "ContainerRefId-01",
+                    "items": [
+                      {
+                        "title": "String",
+                        "quantity": 2,
+                        "unitPrice": {
+                          "unit": "USD",
+                          "value": 14.99
+                        },
+                        "unitWeight": {
+                          "unit": "lb",
+                          "value": 0.08164656
+                        }
+                      }
+                    ],
+                    "dimensions": {
+                      "height": 12,
+                      "length": 36,
+                      "width": 15,
+                      "unit": "CM"
+                    },
+                    "weight": {
+                      "unit": "lb",
+                      "value": 0.08164656
+                    },
+                    "value": {
+                      "unit": "USD",
+                      "value": 29.98
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "examples": {
+              "application/json": {
+                "shipmentId": "89108749065090",
+                "eligibleRates": [
+                  {
+                    "billedWeight": {
+                      "value": 4,
+                      "unit": "kg"
+                    },
+                    "totalCharge": {
+                      "value": 3.25,
+                      "unit": "GBP"
+                    },
+                    "serviceType": "Amazon Shipping Standard",
+                    "promise": {
+                      "deliveryWindow": {
+                        "start": "2018-08-25T20:22:30.737Z",
+                        "end": "2018-08-26T20:22:30.737Z"
+                      },
+                      "receiveWindow": {
+                        "start": "2018-08-23T09:22:30.737Z",
+                        "end": "2018-08-23T11:22:30.737Z"
+                      }
+                    },
+                    "rateId": "RI123456",
+                    "expirationTime": "2018-08-22T09:22:30.737Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "clientReferenceId": "TEST_CASE_200"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "shipmentId": "TEST_CASE_200",
+                      "eligibleRates": [
+                        {
+                          "billedWeight": {
+                            "value": 4,
+                            "unit": "kg"
+                          },
+                          "totalCharge": {
+                            "value": 3.25,
+                            "unit": "GBP"
+                          },
+                          "serviceType": "Amazon Shipping Standard",
+                          "promise": {
+                            "deliveryWindow": {
+                              "start": "2018-08-25T20:22:30.737Z",
+                              "end": "2018-08-26T20:22:30.737Z"
+                            },
+                            "receiveWindow": {
+                              "start": "2018-08-23T09:22:30.737Z",
+                              "end": "2018-08-23T11:22:30.737Z"
+                            }
+                          },
+                          "rateId": "RI123456",
+                          "expirationTime": "2018-08-22T09:22:30.737Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "clientReferenceId": "TEST_CASE_400"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid input."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "clientReferenceId": "TEST_CASE_401"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "clientReferenceId": "TEST_CASE_403"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "clientReferenceId": "TEST_CASE_404"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "NotFound",
+                        "message": "The requested resource doesn't exist."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "clientReferenceId": "TEST_CASE_429"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "QuotaExceeded",
+                        "message": "You exceeded your quota for the requested resource."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "clientReferenceId": "TEST_CASE_500"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InternalFailure",
+                        "message": "We encountered an internal error. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "clientReferenceId": "TEST_CASE_503"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "ServiceUnavailable",
+                        "message": "Service is temporarily unavailable. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/shipping/v1/shipments/{shipmentId}": {
+      "get": {
+        "tags": [
+          "shipping"
+        ],
+        "description": "返回shipmentId的整个shipment对象。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 15 |\n\n有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "getShipment",
+        "parameters": [
+          {
+            "name": "shipmentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "examples": {
+              "application/json": {
+                "shipmentId": "89108749065090",
+                "clientReferenceId": "911-7267646-6348616",
+                "shipFrom": {},
+                "shipTo": {},
+                "acceptedRate": {
+                  "billedWeight": {
+                    "value": 4,
+                    "unit": "kg"
+                  },
+                  "totalCharge": {
+                    "value": 3.5,
+                    "unit": "GBP"
+                  },
+                  "serviceType": "Amazon Shipping Standard",
+                  "promise": {
+                    "deliveryWindow": {
+                      "start": "2018-08-25T20:22:30.737Z",
+                      "end": "2018-08-26T20:22:30.737Z"
+                    },
+                    "receiveWindow": {
+                      "start": "2018-08-23T09:22:30.737Z",
+                      "end": "2018-08-23T11:22:30.737Z"
+                    }
+                  }
+                },
+                "shipper": {
+                  "accountId": "2755049166"
+                },
+                "containers": [
+                  {
+                    "containerReferenceId": "CRI123456789",
+                    "items": [
+                      {
+                        "title": "String",
+                        "unitWeight": {
+                          "value": 0.08164656,
+                          "unit": "kg"
+                        },
+                        "quantity": 2,
+                        "unitPrice": {
+                          "value": 14.99,
+                          "unit": "GBP"
+                        }
+                      }
+                    ],
+                    "dimensions": {
+                      "height": 12,
+                      "length": 36,
+                      "width": 31,
+                      "unit": "CM"
+                    },
+                    "containerType": "PACKAGE",
+                    "weight": {
+                      "unit": "kg",
+                      "value": 4
+                    },
+                    "value": {
+                      "value": 29.98,
+                      "unit": "GBP"
+                    }
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_200"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "shipmentId": "TEST_CASE_200",
+                      "clientReferenceId": "911-7267646-6348616",
+                      "shipFrom": {},
+                      "shipTo": {},
+                      "acceptedRate": {
+                        "billedWeight": {
+                          "value": 4,
+                          "unit": "kg"
+                        },
+                        "totalCharge": {
+                          "value": 3.5,
+                          "unit": "GBP"
+                        },
+                        "serviceType": "Amazon Shipping Standard",
+                        "promise": {
+                          "deliveryWindow": {
+                            "start": "2018-08-25T20:22:30.737Z",
+                            "end": "2018-08-26T20:22:30.737Z"
+                          },
+                          "receiveWindow": {
+                            "start": "2018-08-23T09:22:30.737Z",
+                            "end": "2018-08-23T11:22:30.737Z"
+                          }
+                        }
+                      },
+                      "shipper": {
+                        "accountId": "2755049166"
+                      },
+                      "containers": [
+                        {
+                          "containerReferenceId": "CRI123456789",
+                          "items": [
+                            {
+                              "title": "String",
+                              "unitWeight": {
+                                "value": 0.08164656,
+                                "unit": "kg"
+                              },
+                              "quantity": 2,
+                              "unitPrice": {
+                                "value": 14.99,
+                                "unit": "GBP"
+                              }
+                            }
+                          ],
+                          "dimensions": {
+                            "height": 12,
+                            "length": 36,
+                            "width": 31,
+                            "unit": "CM"
+                          },
+                          "containerType": "PACKAGE",
+                          "weight": {
+                            "unit": "kg",
+                            "value": 4
+                          },
+                          "value": {
+                            "value": 29.98,
+                            "unit": "GBP"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_400"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid input."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_401"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_403"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_404"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "NotFound",
+                        "message": "The requested resource doesn't exist."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_429"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "QuotaExceeded",
+                        "message": "You exceeded your quota for the requested resource."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_500"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InternalFailure",
+                        "message": "We encountered an internal error. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_503"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "ServiceUnavailable",
+                        "message": "Service is temporarily unavailable. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/shipping/v1/shipments/{shipmentId}/cancel": {
+      "post": {
+        "tags": [
+          "shipping"
+        ],
+        "description": "按给定的shipmentId取消装运。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 15 |\n\n有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "cancelShipment",
+        "parameters": [
+          {
+            "name": "shipmentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_200"
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_400"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid input."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_401"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_403"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_404"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "NotFound",
+                        "message": "The requested resource doesn't exist."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_429"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "QuotaExceeded",
+                        "message": "You exceeded your quota for the requested resource."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_500"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InternalFailure",
+                        "message": "We encountered an internal error. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_503"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "ServiceUnavailable",
+                        "message": "Service is temporarily unavailable. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/shipping/v1/shipments/{shipmentId}/purchaseLabels": {
+      "post": {
+        "tags": [
+          "shipping"
+        ],
+        "description": "根据给定的费率购买运输标签。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 15 |\n\n有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "purchaseLabels",
+        "parameters": [
+          {
+            "name": "shipmentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PurchaseLabelsRequest",
+              "example": {
+                "rateId": "rate identifier",
+                "labelSpecification": {
+                  "labelFormat": "PNG",
+                  "labelStockSize": "4x6"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseLabelsResponse"
+            },
+            "examples": {
+              "application/json": {
+                "shipmentId": "89108749065090",
+                "clientReferenceId": "911-7267646-6348616",
+                "acceptedRate": {
+                  "billedWeight": {
+                    "value": 4,
+                    "unit": "kg"
+                  },
+                  "totalCharge": {
+                    "value": 3.5,
+                    "unit": "GBP"
+                  },
+                  "serviceType": "Amazon Shipping Standard",
+                  "promise": {
+                    "deliveryWindow": {
+                      "start": "2018-08-25T20:22:30.737Z",
+                      "end": "2018-08-26T20:22:30.737Z"
+                    },
+                    "receiveWindow": {
+                      "start": "2018-08-23T09:22:30.737Z",
+                      "end": "2018-08-23T11:22:30.737Z"
+                    }
+                  }
+                },
+                "labelResults": [
+                  {
+                    "containerReferenceId": "CRI123456789",
+                    "trackingId": "1512748795322",
+                    "label": {
+                      "labelStream": "iVBORw0KGgo...AAAARK5CYII=(Truncated)",
+                      "labelSpecification": {
+                        "labelFormat": "PNG",
+                        "labelStockSize": "4x6"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_200"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "shipmentId": "TEST_CASE_200",
+                      "clientReferenceId": "911-7267646-6348616",
+                      "acceptedRate": {
+                        "billedWeight": {
+                          "value": 4,
+                          "unit": "kg"
+                        },
+                        "totalCharge": {
+                          "value": 3.5,
+                          "unit": "GBP"
+                        },
+                        "serviceType": "Amazon Shipping Standard",
+                        "promise": {
+                          "deliveryWindow": {
+                            "start": "2018-08-25T20:22:30.737Z",
+                            "end": "2018-08-26T20:22:30.737Z"
+                          },
+                          "receiveWindow": {
+                            "start": "2018-08-23T09:22:30.737Z",
+                            "end": "2018-08-23T11:22:30.737Z"
+                          }
+                        }
+                      },
+                      "labelResults": [
+                        {
+                          "containerReferenceId": "CRI123456789",
+                          "trackingId": "1512748795322",
+                          "label": {
+                            "labelStream": "iVBORw0KGgo...AAAARK5CYII=(Truncated)",
+                            "labelSpecification": {
+                              "labelFormat": "PNG",
+                              "labelStockSize": "4x6"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseLabelsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_400"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid input."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseLabelsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_401"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseLabelsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_403"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseLabelsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_404"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "NotFound",
+                        "message": "The requested resource doesn't exist."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseLabelsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_429"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "QuotaExceeded",
+                        "message": "You exceeded your quota for the requested resource."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseLabelsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_500"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InternalFailure",
+                        "message": "We encountered an internal error. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseLabelsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_503"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "ServiceUnavailable",
+                        "message": "Service is temporarily unavailable. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/shipping/v1/shipments/{shipmentId}/containers/{trackingId}/label": {
+      "post": {
+        "tags": [
+          "shipping"
+        ],
+        "description": "根据装运id和跟踪id检索装运标签。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 15 |\n\n有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "retrieveShippingLabel",
+        "parameters": [
+          {
+            "name": "shipmentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "trackingId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RetrieveShippingLabelRequest",
+              "example": {
+                "labelSpecification": {
+                  "labelFormat": "PNG",
+                  "labelStockSize": "4x6"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/RetrieveShippingLabelResponse"
+            },
+            "examples": {
+              "application/json": {
+                "labelStream": "iVBORw0KGgo...AAAARK5CYII=(Truncated)",
+                "labelSpecification": {
+                  "labelFormat": "PNG",
+                  "labelStockSize": "4x6"
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_200"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "labelStream": "iVBORw0KGgo...AAAARK5CYII=(Truncated)",
+                      "labelSpecification": {
+                        "labelFormat": "PNG",
+                        "labelStockSize": "4x6"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/RetrieveShippingLabelResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_400"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid input."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/RetrieveShippingLabelResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_401"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/RetrieveShippingLabelResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_403"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/RetrieveShippingLabelResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_404"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "NotFound",
+                        "message": "The requested resource doesn't exist."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/RetrieveShippingLabelResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_429"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "QuotaExceeded",
+                        "message": "You exceeded your quota for the requested resource."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/RetrieveShippingLabelResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_500"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InternalFailure",
+                        "message": "We encountered an internal error. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/RetrieveShippingLabelResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TEST_CASE_503"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "ServiceUnavailable",
+                        "message": "Service is temporarily unavailable. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/shipping/v1/purchaseShipment": {
+      "post": {
+        "tags": [
+          "shipping"
+        ],
+        "description": "购买运输标签。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 15 |\n\n有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "purchaseShipment",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PurchaseShipmentRequest",
+              "example": {
+                "clientReferenceId": "911-7267646-6348616",
+                "shipFrom": {
+                  "name": "test name 1",
+                  "addressLine1": "some Test address 1",
+                  "postalCode": "90013",
+                  "city": "Los Angeles",
+                  "countryCode": "US",
+                  "stateOrRegion": "CA",
+                  "email": "testEmail1@amazon.com",
+                  "phoneNumber": "1234567890"
+                },
+                "shipTo": {
+                  "name": "test name 2",
+                  "addressLine1": "some Test address 2",
+                  "postalCode": "90013",
+                  "city": "Los Angeles",
+                  "countryCode": "US",
+                  "stateOrRegion": "CA",
+                  "email": "testEmail2@amazon.com",
+                  "phoneNumber": "1234567890"
+                },
+                "containers": [
+                  {
+                    "containerType": "PACKAGE",
+                    "containerReferenceId": "ContainerRefId-01",
+                    "items": [
+                      {
+                        "title": "String",
+                        "quantity": 2,
+                        "unitPrice": {
+                          "unit": "USD",
+                          "value": 14.99
+                        },
+                        "unitWeight": {
+                          "unit": "lb",
+                          "value": 0.08164656
+                        }
+                      }
+                    ],
+                    "dimensions": {
+                      "height": 12,
+                      "length": 36,
+                      "width": 15,
+                      "unit": "CM"
+                    },
+                    "weight": {
+                      "unit": "lb",
+                      "value": 0.08164656
+                    },
+                    "value": {
+                      "unit": "USD",
+                      "value": 29.98
+                    }
+                  }
+                ],
+                "labelSpecification": {
+                  "labelFormat": "PNG",
+                  "labelStockSize": "4x6"
+                },
+                "serviceType": "Amazon Shipping Standard"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseShipmentResponse"
+            },
+            "examples": {
+              "application/json": {
+                "shipmentId": "89108749065090",
+                "serviceRate": {
+                  "billableWeight": {
+                    "value": 4,
+                    "unit": "kg"
+                  },
+                  "totalCharge": {
+                    "value": 3.5,
+                    "unit": "GBP"
+                  },
+                  "serviceType": "Amazon Shipping Standard",
+                  "promise": {
+                    "deliveryWindow": {
+                      "start": "2018-08-25T20:22:30.737Z",
+                      "end": "2018-08-26T20:22:30.737Z"
+                    },
+                    "receiveWindow": {
+                      "start": "2018-08-23T09:22:30.737Z",
+                      "end": "2018-08-23T11:22:30.737Z"
+                    }
+                  }
+                },
+                "labelResults": [
+                  {
+                    "containerReferenceId": "CRI123456789",
+                    "trackingId": "1512748795322",
+                    "label": {
+                      "labelStream": "iVBORw0KGgo...AAAARK5CYII=(Truncated)",
+                      "labelSpecification": {
+                        "labelFormat": "PNG",
+                        "labelStockSize": "4x6"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "clientReferenceId": "TEST_CASE_200"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "shipmentId": "TEST_CASE_200",
+                      "serviceRate": {
+                        "billableWeight": {
+                          "value": 4,
+                          "unit": "kg"
+                        },
+                        "totalCharge": {
+                          "value": 3.5,
+                          "unit": "GBP"
+                        },
+                        "serviceType": "Amazon Shipping Standard",
+                        "promise": {
+                          "deliveryWindow": {
+                            "start": "2018-08-25T20:22:30.737Z",
+                            "end": "2018-08-26T20:22:30.737Z"
+                          },
+                          "receiveWindow": {
+                            "start": "2018-08-23T09:22:30.737Z",
+                            "end": "2018-08-23T11:22:30.737Z"
+                          }
+                        }
+                      },
+                      "labelResults": [
+                        {
+                          "containerReferenceId": "CRI123456789",
+                          "trackingId": "1512748795322",
+                          "label": {
+                            "labelStream": "iVBORw0KGgo...AAAARK5CYII=(Truncated)",
+                            "labelSpecification": {
+                              "labelFormat": "PNG",
+                              "labelStockSize": "4x6"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/PurchaseShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shipping/v1/rates": {
+      "post": {
+        "tags": [
+          "shipping"
+        ],
+        "description": "获取服务费率。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 15 |\n\n有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "getRates",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetRatesRequest",
+              "example": {
+                "shipFrom": {
+                  "name": "test name 1",
+                  "addressLine1": "some Test address 1",
+                  "postalCode": "90013",
+                  "city": "Los Angeles",
+                  "countryCode": "US",
+                  "stateOrRegion": "CA"
+                },
+                "shipTo": {
+                  "name": "test name 2",
+                  "addressLine1": "some Test address 2",
+                  "postalCode": "90013",
+                  "city": "Los Angeles",
+                  "countryCode": "US",
+                  "stateOrRegion": "CA"
+                },
+                "containerSpecifications": [
+                  {
+                    "dimensions": {
+                      "height": 12,
+                      "length": 36,
+                      "width": 15,
+                      "unit": "CM"
+                    },
+                    "weight": {
+                      "unit": "lb",
+                      "value": 0.08164656
+                    }
+                  }
+                ],
+                "serviceTypes": [
+                  "Amazon Shipping Standard"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetRatesResponse"
+            },
+            "examples": {
+              "application/json": {
+                "serviceRates": [
+                  {
+                    "billableWeight": {
+                      "value": 4,
+                      "unit": "kg"
+                    },
+                    "totalCharge": {
+                      "value": 3.25,
+                      "unit": "GBP"
+                    },
+                    "serviceType": "Amazon Shipping Standard",
+                    "promise": {
+                      "deliveryWindow": {
+                        "start": "2018-08-25T20:22:30.737Z",
+                        "end": "2018-08-26T20:22:30.737Z"
+                      },
+                      "receiveWindow": {
+                        "start": "2018-08-23T09:22:30.737Z",
+                        "end": "2018-08-23T11:22:30.737Z"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "payload": {
+                      "serviceRates": [
+                        {
+                          "billableWeight": {
+                            "value": 4,
+                            "unit": "kg"
+                          },
+                          "totalCharge": {
+                            "value": 3.25,
+                            "unit": "GBP"
+                          },
+                          "serviceType": "Amazon Shipping Standard",
+                          "promise": {
+                            "deliveryWindow": {
+                              "start": "2018-08-25T20:22:30.737Z",
+                              "end": "2018-08-26T20:22:30.737Z"
+                            },
+                            "receiveWindow": {
+                              "start": "2018-08-23T09:22:30.737Z",
+                              "end": "2018-08-23T11:22:30.737Z"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少或具有无效参数，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetRatesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetRatesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/GetRatesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetRatesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetRatesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetRatesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetRatesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shipping/v1/account": {
+      "get": {
+        "tags": [
+          "shipping"
+        ],
+        "description": "验证当前帐户是否有效。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 15 |\n\n有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "getAccount",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "帐户有效。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "examples": {
+              "application/json": {
+                "accountId": "2755049166"
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "payload": {
+                      "accountId": "2755049166"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shipping/v1/tracking/{trackingId}": {
+      "get": {
+        "tags": [
+          "shipping"
+        ],
+        "description": "返回货件的跟踪信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 1 |\n\n有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "getTrackingInformation",
+        "parameters": [
+          {
+            "name": "trackingId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetTrackingInformationResponse"
+            },
+            "examples": {
+              "application/json": {
+                "trackingId": "89108749065090",
+                "eventHistory": [
+                  {
+                    "eventCode": "Delivered",
+                    "location": {
+                      "city": "San Bernardino",
+                      "countryCode": "US",
+                      "stateOrRegion": "CA",
+                      "postalCode": "92404"
+                    },
+                    "eventTime": "2019-04-04T06:45:12Z"
+                  }
+                ],
+                "promisedDeliveryDate": "2019-04-04T07:05:06Z",
+                "summary": {
+                  "status": "Delivered"
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "trackingId": {
+                        "value": "TEST_CASE_200"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "trackingId": "TEST_CASE_200",
+                      "eventHistory": [
+                        {
+                          "eventCode": "Delivered",
+                          "location": {
+                            "city": "San Bernardino",
+                            "countryCode": "US",
+                            "stateOrRegion": "CA",
+                            "postalCode": "92404"
+                          },
+                          "eventTime": "2019-04-04T06:45:12Z"
+                        }
+                      ],
+                      "promisedDeliveryDate": "2019-04-04T07:05:06Z",
+                      "summary": {
+                        "status": "Delivered"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetTrackingInformationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "trackingId": {
+                        "value": "TEST_CASE_400"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetTrackingInformationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/GetTrackingInformationResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetTrackingInformationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetTrackingInformationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetTrackingInformationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetTrackingInformationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "以人类可读的形式描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "AccountId": {
+      "type": "string",
+      "description": "这是在Amazon Shipping入门过程中生成的Amazon Shipping账户id。",
+      "maxLength": 10
+    },
+    "ShipmentId": {
+      "type": "string",
+      "description": "唯一的装运标识符。"
+    },
+    "ClientReferenceId": {
+      "type": "string",
+      "description": "客户端引用id。",
+      "maxLength": 40
+    },
+    "ContainerReferenceId": {
+      "type": "string",
+      "description": "容器的标识符。这在同一装运的所有集装箱内必须是唯一的。",
+      "maxLength": 40
+    },
+    "EventCode": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "description": "装运的事件代码，如已离开、已接收和ReadyForReceive。"
+    },
+    "StateOrRegion": {
+      "type": "string",
+      "description": "个人、企业或机构所在的州或地区。"
+    },
+    "City": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50,
+      "description": "个人、企业或机构所在的城市。"
+    },
+    "CountryCode": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2,
+      "description": "两位数的国家代码。ISO 3166-1 alpha-2格式。"
+    },
+    "PostalCode": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 20,
+      "description": "该地址的邮政编码。它包含一系列字母或数字或两者，有时包括空格或标点符号。"
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "stateOrRegion": {
+          "$ref": "#/definitions/StateOrRegion"
+        },
+        "city": {
+          "$ref": "#/definitions/City"
+        },
+        "countryCode": {
+          "$ref": "#/definitions/CountryCode"
+        },
+        "postalCode": {
+          "$ref": "#/definitions/PostalCode"
+        }
+      },
+      "description": "个人、企业或机构所在的位置。"
+    },
+    "Event": {
+      "type": "object",
+      "required": [
+        "eventCode",
+        "eventTime"
+      ],
+      "properties": {
+        "eventCode": {
+          "$ref": "#/definitions/EventCode"
+        },
+        "eventTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "装运事件的日期和时间。"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        }
+      },
+      "description": "装运事件"
+    },
+    "EventList": {
+      "type": "array",
+      "description": "装运的事件列表。",
+      "items": {
+        "$ref": "#/definitions/Event"
+      }
+    },
+    "TrackingId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "description": "为每个货件生成的跟踪id。它包含一系列字母或数字或两者。"
+    },
+    "TrackingSummary": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "基于eventHistory中的事件的派生状态。",
+          "minLength": 1,
+          "maxLength": 60
+        }
+      },
+      "description": "跟踪摘要。"
+    },
+    "PromisedDeliveryDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "承诺的发货日期和时间。"
+    },
+    "Address": {
+      "type": "object",
+      "required": [
+        "addressLine1",
+        "city",
+        "countryCode",
+        "name",
+        "postalCode",
+        "stateOrRegion"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "该地址的个人、企业或机构的名称。",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        "addressLine1": {
+          "type": "string",
+          "description": "该地址的第一行。",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "其他地址信息 (如果需要)。",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "addressLine3": {
+          "type": "string",
+          "description": "其他地址信息 (如果需要)。",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "stateOrRegion": {
+          "$ref": "#/definitions/StateOrRegion"
+        },
+        "city": {
+          "$ref": "#/definitions/City"
+        },
+        "countryCode": {
+          "$ref": "#/definitions/CountryCode"
+        },
+        "postalCode": {
+          "$ref": "#/definitions/PostalCode"
+        },
+        "email": {
+          "type": "string",
+          "description": "与地址关联的联系人的电子邮件地址。",
+          "maxLength": 64
+        },
+        "copyEmails": {
+          "type": "array",
+          "description": "与地址关联的联系人的电子邮件cc地址。",
+          "items": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "maxItems": 2
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "位于该地址的个人、企业或机构的电话号码。",
+          "minLength": 1,
+          "maxLength": 20
+        }
+      },
+      "description": "地址。"
+    },
+    "TimeRange": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "description": "开始日期和时间。默认为当前日期和时间。"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "description": "结束日期和时间。这必须在start的值之后。这默认为从开始的下一个工作日。"
+        }
+      },
+      "description": "时间范围。"
+    },
+    "ShippingPromiseSet": {
+      "type": "object",
+      "properties": {
+        "deliveryWindow": {
+          "description": "发货的时间窗口。",
+          "$ref": "#/definitions/TimeRange"
+        },
+        "receiveWindow": {
+          "description": "亚马逊航运将提取货物的时间窗口。",
+          "$ref": "#/definitions/TimeRange"
+        }
+      },
+      "description": "承诺的交货时间和取货时间。"
+    },
+    "ServiceType": {
+      "type": "string",
+      "description": "将用于服务提供的运输服务的类型。",
+      "enum": [
+        "Amazon Shipping Ground",
+        "Amazon Shipping Standard",
+        "Amazon Shipping Premium"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "Amazon Shipping Ground",
+          "description": "亚马逊航运地面。"
+        },
+        {
+          "value": "Amazon Shipping Standard",
+          "description": "亚马逊航运标准。"
+        },
+        {
+          "value": "Amazon Shipping Premium",
+          "description": "亚马逊运费溢价。"
+        }
+      ]
+    },
+    "ServiceTypeList": {
+      "type": "array",
+      "description": "可用于发送货件的服务类型列表。",
+      "items": {
+        "$ref": "#/definitions/ServiceType"
+      }
+    },
+    "Rate": {
+      "type": "object",
+      "properties": {
+        "rateId": {
+          "type": "string",
+          "description": "费率的标识符。"
+        },
+        "totalCharge": {
+          "description": "将为费率计费的总费用。",
+          "$ref": "#/definitions/Currency"
+        },
+        "billedWeight": {
+          "description": "用于计算总费用的重量。",
+          "$ref": "#/definitions/Weight"
+        },
+        "expirationTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "发行到期的时间。"
+        },
+        "serviceType": {
+          "$ref": "#/definitions/ServiceType"
+        },
+        "promise": {
+          "$ref": "#/definitions/ShippingPromiseSet"
+        }
+      },
+      "description": "可用于发送货物的可用费率"
+    },
+    "RateList": {
+      "type": "array",
+      "description": "可用于发送货物的所有可用费率的列表。",
+      "items": {
+        "$ref": "#/definitions/Rate"
+      }
+    },
+    "RateId": {
+      "type": "string",
+      "description": "评级的标识符。"
+    },
+    "AcceptedRate": {
+      "type": "object",
+      "properties": {
+        "totalCharge": {
+          "description": "将为费率计费的总费用。",
+          "$ref": "#/definitions/Currency"
+        },
+        "billedWeight": {
+          "description": "用于计算总费用的重量。",
+          "$ref": "#/definitions/Weight"
+        },
+        "serviceType": {
+          "$ref": "#/definitions/ServiceType"
+        },
+        "promise": {
+          "$ref": "#/definitions/ShippingPromiseSet"
+        }
+      },
+      "description": "为装运购买的特定费率，如果未购买，则为null。"
+    },
+    "ServiceRate": {
+      "type": "object",
+      "required": [
+        "billableWeight",
+        "promise",
+        "serviceType",
+        "totalCharge"
+      ],
+      "properties": {
+        "totalCharge": {
+          "description": "将为费率计费的总费用。",
+          "$ref": "#/definitions/Currency"
+        },
+        "billableWeight": {
+          "description": "用于计算总费用的重量。",
+          "$ref": "#/definitions/Weight"
+        },
+        "serviceType": {
+          "$ref": "#/definitions/ServiceType"
+        },
+        "promise": {
+          "$ref": "#/definitions/ShippingPromiseSet"
+        }
+      },
+      "description": "运输服务的特定费率，如果没有可用的服务，则为null。"
+    },
+    "ServiceRateList": {
+      "type": "array",
+      "description": "服务费率列表。",
+      "items": {
+        "$ref": "#/definitions/ServiceRate"
+      }
+    },
+    "Party": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "$ref": "#/definitions/AccountId"
+        }
+      },
+      "description": "与装运相关的帐户。"
+    },
+    "Currency": {
+      "type": "object",
+      "required": [
+        "unit",
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "货币的数量。"
+        },
+        "unit": {
+          "type": "string",
+          "description": "3个字符的货币代码。",
+          "minLength": 3,
+          "maxLength": 3
+        }
+      },
+      "description": "容器中所有项的总值。"
+    },
+    "Dimensions": {
+      "type": "object",
+      "required": [
+        "height",
+        "length",
+        "unit",
+        "width"
+      ],
+      "properties": {
+        "length": {
+          "type": "number",
+          "description": "容器的长度。"
+        },
+        "width": {
+          "type": "number",
+          "description": "容器的宽度。"
+        },
+        "height": {
+          "type": "number",
+          "description": "容器的高度。"
+        },
+        "unit": {
+          "type": "string",
+          "description": "这些测量的单位。",
+          "enum": [
+            "IN",
+            "CM"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "IN",
+              "description": "英寸"
+            },
+            {
+              "value": "CM",
+              "description": "厘米"
+            }
+          ]
+        }
+      },
+      "description": "三维物体的一组测量。"
+    },
+    "Weight": {
+      "type": "object",
+      "required": [
+        "unit",
+        "value"
+      ],
+      "properties": {
+        "unit": {
+          "type": "string",
+          "description": "测量单位。",
+          "enum": [
+            "g",
+            "kg",
+            "oz",
+            "lb"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "g",
+              "description": "克"
+            },
+            {
+              "value": "kg",
+              "description": "公斤"
+            },
+            {
+              "value": "oz",
+              "description": "盎司"
+            },
+            {
+              "value": "lb",
+              "description": "英镑"
+            }
+          ]
+        },
+        "value": {
+          "type": "number",
+          "description": "测量值。"
+        }
+      },
+      "description": "重量。"
+    },
+    "ContainerItem": {
+      "type": "object",
+      "required": [
+        "quantity",
+        "title",
+        "unitPrice",
+        "unitWeight"
+      ],
+      "properties": {
+        "quantity": {
+          "type": "number",
+          "description": "容器中此类型项的数量。"
+        },
+        "unitPrice": {
+          "description": "此类型物料的单价 (此物料类型在容器中的总值为unitPrice * quantity)。",
+          "$ref": "#/definitions/Currency"
+        },
+        "unitWeight": {
+          "description": "此类型的项目的单位重量 (容器中此项目类型的总重量为单位重量 * 数量)。",
+          "$ref": "#/definitions/Weight"
+        },
+        "title": {
+          "type": "string",
+          "description": "项目的描述性标题。",
+          "maxLength": 30
+        }
+      },
+      "description": "容器中的项。"
+    },
+    "Container": {
+      "type": "object",
+      "required": [
+        "containerReferenceId",
+        "dimensions",
+        "items",
+        "value",
+        "weight"
+      ],
+      "properties": {
+        "containerType": {
+          "type": "string",
+          "description": "正在使用的物理容器的类型。(总是 “包”)",
+          "enum": [
+            "PACKAGE"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "PACKAGE",
+              "description": "包装"
+            }
+          ]
+        },
+        "containerReferenceId": {
+          "$ref": "#/definitions/ContainerReferenceId"
+        },
+        "value": {
+          "description": "容器中所有项的总值。",
+          "$ref": "#/definitions/Currency"
+        },
+        "dimensions": {
+          "description": "容器的长度、宽度、高度和重量。",
+          "$ref": "#/definitions/Dimensions"
+        },
+        "items": {
+          "type": "array",
+          "description": "容器中的项的列表。",
+          "items": {
+            "$ref": "#/definitions/ContainerItem"
+          }
+        },
+        "weight": {
+          "description": "容器的重量。",
+          "$ref": "#/definitions/Weight"
+        }
+      },
+      "description": "集装箱在装运。"
+    },
+    "ContainerList": {
+      "type": "array",
+      "description": "容器的列表。",
+      "items": {
+        "$ref": "#/definitions/Container"
+      }
+    },
+    "ContainerSpecification": {
+      "type": "object",
+      "required": [
+        "dimensions",
+        "weight"
+      ],
+      "properties": {
+        "dimensions": {
+          "description": "容器的长度、宽度和高度。",
+          "$ref": "#/definitions/Dimensions"
+        },
+        "weight": {
+          "description": "容器的重量。",
+          "$ref": "#/definitions/Weight"
+        }
+      },
+      "description": "用于检查服务费率的容器规范。"
+    },
+    "ContainerSpecificationList": {
+      "type": "array",
+      "description": "容器规格列表。",
+      "items": {
+        "$ref": "#/definitions/ContainerSpecification"
+      }
+    },
+    "Label": {
+      "type": "object",
+      "properties": {
+        "labelStream": {
+          "$ref": "#/definitions/LabelStream"
+        },
+        "labelSpecification": {
+          "$ref": "#/definitions/LabelSpecification"
+        }
+      },
+      "description": "容器的标签详细信息。"
+    },
+    "LabelResult": {
+      "type": "object",
+      "properties": {
+        "containerReferenceId": {
+          "$ref": "#/definitions/ContainerReferenceId"
+        },
+        "trackingId": {
+          "type": "string",
+          "description": "分配给容器的跟踪标识符。"
+        },
+        "label": {
+          "$ref": "#/definitions/Label"
+        }
+      },
+      "description": "标签详细信息，包括标签流，格式，大小。"
+    },
+    "LabelResultList": {
+      "type": "array",
+      "description": "标签结果列表",
+      "items": {
+        "$ref": "#/definitions/LabelResult"
+      }
+    },
+    "LabelStream": {
+      "type": "string",
+      "description": "包含编码为base-64字符串的二进制图像数据。"
+    },
+    "LabelSpecification": {
+      "type": "object",
+      "required": [
+        "labelFormat",
+        "labelStockSize"
+      ],
+      "properties": {
+        "labelFormat": {
+          "type": "string",
+          "description": "标签的格式。PNG的枚举只是现在。",
+          "enum": [
+            "PNG"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "PNG",
+              "description": "PNG"
+            }
+          ]
+        },
+        "labelStockSize": {
+          "type": "string",
+          "description": "标签尺寸规格的长度和高度。仅适用于4x6的枚举。",
+          "enum": [
+            "4x6"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "4x6",
+              "description": "4x6"
+            }
+          ]
+        }
+      },
+      "description": "标签规范信息。"
+    },
+    "CreateShipmentRequest": {
+      "type": "object",
+      "required": [
+        "clientReferenceId",
+        "containers",
+        "shipFrom",
+        "shipTo"
+      ],
+      "properties": {
+        "clientReferenceId": {
+          "$ref": "#/definitions/ClientReferenceId"
+        },
+        "shipTo": {
+          "$ref": "#/definitions/Address"
+        },
+        "shipFrom": {
+          "$ref": "#/definitions/Address"
+        },
+        "containers": {
+          "$ref": "#/definitions/ContainerList"
+        }
+      },
+      "description": "createShipment操作的请求架构。"
+    },
+    "PurchaseLabelsRequest": {
+      "type": "object",
+      "required": [
+        "labelSpecification",
+        "rateId"
+      ],
+      "properties": {
+        "rateId": {
+          "$ref": "#/definitions/RateId"
+        },
+        "labelSpecification": {
+          "$ref": "#/definitions/LabelSpecification"
+        }
+      },
+      "description": "purchaseLabels操作的请求架构。"
+    },
+    "RetrieveShippingLabelRequest": {
+      "type": "object",
+      "required": [
+        "labelSpecification"
+      ],
+      "properties": {
+        "labelSpecification": {
+          "$ref": "#/definitions/LabelSpecification"
+        }
+      },
+      "description": "retrieveShippingLabel操作的请求架构。"
+    },
+    "GetRatesRequest": {
+      "type": "object",
+      "required": [
+        "containerSpecifications",
+        "serviceTypes",
+        "shipFrom",
+        "shipTo"
+      ],
+      "properties": {
+        "shipTo": {
+          "$ref": "#/definitions/Address"
+        },
+        "shipFrom": {
+          "$ref": "#/definitions/Address"
+        },
+        "serviceTypes": {
+          "$ref": "#/definitions/ServiceTypeList"
+        },
+        "shipDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "开始日期和时间。默认为当前日期和时间。"
+        },
+        "containerSpecifications": {
+          "$ref": "#/definitions/ContainerSpecificationList"
+        }
+      },
+      "description": "getRates操作的负载架构。"
+    },
+    "PurchaseShipmentRequest": {
+      "type": "object",
+      "required": [
+        "clientReferenceId",
+        "containers",
+        "labelSpecification",
+        "serviceType",
+        "shipFrom",
+        "shipTo"
+      ],
+      "properties": {
+        "clientReferenceId": {
+          "$ref": "#/definitions/ClientReferenceId"
+        },
+        "shipTo": {
+          "$ref": "#/definitions/Address"
+        },
+        "shipFrom": {
+          "$ref": "#/definitions/Address"
+        },
+        "shipDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "开始日期和时间。默认为当前日期和时间。"
+        },
+        "serviceType": {
+          "$ref": "#/definitions/ServiceType"
+        },
+        "containers": {
+          "$ref": "#/definitions/ContainerList"
+        },
+        "labelSpecification": {
+          "$ref": "#/definitions/LabelSpecification"
+        }
+      },
+      "description": "purchaseShipment操作的负载架构。"
+    },
+    "CreateShipmentResult": {
+      "type": "object",
+      "required": [
+        "eligibleRates",
+        "shipmentId"
+      ],
+      "properties": {
+        "shipmentId": {
+          "$ref": "#/definitions/ShipmentId"
+        },
+        "eligibleRates": {
+          "$ref": "#/definitions/RateList"
+        }
+      },
+      "description": "createShipment操作的负载架构。"
+    },
+    "Shipment": {
+      "type": "object",
+      "required": [
+        "clientReferenceId",
+        "containers",
+        "shipFrom",
+        "shipTo",
+        "shipmentId"
+      ],
+      "properties": {
+        "shipmentId": {
+          "$ref": "#/definitions/ShipmentId"
+        },
+        "clientReferenceId": {
+          "$ref": "#/definitions/ClientReferenceId"
+        },
+        "shipFrom": {
+          "$ref": "#/definitions/Address"
+        },
+        "shipTo": {
+          "$ref": "#/definitions/Address"
+        },
+        "acceptedRate": {
+          "$ref": "#/definitions/AcceptedRate"
+        },
+        "shipper": {
+          "$ref": "#/definitions/Party"
+        },
+        "containers": {
+          "$ref": "#/definitions/ContainerList"
+        }
+      },
+      "description": "装运相关数据。"
+    },
+    "PurchaseLabelsResult": {
+      "type": "object",
+      "required": [
+        "acceptedRate",
+        "labelResults",
+        "shipmentId"
+      ],
+      "properties": {
+        "shipmentId": {
+          "$ref": "#/definitions/ShipmentId"
+        },
+        "clientReferenceId": {
+          "$ref": "#/definitions/ClientReferenceId"
+        },
+        "acceptedRate": {
+          "$ref": "#/definitions/AcceptedRate"
+        },
+        "labelResults": {
+          "$ref": "#/definitions/LabelResultList"
+        }
+      },
+      "description": "purchaseLabels操作的负载架构。"
+    },
+    "RetrieveShippingLabelResult": {
+      "type": "object",
+      "required": [
+        "labelSpecification",
+        "labelStream"
+      ],
+      "properties": {
+        "labelStream": {
+          "$ref": "#/definitions/LabelStream"
+        },
+        "labelSpecification": {
+          "$ref": "#/definitions/LabelSpecification"
+        }
+      },
+      "description": "retrieveShippingLabel操作的负载架构。"
+    },
+    "Account": {
+      "type": "object",
+      "required": [
+        "accountId"
+      ],
+      "properties": {
+        "accountId": {
+          "$ref": "#/definitions/AccountId"
+        }
+      },
+      "description": "帐户相关数据。"
+    },
+    "GetRatesResult": {
+      "type": "object",
+      "required": [
+        "serviceRates"
+      ],
+      "properties": {
+        "serviceRates": {
+          "$ref": "#/definitions/ServiceRateList"
+        }
+      },
+      "description": "getRates操作的负载架构。"
+    },
+    "PurchaseShipmentResult": {
+      "type": "object",
+      "required": [
+        "labelResults",
+        "serviceRate",
+        "shipmentId"
+      ],
+      "properties": {
+        "shipmentId": {
+          "$ref": "#/definitions/ShipmentId"
+        },
+        "serviceRate": {
+          "$ref": "#/definitions/ServiceRate"
+        },
+        "labelResults": {
+          "$ref": "#/definitions/LabelResultList"
+        }
+      },
+      "description": "purchaseShipment操作的负载架构。"
+    },
+    "TrackingInformation": {
+      "type": "object",
+      "required": [
+        "eventHistory",
+        "promisedDeliveryDate",
+        "summary",
+        "trackingId"
+      ],
+      "properties": {
+        "trackingId": {
+          "$ref": "#/definitions/TrackingId"
+        },
+        "summary": {
+          "$ref": "#/definitions/TrackingSummary"
+        },
+        "promisedDeliveryDate": {
+          "$ref": "#/definitions/PromisedDeliveryDate"
+        },
+        "eventHistory": {
+          "$ref": "#/definitions/EventList"
+        }
+      },
+      "description": "getTrackingInformation操作的负载架构。"
+    },
+    "CreateShipmentResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "用于创建设备操作的有效载荷",
+          "$ref": "#/definitions/CreateShipmentResult"
+        },
+        "errors": {
+          "description": "操作遇到错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "createShipment操作的响应架构。"
+    },
+    "GetShipmentResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "getShipment操作的有效负载",
+          "$ref": "#/definitions/Shipment"
+        },
+        "errors": {
+          "description": "操作遇到错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "getShipment操作的响应架构。"
+    },
+    "GetRatesResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "getRates操作的有效载荷",
+          "$ref": "#/definitions/GetRatesResult"
+        },
+        "errors": {
+          "description": "操作遇到错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "getRates操作的响应架构。"
+    },
+    "PurchaseShipmentResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "采购设备操作的有效载荷",
+          "$ref": "#/definitions/PurchaseShipmentResult"
+        },
+        "errors": {
+          "description": "操作遇到错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "purchaseShipment操作的响应架构。"
+    },
+    "CancelShipmentResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "description": "操作遇到错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "cancelShipment操作的响应架构。"
+    },
+    "PurchaseLabelsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "purchaseLabels操作的有效载荷",
+          "$ref": "#/definitions/PurchaseLabelsResult"
+        },
+        "errors": {
+          "description": "操作遇到错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "purchaseLabels操作的响应架构。"
+    },
+    "RetrieveShippingLabelResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "retrieveShippingLabel操作的负载",
+          "$ref": "#/definitions/RetrieveShippingLabelResult"
+        },
+        "errors": {
+          "description": "操作遇到错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "retrieveShippingLabel操作的响应架构。"
+    },
+    "GetAccountResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "getAccount操作的负载",
+          "$ref": "#/definitions/Account"
+        },
+        "errors": {
+          "description": "操作遇到错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "getAccount操作的响应架构。"
+    },
+    "GetTrackingInformationResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "getTrackingInformation操作的有效负载",
+          "$ref": "#/definitions/TrackingInformation"
+        },
+        "errors": {
+          "description": "操作遇到错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "getTrackingInformation操作的响应架构。"
+    }
+  }
+}

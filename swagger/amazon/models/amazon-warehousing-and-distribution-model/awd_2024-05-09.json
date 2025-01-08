@@ -1,0 +1,1725 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "亚马逊仓储和配送的销售合作伙伴API",
+    "version": "2024-05-09",
+    "description": "Amazon仓储和配送 (AWD) 的销售合作伙伴API提供了对AWD发货和库存信息的编程访问。",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/awd/2024-05-09/inboundShipments/{shipmentId}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "装运的身份证。一件货物包含被包围的箱子。",
+            "in": "path",
+            "minLength": 1,
+            "name": "shipmentId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "如果等于 “显示”，则响应包括装运SKU数量详细信息。\n\n默认为 “隐藏”，在这种情况下，响应不包含SKU数量",
+            "enum": [
+              "SHOW",
+              "HIDE"
+            ],
+            "in": "query",
+            "name": "skuQuantities",
+            "type": "string",
+            "x-example": "SHOW",
+            "x-docgen-enum-table-extension": [
+              {
+                "description": "显示其他SKU数量详细信息。",
+                "value": "SHOW"
+              },
+              {
+                "description": "隐藏其他SKU数量详细信息。",
+                "value": "HIDE"
+              }
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "“Getinboundshipment” 的200响应。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InboundShipment"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "TestShipmentId"
+                      }
+                    }
+                  },
+                  "response": {
+                    "createdAt": "2023-06-07T12:12:09.061Z",
+                    "destinationAddress": {
+                      "addressLine1": "address_line_1",
+                      "addressLine2": "address_line_2",
+                      "addressLine3": "address_line_3",
+                      "city": "City1",
+                      "countryCode": "CC",
+                      "district": "District1",
+                      "name": "DestinationName",
+                      "postalCode": "123456",
+                      "stateOrRegion": "State1"
+                    },
+                    "orderId": "TestOrderId",
+                    "originAddress": {
+                      "addressLine1": "address_1",
+                      "addressLine2": "address_2",
+                      "addressLine3": "address_3",
+                      "city": "City1",
+                      "countryCode": "CC",
+                      "district": "District1",
+                      "name": "address_name",
+                      "postalCode": "123456",
+                      "stateOrRegion": "State1"
+                    },
+                    "receivedQuantity": [
+                      {
+                        "quantity": 0,
+                        "unitOfMeasurement": "CASES"
+                      }
+                    ],
+                    "shipmentContainerQuantities": [
+                      {
+                        "count": 2,
+                        "distributionPackage": {
+                          "contents": {
+                            "packages": [],
+                            "products": [
+                              {
+                                "quantity": 20,
+                                "sku": "testPen"
+                              }
+                            ]
+                          },
+                          "measurements": {
+                            "dimensions": {
+                              "height": 33.02,
+                              "length": 45.72,
+                              "unitOfMeasurement": "CENTIMETERS",
+                              "width": 15.24
+                            },
+                            "weight": {
+                              "unitOfMeasurement": "KILOGRAMS",
+                              "weight": 5.443104
+                            }
+                          },
+                          "type": "CASE"
+                        }
+                      }
+                    ],
+                    "shipmentId": "TestShipmentId",
+                    "shipmentStatus": "CREATED",
+                    "shipmentSkuQuantities": [
+                      {
+                        "sku": "testPen",
+                        "expectedQuantity": {
+                          "quantity": 2,
+                          "unitOfMeasurement": "CASE"
+                        },
+                        "receivedQuantity": {
+                          "quantity": 0,
+                          "unitOfMeasurement": "CASE"
+                        }
+                      }
+                    ],
+                    "updatedAt": "2023-06-07T12:12:09.061Z"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": " "
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "details": "This exception is thrown when client inputs are invalid",
+                        "message": "ShipmentId should be present for this request"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        },
+        "tags": [
+          "awd"
+        ],
+        "description": "检索AWD入站发运。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 2 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)",
+        "operationId": "getInboundShipment"
+      }
+    },
+    "/awd/2024-05-09/inboundShipments": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "用于对结果进行排序的字段。默认情况下，响应将按UPDATED_AT排序。",
+            "enum": [
+              "UPDATED_AT",
+              "CREATED_AT"
+            ],
+            "in": "query",
+            "name": "sortBy",
+            "type": "string",
+            "x-docgen-enum-table-extension": [
+              {
+                "description": "按更新时间排序。",
+                "value": "UPDATED_AT"
+              },
+              {
+                "description": "按创建时间排序。",
+                "value": "CREATED_AT"
+              }
+            ]
+          },
+          {
+            "description": "按升序或降序对响应进行排序。默认情况下，响应将按降序排序。",
+            "enum": [
+              "ASCENDING",
+              "DESCENDING"
+            ],
+            "in": "query",
+            "name": "sortOrder",
+            "type": "string",
+            "x-docgen-enum-table-extension": [
+              {
+                "description": "按升序对集合进行排序。",
+                "value": "ASCENDING"
+              },
+              {
+                "description": "按降序对集合进行排序。",
+                "value": "DESCENDING"
+              }
+            ],
+            "x-example": "ASCENDING"
+          },
+          {
+            "description": "按入站发运状态筛选。",
+            "enum": [
+              "CREATED",
+              "SHIPPED",
+              "IN_TRANSIT",
+              "RECEIVING",
+              "DELIVERED",
+              "CLOSED",
+              "CANCELLED"
+            ],
+            "in": "query",
+            "name": "shipmentStatus",
+            "type": "string",
+            "x-docgen-enum-table-extension": [
+              {
+                "description": "已创建装运，但尚未装运。",
+                "value": "CREATED"
+              },
+              {
+                "description": "货物由承运人提货或由承运人放下。",
+                "value": "SHIPPED"
+              },
+              {
+                "description": "承运人已通知AWD，货物正在起点和目的地节点之间运输。",
+                "value": "IN_TRANSIT"
+              },
+              {
+                "description": "已收到部分货物。",
+                "value": "RECEIVING"
+              },
+              {
+                "description": "货物已到达目的地节点，并已交付至设施堆场。仓库的装运 “接收” 过程将很快开始。",
+                "value": "DELIVERED"
+              },
+              {
+                "description": "装运不需要更多的操作。这是最终状态。",
+                "value": "CLOSED"
+              },
+              {
+                "description": "发货被取消。这是最终状态。",
+                "value": "CANCELLED"
+              }
+            ],
+            "x-example": "CREATED"
+          },
+          {
+            "description": "列出在特定时间 (包括) 之后更新的入站发运。日期必须为 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "format": "date-time",
+            "in": "query",
+            "name": "updatedAfter",
+            "type": "string",
+            "x-example": "2023-01-12T10:00:00.000Z"
+          },
+          {
+            "description": "列出在特定时间 (包括) 之前更新的入站发运。日期必须为 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "format": "date-time",
+            "in": "query",
+            "name": "updatedBefore",
+            "type": "string",
+            "x-example": "2023-01-12T10:00:00.000Z"
+          },
+          {
+            "default": 25,
+            "description": "要返回的最大结果数。",
+            "format": "int32",
+            "in": "query",
+            "maximum": 200,
+            "minimum": 1,
+            "name": "maxResults",
+            "type": "integer",
+            "x-example": "10"
+          },
+          {
+            "description": "令牌来检索下一组分页结果。",
+            "in": "query",
+            "name": "nextToken",
+            "type": "string",
+            "x-example": "SampleToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "“Listinboundshipments” 的200响应。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ShipmentListing"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "shipments": [
+                      {
+                        "createdAt": "2023-06-07T12:12:09.061Z",
+                        "orderId": "TestOrderId",
+                        "shipmentId": "TestShipmentId",
+                        "shipmentStatus": "CREATED",
+                        "updatedAt": "2023-06-07T12:12:09.061Z"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "sortBy": {
+                        "value": "TEST"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "details": "This exception is thrown when client inputs are invalid",
+                        "message": "Invalid shipment sortable field received: TEST"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        },
+        "tags": [
+          "awd"
+        ],
+        "description": "检索与商家关联的所有入站AWD货件的摘要，并能够应用可选筛选器。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "listInboundShipments"
+      }
+    },
+    "/awd/2024-05-09/inventory": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "按卖家或商家SKU筛选项目。",
+            "in": "query",
+            "name": "sku",
+            "type": "string",
+            "x-example": "TestSKU"
+          },
+          {
+            "description": "按 “上升” 或 “下降” 顺序对响应进行排序。",
+            "enum": [
+              "ASCENDING",
+              "DESCENDING"
+            ],
+            "in": "query",
+            "name": "sortOrder",
+            "type": "string",
+            "x-docgen-enum-table-extension": [
+              {
+                "description": "按升序对集合进行排序。",
+                "value": "ASCENDING"
+              },
+              {
+                "description": "按降序对集合进行排序。",
+                "value": "DESCENDING"
+              }
+            ]
+          },
+          {
+            "description": "设置为 “显示” 可返回包含其他库存详细信息的摘要。默认为 “隐藏”，仅返回库存汇总总计。",
+            "enum": [
+              "SHOW",
+              "HIDE"
+            ],
+            "in": "query",
+            "name": "details",
+            "type": "string",
+            "x-docgen-enum-table-extension": [
+              {
+                "description": "显示其他汇总的库存详细信息。",
+                "value": "SHOW"
+              },
+              {
+                "description": "隐藏附加的汇总库存详细信息。",
+                "value": "HIDE"
+              }
+            ],
+            "x-example": "SHOW"
+          },
+          {
+            "description": "令牌来检索下一组分页结果。",
+            "in": "query",
+            "name": "nextToken",
+            "type": "string",
+            "x-example": "SampleToken"
+          },
+          {
+            "default": 25,
+            "description": "要返回的最大结果数。",
+            "format": "int32",
+            "in": "query",
+            "maximum": 200,
+            "minimum": 1,
+            "name": "maxResults",
+            "type": "integer",
+            "x-example": "10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "“Listinventory” 的200响应。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InventoryListing"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {},
+                  "response": {
+                    "inventory": [
+                      {
+                        "totalOnhandQuantity": 20,
+                        "totalInboundQuantity": 10,
+                        "sku": "100TestSKU1Pen",
+                        "inventoryDetails": {
+                          "availableDistributableQuantity": 10,
+                          "reservedDistributableQuantity": 10
+                        }
+                      },
+                      {
+                        "totalOnhandQuantity": 20,
+                        "totalInboundQuantity": 5,
+                        "sku": "2U-BKEX-VW4D",
+                        "inventoryDetails": {
+                          "availableDistributableQuantity": 10,
+                          "reservedDistributableQuantity": 10
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "sortOrder": {
+                        "value": "UNKNOWN"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "details": "This exception is thrown when client inputs are invalid",
+                        "message": "Invalid value: UNKNOWN passed for sort order. Possible values are: [ASCENDING, DESCENDING]"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        },
+        "tags": [
+          "awd"
+        ],
+        "description": "列出与能够应用可选过滤器的商家关联的AWD库存。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 2 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "listInventory"
+      }
+    }
+  },
+  "definitions": {
+    "Address": {
+      "description": "表示出发地或目的地位置的送货地址。",
+      "properties": {
+        "addressLine1": {
+          "description": "地址文本的第一行。",
+          "type": "string"
+        },
+        "addressLine2": {
+          "description": "可选的地址文本的第二行。",
+          "type": "string"
+        },
+        "addressLine3": {
+          "description": "可选的地址文本的第三行。",
+          "type": "string"
+        },
+        "city": {
+          "description": "此地址所在的可选城市。",
+          "type": "string"
+        },
+        "countryCode": {
+          "description": "此地址所在的两位数ISO 3166-1 alpha-2格式的国家/地区代码。",
+          "type": "string"
+        },
+        "county": {
+          "description": "此地址所在的可选县。",
+          "type": "string",
+          "example": "Washington"
+        },
+        "district": {
+          "description": "此地址所在的可选地区。",
+          "type": "string"
+        },
+        "name": {
+          "description": "此地址的个人、企业或机构的名称。",
+          "type": "string"
+        },
+        "phoneNumber": {
+          "description": "可选E.164格式的电话号码，用于此地址的可用联系人。",
+          "type": "string",
+          "example": "+14155552671"
+        },
+        "postalCode": {
+          "description": "此地址所在的可选邮政编码。",
+          "type": "string"
+        },
+        "stateOrRegion": {
+          "description": "此地址所在的州或地区。请注意，这与指定的国家/地区代码有关。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "addressLine1",
+        "countryCode",
+        "name",
+        "stateOrRegion"
+      ],
+      "type": "object",
+      "example": {
+        "addressLine1": "address_1",
+        "addressLine2": "address_2",
+        "addressLine3": "address_3",
+        "city": "Seattle",
+        "countryCode": "US",
+        "county": "Washington",
+        "district": "District1",
+        "name": "address_name",
+        "phoneNumber": "+14155552671",
+        "postalCode": "123456",
+        "stateOrRegion": "Washington"
+      }
+    },
+    "CarrierCode": {
+      "description": "确定将交付货物的承运人。",
+      "properties": {
+        "carrierCodeType": {
+          "description": "表示载波类型。",
+          "$ref": "#/definitions/CarrierCodeType"
+        },
+        "carrierCodeValue": {
+          "description": "承运人代码的值。",
+          "type": "string",
+          "example": "TestCarrierCode"
+        }
+      },
+      "type": "object",
+      "example": {
+        "carrierCodeType": "SCAC",
+        "carrierCodeValue": "TestCarrierCode"
+      }
+    },
+    "CarrierCodeType": {
+      "description": "表示载体的类型。",
+      "enum": [
+        "SCAC"
+      ],
+      "type": "string",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "标准承运人字母码。有关详细信息，请参阅 [什么是标准承运人字母码](https://www.help.cbp.gov/s/article/ Article-1420？language = en_US)。",
+          "value": "SCAC"
+        }
+      ],
+      "example": "SCAC"
+    },
+    "DimensionUnitOfMeasurement": {
+      "description": "包装尺寸的计量单位。",
+      "enum": [
+        "INCHES",
+        "CENTIMETERS"
+      ],
+      "type": "string",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "表示包装尺寸 (以英寸为单位)。",
+          "value": "INCHES"
+        },
+        {
+          "description": "表示包装尺寸 (以厘米为单位)。",
+          "value": "CENTIMETERS"
+        }
+      ],
+      "example": "INCHES"
+    },
+    "DistributionPackage": {
+      "description": "表示AWD分发包。",
+      "properties": {
+        "contents": {
+          "description": "适用于该类型的内容。",
+          "$ref": "#/definitions/DistributionPackageContents"
+        },
+        "measurements": {
+          "description": "包装的测量，包括重量、体积和尺寸。",
+          "$ref": "#/definitions/MeasurementData"
+        },
+        "type": {
+          "description": "分发包的类型。",
+          "$ref": "#/definitions/DistributionPackageType"
+        }
+      },
+      "required": [
+        "contents",
+        "measurements",
+        "type"
+      ],
+      "type": "object",
+      "example": {
+        "contents": {
+          "products": [
+            {
+              "quantity": 1,
+              "sku": "testPen"
+            }
+          ]
+        },
+        "measurements": {
+          "dimensions": {
+            "height": 1,
+            "length": 1,
+            "unitOfMeasurement": "INCHES",
+            "width": 1
+          },
+          "volume": {
+            "unitOfMeasurement": "CUIN",
+            "volume": 1
+          },
+          "weight": {
+            "unitOfMeasurement": "POUNDS",
+            "weight": 1
+          }
+        },
+        "type": "CASE"
+      }
+    },
+    "DistributionPackageContents": {
+      "description": "表示包中的内容，包可以是产品或嵌套包。",
+      "properties": {
+        "packages": {
+          "description": "仅当 “distributionpackagetype = pallet” 时才需要此选项。",
+          "items": {
+            "$ref": "#/definitions/DistributionPackageQuantity"
+          },
+          "type": "array"
+        },
+        "products": {
+          "description": "仅当 “distributionpackagetype = case” 时才需要此选项。",
+          "items": {
+            "$ref": "#/definitions/ProductQuantity"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DistributionPackageQuantity": {
+      "description": "表示具有其各自数量的分发包。",
+      "properties": {
+        "count": {
+          "description": "具有相同包装配置的箱子或托盘的数量。",
+          "format": "int32",
+          "type": "integer"
+        },
+        "distributionPackage": {
+          "$ref": "#/definitions/DistributionPackage"
+        }
+      },
+      "required": [
+        "count",
+        "distributionPackage"
+      ],
+      "type": "object",
+      "example": {
+        "count": 1,
+        "distributionPackage": {
+          "contents": {
+            "products": [
+              {
+                "quantity": 1,
+                "sku": "testPen"
+              }
+            ]
+          },
+          "measurements": {
+            "dimensions": {
+              "height": 1,
+              "length": 1,
+              "unitOfMeasurement": "INCHES",
+              "width": 1
+            },
+            "volume": {
+              "unitOfMeasurement": "CUIN",
+              "volume": 1
+            },
+            "weight": {
+              "unitOfMeasurement": "POUNDS",
+              "weight": 1
+            }
+          },
+          "type": "CASE"
+        }
+      }
+    },
+    "DistributionPackageType": {
+      "description": "分发包的类型。",
+      "enum": [
+        "CASE",
+        "PALLET"
+      ],
+      "type": "string",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "包类型 “case”。",
+          "value": "CASE"
+        },
+        {
+          "description": "包装类型 “托盘”。目前，不支持 “pallet” 包类型。",
+          "value": "PALLET"
+        }
+      ],
+      "example": "CASE"
+    },
+    "Error": {
+      "description": "请求不成功时返回的错误响应。",
+      "properties": {
+        "code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "details": {
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述错误情况的消息。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "ErrorList": {
+      "description": "当客户端输入无效时，将引发此异常。",
+      "properties": {
+        "errors": {
+          "description": "描述失败的错误列表。",
+          "items": {
+            "$ref": "#/definitions/Error"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object",
+      "required": [
+        "errors"
+      ]
+    },
+    "InboundShipment": {
+      "description": "表示AWD入站发运。",
+      "properties": {
+        "carrierCode": {
+          "description": "装运承运人代码。",
+          "$ref": "#/definitions/CarrierCode"
+        },
+        "createdAt": {
+          "description": "创建货件时的时间戳。日期以 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 格式返回。",
+          "format": "date-time",
+          "type": "string"
+        },
+        "destinationAddress": {
+          "description": "这批货的目的地地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "externalReferenceId": {
+          "description": "客户端提供的引用ID，它可以将此发货与客户端资源相关联。例如，将此发运映射到内部簿记订单记录。",
+          "type": "string",
+          "example": "TestReferenceId"
+        },
+        "orderId": {
+          "description": "此入站发运所属的AWD入站订单ID。",
+          "minLength": 1,
+          "type": "string"
+        },
+        "originAddress": {
+          "description": "这批货物的原产地地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "receivedQuantity": {
+          "description": "作为这批货物的一部分 (在接收端) 收到的数量。",
+          "items": {
+            "$ref": "#/definitions/InventoryQuantity"
+          },
+          "type": "array"
+        },
+        "shipBy": {
+          "description": "装运时的时间戳。",
+          "format": "date-time",
+          "type": "string"
+        },
+        "shipmentContainerQuantities": {
+          "description": "包裹是这批货物的一部分。",
+          "items": {
+            "$ref": "#/definitions/DistributionPackageQuantity"
+          },
+          "type": "array"
+        },
+        "shipmentId": {
+          "description": "唯一的装运ID。",
+          "minLength": 1,
+          "type": "string"
+        },
+        "shipmentSkuQuantities": {
+          "description": "装运的SKU级别的数量详细信息。仅当请求中的skuquantits参数设置为SHOW时，此属性才会出现。",
+          "items": {
+            "$ref": "#/definitions/SkuQuantity"
+          },
+          "type": "array"
+        },
+        "shipmentStatus": {
+          "description": "此装运的当前状态。",
+          "$ref": "#/definitions/InboundShipmentStatus"
+        },
+        "trackingId": {
+          "description": "承运人-此货件的唯一跟踪ID。",
+          "minLength": 1,
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "更新货件时的时间戳。日期以 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 格式返回。",
+          "format": "date-time",
+          "type": "string"
+        },
+        "warehouseReferenceId": {
+          "description": "AWD提供的参考ID，可用于与仓库进行交互。例如，承运人预约预订。",
+          "type": "string",
+          "example": "TestWarehouseReferenceId"
+        }
+      },
+      "required": [
+        "destinationAddress",
+        "orderId",
+        "originAddress",
+        "shipmentContainerQuantities",
+        "shipmentId",
+        "shipmentStatus"
+      ],
+      "type": "object"
+    },
+    "InboundShipmentStatus": {
+      "description": "发运使用的可能的发运状态。",
+      "enum": [
+        "CREATED",
+        "SHIPPED",
+        "IN_TRANSIT",
+        "RECEIVING",
+        "DELIVERED",
+        "CLOSED",
+        "CANCELLED"
+      ],
+      "type": "string",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "已创建装运，但尚未装运。",
+          "value": "CREATED"
+        },
+        {
+          "description": "货物由承运人提货或由承运人放下。",
+          "value": "SHIPPED"
+        },
+        {
+          "description": "承运人已通知AWD，货物正在起点和目的地节点之间运输。",
+          "value": "IN_TRANSIT"
+        },
+        {
+          "description": "已收到部分货物。",
+          "value": "RECEIVING"
+        },
+        {
+          "description": "货物已到达目的地节点，并已交付至设施堆场。仓库的货物接收过程将很快开始。",
+          "value": "DELIVERED"
+        },
+        {
+          "description": "没有更多的行动需要在装运。这是最终状态。",
+          "value": "CLOSED"
+        },
+        {
+          "description": "已取消发货。这是最终状态。",
+          "value": "CANCELLED"
+        }
+      ]
+    },
+    "InboundShipmentSummary": {
+      "description": "包含装运ID的AWD入站装运的摘要，可用于检索实际装运。",
+      "properties": {
+        "createdAt": {
+          "description": "创建货件时的时间戳。",
+          "format": "date-time",
+          "type": "string"
+        },
+        "externalReferenceId": {
+          "description": "可选的客户端提供的引用ID，可用于将此装运与客户端资源相关联。例如，将此发运映射到内部簿记订单记录。",
+          "type": "string",
+          "example": "TestReferenceId"
+        },
+        "orderId": {
+          "description": "此入站发运所属的AWD入站订单ID。",
+          "minLength": 1,
+          "type": "string"
+        },
+        "shipmentId": {
+          "description": "唯一的装运ID。",
+          "minLength": 1,
+          "type": "string"
+        },
+        "shipmentStatus": {
+          "$ref": "#/definitions/InboundShipmentStatus"
+        },
+        "updatedAt": {
+          "description": "更新货件时的时间戳。",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "orderId",
+        "shipmentId",
+        "shipmentStatus"
+      ],
+      "type": "object"
+    },
+    "InventoryDetails": {
+      "description": "其他库存详细信息。仅当请求中的details参数设置为 “show” 时，才显示此对象。",
+      "properties": {
+        "availableDistributableQuantity": {
+          "description": "可用于下游渠道补货的数量。",
+          "format": "int64",
+          "type": "integer"
+        },
+        "reservedDistributableQuantity": {
+          "description": "为准备装运的下游渠道补货订单预留的数量。",
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "InventoryDetailsVisibility": {
+      "description": "枚举以指定返回的摘要是否应包括其他汇总的库存详细信息和数量。",
+      "enum": [
+        "SHOW",
+        "HIDE"
+      ],
+      "type": "string",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "显示其他汇总的库存详细信息。",
+          "value": "SHOW"
+        },
+        {
+          "description": "隐藏附加的汇总库存详细信息。",
+          "value": "HIDE"
+        }
+      ],
+      "example": "SHOW"
+    },
+    "InventoryListing": {
+      "description": "AWD库存有效载荷。",
+      "properties": {
+        "inventory": {
+          "description": "清单摘要列表。",
+          "items": {
+            "$ref": "#/definitions/InventorySummary"
+          },
+          "type": "array"
+        },
+        "nextToken": {
+          "description": "令牌来检索下一组分页结果。",
+          "type": "string",
+          "example": "SampleToken"
+        }
+      },
+      "required": [
+        "inventory"
+      ],
+      "type": "object"
+    },
+    "InventoryQuantity": {
+      "description": "具有关联的度量单位上下文的库存数量。",
+      "properties": {
+        "quantity": {
+          "description": "各自库存的数量。",
+          "type": "number"
+        },
+        "unitOfMeasurement": {
+          "description": "存货的计量单位。",
+          "$ref": "#/definitions/InventoryUnitOfMeasurement"
+        }
+      },
+      "required": [
+        "quantity",
+        "unitOfMeasurement"
+      ],
+      "type": "object"
+    },
+    "InventorySummary": {
+      "description": "每个SKU的库存摘要。",
+      "properties": {
+        "inventoryDetails": {
+          "$ref": "#/definitions/InventoryDetails"
+        },
+        "sku": {
+          "description": "卖家或商家SKU。",
+          "type": "string"
+        },
+        "totalInboundQuantity": {
+          "description": "卖方在途且尚未在AWD配送中心收到的总数量",
+          "format": "int64",
+          "type": "integer"
+        },
+        "totalOnhandQuantity": {
+          "description": "AWD配送中心中存在的总数量。",
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sku"
+      ],
+      "type": "object"
+    },
+    "InventoryUnitOfMeasurement": {
+      "description": "存货的计量单位。",
+      "enum": [
+        "PRODUCT_UNITS",
+        "CASES",
+        "PALLETS"
+      ],
+      "type": "string",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "测量产品单位的离散数量。",
+          "value": "PRODUCT_UNITS"
+        },
+        {
+          "description": "测量离散数量的案例。",
+          "value": "CASES"
+        },
+        {
+          "description": "测量托盘的离散数量。",
+          "value": "PALLETS"
+        }
+      ]
+    },
+    "MeasurementData": {
+      "description": "包装重量和尺寸。",
+      "properties": {
+        "dimensions": {
+          "description": "包装的尺寸。创建入站或出站订单时需要维度。",
+          "$ref": "#/definitions/PackageDimensions"
+        },
+        "volume": {
+          "description": "包的体积。",
+          "$ref": "#/definitions/PackageVolume"
+        },
+        "weight": {
+          "description": "包装的重量。",
+          "$ref": "#/definitions/PackageWeight"
+        }
+      },
+      "required": [
+        "weight"
+      ],
+      "type": "object"
+    },
+    "PackageDimensions": {
+      "description": "包装的尺寸。",
+      "properties": {
+        "height": {
+          "description": "包的高度。",
+          "format": "double",
+          "type": "number"
+        },
+        "length": {
+          "description": "包的长度。",
+          "format": "double",
+          "type": "number"
+        },
+        "unitOfMeasurement": {
+          "description": "包装尺寸的计量单位。",
+          "$ref": "#/definitions/DimensionUnitOfMeasurement"
+        },
+        "width": {
+          "description": "包的宽度。",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "height",
+        "length",
+        "unitOfMeasurement",
+        "width"
+      ],
+      "type": "object"
+    },
+    "PackageVolume": {
+      "description": "用度量单位表示包的体积。",
+      "properties": {
+        "unitOfMeasurement": {
+          "description": "包装体积的度量单位。",
+          "$ref": "#/definitions/VolumeUnitOfMeasurement"
+        },
+        "volume": {
+          "description": "包体积值。",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "unitOfMeasurement",
+        "volume"
+      ],
+      "type": "object"
+    },
+    "PackageWeight": {
+      "description": "用计量单位表示包裹的重量。",
+      "properties": {
+        "unitOfMeasurement": {
+          "description": "包装重量的计量单位。",
+          "$ref": "#/definitions/WeightUnitOfMeasurement"
+        },
+        "weight": {
+          "description": "包装重量值。",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "unitOfMeasurement",
+        "weight"
+      ],
+      "type": "object"
+    },
+    "ProductAttribute": {
+      "description": "未在目录中的SKU级别描述的产品实例属性。",
+      "properties": {
+        "name": {
+          "description": "产品属性名称。",
+          "type": "string",
+          "example": "TestAttribute"
+        },
+        "value": {
+          "description": "产品属性值。",
+          "type": "string",
+          "example": "TestAttributeValue"
+        }
+      },
+      "type": "object",
+      "example": {
+        "name": "TestAttribute",
+        "value": "TestAttributeValue"
+      }
+    },
+    "ProductQuantity": {
+      "description": "表示具有SKU详细信息和相应数量的产品。",
+      "properties": {
+        "attributes": {
+          "description": "此产品实例的属性。例如，已经准备好的，或其他区分SKU以外的产品的属性。",
+          "items": {
+            "$ref": "#/definitions/ProductAttribute"
+          },
+          "type": "array"
+        },
+        "quantity": {
+          "description": "产品数量。",
+          "format": "int32",
+          "type": "integer"
+        },
+        "sku": {
+          "description": "卖家或商家SKU。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "quantity",
+        "sku"
+      ],
+      "type": "object"
+    },
+    "ShipmentListing": {
+      "description": "按请求中指定的属性筛选的入站发运汇总列表。",
+      "properties": {
+        "nextToken": {
+          "description": "令牌来检索下一组分页结果。",
+          "type": "string",
+          "example": "SampleToken"
+        },
+        "shipments": {
+          "description": "入站装运摘要列表。",
+          "items": {
+            "$ref": "#/definitions/InboundShipmentSummary"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ShipmentSortableField": {
+      "description": "表示要对装运进行排序的字段名。",
+      "enum": [
+        "UPDATED_AT",
+        "CREATED_AT"
+      ],
+      "type": "string",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "按时间戳更新排序。",
+          "value": "UPDATED_AT"
+        },
+        {
+          "description": "按时间戳创建的排序。",
+          "value": "CREATED_AT"
+        }
+      ],
+      "example": "CREATED_AT"
+    },
+    "SkuQuantitiesVisibility": {
+      "description": "枚举以指定退回的装运是否应包括SKU数量详细信息",
+      "enum": [
+        "SHOW",
+        "HIDE"
+      ],
+      "type": "string",
+      "example": "SHOW",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "显示其他SKU数量详细信息",
+          "value": "SHOW"
+        },
+        {
+          "description": "隐藏其他SKU数量详细信息",
+          "value": "HIDE"
+        }
+      ]
+    },
+    "SkuQuantity": {
+      "description": "作为装运一部分的SKU的数量详细信息",
+      "properties": {
+        "expectedQuantity": {
+          "$ref": "#/definitions/InventoryQuantity"
+        },
+        "receivedQuantity": {
+          "$ref": "#/definitions/InventoryQuantity"
+        },
+        "sku": {
+          "description": "商户库存单位",
+          "type": "string"
+        }
+      },
+      "required": [
+        "expectedQuantity",
+        "sku"
+      ],
+      "type": "object"
+    },
+    "SortOrder": {
+      "description": "项集合的排序顺序。例如，订单或装运。",
+      "enum": [
+        "ASCENDING",
+        "DESCENDING"
+      ],
+      "type": "string",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "按升序对集合进行排序。",
+          "value": "ASCENDING"
+        },
+        {
+          "description": "按降序对集合进行排序。",
+          "value": "DESCENDING"
+        }
+      ],
+      "example": "ASCENDING"
+    },
+    "VolumeUnitOfMeasurement": {
+      "description": "包装体积的度量单位。",
+      "enum": [
+        "CU_IN",
+        "CBM",
+        "CC"
+      ],
+      "type": "string",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "表示以立方英寸为单位的体积测量值。",
+          "value": "CU_IN"
+        },
+        {
+          "description": "表示以立方米为单位的体积测量值。",
+          "value": "CBM"
+        },
+        {
+          "description": "表示以立方厘米为单位的体积测量值。",
+          "value": "CC"
+        }
+      ]
+    },
+    "WeightUnitOfMeasurement": {
+      "description": "包装重量的计量单位。",
+      "enum": [
+        "POUNDS",
+        "KILOGRAMS"
+      ],
+      "type": "string",
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "表示以磅为单位的重量测量值。",
+          "value": "POUNDS"
+        },
+        {
+          "description": "表示以千克为单位的重量测量值。",
+          "value": "KILOGRAMS"
+        }
+      ]
+    }
+  }
+}

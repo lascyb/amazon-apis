@@ -1,0 +1,380 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "用于令牌的销售合作伙伴API提供了一种安全的方式来访问客户的PII (个人身份信息)。您可以调用Tokens API来获取您指定的一个或多个受限资源的受限数据令牌 (RDT)。RDT授权对与您指定的受限资源相对应的受限操作的后续调用。\n\n有关更多信息，请参阅 [Tokens API用例指南](doc:tokens-api-Use-Case-Guide)。",
+    "version": "2021-03-01",
+    "title": "Selling Partner API for Tokens ",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/tokens/2021-03-01/restrictedDataToken": {
+      "post": {
+        "operationId": "createRestrictedDataToken",
+        "tags": [
+          "tokens"
+        ],
+        "description": "返回您指定的一个或多个受限资源的受限数据令牌 (RDT)。受限资源是来自受限操作的HTTP方法和路径，该受限操作返回个人身份信息 (PII) 以及指示所请求的PII类型的dataElements值。有关受限操作的列表，请参阅Tokens API用例指南。在对相应受限操作的后续调用中，使用此处返回的RDT作为访问令牌。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "受限数据令牌请求详细信息。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateRestrictedDataTokenRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CreateRestrictedDataTokenResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "targetApplication": "amzn1.sellerapps.app.target-application",
+                          "restrictedResources": [
+                            {
+                              "method": "GET",
+                              "path": "/orders/v0/orders/{orderId}/address"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "restrictedDataToken": "Atz.sprdt|IQEBLjAsAhRmHjNgHpi0U-Dme37rR6CuUpSR",
+                    "expiresIn": 3600
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "restrictedResources": [
+                            {
+                              "method": "GET",
+                              "path": "/orders/v0/orders/943-12-123434/address"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "restrictedDataToken": "Atz.sprdt|AODFNESLjAsAhRmHjNgHpi0U-Dme37rR6CuUpSR",
+                    "expiresIn": 3600
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "targetApplication": "amzn1.sellerapps.app.target-application",
+                          "restrictedResources": [
+                            {
+                              "method": "",
+                              "path": "/orders/v1/orders/902-1845936-5435065/address"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidRequest",
+                        "message": "Request is missing or has invalid parameters",
+                        "details": "Resource not provided."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CreateRestrictedDataTokenRequest": {
+      "description": "Createrestricteddatatuken操作的请求架构。",
+      "type": "object",
+      "properties": {
+        "targetApplication": {
+          "type": "string",
+          "description": "要向其委派访问权限的目标应用程序的应用程序ID。"
+        },
+        "restrictedResources": {
+          "type": "array",
+          "description": "受限制资源的列表。\n最大值: 50",
+          "items": {
+            "$ref": "#/definitions/RestrictedResource"
+          }
+        }
+      },
+      "required": [
+        "restrictedResources"
+      ]
+    },
+    "RestrictedResource": {
+      "description": "受限资源的模型。",
+      "type": "object",
+      "required": [
+        "method",
+        "path"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "受限资源中的HTTP方法。",
+          "enum": [
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "GET",
+              "description": "GET方法。"
+            },
+            {
+              "value": "PUT",
+              "description": "PUT方法。"
+            },
+            {
+              "value": "POST",
+              "description": "POST方法。"
+            },
+            {
+              "value": "DELETE",
+              "description": "DELETE方法。"
+            }
+          ]
+        },
+        "path": {
+          "type": "string",
+          "description": "受限资源中的路径。以下是一些路径示例:\n-'''/订单/v0/订单 '''。用于获取Orders API的getOrders操作的RDT。用于批量订单。\n-'''/订单/v0/订单/123-1234567 '''。用于获取Orders API的getOrder操作的RDT。一个特定的订单。\n-'''/订单/v0/订单/123-1234567/订单项目 '''。用于获取Orders API的getOrderItems操作的RDT。对于特定订单中的订单项目。\n-'''/mfn/v0/出货量/FBA1234ABC5D '''。用于获取装运API的getShipment操作的RDT。特定的货物。\n-'''/mfn/v0/shipments/{shipmentId}'''。用于获取装运API的getShipment操作的RDT。对于您在调用getShipment操作时指定的任何销售合作伙伴的货件。"
+        },
+        "dataElements": {
+          "type": "array",
+          "description": "指示请求的个人身份信息的类型。仅当获取用于Orders API的getOrder、getOrders或getOrderItems操作的RDT时，才需要此参数。有关更多信息，请参阅 [Tokens API用例指南](doc:tokens-api-use-case-guide)。可能的值包括:\n-** buyerInfo **。在订单级别，这包括有关买方的一般识别信息和与税收相关的信息。在订单项目级别，这包括礼品包装信息和自定义订单信息 (如果可用)。\n-** shippingAddress **。这包括用于履行订单的信息。\n-** 买方税务信息 **。这包括开具税务发票的信息。",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CreateRestrictedDataTokenResponse": {
+      "type": "object",
+      "description": "Createrestricteddatatuken操作的响应架构。",
+      "properties": {
+        "restrictedDataToken": {
+          "description": "受限数据令牌 (RDT)。这是一个短期访问令牌，用于授权对受限操作的调用。在对这些受限资源进行后续调用时，将此值与x-amz-access-token标头一起传递。",
+          "type": "string"
+        },
+        "expiresIn": {
+          "description": "受限数据令牌的生存期 (以秒为单位)。",
+          "type": "integer"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "ErrorList": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      },
+      "description": "请求不成功时返回的错误响应列表。"
+    }
+  }
+}

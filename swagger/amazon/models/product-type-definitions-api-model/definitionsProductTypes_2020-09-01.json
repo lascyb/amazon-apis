@@ -1,0 +1,1130 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "产品类型定义的销售合作伙伴API提供了对Amazon catalog中产品类型的属性和数据要求的编程访问。使用此API返回产品类型的JSON架构，然后您可以将其与其他销售合作伙伴API一起使用，例如列表项的销售合作伙伴API、目录项的销售合作伙伴API和feed (基于JSON的列表源) 的销售合作伙伴API。\n\n有关更多信息，请参阅 [产品类型定义API用例指南] (文档: Product-type-api-use-Case-Guide)。",
+    "version": "2020-09-01",
+    "title": "Selling Partner API for Product Type Definitions",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/definitions/2020-09-01/productTypes": {
+      "get": {
+        "tags": [
+          "definitions"
+        ],
+        "description": "搜索并返回具有可用定义的Amazon产品类型的列表。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认 | 5 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "searchDefinitionsProductTypes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "keywords",
+            "in": "query",
+            "description": "用于搜索产品类型的关键字的逗号分隔列表。** 注意: ** 不能与 “itemname” 一起使用。",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "LUGGAGE"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "itemName",
+            "description": "ASIN的标题，以获取产品类型推荐。** 注意: ** 不能与 “关键字” 一起使用。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "Running shoes"
+          },
+          {
+            "name": "locale",
+            "description": "响应中显示名称的区域设置。默认为市场的主要区域设置。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          },
+          {
+            "name": "searchLocale",
+            "description": "用于 “关键字” 和 “itemname” 参数的区域设置。默认为市场的主要区域设置。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功检索具有可用定义的Amazon产品类型的列表。",
+            "schema": {
+              "$ref": "#/definitions/ProductTypeList"
+            },
+            "examples": {
+              "application/json": {
+                "productTypes": [
+                  {
+                    "name": "LUGGAGE",
+                    "displayName": "Luggage",
+                    "marketplaceIds": [
+                      "ATVPDKIKX0DER"
+                    ]
+                  }
+                ],
+                "productTypeVersion": "UHqSqmb4FNUk="
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "productTypes": [
+                      {
+                        "name": "LUGGAGE",
+                        "displayName": "Luggage",
+                        "marketplaceIds": [
+                          "ATVPDKIKX0DER"
+                        ]
+                      }
+                    ],
+                    "productTypeVersion": "UHqSqmb4FNUk="
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "keywords": {
+                        "value": [
+                          "Invalid Request"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/definitions/2020-09-01/productTypes/{productType}": {
+      "get": {
+        "tags": [
+          "definitions"
+        ],
+        "description": "检索Amazon产品类型定义。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认 | 5 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getDefinitionsProductType",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "productType",
+            "in": "path",
+            "description": "Amazon产品类型名称。",
+            "required": true,
+            "type": "string",
+            "x-example": "LUGGAGE"
+          },
+          {
+            "name": "sellerId",
+            "in": "query",
+            "description": "销售合作伙伴标识符。当提供时，卖方特定的要求和值被填充在产品类型定义方案中，诸如与销售伙伴相关联的品牌名称。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。\n注意: 此参数目前仅限于一个marketplaceId。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "productTypeVersion",
+            "in": "query",
+            "description": "要检索的Amazon产品类型的版本。默认为 “最新”，。可以使用 “RELEASE_CANDIDATE” 检索产品类型定义的预发行版本。如果当前没有预发行版本，则将提供 “最新” 实时版本。",
+            "required": false,
+            "type": "string",
+            "default": "LATEST",
+            "x-example": "LATEST"
+          },
+          {
+            "name": "requirements",
+            "in": "query",
+            "description": "要为其检索要求的要求集的名称。",
+            "required": false,
+            "type": "string",
+            "default": "LISTING",
+            "enum": [
+              "LISTING",
+              "LISTING_PRODUCT_ONLY",
+              "LISTING_OFFER_ONLY"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "LISTING",
+                "description": "包含产品事实和销售条款的请求模式。"
+              },
+              {
+                "value": "LISTING_PRODUCT_ONLY",
+                "description": "请求模式仅包含产品事实。"
+              },
+              {
+                "value": "LISTING_OFFER_ONLY",
+                "description": "请求架构仅包含销售术语。"
+              }
+            ],
+            "x-example": "LISTING"
+          },
+          {
+            "name": "requirementsEnforced",
+            "in": "query",
+            "description": "标识需求集的必需属性是否由产品类型定义架构强制执行。非强制要求允许在不存在所有所需属性的情况下对单个属性进行结构验证 (例如用于部分更新)。",
+            "required": false,
+            "type": "string",
+            "default": "ENFORCED",
+            "enum": [
+              "ENFORCED",
+              "NOT_ENFORCED"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "ENFORCED",
+                "description": "具有强制执行的必需和条件必需属性的请求架构 (用于完整负载验证)。"
+              },
+              {
+                "value": "NOT_ENFORCED",
+                "description": "具有未强制执行的必需和条件必需属性的请求架构 (用于部分负载验证，例如单个属性)。"
+              }
+            ],
+            "x-example": "ENFORCED"
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "description": "用于检索显示标签和其他演示文稿详细信息的区域设置。默认为请求中第一个市场的默认语言。",
+            "required": false,
+            "type": "string",
+            "default": "DEFAULT",
+            "enum": [
+              "DEFAULT",
+              "ar",
+              "ar_AE",
+              "de",
+              "de_DE",
+              "en",
+              "en_AE",
+              "en_AU",
+              "en_CA",
+              "en_GB",
+              "en_IN",
+              "en_SG",
+              "en_US",
+              "es",
+              "es_ES",
+              "es_MX",
+              "es_US",
+              "fr",
+              "fr_CA",
+              "fr_FR",
+              "it",
+              "it_IT",
+              "ja",
+              "ja_JP",
+              "nl",
+              "nl_NL",
+              "pl",
+              "pl_PL",
+              "pt",
+              "pt_BR",
+              "pt_PT",
+              "sv",
+              "sv_SE",
+              "tr",
+              "tr_TR",
+              "zh",
+              "zh_CN",
+              "zh_TW"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "DEFAULT",
+                "description": "请求的Amazon marketplace的默认区域设置。"
+              },
+              {
+                "value": "ar",
+                "description": "阿拉伯文"
+              },
+              {
+                "value": "ar_AE",
+                "description": "阿拉伯语 (U.A.E.)"
+              },
+              {
+                "value": "de",
+                "description": "德语"
+              },
+              {
+                "value": "de_DE",
+                "description": "德语 (德国)"
+              },
+              {
+                "value": "en",
+                "description": "英语"
+              },
+              {
+                "value": "en_AE",
+                "description": "英语 (U.A.e.)"
+              },
+              {
+                "value": "en_AU",
+                "description": "英语 (澳大利亚)"
+              },
+              {
+                "value": "en_CA",
+                "description": "英语 (加拿大)"
+              },
+              {
+                "value": "en_GB",
+                "description": "英语 (英国)"
+              },
+              {
+                "value": "en_IN",
+                "description": "英语 (印度)"
+              },
+              {
+                "value": "en_SG",
+                "description": "英语 (新加坡)"
+              },
+              {
+                "value": "en_US",
+                "description": "英语 (美国)"
+              },
+              {
+                "value": "es",
+                "description": "西班牙语"
+              },
+              {
+                "value": "es_ES",
+                "description": "西班牙语 (西班牙)"
+              },
+              {
+                "value": "es_MX",
+                "description": "西班牙语 (墨西哥)"
+              },
+              {
+                "value": "es_US",
+                "description": "西班牙语 (美国)"
+              },
+              {
+                "value": "fr",
+                "description": "法语"
+              },
+              {
+                "value": "fr_CA",
+                "description": "法语 (加拿大)"
+              },
+              {
+                "value": "fr_FR",
+                "description": "法语 (法国)"
+              },
+              {
+                "value": "it",
+                "description": "意大利语"
+              },
+              {
+                "value": "it_IT",
+                "description": "意大利语 (意大利)"
+              },
+              {
+                "value": "ja",
+                "description": "日语"
+              },
+              {
+                "value": "ja_JP",
+                "description": "日语 (日本)"
+              },
+              {
+                "value": "nl",
+                "description": "荷兰语"
+              },
+              {
+                "value": "nl_NL",
+                "description": "荷兰语 (荷兰)"
+              },
+              {
+                "value": "pl",
+                "description": "波兰语"
+              },
+              {
+                "value": "pl_PL",
+                "description": "波兰语 (波兰)"
+              },
+              {
+                "value": "pt",
+                "description": "葡萄牙语"
+              },
+              {
+                "value": "pt_BR",
+                "description": "葡萄牙语 (巴西)"
+              },
+              {
+                "value": "pt_PT",
+                "description": "葡萄牙语 (葡萄牙)"
+              },
+              {
+                "value": "sv",
+                "description": "瑞典语"
+              },
+              {
+                "value": "sv_SE",
+                "description": "瑞典语 (瑞典)"
+              },
+              {
+                "value": "tr",
+                "description": "土耳其语"
+              },
+              {
+                "value": "tr_TR",
+                "description": "土耳其语 (土耳其)"
+              },
+              {
+                "value": "zh",
+                "description": "中文"
+              },
+              {
+                "value": "zh_CN",
+                "description": "中文 (简体)"
+              },
+              {
+                "value": "zh_TW",
+                "description": "中文 (繁体)"
+              }
+            ],
+            "x-example": "DEFAULT"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功检索Amazon产品类型定义。",
+            "schema": {
+              "$ref": "#/definitions/ProductTypeDefinition"
+            },
+            "examples": {
+              "application/json": {
+                "metaSchema": {
+                  "link": {
+                    "resource": "https://meta-schema-url",
+                    "verb": "GET"
+                  },
+                  "checksum": "c7af9479ca7261645cea9db56c5f720d"
+                },
+                "schema": {
+                  "link": {
+                    "resource": "https://schema-url",
+                    "verb": "GET"
+                  },
+                  "checksum": "c7af9479ca7261645cea9db56c5f720d"
+                },
+                "requirements": "LISTING",
+                "requirementsEnforced": "ENFORCED",
+                "propertyGroups": {
+                  "product_identity": {
+                    "title": "Product Identity",
+                    "description": "用于唯一标识您的产品的信息 (例如，UPC、EAN、GTIN、产品类型、品牌)",
+                    "propertyNames": [
+                      "item_name",
+                      "brand",
+                      "external_product_id",
+                      "gtin_exemption_reason",
+                      "merchant_suggested_asin",
+                      "product_type",
+                      "product_category",
+                      "product_subcategory",
+                      "item_type_keyword"
+                    ]
+                  }
+                },
+                "locale": "en_US",
+                "marketplaceIds": [
+                  "ATVPDKIKX0DER"
+                ],
+                "productType": "LUGGAGE",
+                "displayName": "Luggage",
+                "productTypeVersion": {
+                  "version": "UHqSqmb4FNUk=",
+                  "latest": true,
+                  "releaseCandidate": false
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "metaSchema": {
+                      "link": {
+                        "resource": "https://meta-schema-url",
+                        "verb": "GET"
+                      },
+                      "checksum": "c7af9479ca7261645cea9db56c5f720d"
+                    },
+                    "schema": {
+                      "link": {
+                        "resource": "https://schema-url",
+                        "verb": "GET"
+                      },
+                      "checksum": "c7af9479ca7261645cea9db56c5f720d"
+                    },
+                    "requirements": "LISTING",
+                    "requirementsEnforced": "ENFORCED",
+                    "propertyGroups": {
+                      "product_identity": {
+                        "title": "Product Identity",
+                        "description": "用于唯一标识您的产品的信息 (例如，UPC、EAN、GTIN、产品类型、品牌)",
+                        "propertyNames": [
+                          "item_name",
+                          "brand",
+                          "external_product_id",
+                          "gtin_exemption_reason",
+                          "merchant_suggested_asin",
+                          "product_type",
+                          "product_category",
+                          "product_subcategory",
+                          "item_type_keyword"
+                        ]
+                      }
+                    },
+                    "locale": "en_US",
+                    "marketplaceIds": [
+                      "ATVPDKIKX0DER"
+                    ],
+                    "productType": "LUGGAGE",
+                    "displayName": "Luggage",
+                    "productTypeVersion": {
+                      "version": "UHqSqmb4FNUk=",
+                      "latest": true,
+                      "releaseCandidate": false
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "productType": {
+                        "value": "INVALID"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "ErrorList": {
+      "type": "object",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      },
+      "description": "请求不成功时返回的错误响应列表。"
+    },
+    "SchemaLink": {
+      "type": "object",
+      "required": [
+        "checksum",
+        "link"
+      ],
+      "properties": {
+        "link": {
+          "type": "object",
+          "description": "用于检索架构的链接。",
+          "properties": {
+            "resource": {
+              "type": "string",
+              "description": "链接的URI资源。"
+            },
+            "verb": {
+              "type": "string",
+              "description": "链接操作的HTTP方法。",
+              "enum": [
+                "GET"
+              ],
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "GET",
+                  "description": "使用HTTP GET方法访问提供的资源。"
+                }
+              ]
+            }
+          },
+          "required": [
+            "resource",
+            "verb"
+          ]
+        },
+        "checksum": {
+          "type": "string",
+          "description": "架构 (Base64 MD5) 的校验和哈希。可用于验证架构内容、标识架构版本之间的更改以及用于缓存。"
+        }
+      }
+    },
+    "ProductTypeDefinition": {
+      "type": "object",
+      "required": [
+        "locale",
+        "marketplaceIds",
+        "productType",
+        "displayName",
+        "productTypeVersion",
+        "propertyGroups",
+        "requirements",
+        "requirementsEnforced",
+        "schema"
+      ],
+      "properties": {
+        "metaSchema": {
+          "description": "指向描述产品类型架构所使用的词汇表的元架构的链接。",
+          "$ref": "#/definitions/SchemaLink"
+        },
+        "schema": {
+          "description": "指向描述产品类型的属性和要求的模式的链接。",
+          "$ref": "#/definitions/SchemaLink"
+        },
+        "requirements": {
+          "type": "string",
+          "description": "此产品类型定义中表示的需求集的名称。",
+          "enum": [
+            "LISTING",
+            "LISTING_PRODUCT_ONLY",
+            "LISTING_OFFER_ONLY"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "LISTING",
+              "description": "指示架构包含产品事实和销售术语。"
+            },
+            {
+              "value": "LISTING_PRODUCT_ONLY",
+              "description": "指示架构数据仅包含产品事实。"
+            },
+            {
+              "value": "LISTING_OFFER_ONLY",
+              "description": "指示架构数据仅包含销售术语。"
+            }
+          ]
+        },
+        "requirementsEnforced": {
+          "type": "string",
+          "description": "标识需求集的必需属性是否由产品类型定义架构强制执行。非强制要求允许在不存在所有必需属性的情况下对单个属性进行结构验证 (例如用于部分更新)。",
+          "enum": [
+            "ENFORCED",
+            "NOT_ENFORCED"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ENFORCED",
+              "description": "架构强制执行必需和有条件要求的属性 (用于完全有效负载验证)。"
+            },
+            {
+              "value": "NOT_ENFORCED",
+              "description": "架构不强制要求和条件要求的属性 (用于部分负载验证，例如单个属性)。"
+            }
+          ]
+        },
+        "propertyGroups": {
+          "type": "object",
+          "description": "属性组名称到属性组的映射。属性组表示可用于显示或提供信息的架构属性的逻辑分组。",
+          "additionalProperties": {
+            "$ref": "#/definitions/PropertyGroup"
+          }
+        },
+        "locale": {
+          "type": "string",
+          "description": "产品类型定义中包含的显示元素的区域设置。"
+        },
+        "marketplaceIds": {
+          "type": "array",
+          "description": "适用于产品类型定义的Amazon marketplace标识符。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "productType": {
+          "type": "string",
+          "description": "此产品类型定义适用的Amazon产品类型的名称。"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Amazon产品类型的人类可读和本地化描述。"
+        },
+        "productTypeVersion": {
+          "description": "Amazon产品类型的版本详细信息。",
+          "$ref": "#/definitions/ProductTypeVersion"
+        }
+      },
+      "description": "产品类型定义表示Amazon catalog中产品类型的属性和数据要求。产品类型定义可在列表项的销售合作伙伴API、目录项的销售合作伙伴API和feed的销售合作伙伴API中基于JSON的列表feed之间互换使用。"
+    },
+    "PropertyGroup": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "属性组的显示标签。"
+        },
+        "description": {
+          "type": "string",
+          "description": "属性组的说明。"
+        },
+        "propertyNames": {
+          "type": "array",
+          "description": "属性组的架构属性的名称。",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "属性组表示可用于显示或信息目的的架构属性的逻辑分组。"
+    },
+    "ProductTypeVersion": {
+      "type": "object",
+      "required": [
+        "latest",
+        "version"
+      ],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "版本标识符。"
+        },
+        "latest": {
+          "type": "boolean",
+          "description": "如果为true，则版本标识符指示的版本是适用于Amazon产品类型的最新版本。"
+        },
+        "releaseCandidate": {
+          "type": "boolean",
+          "description": "如果为true，则版本标识符指示的版本是Amazon产品类型的预发布版本 (候选版本)。"
+        }
+      },
+      "description": "Amazon产品类型的版本详细信息。"
+    },
+    "ProductType": {
+      "type": "object",
+      "required": [
+        "marketplaceIds",
+        "name",
+        "displayName"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Amazon产品类型的名称。"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Amazon产品类型的人类可读且本地化的描述。"
+        },
+        "marketplaceIds": {
+          "type": "array",
+          "description": "产品类型定义可用的Amazon marketplace标识符。",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "具有可用定义的Amazon产品类型。"
+    },
+    "ProductTypeList": {
+      "type": "object",
+      "required": [
+        "productTypes",
+        "productTypeVersion"
+      ],
+      "properties": {
+        "productTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductType"
+          }
+        },
+        "productTypeVersion": {
+          "description": "Amazon产品类型版本标识符。",
+          "type": "string"
+        }
+      },
+      "description": "具有可用定义的Amazon产品类型的列表。"
+    }
+  }
+}

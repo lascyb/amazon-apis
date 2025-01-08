@@ -1,0 +1,2079 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "用于通知的销售合作伙伴API允许您订阅与销售合作伙伴的业务相关的通知。使用此API，您可以创建目标以接收通知、订阅通知、删除通知订阅等。\n\n有关详细信息，请参阅 [通知用例指南](https:// developer-docs.amazon.com/sp-api/docs/notifications-api-v1-use-case-guide)。",
+    "version": "v1",
+    "title": "Selling Partner API for Notifications",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/notifications/v1/subscriptions/{notificationType}": {
+      "get": {
+        "tags": [
+          "notifications"
+        ],
+        "description": "返回有关指定通知类型和负载版本的订阅的信息。“Payloads” 是一个可选参数。当未提供 “payloads” 时，它将返回最新的有效载荷版本订阅的信息。当您没有订阅标识符时，您可以使用此API获取订阅信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会观察到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getSubscription",
+        "parameters": [
+          {
+            "$ref": "#/parameters/NotificationType"
+          },
+          {
+            "name": "payloadVersion",
+            "in": "query",
+            "description": "要在通知中使用的负载对象的版本。",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionResponse"
+            },
+            "examples": {
+              "Successful Response": {
+                "payload": {
+                  "subscriptionId": "7fcacc7e-727b-11e9-8848-1681be663d3e",
+                  "payloadVersion": "1.0",
+                  "destinationId": "3acafc7e-121b-1329-8ae8-1571be663aa2",
+                  "processingDirective": {
+                    "eventFilter": {
+                      "marketplaceIds": [
+                        "ATVPDKIKX0DER",
+                        "A2EUQ1WTGCTBG2"
+                      ],
+                      "aggregationSettings": {
+                        "aggregationTimePeriod": "FiveMinutes"
+                      },
+                      "eventFilterType": "ANY_OFFER_CHANGED"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "payload": {
+                      "subscriptionId": "TEST_CASE_200_SUBSCRIPTION_ID",
+                      "payloadVersion": "1.0",
+                      "destinationId": "TEST_CASE_200_DESTINATION_ID"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "notifications"
+        ],
+        "description": "为要传递到指定目标的指定通知类型创建订阅。在订阅之前，您必须首先通过调用 “createdestination” 操作创建目标。在指定的通知类型支持多个负载版本的情况下，如果您已经订阅了不同的负载版本，则可以利用此API订阅不同的负载版本。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会观察到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createSubscription",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionRequest"
+            }
+          },
+          {
+            "$ref": "#/parameters/NotificationType"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionResponse"
+            },
+            "examples": {
+              "Successful Response": {
+                "payload": {
+                  "subscriptionId": "7fcacc7e-727b-11e9-8848-1681be663d3e",
+                  "payloadVersion": "1.0",
+                  "destinationId": "3acafc7e-121b-1329-8ae8-1571be663aa2"
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "payload": {
+                      "subscriptionId": "TEST_CASE_200_SUBSCRIPTION_ID",
+                      "payloadVersion": "1.0",
+                      "destinationId": "TEST_CASE_200_DESTINATION_ID"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "409": {
+            "description": "指定的资源与当前状态冲突。",
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/v1/subscriptions/{notificationType}/{subscriptionId}": {
+      "get": {
+        "tags": [
+          "notifications"
+        ],
+        "description": "返回有关指定通知类型的订阅的信息。“Getsubscriptionbyid” 操作是无许可的。有关详细信息，请参阅 [无许可操作](https:// developer-docs.amazon.com/sp-api/docs/无许可操作)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会观察到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getSubscriptionById",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "description": "要获取的订阅的标识符。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/NotificationType"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionByIdResponse"
+            },
+            "examples": {
+              "Successful Response": {
+                "payload": {
+                  "subscriptionId": "7fcacc7e-727b-11e9-8848-1681be663d3e",
+                  "payloadVersion": "1.0",
+                  "destinationId": "3acafc7e-121b-1329-8ae8-1571be663aa2"
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "payload": {
+                      "subscriptionId": "TEST_CASE_200_SUBSCRIPTION_ID",
+                      "payloadVersion": "1.0",
+                      "destinationId": "TEST_CASE_200_DESTINATION_ID"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "409": {
+            "description": "指定的资源与当前状态冲突。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "notifications"
+        ],
+        "description": "删除由您指定的订阅标识符和通知类型指示的订阅。订阅标识符可以用于与应用程序关联的任何订阅。成功调用此操作后，将停止为关联的订阅发送通知。“Deletesubscriptionbyid” 操作是无许可的。有关详细信息，请参阅 [无授予操作](https:// developer-docs.amazon.com/sp-api/docs/Grantless-operations)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会观察到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "deleteSubscriptionById",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "description": "要删除的订阅的标识符。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/NotificationType"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/DeleteSubscriptionByIdResponse"
+            },
+            "examples": {
+              "Successful Operation Response": {}
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/DeleteSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/DeleteSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/DeleteSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "409": {
+            "description": "指定的资源与当前状态冲突。",
+            "schema": {
+              "$ref": "#/definitions/DeleteSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/DeleteSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/DeleteSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/DeleteSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/DeleteSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/DeleteSubscriptionByIdResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/v1/destinations": {
+      "get": {
+        "tags": [
+          "notifications"
+        ],
+        "description": "返回有关所有目标的信息。“Getdestinations' 操作是无grantless的。有关详细信息，请参阅 [无授予操作](https:// developer-docs.amazon.com/sp-api/docs/Grantless-operations)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会观察到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getDestinations",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationsResponse"
+            },
+            "examples": {
+              "Successful Response": {
+                "payload": [
+                  {
+                    "destinationId": "9e7a83ee-7730-11e9-8f9e-2a86e4085a59",
+                    "name": "SQSDestination",
+                    "resource": {
+                      "sqs": {
+                        "arn": "arn:aws:sqs:us-east-2:444455556666:queue1"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "payload": [
+                      {
+                        "destinationId": "TEST_CASE_200",
+                        "resource": {
+                          "sqs": {
+                            "arn": "arn:aws:sqs:us-east-2:444455556666:queue1"
+                          }
+                        },
+                        "name": "SQSDestination"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "409": {
+            "description": "指定的资源与当前状态冲突。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "notifications"
+        ],
+        "description": "创建用于接收通知的目标资源。“Createdestination” 操作是无grantless的。有关详细信息，请参阅 [无授予操作](https:// developer-docs.amazon.com/sp-api/docs/Grantless-operations)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会观察到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createDestination",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationResponse"
+            },
+            "examples": {
+              "Successful Response": {
+                "payload": {
+                  "destinationId": "9e7a83ee-7730-11e9-8f9e-2a86e4085a59",
+                  "resource": {
+                    "sqs": {
+                      "arn": "arn:aws:sqs:us-east-2:444455556666:queue1"
+                    }
+                  },
+                  "name": "SQSDestination"
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "payload": {
+                      "destinationId": "TEST_CASE_200_DESTINATION_ID",
+                      "resource": {
+                        "sqs": {
+                          "arn": "arn:aws:sqs:us-east-2:444455556666:queue1"
+                        }
+                      },
+                      "name": "SQSDestination"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "409": {
+            "description": "指定的资源与当前状态冲突。",
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/v1/destinations/{destinationId}": {
+      "get": {
+        "tags": [
+          "notifications"
+        ],
+        "description": "返回有关您指定的目标的信息。“Getdestination” 操作是无grantless的。有关详细信息，请参阅 [无授予操作](https:// developer-docs.amazon.com/sp-api/docs/Grantless-operations)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会观察到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getDestination",
+        "parameters": [
+          {
+            "name": "destinationId",
+            "in": "path",
+            "description": "创建目标时生成的标识符。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationResponse"
+            },
+            "examples": {
+              "Successful Response": {
+                "payload": {
+                  "destinationId": "9e7a83ee-7730-11e9-8f9e-2a86e4085a59",
+                  "name": "SQSDestination",
+                  "resource": {
+                    "sqs": {
+                      "arn": "arn:aws:sqs:us-east-2:444455556666:queue1"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "payload": {
+                      "destinationId": "TEST_CASE_200_DESTINATION",
+                      "resource": {
+                        "sqs": {
+                          "arn": "arn:aws:sqs:us-east-2:444455556666:queue1"
+                        }
+                      },
+                      "name": "SQSDestination"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "409": {
+            "description": "指定的资源与当前状态冲突。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "notifications"
+        ],
+        "description": "删除指定的目标。“Deletedestination” 操作是无grantless的。有关详细信息，请参阅 [无授予操作](https:// developer-docs.amazon.com/sp-api/docs/Grantless-operations)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会观察到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "deleteDestination",
+        "parameters": [
+          {
+            "name": "destinationId",
+            "in": "path",
+            "description": "要删除的目标的标识符。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/DeleteDestinationResponse"
+            },
+            "examples": {
+              "Successful Response": {}
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/DeleteDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/DeleteDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/DeleteDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "409": {
+            "description": "指定的资源与当前状态冲突。",
+            "schema": {
+              "$ref": "#/definitions/DeleteDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/DeleteDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/DeleteDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/DeleteDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/DeleteDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/DeleteDestinationResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ProcessingDirective": {
+      "description": "传递给订阅以控制通知处理的附加信息。例如，您可以使用 “eventfilter' 自定义您的订阅，以便仅针对指定的“ marketplaceid ”发送通知，或选择发送通知的聚合时间段 (例如: 对于高频率通知，限制为每五分钟一次通知)。可用的特定功能因 “notificationtype” 而异。\n\n当前仅 'ANY_OFFER_CHANGED' 和 'ORDER_CHANGE' 'notificationtype' 支持此功能。",
+      "type": "object",
+      "properties": {
+        "eventFilter": {
+          "description": "特定于 “notificationtype” 的筛选器。",
+          "$ref": "#/definitions/EventFilter"
+        }
+      }
+    },
+    "EventFilter": {
+      "description": "特定于 “notificationtype” 的筛选器。此对象包含可用于定义 “notificationtype” 特定筛选器的所有当前可用筛选器和属性。",
+      "allOf": [
+        {
+          "$ref": "#/definitions/AggregationFilter"
+        },
+        {
+          "$ref": "#/definitions/MarketplaceFilter"
+        },
+        {
+          "$ref": "#/definitions/OrderChangeTypeFilter"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "eventFilterType": {
+              "type": "string",
+              "enum": [
+                "ANY_OFFER_CHANGED",
+                "ORDER_CHANGE"
+              ],
+              "description": "特定 “notificationtype” 支持的 “eventfiltertype” 值。订阅服务使用它来确定事件筛选器的类型。请参阅 [通知类型值](https:// developer-docs.amazon.com/sp-api/docs/Notification-Type-Values) 以确定是否支持 “eventfiltertype”。"
+            }
+          },
+          "required": [
+            "eventFilterType"
+          ]
+        }
+      ]
+    },
+    "MarketplaceFilter": {
+      "description": "一个事件过滤器，用于自定义您的订阅，以仅发送指定的 “marketplaceid” 的通知。",
+      "type": "object",
+      "properties": {
+        "marketplaceIds": {
+          "$ref": "#/definitions/MarketplaceIds"
+        }
+      }
+    },
+    "MarketplaceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "要订阅的市场标识符的列表 (例如: ATVPDKIKX0DER)。要在每个市场中接收通知，请不要提供此列表。"
+    },
+    "AggregationFilter": {
+      "type": "object",
+      "properties": {
+        "aggregationSettings": {
+          "$ref": "#/definitions/AggregationSettings"
+        }
+      },
+      "description": "用于选择发送通知的聚合时间段的筛选器 (例如: 对于高频率通知，限制为每五分钟一次通知)。"
+    },
+    "AggregationSettings": {
+      "type": "object",
+      "description": "一个容器，其中包含配置通知聚合所需的所有属性。",
+      "properties": {
+        "aggregationTimePeriod": {
+          "$ref": "#/definitions/AggregationTimePeriod",
+          "description": "用于执行marketplace-ASIN级别聚合的支持时间段。"
+        }
+      },
+      "required": [
+        "aggregationTimePeriod"
+      ]
+    },
+    "AggregationTimePeriod": {
+      "description": "支持的聚合时间段。例如，如果选择的值为FiveMinutes，并且ASIN在5分钟内发生50次价格更新，则Amazon将仅发送两个通知; 一个用于第一个事件，然后在5分钟后发送一个具有数据最终结束状态的后续通知。48个临时事件将被删除。",
+      "type": "string",
+      "enum": [
+        "FiveMinutes",
+        "TenMinutes"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "FiveMinutes",
+          "description": "聚合通知将每五分钟发送一次。"
+        },
+        {
+          "value": "TenMinutes",
+          "description": "聚合通知将每十分钟发送一次。"
+        }
+      ]
+    },
+    "OrderChangeTypeFilter": {
+      "description": "用于自定义订阅的事件筛选器，以仅发送指定 “orderchangetype” 的通知。",
+      "type": "object",
+      "properties": {
+        "orderChangeTypes": {
+          "$ref": "#/definitions/OrderChangeTypes"
+        }
+      }
+    },
+    "OrderChangeTypes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/OrderChangeTypeEnum"
+      },
+      "description": "要订阅的订单更改类型的列表 (例如: “buyerrequestedchange”)。要接收所有变更类型的通知，请不要提供此列表。"
+    },
+    "OrderChangeTypeEnum": {
+      "type": "string",
+      "enum": [
+        "OrderStatusChange",
+        "BuyerRequestedChange"
+      ],
+      "description": "ORDER_CHANGE通知支持的订单变更类型。"
+    },
+    "Subscription": {
+      "type": "object",
+      "required": [
+        "destinationId",
+        "payloadVersion",
+        "subscriptionId"
+      ],
+      "properties": {
+        "subscriptionId": {
+          "type": "string",
+          "description": "创建订阅时生成的订阅标识符。"
+        },
+        "payloadVersion": {
+          "type": "string",
+          "description": "要在通知中使用的负载对象的版本。"
+        },
+        "destinationId": {
+          "type": "string",
+          "description": "将在其中传递通知的目标的标识符。"
+        },
+        "processingDirective": {
+          "$ref": "#/definitions/ProcessingDirective"
+        }
+      },
+      "description": "有关订阅的信息。"
+    },
+    "CreateSubscriptionResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Createsubscription” 操作的负载。",
+          "$ref": "#/definitions/Subscription"
+        },
+        "errors": {
+          "description": "在 “createsubscript” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Createsubscription” 操作的响应架构。"
+    },
+    "CreateSubscriptionRequest": {
+      "type": "object",
+      "properties": {
+        "payloadVersion": {
+          "type": "string",
+          "description": "要在通知中使用的负载对象的版本。"
+        },
+        "destinationId": {
+          "type": "string",
+          "description": "将在其中传递通知的目标的标识符。"
+        },
+        "processingDirective": {
+          "$ref": "#/definitions/ProcessingDirective"
+        }
+      },
+      "required": [
+        "destinationId",
+        "payloadVersion"
+      ],
+      "description": "“Createsubscript” 操作的请求架构。"
+    },
+    "GetSubscriptionByIdResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Getsubscriptionbyid” 操作的负载。",
+          "$ref": "#/definitions/Subscription"
+        },
+        "errors": {
+          "description": "“Getsubscriptionbyid” 操作期间出现意外情况。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Getsubscriptionbyid” 操作的响应架构。"
+    },
+    "GetSubscriptionResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Getsubscription” 操作的负载。",
+          "$ref": "#/definitions/Subscription"
+        },
+        "errors": {
+          "description": "在执行 “getsubscription” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Getsubscription” 操作的响应架构。"
+    },
+    "DeleteSubscriptionByIdResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "description": "“Deletesubscriptionbyid” 操作期间出现意外情况。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Deletesubscriptionbyid” 操作的响应架构。"
+    },
+    "DestinationList": {
+      "type": "array",
+      "description": "目的地列表。",
+      "items": {
+        "$ref": "#/definitions/Destination"
+      }
+    },
+    "Destination": {
+      "type": "object",
+      "required": [
+        "destinationId",
+        "name",
+        "resource"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "此目标的开发人员定义的名称。",
+          "maxLength": 256
+        },
+        "destinationId": {
+          "type": "string",
+          "description": "创建目标时生成的目标标识符。"
+        },
+        "resource": {
+          "description": "将接收与此目标关联的通知的资源。",
+          "$ref": "#/definitions/DestinationResource"
+        }
+      },
+      "description": "有关在调用 “createdestination” 操作时创建的目标的信息。"
+    },
+    "DestinationResource": {
+      "type": "object",
+      "properties": {
+        "sqs": {
+          "description": "一个Amazon Simple Queue Service (SQS) 队列目标。",
+          "$ref": "#/definitions/SqsResource"
+        },
+        "eventBridge": {
+          "description": "一个Amazon EventBridge目标。",
+          "$ref": "#/definitions/EventBridgeResource"
+        }
+      },
+      "description": "目标资源类型。"
+    },
+    "DestinationResourceSpecification": {
+      "type": "object",
+      "properties": {
+        "sqs": {
+          "description": "创建Amazon Simple Queue Service (SQS) 队列目标所需的信息。",
+          "$ref": "#/definitions/SqsResource"
+        },
+        "eventBridge": {
+          "description": "创建Amazon EventBridge目标所需的信息。",
+          "$ref": "#/definitions/EventBridgeResourceSpecification"
+        }
+      },
+      "description": "创建目标资源所需的信息。应用程序应该为每个目标使用一种资源类型 (sqs或eventBridge)。"
+    },
+    "SqsResource": {
+      "type": "object",
+      "required": [
+        "arn"
+      ],
+      "properties": {
+        "arn": {
+          "type": "string",
+          "description": "与SQS队列关联的Amazon资源名称 (ARN)。",
+          "maxLength": 1000,
+          "pattern": "^arn:aws:sqs:\\S+:\\S+:\\S+"
+        }
+      },
+      "description": "创建Amazon Simple Queue Service (Amazon SQS) 队列目标所需的信息。"
+    },
+    "EventBridgeResourceSpecification": {
+      "type": "object",
+      "required": [
+        "accountId",
+        "region"
+      ],
+      "properties": {
+        "region": {
+          "type": "string",
+          "description": "您将在其中接收通知的AWS区域。"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "负责接收通知相关费用的AWS账户的标识符。"
+        }
+      },
+      "description": "创建Amazon EventBridge目标所需的信息。"
+    },
+    "EventBridgeResource": {
+      "type": "object",
+      "required": [
+        "accountId",
+        "name",
+        "region"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "与目标关联的合作伙伴事件源的名称。",
+          "maxLength": 256
+        },
+        "region": {
+          "type": "string",
+          "description": "您在其中接收通知的AWS区域。有关Amazon EventBridge中支持的AWS区域，请参阅 [Amazon EventBridge终端节点和配额](https://docs.aws.amazon.com/general/latest/gr/ev.html )。"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "负责接收通知相关费用的AWS账户的标识符。"
+        }
+      },
+      "description": "Amazon EventBridge目标。"
+    },
+    "CreateDestinationRequest": {
+      "type": "object",
+      "required": [
+        "name",
+        "resourceSpecification"
+      ],
+      "properties": {
+        "resourceSpecification": {
+          "description": "创建目标资源所需的信息。应用程序应该为每个目标使用一种资源类型 (sqs或eventBridge)。",
+          "$ref": "#/definitions/DestinationResourceSpecification"
+        },
+        "name": {
+          "type": "string",
+          "description": "开发人员定义的名称，以帮助标识此目标。"
+        }
+      },
+      "description": "“Createdestination” 操作的请求架构。"
+    },
+    "CreateDestinationResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Createdestination” 操作的有效负载。",
+          "$ref": "#/definitions/Destination"
+        },
+        "errors": {
+          "description": "“Createdestination” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "createDestination操作的响应架构。"
+    },
+    "GetDestinationResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Getdestination” 操作的有效负载。",
+          "$ref": "#/definitions/Destination"
+        },
+        "errors": {
+          "description": "“Getdestination” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Getdestination” 操作的响应架构。"
+    },
+    "GetDestinationsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Getdestinations” 操作的有效载荷。",
+          "$ref": "#/definitions/DestinationList"
+        },
+        "errors": {
+          "description": "在 “getdestinations” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Getdestinations” 操作的响应架构。"
+    },
+    "DeleteDestinationResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "description": "“Deletedestination” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Deletedestination” 操作的响应架构。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    }
+  },
+  "parameters": {
+    "NotificationType": {
+      "name": "notificationType",
+      "in": "path",
+      "description": "通知的类型。\n\n有关通知类型的详细信息，请参阅 [通知类型值](https:// developer-docs.amazon.com/sp-api/docs/notification-Type-Values)。",
+      "required": true,
+      "type": "string"
+    }
+  }
+}

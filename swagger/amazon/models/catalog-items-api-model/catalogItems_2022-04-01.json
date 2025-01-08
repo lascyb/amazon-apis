@@ -1,0 +1,4078 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "目录项的销售合作伙伴API提供了对Amazon目录中项目的相关信息的编程访问。\n\n有关详细信息，请参阅 [目录项API用例指南] (文档: catalog-items-api-v2022-04-01-use-case-guide)。",
+    "version": "2022-04-01",
+    "title": "Catalog Items v2022-04-01",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/catalog/2022-04-01/items": {
+      "get": {
+        "tags": [
+          "Catalog Items"
+        ],
+        "description": "按标识符或关键字搜索并返回Amazon目录项和关联信息的列表。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 2 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会观察到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](doc: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "searchCatalogItems",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "identifiers",
+            "description": "要搜索Amazon目录的产品标识符的逗号分隔列表。** 注意: ** 不能与 “关键字” 一起使用。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "maxItems": 20,
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "shoes"
+          },
+          {
+            "name": "identifiersType",
+            "description": "要在Amazon目录中搜索的产品标识符的类型。** 注意: ** 在提供 “标识符” 时需要。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "ASIN",
+              "EAN",
+              "GTIN",
+              "ISBN",
+              "JAN",
+              "MINSAN",
+              "SKU",
+              "UPC"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "ASIN",
+                "description": "亚马逊标准标识号。"
+              },
+              {
+                "value": "EAN",
+                "description": "欧洲商品编号。"
+              },
+              {
+                "value": "GTIN",
+                "description": "全球贸易项目编号。"
+              },
+              {
+                "value": "ISBN",
+                "description": "国际标准书号。"
+              },
+              {
+                "value": "JAN",
+                "description": "日本商品编号。"
+              },
+              {
+                "value": "MINSAN",
+                "description": "Minsan代码。"
+              },
+              {
+                "value": "SKU",
+                "description": "库存单位，亚马逊上市的卖家指定标识符。** 注意: ** 必须附有 “卖方”。"
+              },
+              {
+                "value": "UPC",
+                "description": "通用产品代码。"
+              }
+            ],
+            "x-example": "ASIN"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "maxItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "includedData",
+            "description": "要包含在响应中的数据集的逗号分隔列表。默认值: “summaries”。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "enum": [
+                "attributes",
+                "classifications",
+                "dimensions",
+                "identifiers",
+                "images",
+                "productTypes",
+                "relationships",
+                "salesRanks",
+                "summaries",
+                "vendorDetails"
+              ],
+              "type": "string",
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "attributes",
+                  "description": "包含按属性名称键入的结构化项属性数据的JSON对象。目录项属性符合相关的Amazon产品类型定义在销售合作伙伴API中提供的产品类型定义。"
+                },
+                {
+                  "value": "classifications",
+                  "description": "Amazon目录中的项目的分类 (浏览节点)。"
+                },
+                {
+                  "value": "dimensions",
+                  "description": "Amazon目录中项目的维度。"
+                },
+                {
+                  "value": "identifiers",
+                  "description": "与Amazon目录中的项目关联的标识符，例如UPC和EAN标识符。"
+                },
+                {
+                  "value": "images",
+                  "description": "Amazon目录中项目的图像。"
+                },
+                {
+                  "value": "productTypes",
+                  "description": "与Amazon目录项关联的产品类型。"
+                },
+                {
+                  "value": "relationships",
+                  "description": "Amazon目录项的关系详细信息 (例如，变体)。"
+                },
+                {
+                  "value": "salesRanks",
+                  "description": "Amazon目录项的销售排名。"
+                },
+                {
+                  "value": "summaries",
+                  "description": "Amazon目录项的摘要详细信息。有关更多详细信息，请参阅Amazon目录项的 “属性”。"
+                },
+                {
+                  "value": "vendorDetails",
+                  "description": "与Amazon目录项关联的供应商详细信息。供应商详细信息仅供供应商使用。"
+                }
+              ]
+            },
+            "collectionFormat": "csv",
+            "x-example": "summaries",
+            "default": [
+              "summaries"
+            ]
+          },
+          {
+            "name": "locale",
+            "description": "用于检索本地化摘要的区域设置。默认为市场的主要区域设置。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          },
+          {
+            "name": "sellerId",
+            "description": "销售伙伴标识符，例如卖方帐户或供应商代码。** 注意: ** 当 “identifierstype” 为 “sku” 时需要。",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "keywords",
+            "description": "要在Amazon catalog中搜索的以逗号分隔的单词列表。** 注意: ** 不能与 “标识符” 一起使用。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "maxItems": 20,
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "shoes"
+          },
+          {
+            "name": "brandNames",
+            "description": "以逗号分隔的品牌名称列表，用于限制对基于 “关键字” 的查询的搜索。** 注意: ** 不能与 “标识符” 一起使用。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "Beautiful Boats"
+          },
+          {
+            "name": "classificationIds",
+            "description": "以逗号分隔的分类标识符列表，用于限制对基于 “关键字” 的查询的搜索。** 注意: ** 不能与 “标识符” 一起使用。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "12345678"
+          },
+          {
+            "name": "pageSize",
+            "description": "每页返回的结果数。",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "maximum": 20,
+            "default": 10,
+            "x-example": 9
+          },
+          {
+            "name": "pageToken",
+            "description": "当有多个页面的结果时，用于获取某个页面的令牌。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "sdlkj234lkj234lksjdflkjwdflkjsfdlkj234234234234"
+          },
+          {
+            "name": "keywordsLocale",
+            "description": "为基于 “关键字” 的查询提供的关键字的语言。默认为市场的主要区域设置。** 注意: ** 不能与 “标识符” 一起使用。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ItemSearchResults"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "numberOfResults": 1,
+                "pagination": {
+                  "nextToken": "xsdflkj324lkjsdlkj3423klkjsdfkljlk2j34klj2l3k4jlksdjl234",
+                  "previousToken": "ilkjsdflkj234lkjds234234lkjl234lksjdflkj234234lkjsfsdflkj333d"
+                },
+                "refinements": {
+                  "brands": [
+                    {
+                      "numberOfResults": 1,
+                      "brandName": "SAMSUNG"
+                    }
+                  ],
+                  "classifications": [
+                    {
+                      "numberOfResults": 1,
+                      "displayName": "Electronics",
+                      "classificationId": "493964"
+                    }
+                  ]
+                },
+                "items": [
+                  {
+                    "asin": "B07N4M94X4",
+                    "attributes": {
+                      "total_hdmi_ports": [
+                        {
+                          "value": 4,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "resolution": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "4K",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "item_weight": [
+                        {
+                          "unit": "pounds",
+                          "value": 107.6,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "product_subcategory": [
+                        {
+                          "value": "50400120",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "bullet_point": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "SMART TV WITH UNIVERSAL GUIDE: Simple on-screen Guide is an easy way to find streaming content and live TV shows",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "100% COLOR VOLUME WITH QUANTUM DOTS: Powered by Quantum dots, Samsung’s 4K QLED TV offers over a billion shades of brilliant color and 100% color volume for exceptional depth of detail that will draw you in to the picture for the best 4K TV experience",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "QUANTUM PROCESSOR 4K: Intelligently powered processor instantly upscales content to 4K for sharp detail and refined color",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "QUANTUM HDR 4X: 4K depth of detail with high dynamic range powered by HDR10+ delivers the lightest to darkest colors, scene by scene, for amazing picture realism",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "AMBIENT MODE: Customizes and complements your living space by turning a blank screen of this big screen TV into enticing visuals including décor, info, photos and artwork",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "SMART TV FEATURES: OneRemote to control all compatible devices, Bixby voice command, on-screen universal guide, SmartThings to control compatible home appliances and devices, smart speaker expandability with Alexa and Google Assistant compatibility, and more",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "item_dimensions": [
+                        {
+                          "width": {
+                            "unit": "inches",
+                            "value": 72.4
+                          },
+                          "length": {
+                            "unit": "inches",
+                            "value": 2.4
+                          },
+                          "height": {
+                            "unit": "inches",
+                            "value": 41.4
+                          },
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "brand": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "SAMSUNG",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "control_method": [
+                        {
+                          "value": "voice",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "item_package_dimensions": [
+                        {
+                          "length": {
+                            "unit": "centimeters",
+                            "value": 26.67
+                          },
+                          "width": {
+                            "unit": "centimeters",
+                            "value": 121.92
+                          },
+                          "height": {
+                            "unit": "centimeters",
+                            "value": 203.2
+                          },
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "image_aspect_ratio": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "16:9",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "part_number": [
+                        {
+                          "value": "QN82Q60RAFXZA",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "includes_remote": [
+                        {
+                          "value": true,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "style": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "TV only",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "item_type_name": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "TV",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "battery": [
+                        {
+                          "cell_composition": [
+                            {
+                              "value": "alkaline"
+                            }
+                          ],
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "image_contrast_ratio": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "QLED 4K",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "manufacturer": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "Samsung",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "number_of_boxes": [
+                        {
+                          "value": 1,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "total_usb_ports": [
+                        {
+                          "value": 2,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "model_number": [
+                        {
+                          "value": "QN82Q60RAFXZA",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "supplier_declared_dg_hz_regulation": [
+                        {
+                          "value": "not_applicable",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "num_batteries": [
+                        {
+                          "quantity": 2,
+                          "type": "aaa",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "california_proposition_65": [
+                        {
+                          "compliance_type": "on_product_combined_cancer_reproductive",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "compliance_type": "chemical",
+                          "chemical_names": [
+                            "di_2_ethylhexyl_phthalate_dehp"
+                          ],
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "display": [
+                        {
+                          "resolution_maximum": [
+                            {
+                              "unit": "pixels",
+                              "language_tag": "en_US",
+                              "value": "3840 x 2160"
+                            }
+                          ],
+                          "size": [
+                            {
+                              "unit": "inches",
+                              "value": 82
+                            }
+                          ],
+                          "type": [
+                            {
+                              "language_tag": "en_US",
+                              "value": "QLED"
+                            }
+                          ],
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "item_name": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "list_price": [
+                        {
+                          "currency": "USD",
+                          "value": 3799.99,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "batteries_required": [
+                        {
+                          "value": false,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "includes_rechargable_battery": [
+                        {
+                          "value": false,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "product_site_launch_date": [
+                        {
+                          "value": "2019-03-11T08:00:01.000Z",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "product_category": [
+                        {
+                          "value": "50400100",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "batteries_included": [
+                        {
+                          "value": false,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "connectivity_technology": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "Bluetooth",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "USB",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "Wireless",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "HDMI",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "included_components": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "QLED Standard Smart Remote",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "Power Cable",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "Stand",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "Samsung Smart Control",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "specification_met": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "parental_control_technology": [
+                        {
+                          "value": "V-Chip",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "power_consumption": [
+                        {
+                          "unit": "watts",
+                          "value": 120,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "cpsia_cautionary_statement": [
+                        {
+                          "value": "no_warning_applicable",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "item_type_keyword": [
+                        {
+                          "value": "qled-televisions",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "number_of_items": [
+                        {
+                          "value": 1,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "warranty_description": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "1 year manufacturer",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "max_resolution": [
+                        {
+                          "unit": "pixels",
+                          "value": 8.3,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "color": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "Black",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "screen_surface_description": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "Flat",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "item_package_weight": [
+                        {
+                          "unit": "kilograms",
+                          "value": 62.142,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "speaker_type": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "2CH",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "supported_internet_services": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "Amazon Instant Video",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "YouTube",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "Netflix",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "Hulu",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "Browser",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "tuner_technology": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "Analog Tuner",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "controller_type": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "SmartThings",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "Voice Control",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "special_feature": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "100% Color Volume with Quantum Dot; Quantum Processor 4K; Ambient Mode; Quantum HDR 4X; Real Game Enhancer",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "wireless_communication_technology": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "Wi-Fi::Wi-Fi Direct::Bluetooth",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "model_year": [
+                        {
+                          "value": 2019,
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "power_source_type": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "Corded Electric",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "street_date": [
+                        {
+                          "value": "2019-03-21T00:00:01Z",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "mounting_type": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "Table Mount",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        },
+                        {
+                          "language_tag": "en_US",
+                          "value": "Wall Mount",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ],
+                      "refresh_rate": [
+                        {
+                          "unit": "hertz",
+                          "language_tag": "en_US",
+                          "value": "120",
+                          "marketplace_id": "ATVPDKIKX0DER"
+                        }
+                      ]
+                    },
+                    "classifications": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "classifications": [
+                          {
+                            "displayName": "QLED TVs",
+                            "classificationId": "21489946011",
+                            "parent": {
+                              "displayName": "Televisions",
+                              "classificationId": "172659",
+                              "parent": {
+                                "displayName": "Television & Video",
+                                "classificationId": "1266092011",
+                                "parent": {
+                                  "displayName": "Electronics",
+                                  "classificationId": "172282"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "dimensions": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "item": {
+                          "height": {
+                            "unit": "inches",
+                            "value": 41.4
+                          },
+                          "length": {
+                            "unit": "inches",
+                            "value": 2.4
+                          },
+                          "weight": {
+                            "unit": "pounds",
+                            "value": 107.6
+                          },
+                          "width": {
+                            "unit": "inches",
+                            "value": 72.4
+                          }
+                        },
+                        "package": {
+                          "height": {
+                            "unit": "inches",
+                            "value": 10.49999998929
+                          },
+                          "length": {
+                            "unit": "inches",
+                            "value": 79.9999999184
+                          },
+                          "weight": {
+                            "unit": "kilograms",
+                            "value": 62.142
+                          },
+                          "width": {
+                            "unit": "inches",
+                            "value": 47.99999995104
+                          }
+                        }
+                      }
+                    ],
+                    "identifiers": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "identifiers": [
+                          {
+                            "identifier": "0887276302195",
+                            "identifierType": "EAN"
+                          },
+                          {
+                            "identifier": "00887276302195",
+                            "identifierType": "GTIN"
+                          },
+                          {
+                            "identifier": "887276302195",
+                            "identifierType": "UPC"
+                          }
+                        ]
+                      }
+                    ],
+                    "images": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "images": [
+                          {
+                            "variant": "MAIN",
+                            "link": "https://m.media-amazon.com/images/I/91uohwV+k3L.jpg",
+                            "height": 1707,
+                            "width": 2560
+                          },
+                          {
+                            "variant": "MAIN",
+                            "link": "https://m.media-amazon.com/images/I/51DZzp3w3vL.jpg",
+                            "height": 333,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT01",
+                            "link": "https://m.media-amazon.com/images/I/81w2rTVShlL.jpg",
+                            "height": 2560,
+                            "width": 2560
+                          },
+                          {
+                            "variant": "PT01",
+                            "link": "https://m.media-amazon.com/images/I/41Px9eq9tkL.jpg",
+                            "height": 500,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT02",
+                            "link": "https://m.media-amazon.com/images/I/51NTNhdhPyL.jpg",
+                            "height": 375,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT03",
+                            "link": "https://m.media-amazon.com/images/I/51o4zpL+A3L.jpg",
+                            "height": 375,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT04",
+                            "link": "https://m.media-amazon.com/images/I/71ux2k9GAZL.jpg",
+                            "height": 1000,
+                            "width": 1000
+                          },
+                          {
+                            "variant": "PT04",
+                            "link": "https://m.media-amazon.com/images/I/61UUX63yw1L.jpg",
+                            "height": 500,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT05",
+                            "link": "https://m.media-amazon.com/images/I/61LwHkljX-L.jpg",
+                            "height": 1000,
+                            "width": 1000
+                          },
+                          {
+                            "variant": "PT05",
+                            "link": "https://m.media-amazon.com/images/I/51wJTQty3PL.jpg",
+                            "height": 500,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT06",
+                            "link": "https://m.media-amazon.com/images/I/61uvoB4VvoL.jpg",
+                            "height": 1000,
+                            "width": 1000
+                          },
+                          {
+                            "variant": "PT06",
+                            "link": "https://m.media-amazon.com/images/I/51ZexIO628L.jpg",
+                            "height": 500,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT07",
+                            "link": "https://m.media-amazon.com/images/I/7121MGd2ncL.jpg",
+                            "height": 1000,
+                            "width": 1000
+                          },
+                          {
+                            "variant": "PT07",
+                            "link": "https://m.media-amazon.com/images/I/61QK+JBMrGL.jpg",
+                            "height": 500,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT08",
+                            "link": "https://m.media-amazon.com/images/I/61ECcGlG4IL.jpg",
+                            "height": 1080,
+                            "width": 1920
+                          },
+                          {
+                            "variant": "PT08",
+                            "link": "https://m.media-amazon.com/images/I/31TxwfqvB5L.jpg",
+                            "height": 281,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT09",
+                            "link": "https://m.media-amazon.com/images/I/41B5vgmp4IL.jpg",
+                            "height": 375,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT10",
+                            "link": "https://m.media-amazon.com/images/I/51S5IY3AV0L.jpg",
+                            "height": 375,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT11",
+                            "link": "https://m.media-amazon.com/images/I/41-6bmPtUlL.jpg",
+                            "height": 375,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT12",
+                            "link": "https://m.media-amazon.com/images/I/41s9Q6gWJ7L.jpg",
+                            "height": 448,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT13",
+                            "link": "https://m.media-amazon.com/images/I/519nG0mRzuL.jpg",
+                            "height": 314,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT14",
+                            "link": "https://m.media-amazon.com/images/I/71sHhrGMc7L.jpg",
+                            "height": 1097,
+                            "width": 1500
+                          },
+                          {
+                            "variant": "PT14",
+                            "link": "https://m.media-amazon.com/images/I/41CH6gKtU5L.jpg",
+                            "height": 366,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT15",
+                            "link": "https://m.media-amazon.com/images/I/21-s7QYrTxL.jpg",
+                            "height": 500,
+                            "width": 175
+                          },
+                          {
+                            "variant": "EEGL",
+                            "link": "https://m.media-amazon.com/images/I/61i3dsKD09L.jpg",
+                            "height": 1375,
+                            "width": 370
+                          },
+                          {
+                            "variant": "EEGL",
+                            "link": "https://m.media-amazon.com/images/I/41E7ku-qdGL.jpg",
+                            "height": 500,
+                            "width": 135
+                          },
+                          {
+                            "variant": "EGUS",
+                            "link": "https://m.media-amazon.com/images/I/61i3dsKD09L.jpg",
+                            "height": 1375,
+                            "width": 370
+                          },
+                          {
+                            "variant": "EGUS",
+                            "link": "https://m.media-amazon.com/images/I/41E7ku-qdGL.jpg",
+                            "height": 500,
+                            "width": 135
+                          }
+                        ]
+                      }
+                    ],
+                    "productTypes": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "productType": "TELEVISION"
+                      }
+                    ],
+                    "salesRanks": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "classificationRanks": [
+                          {
+                            "classificationId": "21489946011",
+                            "title": "QLED TVs",
+                            "link": "http://www.amazon.com/gp/bestsellers/electronics/21489946011",
+                            "rank": 113
+                          }
+                        ],
+                        "displayGroupRanks": [
+                          {
+                            "websiteDisplayGroup": "ce_display_on_website",
+                            "title": "Electronics",
+                            "link": "http://www.amazon.com/gp/bestsellers/electronics",
+                            "rank": 72855
+                          }
+                        ]
+                      }
+                    ],
+                    "summaries": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "brand": "SAMSUNG",
+                        "browseClassification": {
+                          "displayName": "QLED TVs",
+                          "classificationId": "21489946011"
+                        },
+                        "color": "Black",
+                        "itemClassification": "BASE_PRODUCT",
+                        "itemName": "Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility",
+                        "manufacturer": "Samsung",
+                        "modelNumber": "QN82Q60RAFXZA",
+                        "packageQuantity": 1,
+                        "partNumber": "QN82Q60RAFXZA",
+                        "size": "82-Inch",
+                        "style": "TV only",
+                        "websiteDisplayGroup": "home_theater_display_on_website",
+                        "websiteDisplayGroupName": "Home Theater"
+                      }
+                    ],
+                    "relationships": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "relationships": [
+                          {
+                            "type": "VARIATION",
+                            "parentAsins": [
+                              "B08J7TQ9FL"
+                            ],
+                            "variationTheme": {
+                              "attributes": [
+                                "color",
+                                "size"
+                              ],
+                              "theme": "SIZE_NAME/COLOR_NAME"
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "vendorDetails": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "brandCode": "SAMF9",
+                        "manufacturerCode": "SAMF9",
+                        "manufacturerCodeParent": "SAMF9",
+                        "productCategory": {
+                          "displayName": "Televisions",
+                          "value": "50400100"
+                        },
+                        "productGroup": "Home Entertainment",
+                        "productSubcategory": {
+                          "displayName": "Plasma TVs",
+                          "value": "50400120"
+                        },
+                        "replenishmentCategory": "OBSOLETE"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "keywords": {
+                        "value": [
+                          "samsung",
+                          "tv"
+                        ]
+                      },
+                      "marketplaceIds": {
+                        "value": [
+                          "ATVPDKIKX0DER"
+                        ]
+                      },
+                      "includedData": {
+                        "value": [
+                          "classifications",
+                          "dimensions",
+                          "identifiers",
+                          "images",
+                          "productTypes",
+                          "relationships",
+                          "salesRanks",
+                          "summaries",
+                          "vendorDetails"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "numberOfResults": 1,
+                    "pagination": {
+                      "nextToken": "xsdflkj324lkjsdlkj3423klkjsdfkljlk2j34klj2l3k4jlksdjl234",
+                      "previousToken": "ilkjsdflkj234lkjds234234lkjl234lksjdflkj234234lkjsfsdflkj333d"
+                    },
+                    "refinements": {
+                      "brands": [
+                        {
+                          "numberOfResults": 1,
+                          "brandName": "SAMSUNG"
+                        }
+                      ],
+                      "classifications": [
+                        {
+                          "numberOfResults": 1,
+                          "displayName": "Electronics",
+                          "classificationId": "493964"
+                        }
+                      ]
+                    },
+                    "items": [
+                      {
+                        "asin": "B07N4M94X4",
+                        "classifications": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "classifications": [
+                              {
+                                "displayName": "QLED TVs",
+                                "classificationId": "21489946011",
+                                "parent": {
+                                  "displayName": "Televisions",
+                                  "classificationId": "172659",
+                                  "parent": {
+                                    "displayName": "Television & Video",
+                                    "classificationId": "1266092011",
+                                    "parent": {
+                                      "displayName": "Electronics",
+                                      "classificationId": "172282"
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "dimensions": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "item": {
+                              "height": {
+                                "unit": "inches",
+                                "value": 41.4
+                              },
+                              "length": {
+                                "unit": "inches",
+                                "value": 2.4
+                              },
+                              "weight": {
+                                "unit": "pounds",
+                                "value": 107.6
+                              },
+                              "width": {
+                                "unit": "inches",
+                                "value": 72.4
+                              }
+                            },
+                            "package": {
+                              "height": {
+                                "unit": "inches",
+                                "value": 10.49999998929
+                              },
+                              "length": {
+                                "unit": "inches",
+                                "value": 79.9999999184
+                              },
+                              "weight": {
+                                "unit": "kilograms",
+                                "value": 62.142
+                              },
+                              "width": {
+                                "unit": "inches",
+                                "value": 47.99999995104
+                              }
+                            }
+                          }
+                        ],
+                        "identifiers": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "identifiers": [
+                              {
+                                "identifier": "0887276302195",
+                                "identifierType": "EAN"
+                              },
+                              {
+                                "identifier": "00887276302195",
+                                "identifierType": "GTIN"
+                              },
+                              {
+                                "identifier": "887276302195",
+                                "identifierType": "UPC"
+                              }
+                            ]
+                          }
+                        ],
+                        "images": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "images": [
+                              {
+                                "variant": "MAIN",
+                                "link": "https://m.media-amazon.com/images/I/91uohwV+k3L.jpg",
+                                "height": 1707,
+                                "width": 2560
+                              },
+                              {
+                                "variant": "MAIN",
+                                "link": "https://m.media-amazon.com/images/I/51DZzp3w3vL.jpg",
+                                "height": 333,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT01",
+                                "link": "https://m.media-amazon.com/images/I/81w2rTVShlL.jpg",
+                                "height": 2560,
+                                "width": 2560
+                              },
+                              {
+                                "variant": "PT01",
+                                "link": "https://m.media-amazon.com/images/I/41Px9eq9tkL.jpg",
+                                "height": 500,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT02",
+                                "link": "https://m.media-amazon.com/images/I/51NTNhdhPyL.jpg",
+                                "height": 375,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT03",
+                                "link": "https://m.media-amazon.com/images/I/51o4zpL+A3L.jpg",
+                                "height": 375,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT04",
+                                "link": "https://m.media-amazon.com/images/I/71ux2k9GAZL.jpg",
+                                "height": 1000,
+                                "width": 1000
+                              },
+                              {
+                                "variant": "PT04",
+                                "link": "https://m.media-amazon.com/images/I/61UUX63yw1L.jpg",
+                                "height": 500,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT05",
+                                "link": "https://m.media-amazon.com/images/I/61LwHkljX-L.jpg",
+                                "height": 1000,
+                                "width": 1000
+                              },
+                              {
+                                "variant": "PT05",
+                                "link": "https://m.media-amazon.com/images/I/51wJTQty3PL.jpg",
+                                "height": 500,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT06",
+                                "link": "https://m.media-amazon.com/images/I/61uvoB4VvoL.jpg",
+                                "height": 1000,
+                                "width": 1000
+                              },
+                              {
+                                "variant": "PT06",
+                                "link": "https://m.media-amazon.com/images/I/51ZexIO628L.jpg",
+                                "height": 500,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT07",
+                                "link": "https://m.media-amazon.com/images/I/7121MGd2ncL.jpg",
+                                "height": 1000,
+                                "width": 1000
+                              },
+                              {
+                                "variant": "PT07",
+                                "link": "https://m.media-amazon.com/images/I/61QK+JBMrGL.jpg",
+                                "height": 500,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT08",
+                                "link": "https://m.media-amazon.com/images/I/61ECcGlG4IL.jpg",
+                                "height": 1080,
+                                "width": 1920
+                              },
+                              {
+                                "variant": "PT08",
+                                "link": "https://m.media-amazon.com/images/I/31TxwfqvB5L.jpg",
+                                "height": 281,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT09",
+                                "link": "https://m.media-amazon.com/images/I/41B5vgmp4IL.jpg",
+                                "height": 375,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT10",
+                                "link": "https://m.media-amazon.com/images/I/51S5IY3AV0L.jpg",
+                                "height": 375,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT11",
+                                "link": "https://m.media-amazon.com/images/I/41-6bmPtUlL.jpg",
+                                "height": 375,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT12",
+                                "link": "https://m.media-amazon.com/images/I/41s9Q6gWJ7L.jpg",
+                                "height": 448,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT13",
+                                "link": "https://m.media-amazon.com/images/I/519nG0mRzuL.jpg",
+                                "height": 314,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT14",
+                                "link": "https://m.media-amazon.com/images/I/71sHhrGMc7L.jpg",
+                                "height": 1097,
+                                "width": 1500
+                              },
+                              {
+                                "variant": "PT14",
+                                "link": "https://m.media-amazon.com/images/I/41CH6gKtU5L.jpg",
+                                "height": 366,
+                                "width": 500
+                              },
+                              {
+                                "variant": "PT15",
+                                "link": "https://m.media-amazon.com/images/I/21-s7QYrTxL.jpg",
+                                "height": 500,
+                                "width": 175
+                              },
+                              {
+                                "variant": "EEGL",
+                                "link": "https://m.media-amazon.com/images/I/61i3dsKD09L.jpg",
+                                "height": 1375,
+                                "width": 370
+                              },
+                              {
+                                "variant": "EEGL",
+                                "link": "https://m.media-amazon.com/images/I/41E7ku-qdGL.jpg",
+                                "height": 500,
+                                "width": 135
+                              },
+                              {
+                                "variant": "EGUS",
+                                "link": "https://m.media-amazon.com/images/I/61i3dsKD09L.jpg",
+                                "height": 1375,
+                                "width": 370
+                              },
+                              {
+                                "variant": "EGUS",
+                                "link": "https://m.media-amazon.com/images/I/41E7ku-qdGL.jpg",
+                                "height": 500,
+                                "width": 135
+                              }
+                            ]
+                          }
+                        ],
+                        "productTypes": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "productType": "TELEVISION"
+                          }
+                        ],
+                        "salesRanks": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "classificationRanks": [
+                              {
+                                "classificationId": "21489946011",
+                                "title": "QLED TVs",
+                                "link": "http://www.amazon.com/gp/bestsellers/electronics/21489946011",
+                                "rank": 113
+                              }
+                            ],
+                            "displayGroupRanks": [
+                              {
+                                "websiteDisplayGroup": "ce_display_on_website",
+                                "title": "Electronics",
+                                "link": "http://www.amazon.com/gp/bestsellers/electronics",
+                                "rank": 72855
+                              }
+                            ]
+                          }
+                        ],
+                        "summaries": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "brand": "SAMSUNG",
+                            "browseClassification": {
+                              "displayName": "QLED TVs",
+                              "classificationId": "21489946011"
+                            },
+                            "color": "Black",
+                            "itemClassification": "BASE_PRODUCT",
+                            "itemName": "Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility",
+                            "manufacturer": "Samsung",
+                            "modelNumber": "QN82Q60RAFXZA",
+                            "packageQuantity": 1,
+                            "partNumber": "QN82Q60RAFXZA",
+                            "size": "82-Inch",
+                            "style": "TV only",
+                            "websiteDisplayGroup": "home_theater_display_on_website",
+                            "websiteDisplayGroupName": "Home Theater"
+                          }
+                        ],
+                        "relationships": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "relationships": [
+                              {
+                                "type": "VARIATION",
+                                "parentAsins": [
+                                  "B08J7TQ9FL"
+                                ],
+                                "variationTheme": {
+                                  "attributes": [
+                                    "color",
+                                    "size"
+                                  ],
+                                  "theme": "SIZE_NAME/COLOR_NAME"
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "vendorDetails": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "brandCode": "SAMF9",
+                            "manufacturerCode": "SAMF9",
+                            "manufacturerCodeParent": "SAMF9",
+                            "productCategory": {
+                              "displayName": "Televisions",
+                              "value": "50400100"
+                            },
+                            "productGroup": "Home Entertainment",
+                            "productSubcategory": {
+                              "displayName": "Plasma TVs",
+                              "value": "50400120"
+                            },
+                            "replenishmentCategory": "OBSOLETE"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        },
+        "summary": "searchCatalogItems"
+      }
+    },
+    "/catalog/2022-04-01/items/{asin}": {
+      "get": {
+        "tags": [
+          "Catalog Items"
+        ],
+        "description": "检索Amazon目录中的项目的详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 2 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会观察到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](doc: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getCatalogItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "asin",
+            "description": "商品的Amazon标准标识号 (ASIN)。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "以逗号分隔的Amazon marketplace标识符列表。响应中的数据集仅包含指定市场的数据。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "includedData",
+            "description": "要包含在响应中的数据集的逗号分隔列表。默认值: “summaries”。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "enum": [
+                "attributes",
+                "classifications",
+                "dimensions",
+                "identifiers",
+                "images",
+                "productTypes",
+                "relationships",
+                "salesRanks",
+                "summaries",
+                "vendorDetails"
+              ],
+              "type": "string",
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "attributes",
+                  "description": "包含按属性名称键入的结构化项属性数据的JSON对象。目录项属性符合相关的Amazon产品类型定义在销售合作伙伴API中提供的产品类型定义。"
+                },
+                {
+                  "value": "classifications",
+                  "description": "Amazon目录中的项目的分类 (浏览节点)。"
+                },
+                {
+                  "value": "dimensions",
+                  "description": "Amazon目录中项目的维度。"
+                },
+                {
+                  "value": "identifiers",
+                  "description": "与Amazon目录中的项目关联的标识符，例如UPC和EAN标识符。"
+                },
+                {
+                  "value": "images",
+                  "description": "Amazon目录中项目的图像。"
+                },
+                {
+                  "value": "productTypes",
+                  "description": "与Amazon目录项关联的产品类型。"
+                },
+                {
+                  "value": "salesRanks",
+                  "description": "Amazon目录项的销售排名。"
+                },
+                {
+                  "value": "summaries",
+                  "description": "Amazon目录项的摘要详细信息。有关更多详细信息，请参阅Amazon目录项的 “属性”。"
+                },
+                {
+                  "value": "relationships",
+                  "description": "Amazon目录项的关系详细信息 (例如，变体)。"
+                },
+                {
+                  "value": "vendorDetails",
+                  "description": "与Amazon目录项关联的供应商详细信息。供应商详细信息仅供供应商使用。"
+                }
+              ]
+            },
+            "collectionFormat": "csv",
+            "x-example": "summaries",
+            "default": [
+              "summaries"
+            ]
+          },
+          {
+            "name": "locale",
+            "description": "用于检索本地化摘要的区域设置。默认为市场的主要区域设置。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/Item"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "asin": "B07N4M94X4",
+                "attributes": {
+                  "total_hdmi_ports": [
+                    {
+                      "value": 4,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "resolution": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "4K",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "item_weight": [
+                    {
+                      "unit": "pounds",
+                      "value": 107.6,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "product_subcategory": [
+                    {
+                      "value": "50400120",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "bullet_point": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "SMART TV WITH UNIVERSAL GUIDE: Simple on-screen Guide is an easy way to find streaming content and live TV shows",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "100% COLOR VOLUME WITH QUANTUM DOTS: Powered by Quantum dots, Samsung’s 4K QLED TV offers over a billion shades of brilliant color and 100% color volume for exceptional depth of detail that will draw you in to the picture for the best 4K TV experience",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "QUANTUM PROCESSOR 4K: Intelligently powered processor instantly upscales content to 4K for sharp detail and refined color",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "QUANTUM HDR 4X: 4K depth of detail with high dynamic range powered by HDR10+ delivers the lightest to darkest colors, scene by scene, for amazing picture realism",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "AMBIENT MODE: Customizes and complements your living space by turning a blank screen of this big screen TV into enticing visuals including décor, info, photos and artwork",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "SMART TV FEATURES: OneRemote to control all compatible devices, Bixby voice command, on-screen universal guide, SmartThings to control compatible home appliances and devices, smart speaker expandability with Alexa and Google Assistant compatibility, and more",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "item_dimensions": [
+                    {
+                      "width": {
+                        "unit": "inches",
+                        "value": 72.4
+                      },
+                      "length": {
+                        "unit": "inches",
+                        "value": 2.4
+                      },
+                      "height": {
+                        "unit": "inches",
+                        "value": 41.4
+                      },
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "brand": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "SAMSUNG",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "control_method": [
+                    {
+                      "value": "voice",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "item_package_dimensions": [
+                    {
+                      "length": {
+                        "unit": "centimeters",
+                        "value": 26.67
+                      },
+                      "width": {
+                        "unit": "centimeters",
+                        "value": 121.92
+                      },
+                      "height": {
+                        "unit": "centimeters",
+                        "value": 203.2
+                      },
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "image_aspect_ratio": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "16:9",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "part_number": [
+                    {
+                      "value": "QN82Q60RAFXZA",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "includes_remote": [
+                    {
+                      "value": true,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "style": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "TV only",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "item_type_name": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "TV",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "battery": [
+                    {
+                      "cell_composition": [
+                        {
+                          "value": "alkaline"
+                        }
+                      ],
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "image_contrast_ratio": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "QLED 4K",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "manufacturer": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "Samsung",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "number_of_boxes": [
+                    {
+                      "value": 1,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "total_usb_ports": [
+                    {
+                      "value": 2,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "model_number": [
+                    {
+                      "value": "QN82Q60RAFXZA",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "supplier_declared_dg_hz_regulation": [
+                    {
+                      "value": "not_applicable",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "num_batteries": [
+                    {
+                      "quantity": 2,
+                      "type": "aaa",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "california_proposition_65": [
+                    {
+                      "compliance_type": "on_product_combined_cancer_reproductive",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "compliance_type": "chemical",
+                      "chemical_names": [
+                        "di_2_ethylhexyl_phthalate_dehp"
+                      ],
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "display": [
+                    {
+                      "resolution_maximum": [
+                        {
+                          "unit": "pixels",
+                          "language_tag": "en_US",
+                          "value": "3840 x 2160"
+                        }
+                      ],
+                      "size": [
+                        {
+                          "unit": "inches",
+                          "value": 82
+                        }
+                      ],
+                      "type": [
+                        {
+                          "language_tag": "en_US",
+                          "value": "QLED"
+                        }
+                      ],
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "item_name": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "list_price": [
+                    {
+                      "currency": "USD",
+                      "value": 3799.99,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "batteries_required": [
+                    {
+                      "value": false,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "includes_rechargable_battery": [
+                    {
+                      "value": false,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "product_site_launch_date": [
+                    {
+                      "value": "2019-03-11T08:00:01.000Z",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "product_category": [
+                    {
+                      "value": "50400100",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "batteries_included": [
+                    {
+                      "value": false,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "connectivity_technology": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "Bluetooth",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "USB",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "Wireless",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "HDMI",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "included_components": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "QLED Standard Smart Remote",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "Power Cable",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "Stand",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "Samsung Smart Control",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "specification_met": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "parental_control_technology": [
+                    {
+                      "value": "V-Chip",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "power_consumption": [
+                    {
+                      "unit": "watts",
+                      "value": 120,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "cpsia_cautionary_statement": [
+                    {
+                      "value": "no_warning_applicable",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "item_type_keyword": [
+                    {
+                      "value": "qled-televisions",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "number_of_items": [
+                    {
+                      "value": 1,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "warranty_description": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "1 year manufacturer",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "max_resolution": [
+                    {
+                      "unit": "pixels",
+                      "value": 8.3,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "color": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "Black",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "screen_surface_description": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "Flat",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "item_package_weight": [
+                    {
+                      "unit": "kilograms",
+                      "value": 62.142,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "speaker_type": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "2CH",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "supported_internet_services": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "Amazon Instant Video",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "YouTube",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "Netflix",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "Hulu",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "Browser",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "tuner_technology": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "Analog Tuner",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "controller_type": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "SmartThings",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "Voice Control",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "special_feature": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "100% Color Volume with Quantum Dot; Quantum Processor 4K; Ambient Mode; Quantum HDR 4X; Real Game Enhancer",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "wireless_communication_technology": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "Wi-Fi::Wi-Fi Direct::Bluetooth",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "model_year": [
+                    {
+                      "value": 2019,
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "power_source_type": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "Corded Electric",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "street_date": [
+                    {
+                      "value": "2019-03-21T00:00:01Z",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "mounting_type": [
+                    {
+                      "language_tag": "en_US",
+                      "value": "Table Mount",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    },
+                    {
+                      "language_tag": "en_US",
+                      "value": "Wall Mount",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ],
+                  "refresh_rate": [
+                    {
+                      "unit": "hertz",
+                      "language_tag": "en_US",
+                      "value": "120",
+                      "marketplace_id": "ATVPDKIKX0DER"
+                    }
+                  ]
+                },
+                "classifications": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "classifications": [
+                      {
+                        "displayName": "QLED TVs",
+                        "classificationId": "21489946011",
+                        "parent": {
+                          "displayName": "Televisions",
+                          "classificationId": "172659",
+                          "parent": {
+                            "displayName": "Television & Video",
+                            "classificationId": "1266092011",
+                            "parent": {
+                              "displayName": "Electronics",
+                              "classificationId": "172282"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "dimensions": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "item": {
+                      "height": {
+                        "unit": "inches",
+                        "value": 41.4
+                      },
+                      "length": {
+                        "unit": "inches",
+                        "value": 2.4
+                      },
+                      "weight": {
+                        "unit": "pounds",
+                        "value": 107.6
+                      },
+                      "width": {
+                        "unit": "inches",
+                        "value": 72.4
+                      }
+                    },
+                    "package": {
+                      "height": {
+                        "unit": "inches",
+                        "value": 10.49999998929
+                      },
+                      "length": {
+                        "unit": "inches",
+                        "value": 79.9999999184
+                      },
+                      "weight": {
+                        "unit": "kilograms",
+                        "value": 62.142
+                      },
+                      "width": {
+                        "unit": "inches",
+                        "value": 47.99999995104
+                      }
+                    }
+                  }
+                ],
+                "identifiers": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "identifiers": [
+                      {
+                        "identifier": "0887276302195",
+                        "identifierType": "EAN"
+                      },
+                      {
+                        "identifier": "00887276302195",
+                        "identifierType": "GTIN"
+                      },
+                      {
+                        "identifier": "887276302195",
+                        "identifierType": "UPC"
+                      }
+                    ]
+                  }
+                ],
+                "images": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "images": [
+                      {
+                        "variant": "MAIN",
+                        "link": "https://m.media-amazon.com/images/I/91uohwV+k3L.jpg",
+                        "height": 1707,
+                        "width": 2560
+                      },
+                      {
+                        "variant": "MAIN",
+                        "link": "https://m.media-amazon.com/images/I/51DZzp3w3vL.jpg",
+                        "height": 333,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT01",
+                        "link": "https://m.media-amazon.com/images/I/81w2rTVShlL.jpg",
+                        "height": 2560,
+                        "width": 2560
+                      },
+                      {
+                        "variant": "PT01",
+                        "link": "https://m.media-amazon.com/images/I/41Px9eq9tkL.jpg",
+                        "height": 500,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT02",
+                        "link": "https://m.media-amazon.com/images/I/51NTNhdhPyL.jpg",
+                        "height": 375,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT03",
+                        "link": "https://m.media-amazon.com/images/I/51o4zpL+A3L.jpg",
+                        "height": 375,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT04",
+                        "link": "https://m.media-amazon.com/images/I/71ux2k9GAZL.jpg",
+                        "height": 1000,
+                        "width": 1000
+                      },
+                      {
+                        "variant": "PT04",
+                        "link": "https://m.media-amazon.com/images/I/61UUX63yw1L.jpg",
+                        "height": 500,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT05",
+                        "link": "https://m.media-amazon.com/images/I/61LwHkljX-L.jpg",
+                        "height": 1000,
+                        "width": 1000
+                      },
+                      {
+                        "variant": "PT05",
+                        "link": "https://m.media-amazon.com/images/I/51wJTQty3PL.jpg",
+                        "height": 500,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT06",
+                        "link": "https://m.media-amazon.com/images/I/61uvoB4VvoL.jpg",
+                        "height": 1000,
+                        "width": 1000
+                      },
+                      {
+                        "variant": "PT06",
+                        "link": "https://m.media-amazon.com/images/I/51ZexIO628L.jpg",
+                        "height": 500,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT07",
+                        "link": "https://m.media-amazon.com/images/I/7121MGd2ncL.jpg",
+                        "height": 1000,
+                        "width": 1000
+                      },
+                      {
+                        "variant": "PT07",
+                        "link": "https://m.media-amazon.com/images/I/61QK+JBMrGL.jpg",
+                        "height": 500,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT08",
+                        "link": "https://m.media-amazon.com/images/I/61ECcGlG4IL.jpg",
+                        "height": 1080,
+                        "width": 1920
+                      },
+                      {
+                        "variant": "PT08",
+                        "link": "https://m.media-amazon.com/images/I/31TxwfqvB5L.jpg",
+                        "height": 281,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT09",
+                        "link": "https://m.media-amazon.com/images/I/41B5vgmp4IL.jpg",
+                        "height": 375,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT10",
+                        "link": "https://m.media-amazon.com/images/I/51S5IY3AV0L.jpg",
+                        "height": 375,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT11",
+                        "link": "https://m.media-amazon.com/images/I/41-6bmPtUlL.jpg",
+                        "height": 375,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT12",
+                        "link": "https://m.media-amazon.com/images/I/41s9Q6gWJ7L.jpg",
+                        "height": 448,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT13",
+                        "link": "https://m.media-amazon.com/images/I/519nG0mRzuL.jpg",
+                        "height": 314,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT14",
+                        "link": "https://m.media-amazon.com/images/I/71sHhrGMc7L.jpg",
+                        "height": 1097,
+                        "width": 1500
+                      },
+                      {
+                        "variant": "PT14",
+                        "link": "https://m.media-amazon.com/images/I/41CH6gKtU5L.jpg",
+                        "height": 366,
+                        "width": 500
+                      },
+                      {
+                        "variant": "PT15",
+                        "link": "https://m.media-amazon.com/images/I/21-s7QYrTxL.jpg",
+                        "height": 500,
+                        "width": 175
+                      },
+                      {
+                        "variant": "EEGL",
+                        "link": "https://m.media-amazon.com/images/I/61i3dsKD09L.jpg",
+                        "height": 1375,
+                        "width": 370
+                      },
+                      {
+                        "variant": "EEGL",
+                        "link": "https://m.media-amazon.com/images/I/41E7ku-qdGL.jpg",
+                        "height": 500,
+                        "width": 135
+                      },
+                      {
+                        "variant": "EGUS",
+                        "link": "https://m.media-amazon.com/images/I/61i3dsKD09L.jpg",
+                        "height": 1375,
+                        "width": 370
+                      },
+                      {
+                        "variant": "EGUS",
+                        "link": "https://m.media-amazon.com/images/I/41E7ku-qdGL.jpg",
+                        "height": 500,
+                        "width": 135
+                      }
+                    ]
+                  }
+                ],
+                "productTypes": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "productType": "TELEVISION"
+                  }
+                ],
+                "salesRanks": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "classificationRanks": [
+                      {
+                        "classificationId": "21489946011",
+                        "title": "QLED TVs",
+                        "link": "http://www.amazon.com/gp/bestsellers/electronics/21489946011",
+                        "rank": 113
+                      }
+                    ],
+                    "displayGroupRanks": [
+                      {
+                        "websiteDisplayGroup": "ce_display_on_website",
+                        "title": "Electronics",
+                        "link": "http://www.amazon.com/gp/bestsellers/electronics",
+                        "rank": 72855
+                      }
+                    ]
+                  }
+                ],
+                "summaries": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "brand": "SAMSUNG",
+                    "browseClassification": {
+                      "displayName": "QLED TVs",
+                      "classificationId": "21489946011"
+                    },
+                    "color": "Black",
+                    "itemClassification": "BASE_PRODUCT",
+                    "itemName": "Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility",
+                    "manufacturer": "Samsung",
+                    "modelNumber": "QN82Q60RAFXZA",
+                    "packageQuantity": 1,
+                    "partNumber": "QN82Q60RAFXZA",
+                    "size": "82-Inch",
+                    "style": "TV only",
+                    "websiteDisplayGroup": "home_theater_display_on_website",
+                    "websiteDisplayGroupName": "Home Theater"
+                  }
+                ],
+                "relationships": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "relationships": [
+                      {
+                        "type": "VARIATION",
+                        "parentAsins": [
+                          "B08J7TQ9FL"
+                        ],
+                        "variationTheme": {
+                          "attributes": [
+                            "color",
+                            "size"
+                          ],
+                          "theme": "SIZE_NAME/COLOR_NAME"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "vendorDetails": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "brandCode": "SAMF9",
+                    "manufacturerCode": "SAMF9",
+                    "manufacturerCodeParent": "SAMF9",
+                    "productCategory": {
+                      "displayName": "Televisions",
+                      "value": "50400100"
+                    },
+                    "productGroup": "Home Entertainment",
+                    "productSubcategory": {
+                      "displayName": "Plasma TVs",
+                      "value": "50400120"
+                    },
+                    "replenishmentCategory": "OBSOLETE"
+                  }
+                ]
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "B07N4M94X4"
+                      },
+                      "marketplaceIds": {
+                        "value": [
+                          "ATVPDKIKX0DER"
+                        ]
+                      },
+                      "includedData": {
+                        "value": [
+                          "classifications",
+                          "dimensions",
+                          "identifiers",
+                          "images",
+                          "productTypes",
+                          "relationships",
+                          "salesRanks",
+                          "summaries",
+                          "vendorDetails"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "asin": "B07N4M94X4",
+                    "classifications": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "classifications": [
+                          {
+                            "displayName": "QLED TVs",
+                            "classificationId": "21489946011",
+                            "parent": {
+                              "displayName": "Televisions",
+                              "classificationId": "172659",
+                              "parent": {
+                                "displayName": "Television & Video",
+                                "classificationId": "1266092011",
+                                "parent": {
+                                  "displayName": "Electronics",
+                                  "classificationId": "172282"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "dimensions": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "item": {
+                          "height": {
+                            "unit": "inches",
+                            "value": 41.4
+                          },
+                          "length": {
+                            "unit": "inches",
+                            "value": 2.4
+                          },
+                          "weight": {
+                            "unit": "pounds",
+                            "value": 107.6
+                          },
+                          "width": {
+                            "unit": "inches",
+                            "value": 72.4
+                          }
+                        },
+                        "package": {
+                          "height": {
+                            "unit": "inches",
+                            "value": 10.49999998929
+                          },
+                          "length": {
+                            "unit": "inches",
+                            "value": 79.9999999184
+                          },
+                          "weight": {
+                            "unit": "kilograms",
+                            "value": 62.142
+                          },
+                          "width": {
+                            "unit": "inches",
+                            "value": 47.99999995104
+                          }
+                        }
+                      }
+                    ],
+                    "identifiers": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "identifiers": [
+                          {
+                            "identifier": "0887276302195",
+                            "identifierType": "EAN"
+                          },
+                          {
+                            "identifier": "00887276302195",
+                            "identifierType": "GTIN"
+                          },
+                          {
+                            "identifier": "887276302195",
+                            "identifierType": "UPC"
+                          }
+                        ]
+                      }
+                    ],
+                    "images": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "images": [
+                          {
+                            "variant": "MAIN",
+                            "link": "https://m.media-amazon.com/images/I/91uohwV+k3L.jpg",
+                            "height": 1707,
+                            "width": 2560
+                          },
+                          {
+                            "variant": "MAIN",
+                            "link": "https://m.media-amazon.com/images/I/51DZzp3w3vL.jpg",
+                            "height": 333,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT01",
+                            "link": "https://m.media-amazon.com/images/I/81w2rTVShlL.jpg",
+                            "height": 2560,
+                            "width": 2560
+                          },
+                          {
+                            "variant": "PT01",
+                            "link": "https://m.media-amazon.com/images/I/41Px9eq9tkL.jpg",
+                            "height": 500,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT02",
+                            "link": "https://m.media-amazon.com/images/I/51NTNhdhPyL.jpg",
+                            "height": 375,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT03",
+                            "link": "https://m.media-amazon.com/images/I/51o4zpL+A3L.jpg",
+                            "height": 375,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT04",
+                            "link": "https://m.media-amazon.com/images/I/71ux2k9GAZL.jpg",
+                            "height": 1000,
+                            "width": 1000
+                          },
+                          {
+                            "variant": "PT04",
+                            "link": "https://m.media-amazon.com/images/I/61UUX63yw1L.jpg",
+                            "height": 500,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT05",
+                            "link": "https://m.media-amazon.com/images/I/61LwHkljX-L.jpg",
+                            "height": 1000,
+                            "width": 1000
+                          },
+                          {
+                            "variant": "PT05",
+                            "link": "https://m.media-amazon.com/images/I/51wJTQty3PL.jpg",
+                            "height": 500,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT06",
+                            "link": "https://m.media-amazon.com/images/I/61uvoB4VvoL.jpg",
+                            "height": 1000,
+                            "width": 1000
+                          },
+                          {
+                            "variant": "PT06",
+                            "link": "https://m.media-amazon.com/images/I/51ZexIO628L.jpg",
+                            "height": 500,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT07",
+                            "link": "https://m.media-amazon.com/images/I/7121MGd2ncL.jpg",
+                            "height": 1000,
+                            "width": 1000
+                          },
+                          {
+                            "variant": "PT07",
+                            "link": "https://m.media-amazon.com/images/I/61QK+JBMrGL.jpg",
+                            "height": 500,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT08",
+                            "link": "https://m.media-amazon.com/images/I/61ECcGlG4IL.jpg",
+                            "height": 1080,
+                            "width": 1920
+                          },
+                          {
+                            "variant": "PT08",
+                            "link": "https://m.media-amazon.com/images/I/31TxwfqvB5L.jpg",
+                            "height": 281,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT09",
+                            "link": "https://m.media-amazon.com/images/I/41B5vgmp4IL.jpg",
+                            "height": 375,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT10",
+                            "link": "https://m.media-amazon.com/images/I/51S5IY3AV0L.jpg",
+                            "height": 375,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT11",
+                            "link": "https://m.media-amazon.com/images/I/41-6bmPtUlL.jpg",
+                            "height": 375,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT12",
+                            "link": "https://m.media-amazon.com/images/I/41s9Q6gWJ7L.jpg",
+                            "height": 448,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT13",
+                            "link": "https://m.media-amazon.com/images/I/519nG0mRzuL.jpg",
+                            "height": 314,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT14",
+                            "link": "https://m.media-amazon.com/images/I/71sHhrGMc7L.jpg",
+                            "height": 1097,
+                            "width": 1500
+                          },
+                          {
+                            "variant": "PT14",
+                            "link": "https://m.media-amazon.com/images/I/41CH6gKtU5L.jpg",
+                            "height": 366,
+                            "width": 500
+                          },
+                          {
+                            "variant": "PT15",
+                            "link": "https://m.media-amazon.com/images/I/21-s7QYrTxL.jpg",
+                            "height": 500,
+                            "width": 175
+                          },
+                          {
+                            "variant": "EEGL",
+                            "link": "https://m.media-amazon.com/images/I/61i3dsKD09L.jpg",
+                            "height": 1375,
+                            "width": 370
+                          },
+                          {
+                            "variant": "EEGL",
+                            "link": "https://m.media-amazon.com/images/I/41E7ku-qdGL.jpg",
+                            "height": 500,
+                            "width": 135
+                          },
+                          {
+                            "variant": "EGUS",
+                            "link": "https://m.media-amazon.com/images/I/61i3dsKD09L.jpg",
+                            "height": 1375,
+                            "width": 370
+                          },
+                          {
+                            "variant": "EGUS",
+                            "link": "https://m.media-amazon.com/images/I/41E7ku-qdGL.jpg",
+                            "height": 500,
+                            "width": 135
+                          }
+                        ]
+                      }
+                    ],
+                    "productTypes": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "productType": "TELEVISION"
+                      }
+                    ],
+                    "salesRanks": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "classificationRanks": [
+                          {
+                            "classificationId": "21489946011",
+                            "title": "QLED TVs",
+                            "link": "http://www.amazon.com/gp/bestsellers/electronics/21489946011",
+                            "rank": 113
+                          }
+                        ],
+                        "displayGroupRanks": [
+                          {
+                            "websiteDisplayGroup": "ce_display_on_website",
+                            "title": "Electronics",
+                            "link": "http://www.amazon.com/gp/bestsellers/electronics",
+                            "rank": 72855
+                          }
+                        ]
+                      }
+                    ],
+                    "summaries": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "brand": "SAMSUNG",
+                        "browseClassification": {
+                          "displayName": "QLED TVs",
+                          "classificationId": "21489946011"
+                        },
+                        "color": "Black",
+                        "itemClassification": "BASE_PRODUCT",
+                        "itemName": "Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility",
+                        "manufacturer": "Samsung",
+                        "modelNumber": "QN82Q60RAFXZA",
+                        "packageQuantity": 1,
+                        "partNumber": "QN82Q60RAFXZA",
+                        "size": "82-Inch",
+                        "style": "TV only",
+                        "websiteDisplayGroup": "home_theater_display_on_website",
+                        "websiteDisplayGroupName": "Home Theater"
+                      }
+                    ],
+                    "relationships": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "relationships": [
+                          {
+                            "type": "VARIATION",
+                            "parentAsins": [
+                              "B08J7TQ9FL"
+                            ],
+                            "variationTheme": {
+                              "attributes": [
+                                "color",
+                                "size"
+                              ],
+                              "theme": "SIZE_NAME/COLOR_NAME"
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "vendorDetails": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "brandCode": "SAMF9",
+                        "manufacturerCode": "SAMF9",
+                        "manufacturerCodeParent": "SAMF9",
+                        "productCategory": {
+                          "displayName": "Televisions",
+                          "value": "50400100"
+                        },
+                        "productGroup": "Home Entertainment",
+                        "productSubcategory": {
+                          "displayName": "Plasma TVs",
+                          "value": "50400120"
+                        },
+                        "replenishmentCategory": "OBSOLETE"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        },
+        "summary": "getCatalogItem"
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "description": "请求不成功时返回的错误响应。",
+      "properties": {
+        "code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述错误情况的消息。",
+          "type": "string"
+        },
+        "details": {
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "ErrorList": {
+      "description": "请求不成功时返回的错误响应列表。",
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ]
+    },
+    "Item": {
+      "description": "Amazon目录中的项目。",
+      "properties": {
+        "asin": {
+          "$ref": "#/definitions/ItemAsin"
+        },
+        "attributes": {
+          "$ref": "#/definitions/ItemAttributes"
+        },
+        "classifications": {
+          "$ref": "#/definitions/ItemBrowseClassifications"
+        },
+        "dimensions": {
+          "$ref": "#/definitions/ItemDimensions"
+        },
+        "identifiers": {
+          "$ref": "#/definitions/ItemIdentifiers"
+        },
+        "images": {
+          "$ref": "#/definitions/ItemImages"
+        },
+        "productTypes": {
+          "$ref": "#/definitions/ItemProductTypes"
+        },
+        "relationships": {
+          "$ref": "#/definitions/ItemRelationships"
+        },
+        "salesRanks": {
+          "$ref": "#/definitions/ItemSalesRanks"
+        },
+        "summaries": {
+          "$ref": "#/definitions/ItemSummaries"
+        },
+        "vendorDetails": {
+          "$ref": "#/definitions/ItemVendorDetails"
+        }
+      },
+      "required": [
+        "asin"
+      ],
+      "type": "object"
+    },
+    "ItemAsin": {
+      "description": "Amazon标准标识号 (ASIN) 是Amazon目录中项目的唯一标识符。",
+      "type": "string"
+    },
+    "ItemAttributes": {
+      "description": "包含按属性名称键入的结构化项属性数据的JSON对象。目录项属性符合产品类型定义的销售合作伙伴API中提供的相关产品类型定义。",
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "ItemBrowseClassification": {
+      "description": "与Amazon目录项关联的分类 (浏览节点)。",
+      "properties": {
+        "displayName": {
+          "description": "分类的显示名称 (浏览节点)。",
+          "type": "string"
+        },
+        "classificationId": {
+          "description": "分类的标识符 (浏览节点标识符)。",
+          "type": "string"
+        },
+        "parent": {
+          "description": "当前分类的父分类 (浏览节点)。",
+          "$ref": "#/definitions/ItemBrowseClassification"
+        }
+      },
+      "required": [
+        "displayName",
+        "classificationId"
+      ],
+      "type": "object"
+    },
+    "ItemContributor": {
+      "description": "创建项目的个人贡献者，例如作者或演员。",
+      "properties": {
+        "role": {
+          "$ref": "#/definitions/ItemContributorRole"
+        },
+        "value": {
+          "description": "贡献者的名字，如简·奥斯汀。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "role"
+      ],
+      "type": "object"
+    },
+    "ItemContributorRole": {
+      "description": "个人贡献者在创建项目中的角色，如作者或演员。",
+      "properties": {
+        "displayName": {
+          "description": "在请求的区域设置中显示角色的名称，如作者或演员。",
+          "type": "string"
+        },
+        "value": {
+          "description": "Amazon目录项的角色值，例如author或actor。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
+    },
+    "ItemBrowseClassifications": {
+      "description": "按Amazon marketplace与Amazon目录中的项目关联的分类 (浏览节点) 数组。",
+      "items": {
+        "$ref": "#/definitions/ItemBrowseClassificationsByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemBrowseClassificationsByMarketplace": {
+      "description": "与Amazon catalog中指示的Amazon marketplace中的项目关联的分类 (浏览节点)。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "classifications": {
+          "description": "与Amazon catalog中指示的Amazon marketplace中的项目关联的分类 (浏览节点)。",
+          "items": {
+            "$ref": "#/definitions/ItemBrowseClassification"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "marketplaceId"
+      ],
+      "type": "object"
+    },
+    "Dimension": {
+      "description": "Amazon目录项或项包的单个维度值。",
+      "properties": {
+        "unit": {
+          "description": "尺寸值的度量单位。",
+          "type": "string"
+        },
+        "value": {
+          "description": "数字尺寸值。",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Dimensions": {
+      "description": "Amazon目录项或其包装中的项的尺寸。",
+      "properties": {
+        "height": {
+          "description": "项目或项目包的高度。",
+          "$ref": "#/definitions/Dimension"
+        },
+        "length": {
+          "description": "项目或项目包的长度。",
+          "$ref": "#/definitions/Dimension"
+        },
+        "weight": {
+          "description": "物品或物品包装的重量。",
+          "$ref": "#/definitions/Dimension"
+        },
+        "width": {
+          "description": "项目或项目包的宽度。",
+          "$ref": "#/definitions/Dimension"
+        }
+      },
+      "type": "object"
+    },
+    "ItemDimensions": {
+      "description": "与Amazon目录中的项目关联的维度数组由Amazon marketplace。",
+      "items": {
+        "$ref": "#/definitions/ItemDimensionsByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemDimensionsByMarketplace": {
+      "description": "与Amazon catalog中指示的Amazon marketplace。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "item": {
+          "description": "Amazon目录项的维度。",
+          "$ref": "#/definitions/Dimensions"
+        },
+        "package": {
+          "description": "包装中Amazon目录项的尺寸。",
+          "$ref": "#/definitions/Dimensions"
+        }
+      },
+      "required": [
+        "marketplaceId"
+      ],
+      "type": "object"
+    },
+    "ItemIdentifiers": {
+      "description": "与Amazon目录中的项目关联的标识符，例如UPC和EAN标识符。",
+      "items": {
+        "$ref": "#/definitions/ItemIdentifiersByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemIdentifiersByMarketplace": {
+      "description": "与Amazon catalog中指示的Amazon marketplace。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "identifiers": {
+          "description": "与Amazon catalog中指示的Amazon marketplace。",
+          "items": {
+            "$ref": "#/definitions/ItemIdentifier"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "marketplaceId",
+        "identifiers"
+      ],
+      "type": "object"
+    },
+    "ItemIdentifier": {
+      "description": "与Amazon目录中的项目关联的标识符，例如UPC或EAN标识符。",
+      "properties": {
+        "identifierType": {
+          "description": "标识符的类型，如UPC、EAN或ISBN。",
+          "type": "string"
+        },
+        "identifier": {
+          "description": "标识符。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "identifierType",
+        "identifier"
+      ],
+      "type": "object"
+    },
+    "ItemImages": {
+      "description": "Amazon目录中项目的图像。",
+      "items": {
+        "$ref": "#/definitions/ItemImagesByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemImagesByMarketplace": {
+      "description": "Amazon目录中项目的图像，用于指示的Amazon marketplace。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "images": {
+          "description": "Amazon目录中项目的图像，用于指示的Amazon marketplace。",
+          "items": {
+            "$ref": "#/definitions/ItemImage"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "marketplaceId",
+        "images"
+      ],
+      "type": "object"
+    },
+    "ItemImage": {
+      "description": "Amazon目录中项目的图像。",
+      "properties": {
+        "variant": {
+          "description": "图像的变体，例如 “main” 或 “PT01”。",
+          "example": "MAIN",
+          "type": "string",
+          "enum": [
+            "MAIN",
+            "PT01",
+            "PT02",
+            "PT03",
+            "PT04",
+            "PT05",
+            "PT06",
+            "PT07",
+            "PT08",
+            "SWCH"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "MAIN",
+              "description": "项目的主图像。"
+            },
+            {
+              "value": "PT01",
+              "description": "该项目的其他图像 #1。"
+            },
+            {
+              "value": "PT02",
+              "description": "该项目的其他图像 #2。"
+            },
+            {
+              "value": "PT03",
+              "description": "该项目的其他图像 #3。"
+            },
+            {
+              "value": "PT04",
+              "description": "该项目的其他图像 #4。"
+            },
+            {
+              "value": "PT05",
+              "description": "该项目的其他图像 #5。"
+            },
+            {
+              "value": "PT06",
+              "description": "该项目的其他图像 #6。"
+            },
+            {
+              "value": "PT07",
+              "description": "该项目的其他图片 #7。"
+            },
+            {
+              "value": "PT08",
+              "description": "该项目的其他图像 #8。"
+            },
+            {
+              "value": "SWCH",
+              "description": "项目的色板图像。"
+            }
+          ]
+        },
+        "link": {
+          "description": "图像的链接或URL。",
+          "type": "string"
+        },
+        "height": {
+          "description": "图像的高度 (以像素为单位)。",
+          "type": "integer"
+        },
+        "width": {
+          "description": "图像的宽度 (以像素为单位)。",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "variant",
+        "link",
+        "height",
+        "width"
+      ],
+      "type": "object"
+    },
+    "ItemProductTypes": {
+      "description": "与Amazon目录项关联的产品类型。",
+      "items": {
+        "$ref": "#/definitions/ItemProductTypeByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemProductTypeByMarketplace": {
+      "description": "与指示的Amazon marketplace的Amazon目录项关联的产品类型。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "productType": {
+          "description": "与Amazon目录项关联的产品类型的名称。",
+          "example": "LUGGAGE",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ItemSalesRanks": {
+      "description": "Amazon目录项的销售排名。",
+      "items": {
+        "$ref": "#/definitions/ItemSalesRanksByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemSalesRanksByMarketplace": {
+      "description": "指定的Amazon marketplace的Amazon目录项的销售排名。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "classificationRanks": {
+          "description": "按分类的Amazon marketplace的Amazon目录项的销售排名。",
+          "items": {
+            "$ref": "#/definitions/ItemClassificationSalesRank"
+          },
+          "type": "array"
+        },
+        "displayGroupRanks": {
+          "description": "按网站显示组的Amazon marketplace的Amazon目录项的销售排名。",
+          "items": {
+            "$ref": "#/definitions/ItemDisplayGroupSalesRank"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "marketplaceId"
+      ],
+      "type": "object"
+    },
+    "ItemClassificationSalesRank": {
+      "description": "按分类的Amazon目录项的销售排名。",
+      "properties": {
+        "classificationId": {
+          "description": "与销售等级关联的分类的标识符。",
+          "type": "string"
+        },
+        "title": {
+          "description": "销售职级的头衔或名称。",
+          "type": "string"
+        },
+        "link": {
+          "description": "销售排名的相应亚马逊零售网站链接或URL。",
+          "type": "string"
+        },
+        "rank": {
+          "description": "销售等级值。",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "classificationId",
+        "title",
+        "rank"
+      ],
+      "type": "object"
+    },
+    "ItemDisplayGroupSalesRank": {
+      "description": "按网站显示组的Amazon目录项的销售排名。",
+      "properties": {
+        "websiteDisplayGroup": {
+          "description": "与销售等级关联的网站显示组的名称",
+          "type": "string"
+        },
+        "title": {
+          "description": "销售职级的头衔或名称。",
+          "type": "string"
+        },
+        "link": {
+          "description": "销售排名的相应亚马逊零售网站链接或URL。",
+          "type": "string"
+        },
+        "rank": {
+          "description": "销售等级值。",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "websiteDisplayGroup",
+        "title",
+        "rank"
+      ],
+      "type": "object"
+    },
+    "ItemSummaries": {
+      "description": "Amazon目录项的摘要详细信息。",
+      "items": {
+        "$ref": "#/definitions/ItemSummaryByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemSummaryByMarketplace": {
+      "description": "Amazon catalog项目的摘要详细信息指示的Amazon marketplace。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "adultProduct": {
+          "description": "标识Amazon目录项适用于成人受众或具有性性质。",
+          "type": "boolean"
+        },
+        "autographed": {
+          "description": "标识由玩家或名人亲笔签名的Amazon目录项。",
+          "type": "boolean"
+        },
+        "brand": {
+          "description": "与Amazon目录项关联的品牌名称。",
+          "type": "string"
+        },
+        "browseClassification": {
+          "description": "与Amazon目录项关联的分类 (浏览节点)。",
+          "$ref": "#/definitions/ItemBrowseClassification"
+        },
+        "color": {
+          "description": "与Amazon目录项关联的颜色的名称。",
+          "type": "string"
+        },
+        "contributors": {
+          "description": "创建项目的个人贡献者，例如作者或演员。",
+          "items": {
+            "$ref": "#/definitions/ItemContributor"
+          },
+          "type": "array"
+        },
+        "itemClassification": {
+          "description": "与Amazon目录项关联的分类类型。",
+          "enum": [
+            "BASE_PRODUCT",
+            "OTHER",
+            "PRODUCT_BUNDLE",
+            "VARIATION_PARENT"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "BASE_PRODUCT",
+              "description": "表示Amazon目录中的标准独立项或变体子项。"
+            },
+            {
+              "value": "OTHER",
+              "description": "表示Amazon目录中不是 “BASE_PRODUCT” 、 “PRODUCT_BUNDLE” 或 “VARIATION_PARENT” 的项目。"
+            },
+            {
+              "value": "PRODUCT_BUNDLE",
+              "description": "表示父Amazon目录项，表示一组项。"
+            },
+            {
+              "value": "VARIATION_PARENT",
+              "description": "表示父Amazon目录项将子项分组到变体系列中。"
+            }
+          ],
+          "type": "string"
+        },
+        "itemName": {
+          "description": "与Amazon目录项关联的名称或标题。",
+          "type": "string"
+        },
+        "manufacturer": {
+          "description": "与Amazon目录项关联的制造商的名称。",
+          "type": "string"
+        },
+        "memorabilia": {
+          "description": "标识Amazon目录项是因其与历史事件，文化或娱乐的联系而受到重视的纪念品。",
+          "type": "boolean"
+        },
+        "modelNumber": {
+          "description": "与Amazon目录项关联的型号。",
+          "type": "string"
+        },
+        "packageQuantity": {
+          "description": "一个包中的Amazon目录项的数量。",
+          "type": "integer"
+        },
+        "partNumber": {
+          "description": "与Amazon目录项关联的部件号。",
+          "type": "string"
+        },
+        "releaseDate": {
+          "description": "Amazon目录项可交付给客户的第一个日期。",
+          "format": "date",
+          "type": "string"
+        },
+        "size": {
+          "description": "与Amazon目录项关联的大小的名称。",
+          "type": "string"
+        },
+        "style": {
+          "description": "与Amazon目录项关联的样式的名称。",
+          "type": "string"
+        },
+        "tradeInEligible": {
+          "description": "标识符合以旧换新条件的Amazon目录项目。",
+          "type": "boolean"
+        },
+        "websiteDisplayGroup": {
+          "description": "与Amazon目录项关联的网站显示组的标识符。",
+          "type": "string"
+        },
+        "websiteDisplayGroupName": {
+          "description": "与Amazon目录项关联的网站显示组的显示名称。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "marketplaceId"
+      ],
+      "type": "object"
+    },
+    "ItemVariationTheme": {
+      "description": "变体主题，指示定义变体系列的Amazon item catalog属性的组合。",
+      "properties": {
+        "attributes": {
+          "description": "Amazon目录项目属性与变体主题关联。",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "theme": {
+          "description": "变体主题，指示定义变体系列的Amazon item catalog属性的组合。",
+          "example": "COLOR_NAME/STYLE_NAME",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ItemRelationships": {
+      "description": "Amazon目录项 (例如，变体) 的marketplace关系。",
+      "items": {
+        "$ref": "#/definitions/ItemRelationshipsByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemRelationshipsByMarketplace": {
+      "description": "Amazon目录项的关系详细信息指示的Amazon marketplace。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "relationships": {
+          "description": "项目的关系。",
+          "items": {
+            "$ref": "#/definitions/ItemRelationship"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "marketplaceId",
+        "relationships"
+      ],
+      "type": "object"
+    },
+    "ItemRelationship": {
+      "description": "Amazon目录项的关系详细信息。",
+      "properties": {
+        "childAsins": {
+          "description": "作为该项的子项的相关项的标识符 (asin)。",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "parentAsins": {
+          "description": "作为该项的父项的相关项的标识符 (asin)。",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "variationTheme": {
+          "description": "对于 “变体” 关系，变体主题指示定义变体系列的Amazon item catalog属性的组合。",
+          "$ref": "#/definitions/ItemVariationTheme"
+        },
+        "type": {
+          "description": "关系的类型。",
+          "example": "VARIATION",
+          "enum": [
+            "VARIATION",
+            "PACKAGE_HIERARCHY"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "VARIATION",
+              "description": "请求中的Amazon目录项是ASIN指示的相关项的变体父项或变体子项。"
+            },
+            {
+              "value": "PACKAGE_HIERARCHY",
+              "description": "请求中的Amazon目录项是包容器或由ASIN指示的相关项包含。"
+            }
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "ItemVendorDetailsCategory": {
+      "description": "与Amazon目录项关联的产品类别或子类别。",
+      "properties": {
+        "displayName": {
+          "description": "产品类别或子类别的显示名称",
+          "type": "string"
+        },
+        "value": {
+          "description": "产品类别或子类别的值 (代码)。",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ItemVendorDetails": {
+      "description": "与Amazon目录项关联的供应商详细信息。供应商详细信息仅供供应商使用。",
+      "items": {
+        "$ref": "#/definitions/ItemVendorDetailsByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemVendorDetailsByMarketplace": {
+      "description": "与指示的Amazon marketplace的Amazon目录项关联的供应商详细信息。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "brandCode": {
+          "description": "与Amazon目录项关联的品牌代码。",
+          "type": "string"
+        },
+        "manufacturerCode": {
+          "description": "与Amazon目录项关联的制造商代码。",
+          "type": "string"
+        },
+        "manufacturerCodeParent": {
+          "description": "制造商代码的父供应商代码。",
+          "type": "string"
+        },
+        "productCategory": {
+          "description": "与Amazon目录项关联的产品类别。",
+          "$ref": "#/definitions/ItemVendorDetailsCategory"
+        },
+        "productGroup": {
+          "description": "与Amazon目录项关联的产品组。",
+          "type": "string"
+        },
+        "productSubcategory": {
+          "description": "与Amazon目录项关联的产品子类别。",
+          "$ref": "#/definitions/ItemVendorDetailsCategory"
+        },
+        "replenishmentCategory": {
+          "description": "与Amazon目录项关联的补货类别。",
+          "enum": [
+            "ALLOCATED",
+            "BASIC_REPLENISHMENT",
+            "IN_SEASON",
+            "LIMITED_REPLENISHMENT",
+            "MANUFACTURER_OUT_OF_STOCK",
+            "NEW_PRODUCT",
+            "NON_REPLENISHABLE",
+            "NON_STOCKUPABLE",
+            "OBSOLETE",
+            "PLANNED_REPLENISHMENT"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ALLOCATED",
+              "description": "表示供应商已分配给Amazon的库存的非自动购买。"
+            },
+            {
+              "value": "BASIC_REPLENISHMENT",
+              "description": "表示库存的非自动采购。"
+            },
+            {
+              "value": "IN_SEASON",
+              "description": "表示非自动采购季节性项目的库存。"
+            },
+            {
+              "value": "LIMITED_REPLENISHMENT",
+              "description": "在物料为 “NEW_PRODUCT” 之前保持队列补充状态。"
+            },
+            {
+              "value": "MANUFACTURER_OUT_OF_STOCK",
+              "description": "表示供应商缺货时间较长，不能缺货。"
+            },
+            {
+              "value": "NEW_PRODUCT",
+              "description": "表示亚马逊尚未在库存中储存的新商品。"
+            },
+            {
+              "value": "NON_REPLENISHABLE",
+              "description": "指示用于详细信息页面显示的分类父项，而不是实际项。"
+            },
+            {
+              "value": "NON_STOCKUPABLE",
+              "description": "表示亚马逊不在其履行中心库存的直接发货库存。"
+            },
+            {
+              "value": "OBSOLETE",
+              "description": "表示项目已过时，不应订购。"
+            },
+            {
+              "value": "PLANNED_REPLENISHMENT",
+              "description": "指示应自动订购的活动项目。"
+            }
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "marketplaceId"
+      ],
+      "type": "object"
+    },
+    "ItemSearchResults": {
+      "description": "Amazon目录和搜索相关的元数据。",
+      "properties": {
+        "numberOfResults": {
+          "description": "对于基于 “标识符” 的搜索，找到的Amazon目录项的总数。对于基于 “关键字” 的搜索，与搜索查询匹配的Amazon catalog项目的估计总数 (无论找到的数量如何，每个请求仅返回页面计数限制以内的结果)。\n\n注意: 可以返回和分页的最大项目数 (asin) 为1000。",
+          "type": "integer"
+        },
+        "pagination": {
+          "description": "如果可用，则返回分页结果所需的 “nexttoken” 和/或 “previoustoken” 值。",
+          "$ref": "#/definitions/Pagination"
+        },
+        "refinements": {
+          "description": "基于 “关键字” 的搜索改进。",
+          "$ref": "#/definitions/Refinements"
+        },
+        "items": {
+          "description": "来自Amazon目录的项目列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Item"
+          }
+        }
+      },
+      "required": [
+        "numberOfResults",
+        "pagination",
+        "refinements",
+        "items"
+      ],
+      "type": "object"
+    },
+    "Pagination": {
+      "description": "当请求产生超过 “pagesize” 的响应时，会发生分页。这意味着响应被分成单独的页面。要检索下一页或上一页，必须在下一个请求中传递 “nexttoken” 值或 “previoustoken” 值作为 “pagetoken” 参数。当您收到最后一页时，分页对象中将没有 “nexttoken” 键。",
+      "properties": {
+        "nextToken": {
+          "description": "可用于获取下一页的令牌。",
+          "type": "string"
+        },
+        "previousToken": {
+          "description": "可用于获取上一页的令牌。",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Refinements": {
+      "description": "搜索改进。",
+      "properties": {
+        "brands": {
+          "description": "品牌搜索改进。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BrandRefinement"
+          }
+        },
+        "classifications": {
+          "description": "分类搜索细化。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClassificationRefinement"
+          }
+        }
+      },
+      "required": [
+        "brands",
+        "classifications"
+      ],
+      "type": "object"
+    },
+    "BrandRefinement": {
+      "description": "可用于获得更细粒度搜索结果的品牌描述。",
+      "properties": {
+        "numberOfResults": {
+          "description": "如果应用了优化键，则仍将返回的估计结果数。",
+          "type": "integer"
+        },
+        "brandName": {
+          "description": "品牌名称。用于显示，并且可以用作搜索细化。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "numberOfResults",
+        "brandName"
+      ],
+      "type": "object"
+    },
+    "ClassificationRefinement": {
+      "description": "分类的描述，可用于获得更细粒度的搜索结果。",
+      "properties": {
+        "numberOfResults": {
+          "description": "如果应用了优化键，则仍将返回的估计结果数。",
+          "type": "integer"
+        },
+        "displayName": {
+          "description": "分类的显示名称。",
+          "type": "string"
+        },
+        "classificationId": {
+          "description": "可用于搜索优化目的的分类的标识符。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "numberOfResults",
+        "displayName",
+        "classificationId"
+      ],
+      "type": "object"
+    }
+  }
+}

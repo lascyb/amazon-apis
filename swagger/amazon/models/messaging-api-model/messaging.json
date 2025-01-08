@@ -1,0 +1,3523 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "使用消息传递API，您可以构建向买家发送消息的应用程序。您可以获取您指定的订单可用的消息类型列表，然后调用向该订单的买方发送消息的操作。消息传递API返回根据 <a href = https://tools.ietf.org/html/ draft-kelly-json-hal-08>JSON超文本应用程序语言 </a> (HAL) 标准形成的响应。",
+    "version": "v1",
+    "title": "Selling Partner API for Messaging",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/hal+json"
+  ],
+  "paths": {
+    "/messaging/v1/orders/{amazonOrderId}": {
+      "get": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "返回可用于指定订单的消息类型的列表。消息类型由actions对象表示，该对象包含路径和查询参数。您可以使用路径和参数来调用发送消息的操作。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getMessagingActionsForOrder",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这将指定您需要可用消息类型列表的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回 _links.actions键下的hypermedia链接，这些链接指定订单允许哪些消息传递操作。",
+            "schema": {
+              "$ref": "#/definitions/GetMessagingActionsForOrderResponse"
+            },
+            "examples": {
+              "application/hal+json": {
+                "_links": {
+                  "actions": [
+                    {
+                      "href": "/messaging/v1/orders/903-1671087-0812628/messages/negativeFeedbackRemoval?marketplaceIds=ATVPDKIKX0DER",
+                      "name": "negativeFeedbackRemoval"
+                    }
+                  ],
+                  "self": {
+                    "href": "/messaging/v1/orders/903-1671087-0812628?marketplaceIds=ATVPDKIKX0DER"
+                  }
+                },
+                "_embedded": {
+                  "actions": [
+                    {
+                      "_links": {
+                        "schema": {
+                          "href": "/messaging/v1/orders/903-1671087-0812628/messages/negativeFeedbackRemoval/schema",
+                          "name": "negativeFeedbackRemoval"
+                        },
+                        "self": {
+                          "href": "/messaging/v1/orders/903-1671087-0812628/messages/negativeFeedbackRemoval?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "negativeFeedbackRemoval"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      }
+                    }
+                  },
+                  "response": {
+                    "_links": {
+                      "actions": [
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/messages/confirmCustomizationDetails?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "confirmCustomizationDetails"
+                        },
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/messages/confirmDeliveryDetails?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "confirmDeliveryDetails"
+                        },
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/messages/legalDisclosure?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "legalDisclosure"
+                        },
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/messages/negativeFeedbackRemoval?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "negativeFeedbackRemoval"
+                        },
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/messages/confirmOrderDetails?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "confirmOrderDetails"
+                        },
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/messages/confirmServiceDetails?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "confirmServiceDetails"
+                        },
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/messages/amazonMotors?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "amazonMotors"
+                        },
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/messages/digitalAccessKey?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "digitalAccessKey"
+                        },
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/messages/unexpectedProblem?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "unexpectedProblem"
+                        },
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/messages/warranty?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "warranty"
+                        },
+                        {
+                          "href": "/messaging/v1/orders/123-1234567-1234567/attributes?marketplaceIds=ATVPDKIKX0DER",
+                          "name": "attributes"
+                        }
+                      ],
+                      "self": {
+                        "href": "/messaging/v1/orders/123-1234567-1234567?marketplaceIds=ATVPDKIKX0DER"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetMessagingActionsForOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetMessagingActionsForOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetMessagingActionsForOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/GetMessagingActionsForOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetMessagingActionsForOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetMessagingActionsForOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetMessagingActionsForOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetMessagingActionsForOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/confirmCustomizationDetails": {
+      "post": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "发送一条消息，要求买家提供或验证自定义详细信息，如姓名拼写、图像、首字母等。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "confirmCustomizationDetails",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmCustomizationDetailsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建消息。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmCustomizationDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      },
+                      "body": {
+                        "value": {
+                          "text": "My Message",
+                          "attachments": [
+                            {
+                              "uploadDestinationId": "4e936e26-7b72-4b84-af27-e6baee1d546d",
+                              "fileName": "AmazonMotors.txt"
+                            },
+                            {
+                              "uploadDestinationId": "4e936e26-7b72-4b84-af27-e6baee1d546d",
+                              "fileName": "AmazonMotors.txt"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmCustomizationDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmCustomizationDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmCustomizationDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmCustomizationDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmCustomizationDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmCustomizationDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmCustomizationDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmCustomizationDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/confirmDeliveryDetails": {
+      "post": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "向买方发送消息以安排交货或确认联系信息以进行交货。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createConfirmDeliveryDetails",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmDeliveryDetailsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建消息。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmDeliveryDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      },
+                      "body": {
+                        "value": {
+                          "text": "My Message"
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmDeliveryDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmDeliveryDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmDeliveryDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmDeliveryDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmDeliveryDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmDeliveryDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmDeliveryDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmDeliveryDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/legalDisclosure": {
+      "post": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "发送重要消息，其中包含卖方在法律上有义务向买方提供的文档。此消息只能用于交付法律要求的文件。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createLegalDisclosure",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateLegalDisclosureRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建了法律披露消息。",
+            "schema": {
+              "$ref": "#/definitions/CreateLegalDisclosureResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      },
+                      "body": {
+                        "value": {
+                          "attachments": [
+                            {
+                              "uploadDestinationId": "4e936e26-7b72-4b84-af27-e6baee1d546d",
+                              "fileName": "AmazonMotors.txt"
+                            },
+                            {
+                              "uploadDestinationId": "4e936e26-7b72-4b84-af27-e6baee1d546d",
+                              "fileName": "AmazonMotors.txt"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateLegalDisclosureResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateLegalDisclosureResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateLegalDisclosureResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateLegalDisclosureResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateLegalDisclosureResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateLegalDisclosureResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateLegalDisclosureResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateLegalDisclosureResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/negativeFeedbackRemoval": {
+      "post": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "发送一条非关键消息，要求买家删除他们的负面反馈。只有在卖方解决了买方的问题后，才能发送此消息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createNegativeFeedbackRemoval",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建了negativefeedback删除消息。",
+            "schema": {
+              "$ref": "#/definitions/CreateNegativeFeedbackRemovalResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateNegativeFeedbackRemovalResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateNegativeFeedbackRemovalResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateNegativeFeedbackRemovalResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateNegativeFeedbackRemovalResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateNegativeFeedbackRemovalResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateNegativeFeedbackRemovalResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateNegativeFeedbackRemovalResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateNegativeFeedbackRemovalResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/confirmOrderDetails": {
+      "post": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "发送一条消息，在运送订单之前向买家询问与订单相关的问题。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createConfirmOrderDetails",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmOrderDetailsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建消息。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmOrderDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      },
+                      "body": {
+                        "value": {
+                          "text": "My Message"
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmOrderDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmOrderDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmOrderDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmOrderDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmOrderDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmOrderDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmOrderDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmOrderDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/confirmServiceDetails": {
+      "post": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "发送消息以联系家庭服务客户以安排服务呼叫或在服务呼叫之前收集信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createConfirmServiceDetails",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmServiceDetailsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建消息。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmServiceDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      },
+                      "body": {
+                        "value": {
+                          "text": "My Message"
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmServiceDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmServiceDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmServiceDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmServiceDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmServiceDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmServiceDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmServiceDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateConfirmServiceDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/amazonMotors": {
+      "post": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "向买家发送消息，以提供有关Amazon Motors订单的详细信息。此消息只能由亚马逊汽车卖家发送。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "CreateAmazonMotors",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateAmazonMotorsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建消息。",
+            "schema": {
+              "$ref": "#/definitions/CreateAmazonMotorsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      },
+                      "body": {
+                        "value": {
+                          "attachments": [
+                            {
+                              "uploadDestinationId": "4e936e26-7b72-4b84-af27-e6baee1d546d",
+                              "fileName": "AmazonMotors.txt"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateAmazonMotorsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateAmazonMotorsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateAmazonMotorsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateAmazonMotorsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateAmazonMotorsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateAmazonMotorsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateAmazonMotorsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateAmazonMotorsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/warranty": {
+      "post": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "向买方发送消息，以提供有关其订单中购买的保修信息的详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "CreateWarranty",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateWarrantyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建消息。",
+            "schema": {
+              "$ref": "#/definitions/CreateWarrantyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      },
+                      "body": {
+                        "value": {
+                          "attachments": [
+                            {
+                              "uploadDestinationId": "8634452c-4d4f-4703-8cea-2ecc9dcb3279",
+                              "fileName": "warranty.txt"
+                            }
+                          ],
+                          "coverageStartDate": "2004-12-13T21:39:45.618-08:00",
+                          "coverageEndDate": "2005-12-13T21:39:45.618-08:00"
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateWarrantyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateWarrantyResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateWarrantyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateWarrantyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateWarrantyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateWarrantyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateWarrantyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateWarrantyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/attributes": {
+      "get": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "返回包含与订单相关的属性的响应。这包括买家偏好。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |",
+        "operationId": "GetAttributes",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功返回响应。",
+            "schema": {
+              "$ref": "#/definitions/GetAttributesResponse"
+            },
+            "examples": {
+              "application/hal+json": {
+                "buyer": {
+                  "locale": "en-US"
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      }
+                    }
+                  },
+                  "response": {
+                    "buyer": {
+                      "locale": "en-US"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetAttributesResponse"
+            },
+            "examples": {
+              "application/hal+json": {
+                "errors": [
+                  {
+                    "code": "string",
+                    "message": "string",
+                    "details": "string"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetAttributesResponse"
+            },
+            "examples": {
+              "application/hal+json": {
+                "errors": [
+                  {
+                    "code": "string",
+                    "message": "string",
+                    "details": "string"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetAttributesResponse"
+            },
+            "examples": {
+              "application/hal+json": {
+                "errors": [
+                  {
+                    "code": "string",
+                    "message": "string",
+                    "details": "string"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/GetAttributesResponse"
+            },
+            "examples": {
+              "application/hal+json": {
+                "errors": [
+                  {
+                    "code": "string",
+                    "message": "string",
+                    "details": "string"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetAttributesResponse"
+            },
+            "examples": {
+              "application/hal+json": {
+                "errors": [
+                  {
+                    "code": "string",
+                    "message": "string",
+                    "details": "string"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetAttributesResponse"
+            },
+            "examples": {
+              "application/hal+json": {
+                "errors": [
+                  {
+                    "code": "string",
+                    "message": "string",
+                    "details": "string"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetAttributesResponse"
+            },
+            "examples": {
+              "application/hal+json": {
+                "errors": [
+                  {
+                    "code": "string",
+                    "message": "string",
+                    "details": "string"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetAttributesResponse"
+            },
+            "examples": {
+              "application/hal+json": {
+                "errors": [
+                  {
+                    "code": "string",
+                    "message": "string",
+                    "details": "string"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/digitalAccessKey": {
+      "post": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "向买方发送消息，以共享按订单使用数字内容所需的数字访问密钥。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createDigitalAccessKey",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateDigitalAccessKeyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建消息。",
+            "schema": {
+              "$ref": "#/definitions/CreateDigitalAccessKeyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      },
+                      "body": {
+                        "value": {
+                          "text": "My Message",
+                          "attachments": [
+                            {
+                              "uploadDestinationId": "4e936e26-7b72-4b84-af27-e6baee1d546d",
+                              "fileName": "AmazonMotors.txt"
+                            },
+                            {
+                              "uploadDestinationId": "4e936e26-7b72-4b84-af27-e6baee1d546d",
+                              "fileName": "AmazonMotors.txt"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateDigitalAccessKeyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateDigitalAccessKeyResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateDigitalAccessKeyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateDigitalAccessKeyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateDigitalAccessKeyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateDigitalAccessKeyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateDigitalAccessKeyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateDigitalAccessKeyResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/unexpectedProblem": {
+      "post": {
+        "tags": [
+          "messaging"
+        ],
+        "description": "向买方发送重要消息，指出遇到了影响订单完成的意外问题。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createUnexpectedProblem",
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "in": "path",
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateUnexpectedProblemRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建消息。",
+            "schema": {
+              "$ref": "#/definitions/CreateUnexpectedProblemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      },
+                      "body": {
+                        "value": {
+                          "text": "My Message"
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateUnexpectedProblemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-0000000"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateUnexpectedProblemResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateUnexpectedProblemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateUnexpectedProblemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateUnexpectedProblemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateUnexpectedProblemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateUnexpectedProblemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateUnexpectedProblemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messaging/v1/orders/{amazonOrderId}/messages/invoice": {
+      "post": {
+        "description": "发送消息，向买方提供发票",
+        "operationId": "sendInvoice",
+        "tags": [
+          "messaging"
+        ],
+        "responses": {
+          "201": {
+            "description": "已为订单创建消息。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "Unique request reference id.",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InvoiceResponse"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "123-1234567-1234567"
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "Unique request reference id.",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InvoiceResponse"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "amazonOrderId": {
+                        "value": "badOrderId"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "Unique request reference id.",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InvoiceResponse"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "Unique request reference id.",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InvoiceResponse"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "description": "Unique request reference id.",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InvoiceResponse"
+            }
+          },
+          "415": {
+            "description": "请求的实体的格式不受请求的资源支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "description": "Unique request reference id.",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InvoiceResponse"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "description": "Unique request reference id.",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InvoiceResponse"
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "description": "Unique request reference id.",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InvoiceResponse"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "description": "Unique request reference id.",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/InvoiceResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "amazonOrderId",
+            "type": "string",
+            "in": "path",
+            "required": true,
+            "description": "Amazon订单标识符。这指定了发送消息的顺序。"
+          },
+          {
+            "name": "marketplaceIds",
+            "type": "array",
+            "in": "query",
+            "required": true,
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "schema": {
+              "$ref": "#/definitions/InvoiceRequest"
+            },
+            "in": "body",
+            "name": "body",
+            "required": true
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Attachment": {
+      "type": "object",
+      "required": [
+        "fileName",
+        "uploadDestinationId"
+      ],
+      "properties": {
+        "uploadDestinationId": {
+          "type": "string",
+          "description": "上传目标的标识符。通过调用uploads api的 [createUploadDestinationForResource](doc: Uploads-api-reference # post-uploads2020-11-01uploaddestinationsresource) 操作获取此值。"
+        },
+        "fileName": {
+          "type": "string",
+          "description": "文件的名称，包括扩展名。这是将出现在消息中的文件名。这不需要与您上传的文件的文件名匹配。"
+        }
+      },
+      "description": "表示上载到目标的文件，该目标由用于上载的销售合作伙伴api的 [createUploadDestinationForResource](doc:uploads-API-reference # post-uploads2020-11-01uploaddestinationsresource) 操作创建。"
+    },
+    "LinkObject": {
+      "type": "object",
+      "required": [
+        "href"
+      ],
+      "properties": {
+        "href": {
+          "type": "string",
+          "description": "此对象的URI。"
+        },
+        "name": {
+          "type": "string",
+          "description": "此对象的标识符。"
+        }
+      },
+      "description": "一个Link对象。"
+    },
+    "MessagingAction": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "description": "包含模板名称的简单对象。"
+    },
+    "Schema": {
+      "type": "object",
+      "description": "描述操作的预期负载的JSON架构文档。可以根据 <a href = http:// json-schema.org/draft-04/schema>http:// json-schema.org/draft-04/schema</a> 验证此对象。",
+      "additionalProperties": {}
+    },
+    "GetMessagingActionsForOrderResponse": {
+      "type": "object",
+      "properties": {
+        "_links": {
+          "type": "object",
+          "properties": {
+            "self": {
+              "$ref": "#/definitions/LinkObject"
+            },
+            "actions": {
+              "type": "array",
+              "description": "指定的amazonOrderId的合格操作。",
+              "items": {
+                "$ref": "#/definitions/LinkObject"
+              }
+            }
+          },
+          "required": [
+            "actions",
+            "self"
+          ]
+        },
+        "_embedded": {
+          "type": "object",
+          "properties": {
+            "actions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetMessagingActionResponse"
+              }
+            }
+          },
+          "required": [
+            "actions"
+          ]
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "getMessagingActionsForOrder操作的响应架构。"
+    },
+    "GetMessagingActionResponse": {
+      "type": "object",
+      "properties": {
+        "_links": {
+          "type": "object",
+          "properties": {
+            "self": {
+              "$ref": "#/definitions/LinkObject"
+            },
+            "schema": {
+              "$ref": "#/definitions/LinkObject"
+            }
+          },
+          "required": [
+            "schema",
+            "self"
+          ]
+        },
+        "_embedded": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "$ref": "#/definitions/GetSchemaResponse"
+            }
+          }
+        },
+        "payload": {
+          "$ref": "#/definitions/MessagingAction"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "描述可以对订单执行的消息传递操作。提供指向描述预期输入的JSON架构文档的JSON超文本应用程序语言 (HAL) 链接。"
+    },
+    "GetSchemaResponse": {
+      "type": "object",
+      "properties": {
+        "_links": {
+          "type": "object",
+          "properties": {
+            "self": {
+              "$ref": "#/definitions/LinkObject"
+            }
+          },
+          "required": [
+            "self"
+          ]
+        },
+        "payload": {
+          "$ref": "#/definitions/Schema"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      }
+    },
+    "InvoiceRequest": {
+      "description": "sendInvoice操作的请求架构。",
+      "type": "object",
+      "properties": {
+        "attachments": {
+          "type": "array",
+          "description": "要包括在给买方的消息中的附件。",
+          "maxLength": 5,
+          "minLength": 1,
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        }
+      }
+    },
+    "InvoiceResponse": {
+      "description": "sendInvoice操作的响应架构。",
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      }
+    },
+    "CreateConfirmCustomizationDetailsRequest": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "要发送给买方的文本。仅允许与自定义详细信息相关的链接。不要包含HTML或电子邮件地址。文本必须以购买者的首选语言编写，可以从GetAttributes操作中检索。",
+          "minLength": 1,
+          "maxLength": 800
+        },
+        "attachments": {
+          "type": "array",
+          "description": "要包括在给买方的消息中的附件。",
+          "maxLength": 5,
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        }
+      },
+      "description": "confirmCustomizationDetails操作的请求架构。"
+    },
+    "CreateConfirmCustomizationDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "confirmCustomizationDetails操作的响应架构。"
+    },
+    "CreateConfirmDeliveryDetailsRequest": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "要发送给买方的文本。仅允许与订单交付相关的链接。不要包含HTML或电子邮件地址。文本必须以购买者的首选语言编写，可以从GetAttributes操作中检索。",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "description": "createConfirmDeliveryDetails操作的请求架构。"
+    },
+    "CreateConfirmDeliveryDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "createConfirmDeliveryDetails操作的响应架构。"
+    },
+    "CreateNegativeFeedbackRemovalResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "Createnegativefeedbackreletion操作的响应架构。"
+    },
+    "CreateLegalDisclosureRequest": {
+      "type": "object",
+      "properties": {
+        "attachments": {
+          "type": "array",
+          "description": "要包括在给买方的消息中的附件。如果附件中包含任何文本，则必须以买方的首选语言编写文本，可以从GetAttributes操作中检索该语言。",
+          "maxLength": 5,
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        }
+      },
+      "description": "Createlegaldiscemaloperation操作的请求架构。"
+    },
+    "CreateLegalDisclosureResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "Createlegaldiscemaloperation的响应架构。"
+    },
+    "CreateConfirmOrderDetailsRequest": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "要发送给买方的文本。仅允许与订单完成相关的链接。不要包含HTML或电子邮件地址。文本必须以购买者的首选语言编写，可以从GetAttributes操作中检索。",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "description": "createConfirmOrderDetails操作的请求架构。"
+    },
+    "CreateConfirmOrderDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "createConfirmOrderDetails操作的响应架构。"
+    },
+    "CreateConfirmServiceDetailsRequest": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "要发送给买方的文本。仅允许与家庭服务呼叫相关的链接。不要包含HTML或电子邮件地址。文本必须以购买者的首选语言编写，可以从GetAttributes操作中检索。",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "description": "createConfirmServiceDetails操作的请求架构。"
+    },
+    "CreateConfirmServiceDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "createConfirmServiceDetails操作的响应架构。"
+    },
+    "CreateAmazonMotorsRequest": {
+      "type": "object",
+      "properties": {
+        "attachments": {
+          "type": "array",
+          "description": "要包括在给买方的消息中的附件。如果附件中包含任何文本，则必须以买方的首选语言编写文本，可以从GetAttributes操作中检索该语言。",
+          "maxLength": 5,
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        }
+      },
+      "description": "createAmazonMotors操作的请求架构。"
+    },
+    "CreateAmazonMotorsResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "createAmazonMotors操作的响应架构。"
+    },
+    "CreateWarrantyRequest": {
+      "type": "object",
+      "properties": {
+        "attachments": {
+          "type": "array",
+          "description": "要包括在给买方的消息中的附件。如果附件中包含任何文本，则必须以买方的首选语言编写文本，可以从GetAttributes操作中检索该语言。",
+          "maxLength": 5,
+          "minLength": 1,
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        },
+        "coverageStartDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "要包括在给买方的消息中的保修范围的开始日期。"
+        },
+        "coverageEndDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "要包括在给买方的消息中的保修范围的结束日期。"
+        }
+      },
+      "description": "createWarranty操作的请求架构。"
+    },
+    "CreateWarrantyResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "createWarranty操作的响应架构。"
+    },
+    "GetAttributesResponse": {
+      "type": "object",
+      "properties": {
+        "buyer": {
+          "type": "object",
+          "description": "与买方相关的属性列表。",
+          "properties": {
+            "locale": {
+              "type": "string",
+              "description": "买方的首选语言，用区域设置特定的语言标记表示。示例: “en-US” 、 “zh-cn” 和 “en-gb”。"
+            }
+          }
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "GetAttributes操作的响应架构。"
+    },
+    "CreateDigitalAccessKeyRequest": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "要发送给买方的文本。仅允许与数字访问密钥相关的链接。不要包含HTML或电子邮件地址。文本必须以购买者的首选语言编写，可以从GetAttributes操作中检索。",
+          "minLength": 1,
+          "maxLength": 400
+        },
+        "attachments": {
+          "type": "array",
+          "description": "要包括在给买方的消息中的附件。",
+          "maxLength": 5,
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        }
+      },
+      "description": "createDigitalAccessKey操作的请求架构。"
+    },
+    "CreateDigitalAccessKeyResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "createDigitalAccessKey操作的响应架构。"
+    },
+    "CreateUnexpectedProblemRequest": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "要发送给买方的文本。仅允许与意外问题呼叫相关的链接。不要包含HTML或电子邮件地址。文本必须以购买者的首选语言编写，可以从GetAttributes操作中检索。",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "description": "createUnexpectedProblem操作的请求架构。"
+    },
+    "CreateUnexpectedProblemResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "Createunexpected问题操作的响应架构。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    }
+  }
+}

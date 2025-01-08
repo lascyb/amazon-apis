@@ -1,0 +1,571 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Selling Partner API for Listings Restrictions",
+    "description": "列表限制的销售合作伙伴API提供了对Amazon目录列表限制的编程访问。\n\n有关更多信息，请参阅 [清单限制API用例指南](doc:listings-restrictions-api-v2021-08-01-use-case-guide)。",
+    "version": "2021-08-01",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "definitions": {
+    "RestrictionList": {
+      "description": "指定的Amazon目录项的限制列表。",
+      "type": "object",
+      "properties": {
+        "restrictions": {
+          "items": {
+            "$ref": "#/definitions/Restriction"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "restrictions"
+      ]
+    },
+    "Restriction": {
+      "description": "列表限制，可选地由条件限定，并带有限制原因列表。",
+      "type": "object",
+      "properties": {
+        "marketplaceId": {
+          "description": "市场标识符。标识强制执行限制的Amazon marketplace。",
+          "type": "string"
+        },
+        "conditionType": {
+          "description": "适用于限制的条件。",
+          "type": "string",
+          "enum": [
+            "new_new",
+            "new_open_box",
+            "new_oem",
+            "refurbished_refurbished",
+            "used_like_new",
+            "used_very_good",
+            "used_good",
+            "used_acceptable",
+            "collectible_like_new",
+            "collectible_very_good",
+            "collectible_good",
+            "collectible_acceptable",
+            "club_club"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "new_new",
+              "description": "新建"
+            },
+            {
+              "value": "new_open_box",
+              "description": "新建-打开盒子。"
+            },
+            {
+              "value": "new_oem",
+              "description": "新的OEM。"
+            },
+            {
+              "value": "refurbished_refurbished",
+              "description": "翻新"
+            },
+            {
+              "value": "used_like_new",
+              "description": "二手-像新的一样。"
+            },
+            {
+              "value": "used_very_good",
+              "description": "使用-非常好。"
+            },
+            {
+              "value": "used_good",
+              "description": "用过的-很好。"
+            },
+            {
+              "value": "used_acceptable",
+              "description": "已使用-可接受。"
+            },
+            {
+              "value": "collectible_like_new",
+              "description": "收藏品-像新的一样。"
+            },
+            {
+              "value": "collectible_very_good",
+              "description": "收藏-非常好。"
+            },
+            {
+              "value": "collectible_good",
+              "description": "收藏-很好。"
+            },
+            {
+              "value": "collectible_acceptable",
+              "description": "收藏品-可接受。"
+            },
+            {
+              "value": "club_club",
+              "description": "俱乐部"
+            }
+          ]
+        },
+        "reasons": {
+          "description": "限制的原因列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reason"
+          }
+        }
+      },
+      "required": [
+        "marketplaceId"
+      ]
+    },
+    "Reason": {
+      "description": "限制的原因，包括可能允许销售合作伙伴取消限制的路径转发链接 (如果可用)。",
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "描述限制原因的消息。",
+          "type": "string"
+        },
+        "reasonCode": {
+          "description": "指示限制列表的原因的代码。",
+          "type": "string",
+          "enum": [
+            "APPROVAL_REQUIRED",
+            "ASIN_NOT_FOUND",
+            "NOT_ELIGIBLE"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "APPROVAL_REQUIRED",
+              "description": "需要批准才能为指定的ASIN创建列表。将提供可允许销售伙伴移除限制的路径前向链路。"
+            },
+            {
+              "value": "ASIN_NOT_FOUND",
+              "description": "指定的ASIN在请求的市场中不存在。"
+            },
+            {
+              "value": "NOT_ELIGIBLE",
+              "description": "没有资格为指定的ASIN创建列表。将不提供路径前向链路来移除限制。"
+            }
+          ]
+        },
+        "links": {
+          "description": "可能允许销售伙伴删除限制的路径转发链接列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "required": [
+        "message"
+      ]
+    },
+    "Link": {
+      "description": "指向与列表限制相关的资源的链接。",
+      "type": "object",
+      "properties": {
+        "resource": {
+          "description": "相关资源的URI。",
+          "type": "string",
+          "format": "uri"
+        },
+        "verb": {
+          "description": "用于与相关资源交互的HTTP谓词。",
+          "type": "string",
+          "enum": [
+            "GET"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "GET",
+              "description": "使用HTTP GET方法访问提供的资源。"
+            }
+          ]
+        },
+        "title": {
+          "description": "相关资源的标题。",
+          "type": "string"
+        },
+        "type": {
+          "description": "相关资源的媒体类型。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "resource",
+        "verb"
+      ]
+    },
+    "ErrorList": {
+      "description": "请求不成功时返回的错误响应列表。",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "description": "请求不成功时返回的错误响应。",
+      "properties": {
+        "code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述错误情况的消息。",
+          "type": "string"
+        },
+        "details": {
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    }
+  },
+  "paths": {
+    "/listings/2021-08-01/restrictions": {
+      "get": {
+        "tags": [
+          "listings"
+        ],
+        "description": "返回Amazon目录中的项目的列表限制。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getListingsRestrictions",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "asin",
+            "in": "query",
+            "description": "商品的Amazon标准标识号 (ASIN)。",
+            "required": true,
+            "type": "string",
+            "x-example": "B0000ASIN1"
+          },
+          {
+            "name": "conditionType",
+            "in": "query",
+            "description": "用于筛选限制的条件。",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "new_new",
+              "new_open_box",
+              "new_oem",
+              "refurbished_refurbished",
+              "used_like_new",
+              "used_very_good",
+              "used_good",
+              "used_acceptable",
+              "collectible_like_new",
+              "collectible_very_good",
+              "collectible_good",
+              "collectible_acceptable",
+              "club_club"
+            ],
+            "x-example": "used_very_good",
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "new_new",
+                "description": "新建"
+              },
+              {
+                "value": "new_open_box",
+                "description": "新建-打开盒子。"
+              },
+              {
+                "value": "new_oem",
+                "description": "新的OEM。"
+              },
+              {
+                "value": "refurbished_refurbished",
+                "description": "翻新"
+              },
+              {
+                "value": "used_like_new",
+                "description": "二手-像新的一样。"
+              },
+              {
+                "value": "used_very_good",
+                "description": "使用-非常好。"
+              },
+              {
+                "value": "used_good",
+                "description": "用过的-很好。"
+              },
+              {
+                "value": "used_acceptable",
+                "description": "已使用-可接受。"
+              },
+              {
+                "value": "collectible_like_new",
+                "description": "收藏品-像新的一样。"
+              },
+              {
+                "value": "collectible_very_good",
+                "description": "收藏-非常好。"
+              },
+              {
+                "value": "collectible_good",
+                "description": "收藏-很好。"
+              },
+              {
+                "value": "collectible_acceptable",
+                "description": "收藏品-可接受。"
+              },
+              {
+                "value": "club_club",
+                "description": "俱乐部"
+              }
+            ]
+          },
+          {
+            "name": "sellerId",
+            "in": "query",
+            "description": "销售伙伴标识符，例如商家帐户。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "reasonLocale",
+            "in": "query",
+            "description": "用于原因文本本地化的区域设置。如果未提供，则使用第一市场的默认语言代码。示例: “en_US” 、 “fr_CA” 、 “fr_FR”。当本地化在指定的区域设置中不可用时，本地化消息默认为 “en_US”。",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功检索列表限制。",
+            "schema": {
+              "$ref": "#/definitions/RestrictionList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "restrictions": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "conditionType": "used_acceptable",
+                    "reasons": [
+                      {
+                        "message": "You cannot list the product in this condition.",
+                        "links": [
+                          {
+                            "resource": "https://sellercentral.amazon.com/hz/approvalrequest/restrictions/approve?asin=B0000ASIN1",
+                            "verb": "GET",
+                            "title": "Request Approval via Seller Central.",
+                            "type": "text/html"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {}
+                    }
+                  },
+                  "response": {
+                    "restrictions": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "conditionType": "used_acceptable",
+                        "reasons": [
+                          {
+                            "message": "You cannot list the product in this condition.",
+                            "links": [
+                              {
+                                "resource": "https://sellercentral.amazon.com/hz/approvalrequest/restrictions/approve?asin=B0000ASIN1",
+                                "verb": "GET",
+                                "title": "Request Approval via Seller Central.",
+                                "type": "text/html"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "BAD_ASIN"
+                      }
+                    }
+                  },
+                  "response": [
+                    {
+                      "code": "BAD_REQUEST",
+                      "message": "Invalid 'asin' provided."
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    }
+  }
+}

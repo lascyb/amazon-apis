@@ -1,0 +1,1875 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "目录项的销售合作伙伴API可帮助您以编程方式检索目录中项目的项目详细信息。",
+    "version": "v0",
+    "title": "Selling Partner API for Catalog Items",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/catalog/v0/items": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "description": "2022年9月30日生效，“listcatalogitems” 操作在目录项v0的销售合作伙伴API中将不再可用。作为替代方案，“searchcatalogitems” 在最新版本的 [目录项销售合作伙伴API v2022-04-01](doc:catalog-items-api-v2022-04-01-reference) 中可用。依赖于 “listcatalogitems” 操作的集成应迁移到 “searchcatalogitems” 操作，以避免服务中断。\n_注意:_['listcatalogores'](# get-catalogv0categories) 操作没有被弃用，您可以继续调用它。",
+        "operationId": "listCatalogItems",
+        "parameters": [
+          {
+            "name": "MarketplaceId",
+            "in": "query",
+            "description": "市场标识符。指定为其返回的项目的市场。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Query",
+            "in": "query",
+            "description": "用于在目录中搜索项的关键字。例如: “哈利·波特书”。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "QueryContextId",
+            "in": "query",
+            "description": "将在其中执行给定搜索的上下文的标识符。市场可以提供用于将搜索约束到潜在项目的子集的机制。例如，零售市场允许查询被约束到特定类别。QueryContextId参数指定这样的子集。如果省略，则将使用市场的默认上下文执行搜索，该默认上下文通常包含最大的项目集。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "SellerSKU",
+            "in": "query",
+            "description": "用于标识给定市场中的项目。SellerSKU由卖家的SellerId限定，它包含在您提交的每个操作中。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "UPC",
+            "in": "query",
+            "description": "用于零售包装的12位条形码。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "EAN",
+            "in": "query",
+            "description": "唯一标识目录项、制造商及其属性的欧洲商品编号。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ISBN",
+            "in": "query",
+            "description": "用于在国际上识别书籍的唯一商业书籍标识符。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "JAN",
+            "in": "query",
+            "description": "唯一标识产品、制造商及其属性的日文商品编号。",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogItemsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "MarketplaceId": {
+                        "value": "TEST_CASE_200"
+                      },
+                      "SellerSKU": {
+                        "value": "SKU_200"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "Items": [
+                        {
+                          "Identifiers": {
+                            "MarketplaceASIN": {
+                              "MarketplaceId": "ATVPDKIKX0DER",
+                              "ASIN": "A00551Q3CA"
+                            },
+                            "SKUIdentifier": {
+                              "MarketplaceId": "",
+                              "SellerId": "",
+                              "SellerSKU": ""
+                            }
+                          },
+                          "AttributeSets": [
+                            {
+                              "Actor": [
+                                "actor1",
+                                "actor2"
+                              ],
+                              "Artist": [
+                                "Artist1",
+                                "Artist2"
+                              ],
+                              "Author": [
+                                "Author1",
+                                "Author2"
+                              ],
+                              "Director": [
+                                "Director1",
+                                "Director2"
+                              ],
+                              "DisplaySize": {
+                                "Units": "inches",
+                                "value": 52
+                              },
+                              "Feature": [
+                                "Feature1",
+                                "Feature2"
+                              ],
+                              "Format": [
+                                "Format1",
+                                "Format2"
+                              ],
+                              "GemType": [
+                                "Gem1",
+                                "Gem2"
+                              ],
+                              "MaterialType": [
+                                "MaterialType1",
+                                "MaterialType2"
+                              ],
+                              "MediaType": [
+                                "MediaType1",
+                                "MediaType2"
+                              ],
+                              "OperatingSystem": [
+                                "OperatingSystem1",
+                                "OperatingSystem2"
+                              ],
+                              "Platform": [
+                                "Platform1",
+                                "Platform2"
+                              ],
+                              "AspectRatio": "4:3",
+                              "AudienceRating": "4.5",
+                              "BackFinding": "BackFinding",
+                              "BandMaterialType": "BandMaterialType",
+                              "Binding": "Health and Beauty",
+                              "BlurayRegion": "BlurayRegion",
+                              "Brand": "Nature Made",
+                              "CeroAgeRating": "CeroAgeRating",
+                              "ChainType": "ChainType",
+                              "ClaspType": "ClaspType",
+                              "Color": "Full Strength Mini",
+                              "CpuManufacturer": "CpuManufacturer",
+                              "CpuSpeed": {},
+                              "CpuType": "CpuType",
+                              "Department": "Department",
+                              "Edition": "1",
+                              "EpisodeSequence": "5",
+                              "EsrbAgeRating": "9.5",
+                              "Flavor": "031604028657",
+                              "Genre": "Genre",
+                              "GolfClubFlex": "GolfClubFlex",
+                              "GolfClubLoft": {
+                                "Units": "mm",
+                                "value": 100
+                              },
+                              "HandOrientation": "HandOrientation",
+                              "HardDiskInterface": "HardDiskInterface",
+                              "HardDiskSize": {
+                                "Units": "cm",
+                                "value": 10
+                              },
+                              "HardwarePlatform": "HardwarePlatform",
+                              "HazardousMaterialType": "HazardousMaterialType",
+                              "ItemDimensions": {
+                                "Height": {
+                                  "value": 4.5,
+                                  "Units": "mm"
+                                },
+                                "Length": {
+                                  "value": 1.44,
+                                  "Units": "inches"
+                                },
+                                "Width": {
+                                  "value": 2.44,
+                                  "Units": "cm"
+                                },
+                                "Weight": {
+                                  "value": 0.16,
+                                  "Units": "pounds"
+                                }
+                              },
+                              "IsAdultProduct": false,
+                              "IsAutographed": true,
+                              "IsEligibleForTradeIn": false,
+                              "IsMemorabilia": true,
+                              "IssuesPerYear": "12",
+                              "ItemPartNumber": "3YUIUIR439534",
+                              "Label": "Pharmavite",
+                              "Languages": [
+                                {
+                                  "Name": "Tamil",
+                                  "Type": "published",
+                                  "AudioFormat": "TSV"
+                                },
+                                {
+                                  "Name": "English",
+                                  "Type": "unknown",
+                                  "AudioFormat": "ESV"
+                                }
+                              ],
+                              "LegalDisclaimer": "LegalDisclaimer",
+                              "ListPrice": {
+                                "Amount": 10.99,
+                                "CurrencyCode": "USD"
+                              },
+                              "Manufacturer": "Pharmavite",
+                              "ManufacturerMaximumAge": {
+                                "Units": "age",
+                                "value": 60
+                              },
+                              "ManufacturerMinimumAge": {
+                                "Units": "age",
+                                "value": 10
+                              },
+                              "ManufacturerPartsWarrantyDescription": "ManufacturerPartsWarrantyDescription",
+                              "MetalStamp": "MetalStamp",
+                              "MetalType": "MetalType",
+                              "Model": "2865"
+                            }
+                          ],
+                          "Relationships": [
+                            {
+                              "Edition": "1",
+                              "GolfClubFlex": "GolfClubFlex",
+                              "Size": "Small",
+                              "GolfClubLoft": {
+                                "Units": "meters",
+                                "value": 11
+                              },
+                              "TotalDiamondWeight": {
+                                "Units": "ss",
+                                "value": 234
+                              },
+                              "TotalGemWeight": {
+                                "Units": "ee",
+                                "value": 544
+                              }
+                            },
+                            {
+                              "Color": "Black",
+                              "Flavor": "Grape",
+                              "HandOrientation": "Left",
+                              "HardwarePlatform": "Windows"
+                            },
+                            {
+                              "MetalType": "Steel",
+                              "Model": "5.0",
+                              "ProductTypeSubcategory": "Electronics"
+                            }
+                          ]
+                        },
+                        {
+                          "Identifiers": {
+                            "MarketplaceASIN": {
+                              "MarketplaceId": "ATVPDKIKX0DER",
+                              "ASIN": "B00551Q3CS"
+                            },
+                            "SKUIdentifier": {
+                              "MarketplaceId": "",
+                              "SellerId": "",
+                              "SellerSKU": ""
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogItemsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "MarketplaceId": {
+                        "value": "TEST_CASE_400"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogItemsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogItemsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogItemsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogItemsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogItemsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogItemsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog/v0/items/{asin}": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "description": "从2022年9月30日起，“getcatalogitem” 操作将不再在目录项v0的销售合作伙伴API中可用。此操作在最新版本的 [目录项销售合作伙伴API v2022-04-01](doc:catalog-items-api-v2022-04-01-reference) 中可用。依赖此操作的集成应迁移到最新版本，以避免服务中断。\n_注意:_['listcatalogores'](# get-catalogv0categories) 操作没有被弃用，您可以继续调用它。",
+        "operationId": "getCatalogItem",
+        "parameters": [
+          {
+            "name": "MarketplaceId",
+            "in": "query",
+            "description": "市场标识符。指定项目的市场。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "asin",
+            "in": "path",
+            "description": "商品的Amazon标准标识号 (ASIN)。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetCatalogItemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "MarketplaceId": {
+                        "value": "TEST_CASE_200"
+                      },
+                      "asin": {
+                        "value": "ASIN_200"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "Identifiers": {
+                        "MarketplaceASIN": {
+                          "MarketplaceId": "ATVPDKIKX0DER",
+                          "ASIN": "B00551Q3CS"
+                        },
+                        "SKUIdentifier": {
+                          "MarketplaceId": "",
+                          "SellerId": "",
+                          "SellerSKU": ""
+                        }
+                      },
+                      "AttributeSets": [
+                        {
+                          "NumberOfDiscs": 11,
+                          "NumberOfIssues": 12,
+                          "NumberOfItems": 1,
+                          "NumberOfPages": 234,
+                          "NumberOfTracks": 104,
+                          "OpticalZoom": {
+                            "Units": "nm",
+                            "value": 101
+                          },
+                          "PackageDimensions": {
+                            "Height": {
+                              "value": 5.44,
+                              "Units": "mm"
+                            },
+                            "Length": {
+                              "value": 4.5,
+                              "Units": "inches"
+                            },
+                            "Width": {
+                              "value": 2.44,
+                              "Units": "cm"
+                            },
+                            "Weight": {
+                              "value": 0.16,
+                              "Units": "pounds"
+                            }
+                          },
+                          "Creator": [
+                            {
+                              "Role": "someRole",
+                              "value": "4.5"
+                            },
+                            {
+                              "Role": "someRole2",
+                              "value": "45.5"
+                            }
+                          ],
+                          "PackageQuantity": 1,
+                          "PartNumber": "2865",
+                          "PegiRating": "PegiRating",
+                          "ProcessorCount": 23,
+                          "ProductGroup": "Health and Beauty",
+                          "ProductTypeName": "HEALTH_PERSONAL_CARE",
+                          "ProductTypeSubcategory": "ProductTypeSubcategory",
+                          "PublicationDate": "2012-07-27",
+                          "Publisher": "Pharmavite",
+                          "RegionCode": "RegionCode",
+                          "ReleaseDate": "ReleaseDate",
+                          "RingSize": "RingSize",
+                          "RunningTime": {
+                            "Units": "minutes",
+                            "value": 131
+                          },
+                          "ShaftMaterial": "ShaftMaterial",
+                          "Scent": "Scent",
+                          "SeasonSequence": "Publisher",
+                          "SeikodoProductCode": "SeikodoProductCode",
+                          "Size": "Size",
+                          "SizePerPearl": "SizePerPearl",
+                          "SmallImage": {
+                            "URL": "http://g-ecx.images-amazon.com/images/G/01/x-site/icons/no-img-sm._CB1535416344_.gif",
+                            "Height": {
+                              "Units": "pixels",
+                              "value": 40
+                            },
+                            "Width": {
+                              "Units": "pixels",
+                              "value": 60
+                            }
+                          },
+                          "Studio": "Pharmavite",
+                          "SubscriptionLength": {
+                            "Units": "months",
+                            "value": 12
+                          },
+                          "SystemMemorySize": {
+                            "Units": "GB",
+                            "value": 256
+                          },
+                          "SystemMemoryType": "SystemMemoryType",
+                          "TheatricalReleaseDate": "2020-11-11",
+                          "Title": "Nature Made Super B Complex Full Strength Softgel, 60 Count",
+                          "TotalDiamondWeight": {
+                            "Units": "gms",
+                            "value": 22
+                          },
+                          "TotalGemWeight": {
+                            "Units": "carat",
+                            "value": 23
+                          },
+                          "Warranty": "Warranty",
+                          "WeeeTaxValue": {
+                            "Amount": 11.99,
+                            "CurrencyCode": "EUR"
+                          }
+                        }
+                      ],
+                      "Relationships": [
+                        {
+                          "RingSize": "1",
+                          "ShaftMaterial": "Asbestos",
+                          "Scent": "Happy",
+                          "PackageQuantity": 102
+                        },
+                        {
+                          "SizePerPearl": "2",
+                          "GemType": [
+                            "Gemmy1",
+                            "Gemmy2"
+                          ],
+                          "OperatingSystem": [
+                            "WIN",
+                            "MAC"
+                          ],
+                          "MaterialType": [
+                            "Steel",
+                            "Nickel"
+                          ],
+                          "ItemDimensions": {
+                            "Height": {
+                              "value": 4.5,
+                              "Units": "mm"
+                            },
+                            "Length": {
+                              "value": 1.44,
+                              "Units": "inches"
+                            },
+                            "Width": {
+                              "value": 2.44,
+                              "Units": "cm"
+                            },
+                            "Weight": {
+                              "value": 0.16,
+                              "Units": "pounds"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetCatalogItemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "MarketplaceId": {
+                        "value": "TEST_CASE_400"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetCatalogItemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetCatalogItemResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetCatalogItemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetCatalogItemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetCatalogItemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetCatalogItemResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog/v0/categories": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "description": "根据指定的ASIN或SellerSKU返回项所属的父类别。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 2 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "listCatalogCategories",
+        "parameters": [
+          {
+            "name": "MarketplaceId",
+            "in": "query",
+            "description": "市场标识符。指定项目的市场。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ASIN",
+            "in": "query",
+            "description": "商品的Amazon标准标识号 (ASIN)。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "SellerSKU",
+            "in": "query",
+            "description": "用于标识给定市场中的项目。SellerSKU由卖家的SellerId限定，它包含在您提交的每个操作中。",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogCategoriesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "MarketplaceId": {
+                        "value": "TEST_CASE_200"
+                      },
+                      "ASIN": {
+                        "value": "asin_200"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": [
+                      {
+                        "ProductCategoryId": "26752675",
+                        "ProductCategoryName": "Project Management",
+                        "parent": {}
+                      },
+                      {
+                        "ProductCategoryId": "468220445",
+                        "ProductCategoryName": "Art",
+                        "parent": {}
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogCategoriesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "MarketplaceId": {
+                        "value": "TEST_CASE_400"
+                      },
+                      "ASIN": {
+                        "value": "ASIN_TO_TEST"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogCategoriesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogCategoriesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogCategoriesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogCategoriesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogCategoriesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ListCatalogCategoriesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ListCatalogItemsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "listCatalogItems操作的负载。",
+          "$ref": "#/definitions/ListMatchingItemsResponse"
+        },
+        "errors": {
+          "description": "listCatalogItems操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      }
+    },
+    "ListMatchingItemsResponse": {
+      "type": "object",
+      "properties": {
+        "Items": {
+          "$ref": "#/definitions/ItemList"
+        }
+      }
+    },
+    "ItemList": {
+      "type": "array",
+      "description": "项目列表。",
+      "items": {
+        "$ref": "#/definitions/Item"
+      }
+    },
+    "GetCatalogItemResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "getCatalogItem操作的负载。",
+          "$ref": "#/definitions/Item"
+        },
+        "errors": {
+          "description": "在getCatalogItem操作期间发生一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      }
+    },
+    "Item": {
+      "type": "object",
+      "required": [
+        "Identifiers"
+      ],
+      "properties": {
+        "Identifiers": {
+          "description": "唯一标识项的标识符。",
+          "$ref": "#/definitions/IdentifierType"
+        },
+        "AttributeSets": {
+          "description": "项的属性列表。",
+          "$ref": "#/definitions/AttributeSetList"
+        },
+        "Relationships": {
+          "description": "项的变化关系信息的列表。",
+          "$ref": "#/definitions/RelationshipList"
+        },
+        "SalesRankings": {
+          "description": "按类别列出的项的销售等级信息的列表。",
+          "$ref": "#/definitions/SalesRankList"
+        }
+      },
+      "description": "Amazon目录中的项目。"
+    },
+    "IdentifierType": {
+      "type": "object",
+      "properties": {
+        "MarketplaceASIN": {
+          "description": "表示该项目由MarketPlaceId和ASIN标识。",
+          "$ref": "#/definitions/ASINIdentifier"
+        },
+        "SKUIdentifier": {
+          "description": "表示该项目由MarketPlaceId、SellerId和SellerSKU标识。",
+          "$ref": "#/definitions/SellerSKUIdentifier"
+        }
+      }
+    },
+    "ASINIdentifier": {
+      "type": "object",
+      "required": [
+        "ASIN",
+        "MarketplaceId"
+      ],
+      "properties": {
+        "MarketplaceId": {
+          "type": "string",
+          "description": "市场标识符。"
+        },
+        "ASIN": {
+          "type": "string",
+          "description": "商品的Amazon标准标识号 (ASIN)。"
+        }
+      }
+    },
+    "SellerSKUIdentifier": {
+      "type": "object",
+      "required": [
+        "MarketplaceId",
+        "SellerId",
+        "SellerSKU"
+      ],
+      "properties": {
+        "MarketplaceId": {
+          "type": "string",
+          "description": "市场标识符。"
+        },
+        "SellerId": {
+          "type": "string",
+          "description": "为操作提交的卖方标识符。"
+        },
+        "SellerSKU": {
+          "type": "string",
+          "description": "项目的卖方库存单位 (SKU)。"
+        }
+      }
+    },
+    "AttributeSetList": {
+      "type": "array",
+      "description": "项的属性列表。",
+      "items": {
+        "$ref": "#/definitions/AttributeSetListType"
+      }
+    },
+    "AttributeSetListType": {
+      "type": "object",
+      "properties": {
+        "Actor": {
+          "type": "array",
+          "description": "项目的actor属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Artist": {
+          "type": "array",
+          "description": "项目的艺术家属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "AspectRatio": {
+          "type": "string",
+          "description": "项目的长宽比属性。"
+        },
+        "AudienceRating": {
+          "type": "string",
+          "description": "项目的收视率属性。"
+        },
+        "Author": {
+          "type": "array",
+          "description": "项目的作者属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "BackFinding": {
+          "type": "string",
+          "description": "项目的反向查找属性。"
+        },
+        "BandMaterialType": {
+          "type": "string",
+          "description": "物料的波段材质类型属性。"
+        },
+        "Binding": {
+          "type": "string",
+          "description": "项的绑定属性。"
+        },
+        "BlurayRegion": {
+          "type": "string",
+          "description": "项目的Bluray区域属性。"
+        },
+        "Brand": {
+          "type": "string",
+          "description": "商品的品牌属性。"
+        },
+        "CeroAgeRating": {
+          "type": "string",
+          "description": "项目的CERO年龄分级属性。"
+        },
+        "ChainType": {
+          "type": "string",
+          "description": "项目的链类型属性。"
+        },
+        "ClaspType": {
+          "type": "string",
+          "description": "项的clasp type属性。"
+        },
+        "Color": {
+          "type": "string",
+          "description": "项目的颜色属性。"
+        },
+        "CpuManufacturer": {
+          "type": "string",
+          "description": "项目的CPU制造商属性。"
+        },
+        "CpuSpeed": {
+          "description": "项目的CPU速度属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "CpuType": {
+          "type": "string",
+          "description": "项目的cputype属性。"
+        },
+        "Creator": {
+          "type": "array",
+          "description": "项目的创建者属性。",
+          "items": {
+            "$ref": "#/definitions/CreatorType"
+          }
+        },
+        "Department": {
+          "type": "string",
+          "description": "物料的部门属性。"
+        },
+        "Director": {
+          "type": "array",
+          "description": "项目的director属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "DisplaySize": {
+          "description": "项目的显示大小属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "Edition": {
+          "type": "string",
+          "description": "项目的edition属性。"
+        },
+        "EpisodeSequence": {
+          "type": "string",
+          "description": "项目的片段序列属性。"
+        },
+        "EsrbAgeRating": {
+          "type": "string",
+          "description": "物料的ESRB年龄分级属性。"
+        },
+        "Feature": {
+          "type": "array",
+          "description": "项目的功能属性",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Flavor": {
+          "type": "string",
+          "description": "项目的flavor属性。"
+        },
+        "Format": {
+          "type": "array",
+          "description": "项的格式属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "GemType": {
+          "type": "array",
+          "description": "项目的gem类型属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Genre": {
+          "type": "string",
+          "description": "项目的流派属性。"
+        },
+        "GolfClubFlex": {
+          "type": "string",
+          "description": "项目的高尔夫球杆flex属性。"
+        },
+        "GolfClubLoft": {
+          "description": "项目的高尔夫球杆放样属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "HandOrientation": {
+          "type": "string",
+          "description": "项目的手方向属性。"
+        },
+        "HardDiskInterface": {
+          "type": "string",
+          "description": "项目的硬盘接口属性。"
+        },
+        "HardDiskSize": {
+          "description": "项的硬盘大小属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "HardwarePlatform": {
+          "type": "string",
+          "description": "项的硬件平台属性。"
+        },
+        "HazardousMaterialType": {
+          "type": "string",
+          "description": "物料的危险材料类型属性。"
+        },
+        "ItemDimensions": {
+          "description": "项目的项目维度属性。",
+          "$ref": "#/definitions/DimensionType"
+        },
+        "IsAdultProduct": {
+          "type": "boolean",
+          "description": "物品的成人产品属性。"
+        },
+        "IsAutographed": {
+          "type": "boolean",
+          "description": "项目的亲笔签名属性。"
+        },
+        "IsEligibleForTradeIn": {
+          "type": "boolean",
+          "description": "在该项目的属性中有资格进行贸易。"
+        },
+        "IsMemorabilia": {
+          "type": "boolean",
+          "description": "项目的 “是纪念品” 属性。"
+        },
+        "IssuesPerYear": {
+          "type": "string",
+          "description": "项目的 “每年的问题” 属性。"
+        },
+        "ItemPartNumber": {
+          "type": "string",
+          "description": "物料的物料部件号属性。"
+        },
+        "Label": {
+          "type": "string",
+          "description": "项的label属性。"
+        },
+        "Languages": {
+          "type": "array",
+          "description": "项目的语言属性。",
+          "items": {
+            "$ref": "#/definitions/LanguageType"
+          }
+        },
+        "LegalDisclaimer": {
+          "type": "string",
+          "description": "项目的法律免责声明属性。"
+        },
+        "ListPrice": {
+          "description": "物料的价目表价格属性。",
+          "$ref": "#/definitions/Price"
+        },
+        "Manufacturer": {
+          "type": "string",
+          "description": "物料的制造商属性。"
+        },
+        "ManufacturerMaximumAge": {
+          "description": "物料的制造商最大年龄属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "ManufacturerMinimumAge": {
+          "description": "物料的制造商最小使用年限属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "ManufacturerPartsWarrantyDescription": {
+          "type": "string",
+          "description": "物料的 “制造商部件保修说明” 属性。"
+        },
+        "MaterialType": {
+          "type": "array",
+          "description": "物料的物料类型属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "MaximumResolution": {
+          "description": "项目的最大分辨率属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "MediaType": {
+          "type": "array",
+          "description": "项目的媒体类型属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "MetalStamp": {
+          "type": "string",
+          "description": "项目的金属印章属性。"
+        },
+        "MetalType": {
+          "type": "string",
+          "description": "项目的金属类型属性。"
+        },
+        "Model": {
+          "type": "string",
+          "description": "项目的模型属性。"
+        },
+        "NumberOfDiscs": {
+          "type": "integer",
+          "description": "项目的 “光盘数” 属性。"
+        },
+        "NumberOfIssues": {
+          "type": "integer",
+          "description": "项目的 “问题数” 属性。"
+        },
+        "NumberOfItems": {
+          "type": "integer",
+          "description": "项目的项数属性。"
+        },
+        "NumberOfPages": {
+          "type": "integer",
+          "description": "项目的页数属性。"
+        },
+        "NumberOfTracks": {
+          "type": "integer",
+          "description": "项目的轨道数属性。"
+        },
+        "OperatingSystem": {
+          "type": "array",
+          "description": "项目的操作系统属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "OpticalZoom": {
+          "description": "项目的光学缩放属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "PackageDimensions": {
+          "description": "项目的包维度属性。",
+          "$ref": "#/definitions/DimensionType"
+        },
+        "PackageQuantity": {
+          "type": "integer",
+          "description": "物料的包装数量属性。"
+        },
+        "PartNumber": {
+          "type": "string",
+          "description": "物料的部件号属性。"
+        },
+        "PegiRating": {
+          "type": "string",
+          "description": "项目的PEGI分级属性。"
+        },
+        "Platform": {
+          "type": "array",
+          "description": "项目的平台属性。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ProcessorCount": {
+          "type": "integer",
+          "description": "项目的处理器计数属性。"
+        },
+        "ProductGroup": {
+          "type": "string",
+          "description": "物料的产品组属性。"
+        },
+        "ProductTypeName": {
+          "type": "string",
+          "description": "项目的产品类型名称属性。"
+        },
+        "ProductTypeSubcategory": {
+          "type": "string",
+          "description": "物料的产品类型子类别属性。"
+        },
+        "PublicationDate": {
+          "type": "string",
+          "description": "项目的发布日期属性。"
+        },
+        "Publisher": {
+          "type": "string",
+          "description": "项目的publisher属性。"
+        },
+        "RegionCode": {
+          "type": "string",
+          "description": "物料的区域代码属性。"
+        },
+        "ReleaseDate": {
+          "type": "string",
+          "description": "项目的发布日期属性。"
+        },
+        "RingSize": {
+          "type": "string",
+          "description": "项目的环大小属性。"
+        },
+        "RunningTime": {
+          "description": "项目的运行时间属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "ShaftMaterial": {
+          "type": "string",
+          "description": "物料的轴材质属性。"
+        },
+        "Scent": {
+          "type": "string",
+          "description": "项目的气味属性。"
+        },
+        "SeasonSequence": {
+          "type": "string",
+          "description": "项目的季节序列属性。"
+        },
+        "SeikodoProductCode": {
+          "type": "string",
+          "description": "项目的Seikodo产品代码属性。"
+        },
+        "Size": {
+          "type": "string",
+          "description": "项目的size属性。"
+        },
+        "SizePerPearl": {
+          "type": "string",
+          "description": "项目的每个珍珠的大小属性。"
+        },
+        "SmallImage": {
+          "description": "项目的小图像属性。",
+          "$ref": "#/definitions/Image"
+        },
+        "Studio": {
+          "type": "string",
+          "description": "项目的studio属性。"
+        },
+        "SubscriptionLength": {
+          "description": "项目的订阅长度属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "SystemMemorySize": {
+          "description": "项目的系统内存大小属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "SystemMemoryType": {
+          "type": "string",
+          "description": "项目的系统内存类型属性。"
+        },
+        "TheatricalReleaseDate": {
+          "type": "string",
+          "description": "项目的戏剧发行日期属性。"
+        },
+        "Title": {
+          "type": "string",
+          "description": "项目的title属性。"
+        },
+        "TotalDiamondWeight": {
+          "description": "项目的总钻石重量属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "TotalGemWeight": {
+          "description": "项目的总宝石权重属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "Warranty": {
+          "type": "string",
+          "description": "物料的保修属性。"
+        },
+        "WeeeTaxValue": {
+          "description": "物料的WEEE税值属性。",
+          "$ref": "#/definitions/Price"
+        }
+      },
+      "description": "项目的属性。"
+    },
+    "DecimalWithUnits": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "decimal值。"
+        },
+        "Units": {
+          "type": "string",
+          "description": "decimal值的单位。"
+        }
+      },
+      "description": "十进制值和单位。"
+    },
+    "CreatorType": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "属性的值。"
+        },
+        "Role": {
+          "type": "string",
+          "description": "价值的作用。"
+        }
+      },
+      "description": "项目的创建者类型属性。"
+    },
+    "DimensionType": {
+      "type": "object",
+      "properties": {
+        "Height": {
+          "description": "维度的高度属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "Length": {
+          "description": "维度的长度属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "Width": {
+          "description": "维度的宽度属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "Weight": {
+          "description": "维度的权重属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        }
+      },
+      "description": "物料的维度类型属性。"
+    },
+    "LanguageType": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "description": "项目的name属性。"
+        },
+        "Type": {
+          "type": "string",
+          "description": "项的type属性。"
+        },
+        "AudioFormat": {
+          "type": "string",
+          "description": "项目的音频格式属性。"
+        }
+      },
+      "description": "项目的语言类型属性。"
+    },
+    "Image": {
+      "type": "object",
+      "properties": {
+        "URL": {
+          "type": "string",
+          "description": "项目的图像URL属性。"
+        },
+        "Height": {
+          "description": "项目的图像高度属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "Width": {
+          "description": "项目的图像宽度属性。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        }
+      },
+      "description": "项目的image属性。"
+    },
+    "Price": {
+      "type": "object",
+      "properties": {
+        "Amount": {
+          "type": "number",
+          "description": "金额。"
+        },
+        "CurrencyCode": {
+          "type": "string",
+          "description": "金额的货币代码。"
+        }
+      },
+      "description": "物料的价格属性。"
+    },
+    "RelationshipList": {
+      "type": "array",
+      "description": "变更关系信息的列表 (如果适用于物料)。",
+      "items": {
+        "$ref": "#/definitions/RelationshipType"
+      }
+    },
+    "RelationshipType": {
+      "type": "object",
+      "properties": {
+        "Identifiers": {
+          "description": "唯一标识相关项的标识符。",
+          "$ref": "#/definitions/IdentifierType"
+        },
+        "Color": {
+          "type": "string",
+          "description": "项目的颜色变化。"
+        },
+        "Edition": {
+          "type": "string",
+          "description": "项目的版本变体。"
+        },
+        "Flavor": {
+          "type": "string",
+          "description": "项目的风味变化。"
+        },
+        "GemType": {
+          "type": "array",
+          "description": "项目的gem类型变体。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "GolfClubFlex": {
+          "type": "string",
+          "description": "项目的高尔夫球杆flex变体。"
+        },
+        "HandOrientation": {
+          "type": "string",
+          "description": "项目的手方向变化。"
+        },
+        "HardwarePlatform": {
+          "type": "string",
+          "description": "项的硬件平台变体。"
+        },
+        "MaterialType": {
+          "type": "array",
+          "description": "物料的物料类型变化。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "MetalType": {
+          "type": "string",
+          "description": "项目的金属类型变化。"
+        },
+        "Model": {
+          "type": "string",
+          "description": "项目的模型变化。"
+        },
+        "OperatingSystem": {
+          "type": "array",
+          "description": "项目的操作系统变体。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ProductTypeSubcategory": {
+          "type": "string",
+          "description": "物料的产品类型子类别变体。"
+        },
+        "RingSize": {
+          "type": "string",
+          "description": "项的环大小变化。"
+        },
+        "ShaftMaterial": {
+          "type": "string",
+          "description": "项目的轴材料变化。"
+        },
+        "Scent": {
+          "type": "string",
+          "description": "物品的气味变化。"
+        },
+        "Size": {
+          "type": "string",
+          "description": "项目的大小变化。"
+        },
+        "SizePerPearl": {
+          "type": "string",
+          "description": "每颗珍珠的尺寸。"
+        },
+        "GolfClubLoft": {
+          "description": "项目的高尔夫球杆阁楼变化。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "TotalDiamondWeight": {
+          "description": "一个项目的总钻石重量变化。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "TotalGemWeight": {
+          "description": "一个项目的总宝石重量变化。",
+          "$ref": "#/definitions/DecimalWithUnits"
+        },
+        "PackageQuantity": {
+          "type": "integer",
+          "description": "物料的包装数量变化。"
+        },
+        "ItemDimensions": {
+          "description": "物料的物料维度关系。",
+          "$ref": "#/definitions/DimensionType"
+        }
+      },
+      "description": "项目的具体变化。"
+    },
+    "SalesRankList": {
+      "type": "array",
+      "description": "按类别列出的项的销售等级信息的列表。",
+      "items": {
+        "$ref": "#/definitions/SalesRankType"
+      }
+    },
+    "SalesRankType": {
+      "type": "object",
+      "required": [
+        "ProductCategoryId",
+        "Rank"
+      ],
+      "properties": {
+        "ProductCategoryId": {
+          "type": "string",
+          "description": "标识从中获取销售等级的项目类别。"
+        },
+        "Rank": {
+          "type": "integer",
+          "format": "int32",
+          "description": "物料在物料类别中的销售排名。"
+        }
+      }
+    },
+    "ListCatalogCategoriesResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "listCatalogCategories操作的负载。",
+          "$ref": "#/definitions/ListOfCategories"
+        },
+        "errors": {
+          "description": "listCatalogCategories操作期间发生一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      }
+    },
+    "ListOfCategories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Categories"
+      }
+    },
+    "Categories": {
+      "type": "object",
+      "properties": {
+        "ProductCategoryId": {
+          "type": "string",
+          "description": "产品类别 (或浏览节点) 的标识符。"
+        },
+        "ProductCategoryName": {
+          "type": "string",
+          "description": "产品类别 (或浏览节点) 的名称。"
+        },
+        "parent": {
+          "type": "object",
+          "description": "父产品类别。"
+        }
+      }
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "以人类可读的形式描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可帮助呼叫者了解或解决问题的其他信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    }
+  }
+}

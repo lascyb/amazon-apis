@@ -1,0 +1,3322 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "借助用于商家履行的销售合作伙伴API，您可以构建应用程序，卖家可以使用Amazon的购买运输服务来购买非Prime和Prime订单的运输。",
+    "version": "v0",
+    "title": "销售用于商户履行的合作伙伴API",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/mfn/v0/eligibleShippingServices": {
+      "post": {
+        "tags": [
+          "merchantFulfillment"
+        ],
+        "description": "返回满足指定装运请求详细信息的装运服务优惠列表。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 6 | 12 |\n\n“X-amzn-ratelimit-limit” 响应标头返回可用时应用于请求的操作的使用计划费率限制。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [sp-api中的使用计划和速率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getEligibleShipmentServices",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "“Geteligibleshipmentservices” 操作的请求架构。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetEligibleShipmentServicesRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetEligibleShipmentServicesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "ShipmentRequestDetails": {
+                            "AmazonOrderId": "903-5563053-5647845",
+                            "ItemList": [
+                              {
+                                "OrderItemId": "52986411826454",
+                                "Quantity": 1
+                              }
+                            ],
+                            "ShipFromAddress": {
+                              "Name": "John Doe",
+                              "AddressLine1": "300 Turnbull Ave",
+                              "Email": "jdoeasdfllkj@yahoo.com",
+                              "City": "Detroit",
+                              "StateOrProvinceCode": "MI",
+                              "PostalCode": "48123",
+                              "CountryCode": "US",
+                              "Phone": "7132341234"
+                            },
+                            "PackageDimensions": {
+                              "Length": 10.25,
+                              "Width": 10.25,
+                              "Height": 10.25,
+                              "Unit": "inches"
+                            },
+                            "Weight": {
+                              "Value": 10.25,
+                              "Unit": "oz"
+                            },
+                            "ShippingServiceOptions": {
+                              "DeliveryExperience": "NoTracking",
+                              "CarrierWillPickUp": false,
+                              "CarrierWillPickUpOption": "ShipperWillDropOff"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "ShippingServiceList": [
+                        {
+                          "ShippingServiceName": "UPS 2nd Day Air®",
+                          "CarrierName": "UPS®",
+                          "ShippingServiceId": "UPS_PTP_2ND_DAY_AIR",
+                          "ShippingServiceOfferId": "WHgxtyn6qjGGaCzOCog1azF5HLHje5Pz3Lc2Fmt5eKoZAReW8oJ1SMumuBS8lA/Hjuglhyiu0+KRLvyJxFV0PB9YFMDhygs3VyTL0WGYkGxiuRkmuEvpqldUn9rrkWVodqnR4vx2VtXvtER/Ju6RqYoddJZGy6RS2KLzzhQ2NclN0NYXMZVqpOe5RsRBddXaGuJr7oza3M52+JzChocAHzcurIhCRynpbxfmNLzZMQEbgnpGLzuaoSMzfxg90/NaXFR/Ou01du/uKd5AbfMW/AxAKP9ht6Oi9lDHq6WkGqvjkVLW0/jj/fBgblIwcs+t",
+                          "ShipDate": "2019-10-28T16:36:36Z",
+                          "EarliestEstimatedDeliveryDate": "2019-10-31T06:00:00Z",
+                          "LatestEstimatedDeliveryDate": "2019-10-31T06:00:00Z",
+                          "Rate": {
+                            "CurrencyCode": "USD",
+                            "Amount": 34.73
+                          },
+                          "ShippingServiceOptions": {
+                            "DeliveryExperience": "NoTracking",
+                            "CarrierWillPickUp": false,
+                            "LabelFormat": ""
+                          },
+                          "AvailableLabelFormats": [
+                            "ZPL203",
+                            "ShippingServiceDefault",
+                            "PDF",
+                            "PNG"
+                          ],
+                          "AvailableFormatOptionsForLabel": [
+                            {
+                              "LabelFormat": "ZPL203"
+                            },
+                            {
+                              "LabelFormat": "ShippingServiceDefault"
+                            },
+                            {
+                              "LabelFormat": "PDF"
+                            },
+                            {
+                              "LabelFormat": "PNG"
+                            }
+                          ],
+                          "Benefits": {
+                            "IncludedBenefits": [
+                              "CLAIMS_PROTECTED"
+                            ],
+                            "ExcludedBenefits": []
+                          }
+                        },
+                        {
+                          "ShippingServiceName": "UPS Next Day Air Saver®",
+                          "CarrierName": "UPS®",
+                          "ShippingServiceId": "UPS_PTP_NEXT_DAY_AIR_SAVER",
+                          "ShippingServiceOfferId": "WHgxtyn6qjGGaCzOCog1azF5HLHje5Pz3Lc2Fmt5eKqqhKGQ2YZmuxsXKVXmdgdWNvfxb1qfm5bGm8NuqlqnNT3eTiJ4viTctepggbeUKUSykClJ+Qmw43zdA8wsgREhQCmb4Bbo/skapLQS1F9uwH2FgY5SfMsj/egudyocpVRT45KSQAT0H5YiXW3OyyRAae9fZ0RzDJAABHiisOyYyXnB1mtWOZqc7rlGR4yyqN7jmiT4t8dmuGPX7ptY4qskrN+6VHZO9bM9tdDS0ysHhAVv4jO3Q5sWFg4nEPaARWSsrpa6zSGMLxAOj56O3tcP",
+                          "ShipDate": "2019-10-28T16:36:36Z",
+                          "EarliestEstimatedDeliveryDate": "2019-10-30T06:00:00Z",
+                          "LatestEstimatedDeliveryDate": "2019-10-30T06:00:00Z",
+                          "Rate": {
+                            "CurrencyCode": "USD",
+                            "Amount": 98.75
+                          },
+                          "ShippingServiceOptions": {
+                            "DeliveryExperience": "NoTracking",
+                            "CarrierWillPickUp": false,
+                            "LabelFormat": ""
+                          },
+                          "AvailableLabelFormats": [
+                            "ZPL203",
+                            "ShippingServiceDefault",
+                            "PDF",
+                            "PNG"
+                          ],
+                          "AvailableFormatOptionsForLabel": [
+                            {
+                              "LabelFormat": "ZPL203"
+                            },
+                            {
+                              "LabelFormat": "ShippingServiceDefault"
+                            },
+                            {
+                              "LabelFormat": "PDF"
+                            },
+                            {
+                              "LabelFormat": "PNG"
+                            }
+                          ],
+                          "Benefits": {
+                            "IncludedBenefits": [],
+                            "ExcludedBenefits": [
+                              {
+                                "Benefit": "CLAIMS_PROTECTED",
+                                "ReasonCodes": [
+                                  "LATE_DELIVERY_RISK"
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "TemporarilyUnavailableCarrierList": [
+                        {
+                          "CarrierName": "UPS®"
+                        },
+                        {
+                          "CarrierName": "DHLECOMMERCE"
+                        }
+                      ],
+                      "TermsAndConditionsNotAcceptedCarrierList": [
+                        {
+                          "CarrierName": "YANWEN"
+                        },
+                        {
+                          "CarrierName": "CHINA_POST"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetEligibleShipmentServicesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "ShipmentRequestDetails": {
+                            "AmazonOrderId": "TEST_CASE_400",
+                            "ItemList": [
+                              {
+                                "OrderItemId": "52986411826454",
+                                "Quantity": 1
+                              }
+                            ],
+                            "ShipFromAddress": {
+                              "Name": "John Doe",
+                              "AddressLine1": "300 Turnbull Ave",
+                              "Email": "jdoeasdfllkj@yahoo.com",
+                              "City": "Detroit",
+                              "StateOrProvinceCode": "MI",
+                              "PostalCode": "48123",
+                              "CountryCode": "USA",
+                              "Phone": "7132341234"
+                            },
+                            "PackageDimensions": {
+                              "Length": 10.25,
+                              "Width": 10.25,
+                              "Height": 10.25,
+                              "Unit": "inches"
+                            },
+                            "Weight": {
+                              "Value": 10.25,
+                              "Unit": "oz"
+                            },
+                            "ShippingServiceOptions": {
+                              "DeliveryExperience": "NoTracking",
+                              "CarrierWillPickUp": false,
+                              "CarrierWillPickUpOption": "ShipperWillDropOff"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "1 validation error detected: Value 'USA' at 'shipmentRequestDetails.shipFromAddress.countryCode' failed to satisfy constraint: Member must have length less than or equal to 2",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "The request's authorization header is not formatted correctly or does not contain a valid token.",
+            "schema": {
+              "$ref": "#/definitions/GetEligibleShipmentServicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetEligibleShipmentServicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetEligibleShipmentServicesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetEligibleShipmentServicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetEligibleShipmentServicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetEligibleShipmentServicesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mfn/v0/shipments/{shipmentId}": {
+      "get": {
+        "tags": [
+          "merchantFulfillment"
+        ],
+        "description": "返回现有货件的货件信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回可用时应用于请求的操作的使用计划费率限制。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [sp-api中的使用计划和速率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getShipment",
+        "parameters": [
+          {
+            "name": "shipmentId",
+            "in": "path",
+            "description": "Amazon定义的货件标识符。",
+            "required": true,
+            "type": "string",
+            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "abcddcba-00c3-4f6f-a63a-639f76ee9253"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "ShipmentId": "abcddcba-00c3-4f6f-a63a-639f76ee9253",
+                      "AmazonOrderId": "903-5563053-5647845",
+                      "SellerOrderId": "903-5563053-5647845",
+                      "Insurance": {
+                        "CurrencyCode": "USD",
+                        "Amount": 0
+                      },
+                      "ItemList": [
+                        {
+                          "OrderItemId": "12958298061782",
+                          "Quantity": 1
+                        }
+                      ],
+                      "ShipFromAddress": {
+                        "Name": "John Doe",
+                        "AddressLine1": "300 Turnbull Ave",
+                        "Email": "jdoeasdfllkj@yahoo.com",
+                        "City": "Detroit",
+                        "StateOrProvinceCode": "MI",
+                        "PostalCode": "48123",
+                        "CountryCode": "US",
+                        "Phone": "7132341234"
+                      },
+                      "ShipToAddress": {
+                        "Name": "New York",
+                        "AddressLine1": "TIME WARNER CENTER",
+                        "AddressLine2": "10 COLUMBUS CIR",
+                        "Email": "",
+                        "City": "NEW YORK",
+                        "StateOrProvinceCode": "NY",
+                        "PostalCode": "10019-1158",
+                        "CountryCode": "US",
+                        "Phone": ""
+                      },
+                      "PackageDimensions": {
+                        "Length": 10.25,
+                        "Width": 10.25,
+                        "Height": 10.25,
+                        "Unit": "inches"
+                      },
+                      "Weight": {
+                        "Value": 10.25,
+                        "Unit": "oz"
+                      },
+                      "ShippingService": {
+                        "ShippingServiceName": "UPS 2nd Day Air®",
+                        "CarrierName": "UPS®",
+                        "ShippingServiceId": "UPS_PTP_2ND_DAY_AIR",
+                        "ShippingServiceOfferId": "",
+                        "ShipDate": "2019-10-28T18:00:00Z",
+                        "Rate": {
+                          "CurrencyCode": "USD",
+                          "Amount": 34.73
+                        },
+                        "ShippingServiceOptions": {
+                          "DeliveryExperience": "DeliveryConfirmationWithoutSignature",
+                          "DeclaredValue": {
+                            "CurrencyCode": "USD",
+                            "Amount": 0
+                          }
+                        },
+                        "RequiresAdditionalSellerInputs": false,
+                        "Benefits": {
+                          "IncludedBenefits": [],
+                          "ExcludedBenefits": [
+                            {
+                              "Benefit": "CLAIMS_PROTECTED",
+                              "ReasonCodes": [
+                                "LATE_DELIVERY_RISK"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "Label": {
+                        "Dimensions": {
+                          "Length": 6,
+                          "Width": 4,
+                          "Unit": "inches"
+                        },
+                        "FileContents": {
+                          "Contents": "H4sIAAAAAAAAAOS6dV",
+                          "FileType": "image/png",
+                          "Checksum": "9ALVyphCKfc3+Lb2ssyh8A=="
+                        }
+                      },
+                      "Status": "Purchased",
+                      "TrackingId": "1Z17E2100206868939",
+                      "CreatedDate": "2019-10-28T18:29:34Z",
+                      "LastUpdatedDate": "2019-10-28T18:30:35Z"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "aabbccdd-1beb-4cda-8bf4-7366cfddbec1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "1 validation error detected: Value 'TEST_CASE_400' at 'shipmentId' failed to satisfy constraint: Member must satisfy regular expression pattern: [0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "The request's authorization header is not formatted correctly or does not contain a valid token.",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "merchantFulfillment"
+        ],
+        "description": "取消由指定的发运标识符指示的发运。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回可用时应用于请求的操作的使用计划费率限制。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [sp-api中的使用计划和速率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "cancelShipment",
+        "parameters": [
+          {
+            "name": "shipmentId",
+            "in": "path",
+            "description": "Amazon定义的要取消的货件标识符。",
+            "required": true,
+            "type": "string",
+            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "be7a0a53-00c3-4f6f-a63a-639f76ee9253"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "ShipmentId": "be7a0a53-00c3-4f6f-a63a-639f76ee9253",
+                      "AmazonOrderId": "903-5563053-5647845",
+                      "SellerOrderId": "903-5563053-5647845",
+                      "Insurance": {
+                        "CurrencyCode": "USD",
+                        "Amount": 0
+                      },
+                      "ItemList": [
+                        {
+                          "OrderItemId": "12958298061782",
+                          "Quantity": 1
+                        }
+                      ],
+                      "ShipFromAddress": {
+                        "Name": "John Doe",
+                        "AddressLine1": "300 Turnbull Ave",
+                        "Email": "jdoeasdfllkj@yahoo.com",
+                        "City": "Detroit",
+                        "StateOrProvinceCode": "MI",
+                        "PostalCode": "48123",
+                        "CountryCode": "US",
+                        "Phone": "7132341234"
+                      },
+                      "ShipToAddress": {
+                        "Name": "New York",
+                        "AddressLine1": "TIME WARNER CENTER",
+                        "AddressLine2": "10 COLUMBUS CIR",
+                        "Email": "",
+                        "City": "NEW YORK",
+                        "StateOrProvinceCode": "NY",
+                        "PostalCode": "10019-1158",
+                        "CountryCode": "US",
+                        "Phone": ""
+                      },
+                      "PackageDimensions": {
+                        "Length": 10.25,
+                        "Width": 10.25,
+                        "Height": 10.25,
+                        "Unit": "inches"
+                      },
+                      "Weight": {
+                        "Value": 10.25,
+                        "Unit": "oz"
+                      },
+                      "ShippingService": {
+                        "ShippingServiceName": "UPS 2nd Day Air®",
+                        "CarrierName": "UPS®",
+                        "ShippingServiceId": "UPS_PTP_2ND_DAY_AIR",
+                        "ShippingServiceOfferId": "",
+                        "ShipDate": "2019-10-28T18:00:00Z",
+                        "Rate": {
+                          "CurrencyCode": "USD",
+                          "Amount": 34.73
+                        },
+                        "ShippingServiceOptions": {
+                          "DeliveryExperience": "DeliveryConfirmationWithoutSignature",
+                          "DeclaredValue": {
+                            "CurrencyCode": "USD",
+                            "Amount": 0
+                          }
+                        },
+                        "RequiresAdditionalSellerInputs": false
+                      },
+                      "Label": {
+                        "Dimensions": {},
+                        "FileContents": {
+                          "Contents": "",
+                          "FileType": "",
+                          "Checksum": ""
+                        }
+                      },
+                      "Status": "RefundPending",
+                      "TrackingId": "1Z17E2100206868939",
+                      "CreatedDate": "2019-10-28T18:29:34Z",
+                      "LastUpdatedDate": "2019-10-28T18:36:55Z"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "87d20cf7-1beb-4cda-8bf4-7366cfddbec1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "1 validation error detected: Value 'TEST_CASE_400' at 'shipmentId' failed to satisfy constraint: Member must satisfy regular expression pattern: [0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "The request's authorization header is not formatted correctly or does not contain a valid token.",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CancelShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mfn/v0/shipments": {
+      "post": {
+        "tags": [
+          "merchantFulfillment"
+        ],
+        "description": "使用提供的信息创建装运。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 2 |\n\n“X-amzn-ratelimit-limit” 响应标头返回可用时应用于请求的操作的使用计划费率限制。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [sp-api中的使用计划和速率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createShipment",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "“Createshipment” 操作的请求架构。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "ShipmentRequestDetails": {
+                            "AmazonOrderId": "903-5563053-5647845",
+                            "ItemList": [
+                              {
+                                "OrderItemId": "52986411826454",
+                                "Quantity": 1
+                              }
+                            ],
+                            "ShipFromAddress": {
+                              "Name": "John Doe",
+                              "AddressLine1": "300 Turnbull Ave",
+                              "Email": "jdoeasdfllkj@yahoo.com",
+                              "City": "Detroit",
+                              "StateOrProvinceCode": "MI",
+                              "PostalCode": "48123",
+                              "CountryCode": "US",
+                              "Phone": "7132341234"
+                            },
+                            "PackageDimensions": {
+                              "Length": 10.25,
+                              "Width": 10.25,
+                              "Height": 10.25,
+                              "Unit": "inches"
+                            },
+                            "Weight": {
+                              "Value": 10.25,
+                              "Unit": "oz"
+                            },
+                            "ShippingServiceOptions": {
+                              "DeliveryExperience": "NoTracking",
+                              "CarrierWillPickUp": false,
+                              "CarrierWillPickUpOption": "ShipperWillDropOff"
+                            }
+                          },
+                          "ShippingServiceId": "UPS_PTP_2ND_DAY_AIR",
+                          "ShippingServiceOfferId": "WHgxtyn6qjGGaCzOCog1azF5HLHje5Pz3Lc2Fmt5eKoZAReW8oJ1SMumuBS8lA/Hjuglhyiu0+KRLvyJxFV0PB9YFMDhygs3VyTL0WGYkGxiuRkmuEvpqldUn9rrkWVodqnR4vx2VtXvtER/Ju6RqYoddJZGy6RS2KLzzhQ2NclN0NYXMZVqpOe5RsRBddXaGuJr7oza3M52+JzChocAHzcurIhCRynpbxfmNLzZMQEbgnpGLzuaoSMzfxg90/NaXFR/Ou01du/uKd5AbfMW/AxAKP9ht6Oi9lDHq6WkGqvjkVLW0/jj/fBgblIwcs+t"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "ShipmentId": "be7a0a53-00c3-4f6f-a63a-639f76ee9253",
+                      "AmazonOrderId": "903-5563053-5647845",
+                      "Insurance": {
+                        "CurrencyCode": "USD",
+                        "Amount": 0
+                      },
+                      "ItemList": [
+                        {
+                          "OrderItemId": "12958298061782",
+                          "Quantity": 1
+                        }
+                      ],
+                      "ShipFromAddress": {
+                        "Name": "John Doe",
+                        "AddressLine1": "300 Turnbull Ave",
+                        "Email": "jdoeasdfllkj@yahoo.com",
+                        "City": "Detroit",
+                        "StateOrProvinceCode": "MI",
+                        "PostalCode": "48123",
+                        "CountryCode": "US",
+                        "Phone": "7132341234"
+                      },
+                      "ShipToAddress": {
+                        "Name": "New York",
+                        "AddressLine1": "TIME WARNER CENTER",
+                        "AddressLine2": "10 COLUMBUS CIR",
+                        "Email": "",
+                        "City": "NEW YORK",
+                        "StateOrProvinceCode": "NY",
+                        "PostalCode": "10019-1158",
+                        "CountryCode": "US",
+                        "Phone": ""
+                      },
+                      "PackageDimensions": {
+                        "Length": 10.25,
+                        "Width": 10.25,
+                        "Height": 10.25,
+                        "Unit": "inches"
+                      },
+                      "Weight": {
+                        "Value": 10.25,
+                        "Unit": "oz"
+                      },
+                      "ShippingService": {
+                        "ShippingServiceName": "UPS 2nd Day Air®",
+                        "CarrierName": "UPS®",
+                        "ShippingServiceId": "UPS_PTP_2ND_DAY_AIR",
+                        "ShippingServiceOfferId": "WHgxtyn6qjGGaCzOCog1azF5HLHje5Pz3Lc2Fmt5eKoZAReW8oJ1SMumuBS8lA/Hjuglhyiu0+KRLvyJxFV0PB9YFMDhygs3VyTL0WGYkGxiuRkmuEvpqldUn9rrkWVodqnR4vx2VtXvtER/Ju6RqYoddJZGy6RS2KLzzhQ2NclN0NYXMZVqpOe5RsRBddXaGuJr7oza3M52+JzChocAHzcurIhCRynpbxfmNLzZMQEbgnpGLzuaoSMzfxg90/NaXFR/Ou01du/uKd5AbfMW/AxAKP9ht6Oi9lDHq6WkGqvjkVLW0/jj/fBgblIwcs+t",
+                        "ShipDate": "2019-10-28T16:37:37Z",
+                        "EarliestEstimatedDeliveryDate": "2019-10-30T07:00:00Z",
+                        "LatestEstimatedDeliveryDate": "2019-10-30T07:00:00Z",
+                        "Rate": {
+                          "CurrencyCode": "USD",
+                          "Amount": 34.73
+                        },
+                        "ShippingServiceOptions": {
+                          "DeliveryExperience": "NoTracking",
+                          "DeclaredValue": {
+                            "CurrencyCode": "USD",
+                            "Amount": 0
+                          }
+                        },
+                        "RequiresAdditionalSellerInputs": false,
+                        "Benefits": {
+                          "IncludedBenefits": [
+                            "CLAIMS_PROTECTED"
+                          ],
+                          "ExcludedBenefits": []
+                        }
+                      },
+                      "Label": {
+                        "Dimensions": {
+                          "Length": 6,
+                          "Width": 4,
+                          "Unit": "inches"
+                        },
+                        "FileContents": {
+                          "Contents": "H4sIAAAAAAAAAOR",
+                          "FileType": "image/png",
+                          "Checksum": "d+eUxK5WTGxkGsTF0pmefQ=="
+                        },
+                        "LabelFormat": "PNG"
+                      },
+                      "Status": "Purchased",
+                      "TrackingId": "1Z17E2100217295733",
+                      "CreatedDate": "2019-10-28T16:37:43Z"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "ShipmentRequestDetails": {
+                            "AmazonOrderId": "TEST_CASE_400",
+                            "ItemList": [
+                              {
+                                "OrderItemId": "52986411826454",
+                                "Quantity": 1
+                              }
+                            ],
+                            "ShipFromAddress": {
+                              "Name": "John Doe",
+                              "AddressLine1": "300 Turnbull Ave",
+                              "Email": "jdoeasdfllkj@yahoo.com",
+                              "City": "Detroit",
+                              "StateOrProvinceCode": "MI",
+                              "PostalCode": "48123",
+                              "CountryCode": "USA",
+                              "Phone": "7132341234"
+                            },
+                            "PackageDimensions": {
+                              "Length": 10,
+                              "Width": 10,
+                              "Height": 10,
+                              "Unit": "inches"
+                            },
+                            "Weight": {
+                              "Value": 10,
+                              "Unit": "oz"
+                            },
+                            "ShippingServiceOptions": {
+                              "DeliveryExperience": "NoTracking",
+                              "CarrierWillPickUp": false,
+                              "CarrierWillPickUpOption": "ShipperWillDropOff"
+                            }
+                          },
+                          "ShippingServiceId": "UPS_PTP_2ND_DAY_AIR",
+                          "ShippingServiceOfferId": "WHgxtyn6qjGGaCzOCog1azF5HLHje5Pz3Lc2Fmt5eKoZAReW8oJ1SMumuBS8lA/Hjuglhyiu0+KRLvyJxFV0PB9YFMDhygs3VyTL0WGYkGxiuRkmuEvpqldUn9rrkWVodqnR4vx2VtXvtER/Ju6RqYoddJZGy6RS2KLzzhQ2NclN0NYXMZVqpOe5RsRBddXaGuJr7oza3M52+JzChocAHzcurIhCRynpbxfmNLzZMQEbgnpGLzuaoSMzfxg90/NaXFR/Ou01du/uKd5AbfMW/AxAKP9ht6Oi9lDHq6WkGqvjkVLW0/jj/fBgblIwcs+t"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "1 validation error detected: Value 'USA' at 'shipmentRequestDetails.shipFromAddress.countryCode' failed to satisfy constraint: Member must have length less than or equal to 2",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "The request's authorization header is not formatted correctly or does not contain a valid token.",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateShipmentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mfn/v0/additionalSellerInputs": {
+      "post": {
+        "tags": [
+          "merchantFulfillment"
+        ],
+        "description": "获取ship方法所需的其他卖方输入的列表。这通常用于国际航运。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回可用时应用于请求的操作的使用计划费率限制。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [sp-api中的使用计划和速率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getAdditionalSellerInputs",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "“Getadditionalsellerinputs” 操作的请求架构。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetAdditionalSellerInputsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetAdditionalSellerInputsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "ShippingServiceId": "UPS_PTP_GND",
+                          "ShipFromAddress": {
+                            "Name": "John Doe",
+                            "AddressLine1": "300 Turnbull Ave",
+                            "Email": "jdoeasdfllkj@yahoo.com",
+                            "City": "Detroit",
+                            "StateOrProvinceCode": "MI",
+                            "PostalCode": "48123",
+                            "CountryCode": "US",
+                            "Phone": "7132341234"
+                          },
+                          "OrderId": "903-5563053-5647845"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "ShipmentLevelFields": [
+                        {
+                          "AdditionalInputFieldName": "John Doe"
+                        }
+                      ],
+                      "ItemLevelFieldsList": [
+                        {
+                          "Asin": "ASIN_ID_200",
+                          "AdditionalInputs": []
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetAdditionalSellerInputsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "ShippingServiceId": "UPS_PTP_GND",
+                          "ShipFromAddress": {
+                            "Name": "John Doe",
+                            "AddressLine1": "300 Turnbull Ave",
+                            "Email": "jdoeasdfllkj@yahoo.com",
+                            "City": "Detroit",
+                            "StateOrProvinceCode": "MI",
+                            "PostalCode": "48123",
+                            "CountryCode": "XX",
+                            "Phone": "7132341234"
+                          },
+                          "OrderId": "901-5563053-5647845"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Ship From Address when calling GetAdditionalSellerInputs",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "The request's authorization header is not formatted correctly or does not contain a valid token.",
+            "schema": {
+              "$ref": "#/definitions/GetAdditionalSellerInputsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetAdditionalSellerInputsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetAdditionalSellerInputsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetAdditionalSellerInputsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetAdditionalSellerInputsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetAdditionalSellerInputsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "以人类可读的形式描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "LabelFormatOptionRequest": {
+      "type": "object",
+      "properties": {
+        "IncludePackingSlipWithLabel": {
+          "type": "boolean",
+          "description": "如果为true，则包括带有标签的装箱单。"
+        }
+      },
+      "description": "是否包括装箱单。"
+    },
+    "LabelFormatOption": {
+      "type": "object",
+      "properties": {
+        "IncludePackingSlipWithLabel": {
+          "type": "boolean",
+          "description": "如果为true，则包括带有标签的装箱单。"
+        },
+        "LabelFormat": {
+          "$ref": "#/definitions/LabelFormat"
+        }
+      },
+      "description": "标签格式详细信息以及是否包括装箱单。"
+    },
+    "AvailableCarrierWillPickUpOption": {
+      "type": "object",
+      "required": [
+        "CarrierWillPickUpOption",
+        "Charge"
+      ],
+      "properties": {
+        "CarrierWillPickUpOption": {
+          "$ref": "#/definitions/CarrierWillPickUpOption"
+        },
+        "Charge": {
+          "description": "收取的费用。",
+          "$ref": "#/definitions/CurrencyAmount"
+        }
+      },
+      "description": "指示承运人是否将收取包裹，以及收取的费用 (如果有)。"
+    },
+    "AvailableCarrierWillPickUpOptionsList": {
+      "type": "array",
+      "description": "可用的承运人拾取选项列表。",
+      "items": {
+        "$ref": "#/definitions/AvailableCarrierWillPickUpOption"
+      }
+    },
+    "AvailableDeliveryExperienceOption": {
+      "type": "object",
+      "required": [
+        "Charge",
+        "DeliveryExperienceOption"
+      ],
+      "properties": {
+        "DeliveryExperienceOption": {
+          "$ref": "#/definitions/DeliveryExperienceOption"
+        },
+        "Charge": {
+          "$ref": "#/definitions/CurrencyAmount"
+        }
+      },
+      "description": "可用的交货确认选项，以及收取的费用 (如果有)。"
+    },
+    "AvailableDeliveryExperienceOptionsList": {
+      "type": "array",
+      "description": "可用交付体验选项的列表。",
+      "items": {
+        "$ref": "#/definitions/AvailableDeliveryExperienceOption"
+      }
+    },
+    "AvailableShippingServiceOptions": {
+      "type": "object",
+      "required": [
+        "AvailableCarrierWillPickUpOptions",
+        "AvailableDeliveryExperienceOptions"
+      ],
+      "properties": {
+        "AvailableCarrierWillPickUpOptions": {
+          "$ref": "#/definitions/AvailableCarrierWillPickUpOptionsList"
+        },
+        "AvailableDeliveryExperienceOptions": {
+          "$ref": "#/definitions/AvailableDeliveryExperienceOptionsList"
+        }
+      },
+      "description": "可用的运输服务选项。"
+    },
+    "AvailableFormatOptionsForLabel": {
+      "type": "array",
+      "description": "可用的标签格式。",
+      "items": {
+        "$ref": "#/definitions/LabelFormatOption"
+      }
+    },
+    "AvailableFormatOptionsForLabelList": {
+      "type": "array",
+      "description": "可用的标签格式。",
+      "items": {
+        "$ref": "#/definitions/LabelFormatOption"
+      }
+    },
+    "Constraint": {
+      "type": "object",
+      "required": [
+        "ValidationString"
+      ],
+      "properties": {
+        "ValidationRegEx": {
+          "type": "string",
+          "description": "正则表达式。"
+        },
+        "ValidationString": {
+          "type": "string",
+          "description": "验证字符串。"
+        }
+      },
+      "description": "验证约束。"
+    },
+    "Constraints": {
+      "type": "array",
+      "description": "约束列表。",
+      "items": {
+        "$ref": "#/definitions/Constraint"
+      }
+    },
+    "AdditionalInputs": {
+      "type": "object",
+      "properties": {
+        "AdditionalInputFieldName": {
+          "type": "string",
+          "description": "字段名。"
+        },
+        "SellerInputDefinition": {
+          "$ref": "#/definitions/SellerInputDefinition"
+        }
+      },
+      "description": "将其他卖家输入映射到定义。映射的键是字段名。"
+    },
+    "SellerInputDefinition": {
+      "type": "object",
+      "required": [
+        "Constraints",
+        "DataType",
+        "InputDisplayText",
+        "IsRequired",
+        "StoredValue"
+      ],
+      "properties": {
+        "IsRequired": {
+          "type": "boolean",
+          "description": "如果为true，则需要附加输入字段。"
+        },
+        "DataType": {
+          "type": "string",
+          "description": "附加输入字段的数据类型。"
+        },
+        "Constraints": {
+          "$ref": "#/definitions/Constraints"
+        },
+        "InputDisplayText": {
+          "type": "string",
+          "description": "附加输入字段的显示文本。"
+        },
+        "InputTarget": {
+          "description": "卖方输入是否适用于项目或装运。",
+          "$ref": "#/definitions/InputTargetType"
+        },
+        "StoredValue": {
+          "$ref": "#/definitions/AdditionalSellerInput"
+        },
+        "RestrictedSetValues": {
+          "$ref": "#/definitions/RestrictedSetValues"
+        }
+      },
+      "description": "指定应用于卖方输入的特征。"
+    },
+    "InputTargetType": {
+      "type": "string",
+      "description": "指示附加卖家输入是在项目级别还是在发货级别。",
+      "enum": [
+        "SHIPMENT_LEVEL",
+        "ITEM_LEVEL"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "SHIPMENT_LEVEL",
+          "description": "额外的卖家输入是在装运级别。"
+        },
+        {
+          "value": "ITEM_LEVEL",
+          "description": "额外的卖家输入是在项目级别。"
+        }
+      ]
+    },
+    "AdditionalInputsList": {
+      "type": "array",
+      "description": "其他输入的列表。",
+      "items": {
+        "$ref": "#/definitions/AdditionalInputs"
+      }
+    },
+    "AdditionalSellerInput": {
+      "type": "object",
+      "properties": {
+        "DataType": {
+          "type": "string",
+          "description": "附加信息的数据类型。"
+        },
+        "ValueAsString": {
+          "type": "string",
+          "description": "数据类型为string时的值。"
+        },
+        "ValueAsBoolean": {
+          "type": "boolean",
+          "description": "数据类型为boolean时的值。"
+        },
+        "ValueAsInteger": {
+          "type": "integer",
+          "description": "数据类型为integer时的值。"
+        },
+        "ValueAsTimestamp": {
+          "description": "数据类型为日期时间格式字符串时的值。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "ValueAsAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "ValueAsWeight": {
+          "$ref": "#/definitions/Weight"
+        },
+        "ValueAsDimension": {
+          "$ref": "#/definitions/Length"
+        },
+        "ValueAsCurrency": {
+          "$ref": "#/definitions/CurrencyAmount"
+        }
+      },
+      "description": "购买运输所需的其他信息。"
+    },
+    "AdditionalSellerInputs": {
+      "type": "object",
+      "required": [
+        "AdditionalInputFieldName",
+        "AdditionalSellerInput"
+      ],
+      "properties": {
+        "AdditionalInputFieldName": {
+          "type": "string",
+          "description": "附加输入字段的名称。"
+        },
+        "AdditionalSellerInput": {
+          "$ref": "#/definitions/AdditionalSellerInput"
+        }
+      },
+      "description": "购买运输所需的一组额外的卖方输入。"
+    },
+    "AdditionalSellerInputsList": {
+      "type": "array",
+      "description": "购买运费所需的其他卖家输入对列表。",
+      "items": {
+        "$ref": "#/definitions/AdditionalSellerInputs"
+      }
+    },
+    "Address": {
+      "type": "object",
+      "required": [
+        "AddressLine1",
+        "City",
+        "CountryCode",
+        "Email",
+        "Name",
+        "Phone",
+        "PostalCode"
+      ],
+      "properties": {
+        "Name": {
+          "$ref": "#/definitions/AddressName"
+        },
+        "AddressLine1": {
+          "$ref": "#/definitions/AddressLine1"
+        },
+        "AddressLine2": {
+          "$ref": "#/definitions/AddressLine2"
+        },
+        "AddressLine3": {
+          "$ref": "#/definitions/AddressLine3"
+        },
+        "DistrictOrCounty": {
+          "$ref": "#/definitions/DistrictOrCounty"
+        },
+        "Email": {
+          "$ref": "#/definitions/EmailAddress"
+        },
+        "City": {
+          "$ref": "#/definitions/City"
+        },
+        "StateOrProvinceCode": {
+          "$ref": "#/definitions/StateOrProvinceCode"
+        },
+        "PostalCode": {
+          "$ref": "#/definitions/PostalCode"
+        },
+        "CountryCode": {
+          "$ref": "#/definitions/CountryCode"
+        },
+        "Phone": {
+          "$ref": "#/definitions/PhoneNumber"
+        }
+      },
+      "description": "邮政地址信息。"
+    },
+    "AddressLine1": {
+      "type": "string",
+      "description": "街道地址信息。",
+      "maxLength": 180
+    },
+    "AddressLine2": {
+      "type": "string",
+      "description": "其他街道地址信息。",
+      "maxLength": 60
+    },
+    "AddressLine3": {
+      "type": "string",
+      "description": "其他街道地址信息。",
+      "maxLength": 60
+    },
+    "AddressName": {
+      "type": "string",
+      "description": "收件人的名称或企业名称。",
+      "maxLength": 30
+    },
+    "AmazonOrderId": {
+      "type": "string",
+      "description": "Amazon定义的订单标识符，格式为3-7-7。"
+    },
+    "Benefits": {
+      "type": "object",
+      "description": "包括和排除每个航运优惠的好处。权益表示当卖家通过亚马逊购买运费时，亚马逊提供的服务 (例如 'CLAIMS_PROTECTED')。在2024年1月1日00:00 UTC时或之后放置的任何货件都可以获得优惠详情。",
+      "properties": {
+        "IncludedBenefits": {
+          "$ref": "#/definitions/IncludedBenefits"
+        },
+        "ExcludedBenefits": {
+          "$ref": "#/definitions/ExcludedBenefits"
+        }
+      }
+    },
+    "IncludedBenefits": {
+      "type": "array",
+      "description": "包括的福利清单。",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ExcludedBenefits": {
+      "type": "array",
+      "description": "排除的福利清单。有关进一步的文档，请参阅 “excludebenefit'” 对象。",
+      "items": {
+        "$ref": "#/definitions/ExcludedBenefit"
+      }
+    },
+    "ExcludedBenefit": {
+      "type": "object",
+      "description": "一个对象，表示为送货优惠或费率排除的排除福利。",
+      "properties": {
+        "Benefit": {
+          "description": "从装运中排除的福利。",
+          "type": "string"
+        },
+        "ReasonCodes": {
+          "$ref": "#/definitions/ExcludedBenefitReasonCodes"
+        }
+      }
+    },
+    "ExcludedBenefitReasonCodes": {
+      "type": "array",
+      "description": "排除运输优惠的原因列表 (例如，“LATE_DELIVERY_RISK”)。",
+      "items": {
+        "type": "string"
+      }
+    },
+    "CancelShipmentResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“取消运送” 操作的有效负载。",
+          "$ref": "#/definitions/Shipment"
+        },
+        "errors": {
+          "description": "在 “取消运送” 操作期间发生了一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "响应架构。"
+    },
+    "City": {
+      "type": "string",
+      "description": "城市。",
+      "maxLength": 30
+    },
+    "CountryCode": {
+      "type": "string",
+      "description": "采用 [ISO 3166-1 alpha-2](https://www.iban.com /国家/地区代码) 格式的双字母国家/地区代码。"
+    },
+    "CreateShipmentRequest": {
+      "type": "object",
+      "required": [
+        "ShipmentRequestDetails",
+        "ShippingServiceId"
+      ],
+      "properties": {
+        "ShipmentRequestDetails": {
+          "description": "创建装运所需的装运信息。",
+          "$ref": "#/definitions/ShipmentRequestDetails"
+        },
+        "ShippingServiceId": {
+          "$ref": "#/definitions/ShippingServiceIdentifier"
+        },
+        "ShippingServiceOfferId": {
+          "type": "string",
+          "description": "标识承运人发出的运输服务订单。"
+        },
+        "HazmatType": {
+          "description": "包装的危险材料选项。有关危险材料的更多信息，请咨询各承运人的条款和条件。",
+          "$ref": "#/definitions/HazmatType"
+        },
+        "LabelFormatOption": {
+          "$ref": "#/definitions/LabelFormatOptionRequest"
+        },
+        "ShipmentLevelSellerInputsList": {
+          "description": "装运这批货物所需的额外卖方输入清单。",
+          "$ref": "#/definitions/AdditionalSellerInputsList"
+        }
+      },
+      "description": "请求架构。"
+    },
+    "CreateShipmentResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "装运信息。",
+          "$ref": "#/definitions/Shipment"
+        },
+        "errors": {
+          "description": "在 “createshipment” 操作期间发生了一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "响应架构。"
+    },
+    "ItemLevelFields": {
+      "type": "object",
+      "description": "项级别字段的列表。",
+      "required": [
+        "AdditionalInputs",
+        "Asin"
+      ],
+      "properties": {
+        "Asin": {
+          "type": "string",
+          "description": "商品的Amazon标准标识号 (ASIN)。"
+        },
+        "AdditionalInputs": {
+          "$ref": "#/definitions/AdditionalInputsList"
+        }
+      }
+    },
+    "ItemLevelFieldsList": {
+      "type": "array",
+      "description": "项级别字段的列表。",
+      "items": {
+        "$ref": "#/definitions/ItemLevelFields"
+      }
+    },
+    "GetAdditionalSellerInputsRequest": {
+      "type": "object",
+      "required": [
+        "OrderId",
+        "ShipFromAddress",
+        "ShippingServiceId"
+      ],
+      "properties": {
+        "ShippingServiceId": {
+          "$ref": "#/definitions/ShippingServiceIdentifier"
+        },
+        "ShipFromAddress": {
+          "description": "要发运的地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "OrderId": {
+          "description": "Amazon定义的订单标识符",
+          "$ref": "#/definitions/AmazonOrderId"
+        }
+      },
+      "description": "请求架构。"
+    },
+    "GetAdditionalSellerInputsResult": {
+      "type": "object",
+      "properties": {
+        "ShipmentLevelFields": {
+          "$ref": "#/definitions/AdditionalInputsList"
+        },
+        "ItemLevelFieldsList": {
+          "$ref": "#/definitions/ItemLevelFieldsList"
+        }
+      },
+      "description": "“Getadditionalsellerinputs” 操作的有效负载。"
+    },
+    "GetAdditionalSellerInputsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/GetAdditionalSellerInputsResult"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "响应架构。"
+    },
+    "CurrencyAmount": {
+      "type": "object",
+      "required": [
+        "Amount",
+        "CurrencyCode"
+      ],
+      "properties": {
+        "CurrencyCode": {
+          "type": "string",
+          "description": "ISO 4217格式的三位数货币代码。",
+          "maxLength": 3
+        },
+        "Amount": {
+          "type": "number",
+          "format": "double",
+          "description": "货币金额。"
+        }
+      },
+      "description": "货币类型和金额。"
+    },
+    "CustomTextForLabel": {
+      "type": "string",
+      "description": "要在标签上打印的自定义文本。注意: 自定义文本仅包含在ZPL格式 (ZPL203) 的标签上。FedEx不支持 “customtextforlabel'”。",
+      "maxLength": 14
+    },
+    "DeliveryExperienceType": {
+      "type": "string",
+      "description": "传递确认级别。",
+      "enum": [
+        "DeliveryConfirmationWithAdultSignature",
+        "DeliveryConfirmationWithSignature",
+        "DeliveryConfirmationWithoutSignature",
+        "NoTracking"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "DeliveryConfirmationWithAdultSignature",
+          "description": "带有成人签名的交货确认书。"
+        },
+        {
+          "value": "DeliveryConfirmationWithSignature",
+          "description": "带有签名的交货确认。DPD (英国) 需要。"
+        },
+        {
+          "value": "DeliveryConfirmationWithoutSignature",
+          "description": "没有签名的交货确认。"
+        },
+        {
+          "value": "NoTracking",
+          "description": "没有交货确认。"
+        }
+      ]
+    },
+    "DistrictOrCounty": {
+      "type": "string",
+      "description": "区或县。"
+    },
+    "EmailAddress": {
+      "type": "string",
+      "description": "电子邮件地址。"
+    },
+    "FileContents": {
+      "type": "object",
+      "required": [
+        "Checksum",
+        "Contents",
+        "FileType"
+      ],
+      "properties": {
+        "Contents": {
+          "type": "string",
+          "description": "用于打印编码为Base64、GZip压缩字符串的标签的数据。"
+        },
+        "FileType": {
+          "$ref": "#/definitions/FileType"
+        },
+        "Checksum": {
+          "type": "string",
+          "description": "用于验证PDF文档数据的MD5哈希，采用Base64字符串的形式。"
+        }
+      },
+      "description": "文档数据和校验和。"
+    },
+    "FileType": {
+      "type": "string",
+      "description": "标签的文件类型。",
+      "enum": [
+        "application/pdf",
+        "application/zpl",
+        "image/png"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "application/pdf",
+          "description": "可移植文档格式 (pdf) 文件。"
+        },
+        {
+          "value": "application/zpl",
+          "description": "Zebra编程语言 (zpl) 文件。"
+        },
+        {
+          "value": "image/png",
+          "description": "可移植网络图形 (png) 文件。"
+        }
+      ]
+    },
+    "GetEligibleShipmentServicesRequest": {
+      "type": "object",
+      "required": [
+        "ShipmentRequestDetails"
+      ],
+      "properties": {
+        "ShipmentRequestDetails": {
+          "description": "请求装运服务报价所需的装运信息。",
+          "$ref": "#/definitions/ShipmentRequestDetails"
+        },
+        "ShippingOfferingFilter": {
+          "$ref": "#/definitions/ShippingOfferingFilter"
+        }
+      },
+      "description": "请求架构。"
+    },
+    "GetEligibleShipmentServicesResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/GetEligibleShipmentServicesResult"
+        },
+        "errors": {
+          "description": "此操作期间发生了一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "响应架构。"
+    },
+    "GetEligibleShipmentServicesResult": {
+      "type": "object",
+      "required": [
+        "ShippingServiceList"
+      ],
+      "properties": {
+        "ShippingServiceList": {
+          "description": "提供的运输服务列表。",
+          "$ref": "#/definitions/ShippingServiceList"
+        },
+        "RejectedShippingServiceList": {
+          "$ref": "#/definitions/RejectedShippingServiceList"
+        },
+        "TemporarilyUnavailableCarrierList": {
+          "$ref": "#/definitions/TemporarilyUnavailableCarrierList"
+        },
+        "TermsAndConditionsNotAcceptedCarrierList": {
+          "$ref": "#/definitions/TermsAndConditionsNotAcceptedCarrierList"
+        }
+      },
+      "description": "“Geteligibleshipmentservices” 操作的负载。"
+    },
+    "GetShipmentResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Getshipment” 操作的有效负载。",
+          "$ref": "#/definitions/Shipment"
+        },
+        "errors": {
+          "description": "此操作期间发生了一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "响应架构。"
+    },
+    "HazmatType": {
+      "type": "string",
+      "description": "包装的危险材料选项。有关危险材料的更多信息，请咨询各承运人的条款和条件。",
+      "enum": [
+        "None",
+        "LQHazmat"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "None",
+          "description": "包装不含有害物质。"
+        },
+        {
+          "value": "LQHazmat",
+          "description": "包装中含有限量的有害物质。"
+        }
+      ]
+    },
+    "Item": {
+      "type": "object",
+      "required": [
+        "OrderItemId",
+        "Quantity"
+      ],
+      "properties": {
+        "OrderItemId": {
+          "$ref": "#/definitions/OrderItemId"
+        },
+        "Quantity": {
+          "$ref": "#/definitions/ItemQuantity"
+        },
+        "ItemWeight": {
+          "$ref": "#/definitions/Weight"
+        },
+        "ItemDescription": {
+          "$ref": "#/definitions/ItemDescription"
+        },
+        "TransparencyCodeList": {
+          "$ref": "#/definitions/TransparencyCodeList"
+        },
+        "ItemLevelSellerInputsList": {
+          "description": "使用所选运输服务运输此物品所需的其他卖方输入列表。",
+          "$ref": "#/definitions/AdditionalSellerInputsList"
+        },
+        "LiquidVolume": {
+          "$ref": "#/definitions/LiquidVolume"
+        },
+        "IsHazmat": {
+          "type": "boolean",
+          "description": "当为true时，该项目符合危险材料 (hazmat) 的条件。默认为false。"
+        },
+        "DangerousGoodsDetails": {
+          "$ref": "#/definitions/DangerousGoodsDetails"
+        }
+      },
+      "description": "Amazon订单项目标识符和数量。"
+    },
+    "ItemList": {
+      "type": "array",
+      "description": "要包括在货件中的项目列表。",
+      "items": {
+        "$ref": "#/definitions/Item"
+      }
+    },
+    "ItemQuantity": {
+      "type": "integer",
+      "format": "int32",
+      "description": "项目数。"
+    },
+    "ItemDescription": {
+      "type": "string",
+      "description": "项目的说明。"
+    },
+    "Label": {
+      "type": "object",
+      "required": [
+        "Dimensions",
+        "FileContents"
+      ],
+      "properties": {
+        "CustomTextForLabel": {
+          "$ref": "#/definitions/CustomTextForLabel"
+        },
+        "Dimensions": {
+          "$ref": "#/definitions/LabelDimensions"
+        },
+        "FileContents": {
+          "$ref": "#/definitions/FileContents"
+        },
+        "LabelFormat": {
+          "$ref": "#/definitions/LabelFormat"
+        },
+        "StandardIdForLabel": {
+          "$ref": "#/definitions/StandardIdForLabel"
+        }
+      },
+      "description": "用于创建运输标签的数据和用于打印标签的尺寸。"
+    },
+    "LabelCustomization": {
+      "type": "object",
+      "properties": {
+        "CustomTextForLabel": {
+          "$ref": "#/definitions/CustomTextForLabel"
+        },
+        "StandardIdForLabel": {
+          "$ref": "#/definitions/StandardIdForLabel"
+        }
+      },
+      "description": "运输标签的自定义文本。"
+    },
+    "LabelDimension": {
+      "type": "number",
+      "description": "标签维度。"
+    },
+    "LabelDimensions": {
+      "type": "object",
+      "required": [
+        "Length",
+        "Unit",
+        "Width"
+      ],
+      "properties": {
+        "Length": {
+          "description": "长度尺寸。",
+          "$ref": "#/definitions/LabelDimension"
+        },
+        "Width": {
+          "description": "宽度尺寸。",
+          "$ref": "#/definitions/LabelDimension"
+        },
+        "Unit": {
+          "description": "测量单位。",
+          "$ref": "#/definitions/UnitOfLength"
+        }
+      },
+      "description": "打印运输标签的尺寸。"
+    },
+    "LabelFormat": {
+      "type": "string",
+      "description": "标签格式。",
+      "enum": [
+        "PDF",
+        "PNG",
+        "ZPL203",
+        "ZPL300",
+        "ShippingServiceDefault"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "PDF",
+          "description": "可移植文档格式 (pdf)。"
+        },
+        {
+          "value": "PNG",
+          "description": "可移植网络图形 (png) 格式。"
+        },
+        {
+          "value": "ZPL203",
+          "description": "斑马编程语言 (zpl) 格式，每英寸分辨率203点。"
+        },
+        {
+          "value": "ZPL300",
+          "description": "斑马编程语言 (zpl) 格式，每英寸分辨率300点。"
+        },
+        {
+          "value": "ShippingServiceDefault",
+          "description": "发货服务提供的默认值。"
+        }
+      ]
+    },
+    "LabelFormatList": {
+      "type": "array",
+      "description": "标签格式列表。",
+      "items": {
+        "$ref": "#/definitions/LabelFormat"
+      }
+    },
+    "Length": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "以单位表示的值。"
+        },
+        "unit": {
+          "$ref": "#/definitions/UnitOfLength"
+        }
+      },
+      "description": "长度。"
+    },
+    "OrderItemId": {
+      "type": "string",
+      "description": "订单中单个项目的Amazon定义的标识符。"
+    },
+    "PackageDimension": {
+      "type": "number",
+      "description": "表示给定包维度的数字。",
+      "format": "double"
+    },
+    "PackageDimensions": {
+      "type": "object",
+      "properties": {
+        "Length": {
+          "description": "长度尺寸。如果不指定 “predefinedpackagedimensions”，则必须指定长度。",
+          "$ref": "#/definitions/PackageDimension"
+        },
+        "Width": {
+          "description": "宽度尺寸。如果不指定 “predefinedpackagedimensions”，则必须指定宽度。",
+          "$ref": "#/definitions/PackageDimension"
+        },
+        "Height": {
+          "description": "高度尺寸。如果不指定 “predefinedpackagedimensions”，则必须指定高度。",
+          "$ref": "#/definitions/PackageDimension"
+        },
+        "Unit": {
+          "description": "测量单位。如果不指定 “predefinedpackagedimensions”，则必须指定单位。",
+          "$ref": "#/definitions/UnitOfLength"
+        },
+        "PredefinedPackageDimensions": {
+          "$ref": "#/definitions/PredefinedPackageDimensions"
+        }
+      },
+      "description": "货物中包含的包裹的尺寸。"
+    },
+    "PhoneNumber": {
+      "type": "string",
+      "description": "电话号码。",
+      "maxLength": 30
+    },
+    "PostalCode": {
+      "type": "string",
+      "description": "邮政编码或邮政编码。",
+      "maxLength": 30
+    },
+    "PredefinedPackageDimensions": {
+      "type": "string",
+      "description": "预定义的包裹标记的枚举。如果您指定了 “predefinedpackagedimensions” 令牌，则您没有义务使用来自运营商的品牌包。例如，如果您指定 “FedEx_Box_10kg” 令牌，则不必使用来自FedEx的特定包。您只需要使用与令牌指定的尺寸相匹配的框。注意: 承运人可以对某些运输方式允许的包裹类型进行限制。有关详细信息，请查看运营商网站。示例: 当USPS以USPS生产的统一费率信封或盒子发送材料时，可以使用统一费率定价。",
+      "enum": [
+        "FedEx_Box_10kg",
+        "FedEx_Box_25kg",
+        "FedEx_Box_Extra_Large_1",
+        "FedEx_Box_Extra_Large_2",
+        "FedEx_Box_Large_1",
+        "FedEx_Box_Large_2",
+        "FedEx_Box_Medium_1",
+        "FedEx_Box_Medium_2",
+        "FedEx_Box_Small_1",
+        "FedEx_Box_Small_2",
+        "FedEx_Envelope",
+        "FedEx_Padded_Pak",
+        "FedEx_Pak_1",
+        "FedEx_Pak_2",
+        "FedEx_Tube",
+        "FedEx_XL_Pak",
+        "UPS_Box_10kg",
+        "UPS_Box_25kg",
+        "UPS_Express_Box",
+        "UPS_Express_Box_Large",
+        "UPS_Express_Box_Medium",
+        "UPS_Express_Box_Small",
+        "UPS_Express_Envelope",
+        "UPS_Express_Hard_Pak",
+        "UPS_Express_Legal_Envelope",
+        "UPS_Express_Pak",
+        "UPS_Express_Tube",
+        "UPS_Laboratory_Pak",
+        "UPS_Pad_Pak",
+        "UPS_Pallet",
+        "USPS_Card",
+        "USPS_Flat",
+        "USPS_FlatRateCardboardEnvelope",
+        "USPS_FlatRateEnvelope",
+        "USPS_FlatRateGiftCardEnvelope",
+        "USPS_FlatRateLegalEnvelope",
+        "USPS_FlatRatePaddedEnvelope",
+        "USPS_FlatRateWindowEnvelope",
+        "USPS_LargeFlatRateBoardGameBox",
+        "USPS_LargeFlatRateBox",
+        "USPS_Letter",
+        "USPS_MediumFlatRateBox1",
+        "USPS_MediumFlatRateBox2",
+        "USPS_RegionalRateBoxA1",
+        "USPS_RegionalRateBoxA2",
+        "USPS_RegionalRateBoxB1",
+        "USPS_RegionalRateBoxB2",
+        "USPS_RegionalRateBoxC",
+        "USPS_SmallFlatRateBox",
+        "USPS_SmallFlatRateEnvelope"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "FedEx_Box_10kg",
+          "description": "15.81x12.94x10.19。"
+        },
+        {
+          "value": "FedEx_Box_25kg",
+          "description": "54.80x42.10x33.50。"
+        },
+        {
+          "value": "FedEx_Box_Extra_Large_1",
+          "description": "11.88x11.00x10.75。"
+        },
+        {
+          "value": "FedEx_Box_Extra_Large_2",
+          "description": "15.75x14.13x6.00。"
+        },
+        {
+          "value": "FedEx_Box_Large_1",
+          "description": "17.50x12.38x3.00。"
+        },
+        {
+          "value": "FedEx_Box_Large_2",
+          "description": "11.25x8.75x7.75。"
+        },
+        {
+          "value": "FedEx_Box_Medium_1",
+          "description": "13.25x11.50x2.38。"
+        },
+        {
+          "value": "FedEx_Box_Medium_2",
+          "description": "11.25x8.75x4.38。"
+        },
+        {
+          "value": "FedEx_Box_Small_1",
+          "description": "12.38x10.88x1.50。"
+        },
+        {
+          "value": "FedEx_Box_Small_2",
+          "description": "8.75x2.63x11.25。"
+        },
+        {
+          "value": "FedEx_Envelope",
+          "description": "12.50x9.50x0.80。"
+        },
+        {
+          "value": "FedEx_Padded_Pak",
+          "description": "11.75x14.75x2.00。"
+        },
+        {
+          "value": "FedEx_Pak_1",
+          "description": "15.50x12.00x0.80。"
+        },
+        {
+          "value": "FedEx_Pak_2",
+          "description": "12.75x10.25x0.80。"
+        },
+        {
+          "value": "FedEx_Tube",
+          "description": "38.00x6.00。"
+        },
+        {
+          "value": "FedEx_XL_Pak",
+          "description": "17.50x20.75x2.00。"
+        },
+        {
+          "value": "UPS_Box_10kg",
+          "description": "41.00x33.50 x 26.50厘米。"
+        },
+        {
+          "value": "UPS_Box_25kg",
+          "description": "48.40x43.30 x 35.00厘米。"
+        },
+        {
+          "value": "UPS_Express_Box",
+          "description": "46.00x31.50 x 9.50厘米。"
+        },
+        {
+          "value": "UPS_Express_Box_Large",
+          "description": "18.00x13.00x3.00。"
+        },
+        {
+          "value": "UPS_Express_Box_Medium",
+          "description": "15.00x11.00x3.00。"
+        },
+        {
+          "value": "UPS_Express_Box_Small",
+          "description": "13.00x11.00x2.00。"
+        },
+        {
+          "value": "UPS_Express_Envelope",
+          "description": "12.50x9.50x2.00。"
+        },
+        {
+          "value": "UPS_Express_Hard_Pak",
+          "description": "14.75x11.50x2.00。"
+        },
+        {
+          "value": "UPS_Express_Legal_Envelope",
+          "description": "15.00x9.50x2.00。"
+        },
+        {
+          "value": "UPS_Express_Pak",
+          "description": "16.00x12.75x2.00。"
+        },
+        {
+          "value": "UPS_Express_Tube",
+          "description": "97.00x19.00 x 16.50厘米。"
+        },
+        {
+          "value": "UPS_Laboratory_Pak",
+          "description": "17.25x12.75x2.00。"
+        },
+        {
+          "value": "UPS_Pad_Pak",
+          "description": "14.75x11.00x2.00。"
+        },
+        {
+          "value": "UPS_Pallet",
+          "description": "120.00x80.00 x 200.00厘米。"
+        },
+        {
+          "value": "USPS_Card",
+          "description": "6.00x4.25x0.01。"
+        },
+        {
+          "value": "USPS_Flat",
+          "description": "15.00x12.00x0.75。"
+        },
+        {
+          "value": "USPS_FlatRateCardboardEnvelope",
+          "description": "12.50x9.50x4.00。"
+        },
+        {
+          "value": "USPS_FlatRateEnvelope",
+          "description": "12.50x9.50x4.00。"
+        },
+        {
+          "value": "USPS_FlatRateGiftCardEnvelope",
+          "description": "10.00x7.00x4.00"
+        },
+        {
+          "value": "USPS_FlatRateLegalEnvelope",
+          "description": "15.00x9.50x4.00。"
+        },
+        {
+          "value": "USPS_FlatRatePaddedEnvelope",
+          "description": "12.50x9.50x4.00。"
+        },
+        {
+          "value": "USPS_FlatRateWindowEnvelope",
+          "description": "10.00x5.00x4.00。"
+        },
+        {
+          "value": "USPS_LargeFlatRateBoardGameBox",
+          "description": "24.06x11.88x3.13。"
+        },
+        {
+          "value": "USPS_LargeFlatRateBox",
+          "description": "12.25x6.00。"
+        },
+        {
+          "value": "USPS_Letter",
+          "description": "11.50x6.13x0.25。"
+        },
+        {
+          "value": "USPS_MediumFlatRateBox1",
+          "description": "11.25x8.75x6.00。"
+        },
+        {
+          "value": "USPS_MediumFlatRateBox2",
+          "description": "14.00x12.00x3.50。"
+        },
+        {
+          "value": "USPS_RegionalRateBoxA1",
+          "description": "10.13x7.13x5.00。"
+        },
+        {
+          "value": "USPS_RegionalRateBoxA2",
+          "description": "13.06x11.06x2.50。"
+        },
+        {
+          "value": "USPS_RegionalRateBoxB1",
+          "description": "16.25x14.50x3.00。"
+        },
+        {
+          "value": "USPS_RegionalRateBoxB2",
+          "description": "12.25x10.50x5.50。"
+        },
+        {
+          "value": "USPS_RegionalRateBoxC",
+          "description": "15.00x12.00。"
+        },
+        {
+          "value": "USPS_SmallFlatRateBox",
+          "description": "8.69x5.44x1.75。"
+        },
+        {
+          "value": "USPS_SmallFlatRateEnvelope",
+          "description": "10.00x6.00x4.00。"
+        }
+      ]
+    },
+    "RestrictedSetValues": {
+      "type": "array",
+      "description": "附加卖方输入中的一组固定值。",
+      "items": {
+        "type": "string",
+        "description": "单个固定值。"
+      }
+    },
+    "SellerOrderId": {
+      "type": "string",
+      "description": "卖方定义的订单标识符。",
+      "maxLength": 64
+    },
+    "Shipment": {
+      "type": "object",
+      "required": [
+        "AmazonOrderId",
+        "CreatedDate",
+        "Insurance",
+        "ItemList",
+        "Label",
+        "PackageDimensions",
+        "ShipFromAddress",
+        "ShipToAddress",
+        "ShipmentId",
+        "ShippingService",
+        "Status",
+        "Weight"
+      ],
+      "properties": {
+        "ShipmentId": {
+          "$ref": "#/definitions/ShipmentId"
+        },
+        "AmazonOrderId": {
+          "$ref": "#/definitions/AmazonOrderId"
+        },
+        "SellerOrderId": {
+          "$ref": "#/definitions/SellerOrderId"
+        },
+        "ItemList": {
+          "$ref": "#/definitions/ItemList"
+        },
+        "ShipFromAddress": {
+          "description": "发件人的地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "ShipToAddress": {
+          "description": "装运的目的地地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "PackageDimensions": {
+          "$ref": "#/definitions/PackageDimensions"
+        },
+        "Weight": {
+          "description": "包装重量。",
+          "$ref": "#/definitions/Weight"
+        },
+        "Insurance": {
+          "description": "如果您在上一次调用 “createshipment” 操作时指定了 “declaredvalue”，则 “insurance” 表示承运人使用的装运保险金额。如果 “declaredvalue” 与先前调用 “createshipment” 操作无关，则为货物投保承运人的最低保险金额，或货物中列出的项目的组合销售价格。",
+          "$ref": "#/definitions/CurrencyAmount"
+        },
+        "ShippingService": {
+          "$ref": "#/definitions/ShippingService"
+        },
+        "Label": {
+          "description": "用于创建运输标签的数据和用于打印标签的尺寸。如果取消装运，则返回空标签。",
+          "$ref": "#/definitions/Label"
+        },
+        "Status": {
+          "description": "装运状态。",
+          "$ref": "#/definitions/ShipmentStatus"
+        },
+        "TrackingId": {
+          "$ref": "#/definitions/TrackingId"
+        },
+        "CreatedDate": {
+          "description": "创建装运的日期和时间。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "LastUpdatedDate": {
+          "description": "上次更新的日期和时间。",
+          "$ref": "#/definitions/Timestamp"
+        }
+      },
+      "description": "装运的详细信息。包括发运状态。"
+    },
+    "ShipmentId": {
+      "type": "string",
+      "description": "Amazon定义的发货标识符。"
+    },
+    "ShipmentRequestDetails": {
+      "type": "object",
+      "required": [
+        "AmazonOrderId",
+        "ItemList",
+        "PackageDimensions",
+        "ShipFromAddress",
+        "ShippingServiceOptions",
+        "Weight"
+      ],
+      "properties": {
+        "AmazonOrderId": {
+          "description": "Amazon定义的3-7-7格式的订单标识符。",
+          "$ref": "#/definitions/AmazonOrderId"
+        },
+        "SellerOrderId": {
+          "description": "卖方定义的订单标识符。",
+          "$ref": "#/definitions/SellerOrderId"
+        },
+        "ItemList": {
+          "$ref": "#/definitions/ItemList"
+        },
+        "ShipFromAddress": {
+          "description": "发件人的地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "PackageDimensions": {
+          "description": "包装尺寸。",
+          "$ref": "#/definitions/PackageDimensions"
+        },
+        "Weight": {
+          "description": "包装重量。",
+          "$ref": "#/definitions/Weight"
+        },
+        "MustArriveByDate": {
+          "description": "为履行对客户的承诺，包必须到达的日期，采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。如果指定了 “mudarrivebydate”，则仅返回可以在该日期之前交付的运输服务优惠。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "ShipDate": {
+          "description": "在请求中使用时，这是卖方希望运送包裹的日期和时间。在响应中使用时，这是可以通过指示的方法运送包裹的日期和时间。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "ShippingServiceOptions": {
+          "description": "承运人提供的额外服务。",
+          "$ref": "#/definitions/ShippingServiceOptions"
+        },
+        "LabelCustomization": {
+          "description": "标签自定义选项。",
+          "$ref": "#/definitions/LabelCustomization"
+        }
+      },
+      "description": "请求装运服务报价或创建装运所需的装运信息。"
+    },
+    "ShipmentStatus": {
+      "type": "string",
+      "description": "装运状态。",
+      "enum": [
+        "Purchased",
+        "RefundPending",
+        "RefundRejected",
+        "RefundApplied"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "Purchased",
+          "description": "卖家通过调用 “createshipment” 操作购买了一个标签。"
+        },
+        {
+          "value": "RefundPending",
+          "description": "卖方通过调用 “取消运输” 操作来请求标签退款，并且退款请求正在由承运人处理。注: 卖家可以为订单创建新的装运，而为取消的装运创建 “状态 = 退款待定”。在您请求标签退款 (通过调用 “cancelshipment”) 后，订单的状态保持 “shipped”。"
+        },
+        {
+          "value": "RefundRejected",
+          "description": "标签退款请求被承运人拒绝。退款请求被拒绝，因为取消窗口已过期或承运人已接受要交付的货件。取消政策因运营商而异。有关运营商取消政策的更多信息，请参阅您的市场的卖家中心帮助。"
+        },
+        {
+          "value": "RefundApplied",
+          "description": "退款已被批准并记入卖方账户。"
+        }
+      ]
+    },
+    "DeliveryExperienceOption": {
+      "type": "string",
+      "description": "传递确认级别。",
+      "enum": [
+        "DeliveryConfirmationWithAdultSignature",
+        "DeliveryConfirmationWithSignature",
+        "DeliveryConfirmationWithoutSignature",
+        "NoTracking",
+        "NoPreference"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "DeliveryConfirmationWithAdultSignature",
+          "description": "带成人签名的交货确认书。"
+        },
+        {
+          "value": "DeliveryConfirmationWithSignature",
+          "description": "带签名的交货确认书。DPD (英国) 需要。"
+        },
+        {
+          "value": "DeliveryConfirmationWithoutSignature",
+          "description": "没有签名的交货确认。"
+        },
+        {
+          "value": "NoTracking",
+          "description": "没有交货确认。"
+        },
+        {
+          "value": "NoPreference",
+          "description": "没有偏好。"
+        }
+      ]
+    },
+    "ShippingOfferingFilter": {
+      "type": "object",
+      "properties": {
+        "IncludePackingSlipWithLabel": {
+          "type": "boolean",
+          "description": "如果为true，则包括带有标签的装箱单。"
+        },
+        "IncludeComplexShippingOptions": {
+          "type": "boolean",
+          "description": "如果为true，则包括复杂的发运选项。"
+        },
+        "CarrierWillPickUp": {
+          "$ref": "#/definitions/CarrierWillPickUpOption"
+        },
+        "DeliveryExperience": {
+          "$ref": "#/definitions/DeliveryExperienceOption"
+        }
+      },
+      "description": "在请求符合条件的运输服务时使用的过滤器。"
+    },
+    "ShippingService": {
+      "type": "object",
+      "required": [
+        "CarrierName",
+        "Rate",
+        "RequiresAdditionalSellerInputs",
+        "ShipDate",
+        "ShippingServiceId",
+        "ShippingServiceName",
+        "ShippingServiceOfferId",
+        "ShippingServiceOptions"
+      ],
+      "properties": {
+        "ShippingServiceName": {
+          "type": "string",
+          "description": "承运人运输服务的纯文本表示形式。例如，“UPS地面” 或 “联邦快递标准隔夜”。"
+        },
+        "CarrierName": {
+          "type": "string",
+          "description": "承运人的名称。"
+        },
+        "ShippingServiceId": {
+          "$ref": "#/definitions/ShippingServiceIdentifier"
+        },
+        "ShippingServiceOfferId": {
+          "type": "string",
+          "description": "Amazon定义的送货服务优惠标识符。"
+        },
+        "ShipDate": {
+          "description": "承运人将运送包裹的日期。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "EarliestEstimatedDeliveryDate": {
+          "description": "装运的最早日期。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "LatestEstimatedDeliveryDate": {
+          "description": "发货的最迟日期。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "Rate": {
+          "description": "承运人将对装运收取的金额。",
+          "$ref": "#/definitions/CurrencyAmount"
+        },
+        "ShippingServiceOptions": {
+          "description": "承运人提供的额外服务。",
+          "$ref": "#/definitions/ShippingServiceOptions"
+        },
+        "AvailableShippingServiceOptions": {
+          "$ref": "#/definitions/AvailableShippingServiceOptions"
+        },
+        "AvailableLabelFormats": {
+          "$ref": "#/definitions/LabelFormatList"
+        },
+        "AvailableFormatOptionsForLabel": {
+          "$ref": "#/definitions/AvailableFormatOptionsForLabelList"
+        },
+        "RequiresAdditionalSellerInputs": {
+          "type": "boolean",
+          "description": "当为true时，需要额外的卖方输入。"
+        },
+        "Benefits": {
+          "$ref": "#/definitions/Benefits"
+        }
+      },
+      "description": "承运人提供的运输服务。"
+    },
+    "ShippingServiceIdentifier": {
+      "type": "string",
+      "description": "Amazon定义的运输服务标识符。"
+    },
+    "ShippingServiceList": {
+      "type": "array",
+      "description": "提供的运输服务列表。",
+      "items": {
+        "$ref": "#/definitions/ShippingService"
+      }
+    },
+    "ShippingServiceOptions": {
+      "type": "object",
+      "required": [
+        "CarrierWillPickUp",
+        "DeliveryExperience"
+      ],
+      "properties": {
+        "DeliveryExperience": {
+          "description": "传递确认级别。",
+          "$ref": "#/definitions/DeliveryExperienceType"
+        },
+        "DeclaredValue": {
+          "description": "货物的申报价值。承运人使用此值来确定用于确保装运的金额。如果 “declaredvalue” 大于承运人的最低保险金额，则向卖方收取由承运人确定的额外保险。有关可选保险范围的信息，请参阅卖方中心帮助: [英国](https://sellercentral.amazon.co.uk/gp/help/ 200204080) 、 [美国](https://sellercentral.amazon.com/gp/help/ 200204080)。",
+          "$ref": "#/definitions/CurrencyAmount"
+        },
+        "CarrierWillPickUp": {
+          "type": "boolean",
+          "description": "如果为true，承运人将拿起包裹。注意: 仅使用Dynamex (美国) 、DPD (英国) 和Royal Mail (英国) 提供定期承运人提货服务。"
+        },
+        "CarrierWillPickUpOption": {
+          "$ref": "#/definitions/CarrierWillPickUpOption"
+        },
+        "LabelFormat": {
+          "description": "卖方首选的标签格式。",
+          "$ref": "#/definitions/LabelFormat"
+        }
+      },
+      "description": "承运人提供的额外服务。"
+    },
+    "CarrierWillPickUpOption": {
+      "type": "string",
+      "description": "承运人将拿起选项。",
+      "enum": [
+        "CarrierWillPickUp",
+        "ShipperWillDropOff",
+        "NoPreference"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "CarrierWillPickUp",
+          "description": "承运人将收取包裹。"
+        },
+        {
+          "value": "ShipperWillDropOff",
+          "description": "卖方负责安排提货或将包裹送至承运人。"
+        },
+        {
+          "value": "NoPreference",
+          "description": "没有偏好。"
+        }
+      ]
+    },
+    "StandardIdForLabel": {
+      "type": "string",
+      "description": "要在标签上打印的标准标识符的类型。",
+      "enum": [
+        "AmazonOrderId"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "AmazonOrderId",
+          "description": "Amazon定义的3-7-7格式的订单标识符。"
+        }
+      ]
+    },
+    "StateOrProvinceCode": {
+      "type": "string",
+      "description": "州或省代码。这是加拿大、美国和英国市场的必填字段，适用于源自中国的发货。",
+      "maxLength": 30
+    },
+    "RejectedShippingService": {
+      "type": "object",
+      "required": [
+        "CarrierName",
+        "RejectionReasonCode",
+        "ShippingServiceId",
+        "ShippingServiceName"
+      ],
+      "properties": {
+        "CarrierName": {
+          "type": "string",
+          "description": "被拒绝的运输承运人名称。例如，USPS。"
+        },
+        "ShippingServiceName": {
+          "type": "string",
+          "description": "被拒绝的发运服务本地化名称。例如，联邦快递标准隔夜。"
+        },
+        "ShippingServiceId": {
+          "description": "被拒绝的运输服务标识符。例如，'fedex_ptp_standard_thinnovernight'。",
+          "$ref": "#/definitions/ShippingServiceIdentifier"
+        },
+        "RejectionReasonCode": {
+          "type": "string",
+          "description": "一个原因代码意味着以编程方式使用。例如，'CARRIER_CANNOT_SHIP_TO_POBOX'。"
+        },
+        "RejectionReasonMessage": {
+          "type": "string",
+          "description": "对拒绝原因的本地化的人类可读描述。"
+        }
+      },
+      "description": "有关被拒绝的运输服务的信息"
+    },
+    "RejectedShippingServiceList": {
+      "type": "array",
+      "description": "由于某种原因无法用于此请求的服务列表",
+      "items": {
+        "$ref": "#/definitions/RejectedShippingService"
+      }
+    },
+    "TemporarilyUnavailableCarrier": {
+      "type": "object",
+      "required": [
+        "CarrierName"
+      ],
+      "properties": {
+        "CarrierName": {
+          "type": "string",
+          "description": "承运人的名称。"
+        }
+      },
+      "description": "暂时不可用的运营商，很可能是由于运营商经历的服务中断。"
+    },
+    "TemporarilyUnavailableCarrierList": {
+      "type": "array",
+      "description": "暂时不可用的运营商列表。",
+      "items": {
+        "$ref": "#/definitions/TemporarilyUnavailableCarrier"
+      }
+    },
+    "TermsAndConditionsNotAcceptedCarrier": {
+      "type": "object",
+      "required": [
+        "CarrierName"
+      ],
+      "properties": {
+        "CarrierName": {
+          "type": "string",
+          "description": "承运人的名称。"
+        }
+      },
+      "description": "卖方未接受其条款和条件的承运人。"
+    },
+    "TermsAndConditionsNotAcceptedCarrierList": {
+      "type": "array",
+      "description": "卖方不接受其条款和条件的承运人名单。",
+      "items": {
+        "$ref": "#/definitions/TermsAndConditionsNotAcceptedCarrier"
+      }
+    },
+    "Timestamp": {
+      "type": "string",
+      "description": "日期时间格式的时间戳。",
+      "format": "date-time"
+    },
+    "TrackingId": {
+      "type": "string",
+      "description": "承运人提供的货物跟踪标识符。"
+    },
+    "TransparencyCode": {
+      "type": "string",
+      "description": "与项目关联的透明度代码。确定透明度序列号:\n\n**1D or 2D barcode:** This has a **T** logo. Submit either the 29-character alpha-numeric identifier beginning with **AZ** or **ZA**, or the 38-character Serialized Global Trade Item Number (SGTIN).\n** 二维条码SN:** 提交7到20个字符的序列号条码，可能有前缀 ** SN **。序列号与GTIN (UPC/EAN/ISBN) 条形码应用于包装的同一侧。\n** 二维码SN:** 提交二维码生成的URL。"
+    },
+    "TransparencyCodeList": {
+      "type": "array",
+      "description": "透明度代码列表。",
+      "items": {
+        "$ref": "#/definitions/TransparencyCode"
+      }
+    },
+    "UnitOfLength": {
+      "type": "string",
+      "description": "长度的单位。",
+      "enum": [
+        "inches",
+        "centimeters"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "inches",
+          "description": "长度的单位是英寸。"
+        },
+        {
+          "value": "centimeters",
+          "description": "长度的单位是厘米。"
+        }
+      ]
+    },
+    "UnitOfWeight": {
+      "type": "string",
+      "description": "重量的单位。",
+      "enum": [
+        "oz",
+        "g"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "oz",
+          "description": "重量单位是盎司。"
+        },
+        {
+          "value": "g",
+          "description": "重量单位为克。"
+        }
+      ]
+    },
+    "Weight": {
+      "type": "object",
+      "required": [
+        "Unit",
+        "Value"
+      ],
+      "properties": {
+        "Value": {
+          "$ref": "#/definitions/WeightValue"
+        },
+        "Unit": {
+          "$ref": "#/definitions/UnitOfWeight"
+        }
+      },
+      "description": "重量。"
+    },
+    "WeightValue": {
+      "type": "number",
+      "format": "double",
+      "description": "权重值。"
+    },
+    "LiquidVolume": {
+      "type": "object",
+      "required": [
+        "Unit",
+        "Value"
+      ],
+      "properties": {
+        "Unit": {
+          "type": "string",
+          "description": "测量单位。",
+          "enum": [
+            "ML",
+            "L",
+            "FL_OZ",
+            "GAL",
+            "PT",
+            "QT",
+            "C"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ML",
+              "description": "毫升-公制体积单位。"
+            },
+            {
+              "value": "L",
+              "description": "公升-公制体积单位。"
+            },
+            {
+              "value": "FL_OZ",
+              "description": "Fluid ounce - Imperial unit of volume."
+            },
+            {
+              "value": "GAL",
+              "description": "加仑-体积的英制单位。"
+            },
+            {
+              "value": "PT",
+              "description": "品脱-英制单位的体积。"
+            },
+            {
+              "value": "QT",
+              "description": "夸脱-英制体积单位。"
+            },
+            {
+              "value": "C",
+              "description": "杯-体积的英制单位。"
+            }
+          ]
+        },
+        "Value": {
+          "type": "number",
+          "description": "测量值。"
+        }
+      },
+      "description": "Liquid volume."
+    },
+    "DangerousGoodsDetails": {
+      "type": "object",
+      "description": "与装运的任何危险货物或物品有关的详细信息。",
+      "properties": {
+        "UnitedNationsRegulatoryId": {
+          "type": "string",
+          "description": "正在发运的项目的特定UNID。",
+          "pattern": "^(UN|ID|NA)[0-9]{4}$"
+        },
+        "TransportationRegulatoryClass": {
+          "type": "string",
+          "description": "装运项目的特定法规类别。",
+          "pattern": "^[1-9](\\.[1-9])?$"
+        },
+        "PackingGroup": {
+          "type": "string",
+          "description": "正在发运的项目的特定包装组。",
+          "enum": [
+            "I",
+            "II",
+            "III"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "I",
+              "description": "包装组别I表示非常危险。"
+            },
+            {
+              "value": "II",
+              "description": "包装类别II表示中等危险。"
+            },
+            {
+              "value": "III",
+              "description": "包装类别III表示轻微危险。"
+            }
+          ]
+        },
+        "PackingInstruction": {
+          "type": "string",
+          "description": "正在发运的项目的具体包装说明。",
+          "enum": [
+            "PI965_SECTION_IA",
+            "PI965_SECTION_IB",
+            "PI965_SECTION_II",
+            "PI966_SECTION_I",
+            "PI966_SECTION_II",
+            "PI967_SECTION_I",
+            "PI967_SECTION_II",
+            "PI968_SECTION_IA",
+            "PI968_SECTION_IB",
+            "PI969_SECTION_I",
+            "PI969_SECTION_II",
+            "PI970_SECTION_I",
+            "PI970_SECTION_II"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "PI965_SECTION_IA",
+              "description": "离子PI965第IA节 (LiBa)。"
+            },
+            {
+              "value": "PI965_SECTION_IB",
+              "description": "离子PI965第IB节 (LiBa)。"
+            },
+            {
+              "value": "PI965_SECTION_II",
+              "description": "离子PI965第二部分 (LiBa)。"
+            },
+            {
+              "value": "PI966_SECTION_I",
+              "description": "Ion PI966第I部分 (带设备的LiBa)。"
+            },
+            {
+              "value": "PI966_SECTION_II",
+              "description": "Ion PI966第二部分 (带设备的LiBa)。"
+            },
+            {
+              "value": "PI967_SECTION_I",
+              "description": "Ion PI967第I部分 (设备中的LiBa)。"
+            },
+            {
+              "value": "PI967_SECTION_II",
+              "description": "离子PI967第二部分 (设备中的LiBa)。"
+            },
+            {
+              "value": "PI968_SECTION_IA",
+              "description": "金属PI968段IA (LiBa)。"
+            },
+            {
+              "value": "PI968_SECTION_IB",
+              "description": "金属PI968截面IB (LiBa)。"
+            },
+            {
+              "value": "PI969_SECTION_I",
+              "description": "金属PI969第I节 (带设备的LiBa)。"
+            },
+            {
+              "value": "PI969_SECTION_II",
+              "description": "金属PI969第II部分 (带设备的LiBa)。"
+            },
+            {
+              "value": "PI970_SECTION_I",
+              "description": "金属PI970第I部分 (设备中的LiBa)。"
+            },
+            {
+              "value": "PI970_SECTION_II",
+              "description": "金属PI970第二部分 (设备中的LiBa)。"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

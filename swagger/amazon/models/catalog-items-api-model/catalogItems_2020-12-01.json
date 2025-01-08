@@ -1,0 +1,1660 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "目录项的销售合作伙伴API提供了对Amazon目录中项目的相关信息的编程访问。\n\n有关详细信息，请参阅 [目录项API用例指南] (文档: catalog-items-api-v2020-12-01-use-case-guide)。",
+    "version": "2020-12-01",
+    "title": "Selling Partner API for Catalog Items",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/catalog/2020-12-01/items": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "description": "搜索并返回Amazon目录项和相关信息的列表。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 2 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "searchCatalogItems",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "keywords",
+            "description": "要搜索Amazon目录的单词或项目标识符的逗号分隔列表。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "shoes"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "maxItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "includedData",
+            "description": "要包含在响应中的数据集的逗号分隔列表。默认值: 摘要。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "enum": [
+                "identifiers",
+                "images",
+                "productTypes",
+                "salesRanks",
+                "summaries",
+                "variations",
+                "vendorDetails"
+              ],
+              "type": "string",
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "identifiers",
+                  "description": "与Amazon目录中的项目关联的标识符，例如UPC和EAN标识符。"
+                },
+                {
+                  "value": "images",
+                  "description": "Amazon目录中项目的图像。所有图像变体均提供给品牌所有者; 否则将提供 “主要” 图像变体的缩略图。"
+                },
+                {
+                  "value": "productTypes",
+                  "description": "与Amazon目录项关联的产品类型。"
+                },
+                {
+                  "value": "salesRanks",
+                  "description": "Amazon目录项的销售排名。"
+                },
+                {
+                  "value": "summaries",
+                  "description": "Amazon目录项的摘要详细信息。"
+                },
+                {
+                  "value": "variations",
+                  "description": "Amazon目录项的变体详细信息 (变体关系)。"
+                },
+                {
+                  "value": "vendorDetails",
+                  "description": "与Amazon目录项关联的供应商详细信息。供应商详细信息仅供供应商使用。"
+                }
+              ]
+            },
+            "collectionFormat": "csv",
+            "x-example": "summaries",
+            "default": "summaries"
+          },
+          {
+            "name": "brandNames",
+            "description": "以逗号分隔的品牌名称列表，以限制搜索范围。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "Beautiful Boats"
+          },
+          {
+            "name": "classificationIds",
+            "description": "要限制搜索的分类标识符的逗号分隔列表。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "12345678"
+          },
+          {
+            "name": "pageSize",
+            "description": "每页返回的结果数。",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "maximum": 20,
+            "default": 10,
+            "x-example": 9
+          },
+          {
+            "name": "pageToken",
+            "description": "当有多个页面的结果时，用于获取某个页面的令牌。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "sdlkj234lkj234lksjdflkjwdflkjsfdlkj234234234234"
+          },
+          {
+            "name": "keywordsLocale",
+            "description": "提供关键字的语言。默认为市场的主要区域设置。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          },
+          {
+            "name": "locale",
+            "description": "用于检索本地化摘要的区域设置。默认为市场的主要区域设置。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ItemSearchResults"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "numberOfResults": 3097,
+                "pagination": {
+                  "nextPage": "xsdflkj324lkjsdlkj3423klkjsdfkljlk2j34klj2l3k4jlksdjl234",
+                  "previousPage": "ilkjsdflkj234lkjds234234lkjl234lksjdflkj234234lkjsfsdflkj333d"
+                },
+                "refinements": {
+                  "brands": [
+                    {
+                      "numberOfResults": 1,
+                      "brandName": "Truly Teague"
+                    },
+                    {
+                      "numberOfResults": 20,
+                      "brandName": "Always Awesome Apparel"
+                    }
+                  ],
+                  "categories": [
+                    {
+                      "numberOfResults": 300,
+                      "displayName": "Electronics",
+                      "classificationId": "493964"
+                    },
+                    {
+                      "numberOfResults": 4000,
+                      "displayName": "Tools & Home Improvement",
+                      "classificationId": "468240"
+                    }
+                  ]
+                },
+                "items": [
+                  {
+                    "asin": "B07N4M94X4",
+                    "identifiers": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "identifiers": [
+                          {
+                            "type": "ean",
+                            "identifier": "0887276302195"
+                          },
+                          {
+                            "type": "upc",
+                            "identifier": "887276302195"
+                          }
+                        ]
+                      }
+                    ],
+                    "images": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "images": [
+                          {
+                            "variant": "MAIN",
+                            "link": "https://m.media-amazon.com/images/I/51DZzp3w3vL.jpg",
+                            "height": 333,
+                            "width": 500
+                          }
+                        ]
+                      }
+                    ],
+                    "productTypes": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "productType": "TELEVISION"
+                      }
+                    ],
+                    "salesRanks": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "ranks": [
+                          {
+                            "title": "OLED TVs",
+                            "link": "http://www.amazon.com/gp/bestsellers/electronics/6463520011",
+                            "rank": 3
+                          },
+                          {
+                            "title": "Electronics",
+                            "link": "http://www.amazon.com/gp/bestsellers/electronics",
+                            "rank": 1544
+                          }
+                        ]
+                      }
+                    ],
+                    "summaries": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "brandName": "Samsung Electronics",
+                        "browseNode": "6463520011",
+                        "colorName": "Black",
+                        "itemName": "Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility",
+                        "manufacturer": "Samsung",
+                        "modelNumber": "QN82Q60RAFXZA",
+                        "sizeName": "82-Inch",
+                        "styleName": "TV only"
+                      }
+                    ],
+                    "variations": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "asins": [
+                          "B08J7TQ9FL"
+                        ],
+                        "type": "PARENT"
+                      }
+                    ],
+                    "vendorDetails": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "brandCode": "SAMF9",
+                        "categoryCode": "50400100",
+                        "manufacturerCode": "SAMF9",
+                        "manufacturerCodeParent": "SAMF9",
+                        "productGroup": "Home Entertainment",
+                        "replenishmentCategory": "NEW_PRODUCT",
+                        "subcategoryCode": "50400150"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "keywords": {
+                        "value": [
+                          "red",
+                          "polo",
+                          "shirt"
+                        ]
+                      },
+                      "marketplaceIds": {
+                        "value": [
+                          "ATVPDKIKX0DER"
+                        ]
+                      },
+                      "includedData": {
+                        "value": [
+                          "summaries"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "numberOfResults": 12247,
+                    "pagination": {
+                      "nextToken": "9HkIVcuuPmX_bm51o3-igBfN45pxW4Ru7ElIM6GCECYCuXJKzT26f-AlJJZYjIPp8wkOEmQdma1wt_JvE7qiRmNsKy7hH"
+                    },
+                    "refinements": {
+                      "brands": [
+                        {
+                          "numberOfResults": 91,
+                          "brandName": "Polo Ralph Lauren"
+                        },
+                        {
+                          "numberOfResults": 79,
+                          "brandName": "Eddie Bauer"
+                        },
+                        {
+                          "numberOfResults": 46,
+                          "brandName": "Cutter & Buck"
+                        },
+                        {
+                          "numberOfResults": 39,
+                          "brandName": "FILA"
+                        },
+                        {
+                          "numberOfResults": 37,
+                          "brandName": "Orvis"
+                        }
+                      ],
+                      "classifications": [
+                        {
+                          "numberOfResults": 1243,
+                          "displayName": "Clothing, Shoes & Jewelry",
+                          "classificationId": "7141124011"
+                        },
+                        {
+                          "numberOfResults": 126,
+                          "displayName": "Sports & Outdoors",
+                          "classificationId": "3375301"
+                        }
+                      ]
+                    },
+                    "items": [
+                      {
+                        "asin": "B002N36Q3M",
+                        "summaries": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "brandName": "Fred Perry",
+                            "colorName": "Wht/Brt Red/Nvy",
+                            "itemName": "Fred Perry Men's Twin Tipped Polo Shirt-M1200, WHT/BRT RED/NVY, X-Large",
+                            "manufacturer": "Fred Perry Men's Apparel",
+                            "modelNumber": "M1200",
+                            "sizeName": "X-Large",
+                            "styleName": "Twin Tipped Polo Shirt-m1200"
+                          }
+                        ]
+                      },
+                      {
+                        "asin": "B002N3ABSI",
+                        "summaries": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "brandName": "Fred Perry",
+                            "colorName": "White/Bright Red/Navy",
+                            "itemName": "Fred Perry Men's Twin Tipped Polo, White/Bright Red/Navy, SM",
+                            "manufacturer": "Fred Perry Apparel Mens",
+                            "modelNumber": "M1200-748",
+                            "sizeName": "SM",
+                            "styleName": "Twin Tipped Fred Perry Polo"
+                          }
+                        ]
+                      },
+                      {
+                        "asin": "B01N5B3598",
+                        "summaries": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "brandName": "NHL",
+                            "colorName": "Red",
+                            "itemName": "NHL New Jersey Devils Men's Polo, Small, Red",
+                            "manufacturer": "Knight's Apparel",
+                            "modelNumber": "H0MEE3ZAMZ",
+                            "sizeName": "Small"
+                          }
+                        ]
+                      },
+                      {
+                        "asin": "B00HIVDUXI",
+                        "summaries": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "brandName": "adidas",
+                            "colorName": "Bold Red/White",
+                            "itemName": "Adidas Golf Men's Puremotion Textured Stripe Polo, Bold Red/White, Large",
+                            "manufacturer": "TaylorMade - Adidas Golf Apparel",
+                            "modelNumber": "TM3010S4",
+                            "sizeName": "Large"
+                          }
+                        ]
+                      },
+                      {
+                        "asin": "B005ZZ12YS",
+                        "summaries": [
+                          {
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "brandName": "RALPH LAUREN",
+                            "colorName": "Black / Red Pony",
+                            "itemName": "Polo Ralph Lauren Men's Long-sleeved T-shirt / Sleepwear / Thermal in Black, Red Pony (Large / L)",
+                            "sizeName": "Large"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    },
+    "/catalog/2020-12-01/items/{asin}": {
+      "get": {
+        "tags": [
+          "catalog"
+        ],
+        "description": "检索Amazon目录中的项目的详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 2 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getCatalogItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "asin",
+            "description": "商品的Amazon标准标识号 (ASIN)。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "以逗号分隔的Amazon marketplace标识符列表。响应中的数据集仅包含指定市场的数据。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "includedData",
+            "description": "要包含在响应中的数据集的逗号分隔列表。默认值: 摘要。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "enum": [
+                "attributes",
+                "identifiers",
+                "images",
+                "productTypes",
+                "salesRanks",
+                "summaries",
+                "variations",
+                "vendorDetails"
+              ],
+              "type": "string",
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "attributes",
+                  "description": "包含按属性名称键入的结构化项属性数据的JSON对象。目录项属性仅对品牌所有者可用，并且符合相关的Amazon产品类型定义可在销售合作伙伴API中用于产品类型定义。"
+                },
+                {
+                  "value": "identifiers",
+                  "description": "与Amazon目录中的项目关联的标识符，例如UPC和EAN标识符。"
+                },
+                {
+                  "value": "images",
+                  "description": "Amazon目录中项目的图像。所有图像变体均提供给品牌所有者。否则，提供 “主” 图像变体的缩略图。"
+                },
+                {
+                  "value": "productTypes",
+                  "description": "与Amazon目录项关联的产品类型。"
+                },
+                {
+                  "value": "salesRanks",
+                  "description": "Amazon目录项的销售排名。"
+                },
+                {
+                  "value": "summaries",
+                  "description": "Amazon目录项的摘要详细信息。"
+                },
+                {
+                  "value": "variations",
+                  "description": "Amazon目录项的变体详细信息 (变体关系)。"
+                },
+                {
+                  "value": "vendorDetails",
+                  "description": "与Amazon目录项关联的供应商详细信息。供应商详细信息仅供供应商使用。"
+                }
+              ]
+            },
+            "collectionFormat": "csv",
+            "x-example": "summaries",
+            "default": "summaries"
+          },
+          {
+            "name": "locale",
+            "description": "用于检索本地化摘要的区域设置。默认为市场的主要区域设置。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/Item"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "asin": "B07N4M94X4",
+                "identifiers": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "identifiers": [
+                      {
+                        "type": "ean",
+                        "identifier": "0887276302195"
+                      },
+                      {
+                        "type": "upc",
+                        "identifier": "887276302195"
+                      }
+                    ]
+                  }
+                ],
+                "images": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "images": [
+                      {
+                        "variant": "MAIN",
+                        "link": "https://m.media-amazon.com/images/I/51DZzp3w3vL.jpg",
+                        "height": 333,
+                        "width": 500
+                      }
+                    ]
+                  }
+                ],
+                "productTypes": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "productType": "TELEVISION"
+                  }
+                ],
+                "salesRanks": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "ranks": [
+                      {
+                        "title": "OLED TVs",
+                        "link": "http://www.amazon.com/gp/bestsellers/electronics/6463520011",
+                        "rank": 3
+                      },
+                      {
+                        "title": "Electronics",
+                        "link": "http://www.amazon.com/gp/bestsellers/electronics",
+                        "rank": 1544
+                      }
+                    ]
+                  }
+                ],
+                "summaries": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "brandName": "Samsung Electronics",
+                    "browseNode": "6463520011",
+                    "colorName": "Black",
+                    "itemName": "Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility",
+                    "manufacturer": "Samsung",
+                    "modelNumber": "QN82Q60RAFXZA",
+                    "sizeName": "82-Inch",
+                    "styleName": "TV only"
+                  }
+                ],
+                "variations": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "asins": [
+                      "B08J7TQ9FL"
+                    ],
+                    "type": "PARENT"
+                  }
+                ],
+                "vendorDetails": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "brandCode": "SAMF9",
+                    "categoryCode": "50400100",
+                    "manufacturerCode": "SAMF9",
+                    "manufacturerCodeParent": "SAMF9",
+                    "productGroup": "Home Entertainment",
+                    "replenishmentCategory": "NEW_PRODUCT",
+                    "subcategoryCode": "50400150"
+                  }
+                ]
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "B07N4M94X4"
+                      },
+                      "marketplaceIds": {
+                        "value": [
+                          "ATVPDKIKX0DER"
+                        ]
+                      },
+                      "includedData": {
+                        "value": [
+                          "identifiers",
+                          "images",
+                          "productTypes",
+                          "salesRanks",
+                          "summaries",
+                          "variations",
+                          "vendorDetails"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "asin": "B07N4M94X4",
+                    "identifiers": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "identifiers": [
+                          {
+                            "identifierType": "ean",
+                            "identifier": "0887276302195"
+                          },
+                          {
+                            "identifierType": "upc",
+                            "identifier": "887276302195"
+                          }
+                        ]
+                      }
+                    ],
+                    "images": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "images": [
+                          {
+                            "variant": "MAIN",
+                            "link": "https://m.media-amazon.com/images/I/51DZzp3w3vL.jpg",
+                            "height": 333,
+                            "width": 500
+                          }
+                        ]
+                      }
+                    ],
+                    "productTypes": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "productType": "TELEVISION"
+                      }
+                    ],
+                    "salesRanks": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "ranks": [
+                          {
+                            "title": "OLED TVs",
+                            "link": "http://www.amazon.com/gp/bestsellers/electronics/6463520011",
+                            "rank": 3
+                          },
+                          {
+                            "title": "Electronics",
+                            "link": "http://www.amazon.com/gp/bestsellers/electronics",
+                            "rank": 1544
+                          }
+                        ]
+                      }
+                    ],
+                    "summaries": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "brandName": "Samsung Electronics",
+                        "browseNode": "6463520011",
+                        "colorName": "Black",
+                        "itemName": "Samsung QN82Q60RAFXZA Flat 82-Inch QLED 4K Q60 Series (2019) Ultra HD Smart TV with HDR and Alexa Compatibility",
+                        "manufacturer": "Samsung",
+                        "modelNumber": "QN82Q60RAFXZA",
+                        "sizeName": "82-Inch",
+                        "styleName": "TV only"
+                      }
+                    ],
+                    "variations": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "asins": [
+                          "B08J7TQ9FL"
+                        ],
+                        "variationType": "CHILD"
+                      }
+                    ],
+                    "vendorDetails": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "brandCode": "SAMF9",
+                        "categoryCode": "50400100",
+                        "manufacturerCode": "SAMF9",
+                        "manufacturerCodeParent": "SAMF9",
+                        "productGroup": "Home Entertainment",
+                        "replenishmentCategory": "NEW_PRODUCT",
+                        "subcategoryCode": "50400150"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "description": "请求不成功时返回的错误响应。",
+      "properties": {
+        "code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述错误情况的消息。",
+          "type": "string"
+        },
+        "details": {
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "ErrorList": {
+      "description": "请求不成功时返回的错误响应列表。",
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ]
+    },
+    "Item": {
+      "description": "Amazon目录中的项目。",
+      "properties": {
+        "asin": {
+          "$ref": "#/definitions/ItemAsin"
+        },
+        "attributes": {
+          "$ref": "#/definitions/ItemAttributes"
+        },
+        "identifiers": {
+          "$ref": "#/definitions/ItemIdentifiers"
+        },
+        "images": {
+          "$ref": "#/definitions/ItemImages"
+        },
+        "productTypes": {
+          "$ref": "#/definitions/ItemProductTypes"
+        },
+        "salesRanks": {
+          "$ref": "#/definitions/ItemSalesRanks"
+        },
+        "summaries": {
+          "$ref": "#/definitions/ItemSummaries"
+        },
+        "variations": {
+          "$ref": "#/definitions/ItemVariations"
+        },
+        "vendorDetails": {
+          "$ref": "#/definitions/ItemVendorDetails"
+        }
+      },
+      "required": [
+        "asin"
+      ],
+      "type": "object"
+    },
+    "ItemAsin": {
+      "description": "Amazon标准标识号 (ASIN) 是Amazon目录中项目的唯一标识符。",
+      "type": "string"
+    },
+    "ItemAttributes": {
+      "description": "包含按属性名称键入的结构化项属性数据的JSON对象。目录项属性仅对品牌所有者可用，并符合销售合作伙伴API中针对产品类型定义提供的相关产品类型定义。",
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "ItemIdentifiers": {
+      "description": "与Amazon目录中的项目关联的标识符，例如UPC和EAN标识符。",
+      "items": {
+        "$ref": "#/definitions/ItemIdentifiersByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemIdentifiersByMarketplace": {
+      "description": "与Amazon catalog中指示的Amazon marketplace。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "identifiers": {
+          "description": "与Amazon catalog中指示的Amazon marketplace。",
+          "items": {
+            "$ref": "#/definitions/ItemIdentifier"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "marketplaceId",
+        "identifiers"
+      ],
+      "type": "object"
+    },
+    "ItemIdentifier": {
+      "description": "与Amazon目录中的项目关联的标识符，例如UPC或EAN标识符。",
+      "properties": {
+        "identifierType": {
+          "description": "标识符的类型，如UPC、EAN或ISBN。",
+          "type": "string"
+        },
+        "identifier": {
+          "description": "标识符。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "identifierType",
+        "identifier"
+      ],
+      "type": "object"
+    },
+    "ItemImages": {
+      "description": "Amazon目录中项目的图像。所有图像变体均提供给品牌所有者。否则，提供 “主” 图像变体的缩略图。",
+      "items": {
+        "$ref": "#/definitions/ItemImagesByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemImagesByMarketplace": {
+      "description": "Amazon目录中项目的图像，用于指示的Amazon marketplace。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "images": {
+          "description": "Amazon目录中项目的图像，用于指示的Amazon marketplace。",
+          "items": {
+            "$ref": "#/definitions/ItemImage"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "marketplaceId",
+        "images"
+      ],
+      "type": "object"
+    },
+    "ItemImage": {
+      "description": "Amazon目录中项目的图像。",
+      "properties": {
+        "variant": {
+          "description": "图像的变体，例如MAIN或pt01。",
+          "example": "MAIN",
+          "type": "string",
+          "enum": [
+            "MAIN",
+            "PT01",
+            "PT02",
+            "PT03",
+            "PT04",
+            "PT05",
+            "PT06",
+            "PT07",
+            "PT08",
+            "SWCH"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "MAIN",
+              "description": "项目的主图像。"
+            },
+            {
+              "value": "PT01",
+              "description": "该项目的其他图像 #1。"
+            },
+            {
+              "value": "PT02",
+              "description": "该项目的其他图像 #2。"
+            },
+            {
+              "value": "PT03",
+              "description": "该项目的其他图像 #3。"
+            },
+            {
+              "value": "PT04",
+              "description": "该项目的其他图像 #4。"
+            },
+            {
+              "value": "PT05",
+              "description": "该项目的其他图像 #5。"
+            },
+            {
+              "value": "PT06",
+              "description": "该项目的其他图像 #6。"
+            },
+            {
+              "value": "PT07",
+              "description": "该项目的其他图片 #7。"
+            },
+            {
+              "value": "PT08",
+              "description": "该项目的其他图像 #8。"
+            },
+            {
+              "value": "SWCH",
+              "description": "项目的色板图像。"
+            }
+          ]
+        },
+        "link": {
+          "description": "图像的链接或URL。",
+          "type": "string"
+        },
+        "height": {
+          "description": "图像的高度 (以像素为单位)。",
+          "type": "integer"
+        },
+        "width": {
+          "description": "图像的宽度 (以像素为单位)。",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "variant",
+        "link",
+        "height",
+        "width"
+      ],
+      "type": "object"
+    },
+    "ItemProductTypes": {
+      "description": "与Amazon目录项关联的产品类型。",
+      "items": {
+        "$ref": "#/definitions/ItemProductTypeByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemProductTypeByMarketplace": {
+      "description": "与指示的Amazon marketplace的Amazon目录项关联的产品类型。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "productType": {
+          "description": "与Amazon目录项关联的产品类型的名称。",
+          "example": "LUGGAGE",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ItemSalesRanks": {
+      "description": "Amazon目录项的销售排名。",
+      "items": {
+        "$ref": "#/definitions/ItemSalesRanksByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemSalesRanksByMarketplace": {
+      "description": "指定的Amazon marketplace的Amazon目录项的销售排名。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "ranks": {
+          "description": "Amazon marketplace的Amazon目录项的销售排名。",
+          "items": {
+            "$ref": "#/definitions/ItemSalesRank"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "marketplaceId",
+        "ranks"
+      ],
+      "type": "object"
+    },
+    "ItemSalesRank": {
+      "description": "Amazon目录项的销售排名。",
+      "properties": {
+        "title": {
+          "description": "销售职级的头衔或名称。",
+          "type": "string"
+        },
+        "link": {
+          "description": "销售排名的相应亚马逊零售网站链接或URL。",
+          "type": "string"
+        },
+        "rank": {
+          "description": "销售等级值。",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "title",
+        "rank"
+      ],
+      "type": "object"
+    },
+    "ItemSummaries": {
+      "description": "Amazon目录项的摘要详细信息。",
+      "items": {
+        "$ref": "#/definitions/ItemSummaryByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemSummaryByMarketplace": {
+      "description": "Amazon catalog项目的摘要详细信息指示的Amazon marketplace。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "brandName": {
+          "description": "与Amazon目录项关联的品牌名称。",
+          "type": "string"
+        },
+        "browseNode": {
+          "description": "与Amazon目录项关联的浏览节点的标识符。",
+          "type": "string"
+        },
+        "colorName": {
+          "description": "与Amazon目录项关联的颜色的名称。",
+          "type": "string"
+        },
+        "itemName": {
+          "description": "与Amazon目录项关联的名称或标题。",
+          "type": "string"
+        },
+        "manufacturer": {
+          "description": "与Amazon目录项关联的制造商的名称。",
+          "type": "string"
+        },
+        "modelNumber": {
+          "description": "与Amazon目录项关联的型号。",
+          "type": "string"
+        },
+        "sizeName": {
+          "description": "与Amazon目录项关联的大小的名称。",
+          "type": "string"
+        },
+        "styleName": {
+          "description": "与Amazon目录项关联的样式的名称。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "marketplaceId"
+      ],
+      "type": "object"
+    },
+    "ItemVariations": {
+      "description": "按marketplace列出的Amazon目录项的变体详细信息 (变体关系)。",
+      "items": {
+        "$ref": "#/definitions/ItemVariationsByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemVariationsByMarketplace": {
+      "description": "Amazon目录项的变体详细信息指示的Amazon marketplace。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "asins": {
+          "description": "相关项目的标识符 (asin)。",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "variationType": {
+          "description": "请求中的Amazon目录项与相关项的变体关系的类型: \"PARENT\" 或 \"CHILD\"。",
+          "example": "PARENT",
+          "enum": [
+            "PARENT",
+            "CHILD"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "PARENT",
+              "description": "请求中的Amazon目录项是ASIN指示的相关项的变体父项。"
+            },
+            {
+              "value": "CHILD",
+              "description": "请求中的Amazon目录项是ASIN标识的相关项的变体子级。"
+            }
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "marketplaceId",
+        "asins",
+        "variationType"
+      ],
+      "type": "object"
+    },
+    "ItemVendorDetails": {
+      "description": "与Amazon目录项关联的供应商详细信息。供应商详细信息仅供供应商使用。",
+      "items": {
+        "$ref": "#/definitions/ItemVendorDetailsByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemVendorDetailsByMarketplace": {
+      "description": "与指示的Amazon marketplace的Amazon目录项关联的供应商详细信息。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "brandCode": {
+          "description": "与Amazon目录项关联的品牌代码。",
+          "type": "string"
+        },
+        "categoryCode": {
+          "description": "与Amazon目录项关联的产品类别。",
+          "type": "string"
+        },
+        "manufacturerCode": {
+          "description": "与Amazon目录项关联的制造商代码。",
+          "type": "string"
+        },
+        "manufacturerCodeParent": {
+          "description": "制造商代码的父供应商代码。",
+          "type": "string"
+        },
+        "productGroup": {
+          "description": "与Amazon目录项关联的产品组。",
+          "type": "string"
+        },
+        "replenishmentCategory": {
+          "description": "与Amazon目录项关联的补货类别。",
+          "enum": [
+            "ALLOCATED",
+            "BASIC_REPLENISHMENT",
+            "IN_SEASON",
+            "LIMITED_REPLENISHMENT",
+            "MANUFACTURER_OUT_OF_STOCK",
+            "NEW_PRODUCT",
+            "NON_REPLENISHABLE",
+            "NON_STOCKUPABLE",
+            "OBSOLETE",
+            "PLANNED_REPLENISHMENT"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ALLOCATED",
+              "description": "表示供应商已分配给Amazon的库存的非自动购买。"
+            },
+            {
+              "value": "BASIC_REPLENISHMENT",
+              "description": "表示库存的非自动采购。"
+            },
+            {
+              "value": "IN_SEASON",
+              "description": "表示非自动采购季节性项目的库存。"
+            },
+            {
+              "value": "LIMITED_REPLENISHMENT",
+              "description": "在物料为NEW_PRODUCT之前保持队列补充状态。"
+            },
+            {
+              "value": "MANUFACTURER_OUT_OF_STOCK",
+              "description": "表示供应商缺货时间较长，不能缺货。"
+            },
+            {
+              "value": "NEW_PRODUCT",
+              "description": "表示亚马逊尚未在库存中储存的新商品。"
+            },
+            {
+              "value": "NON_REPLENISHABLE",
+              "description": "指示用于详细信息页面显示的分类父项，而不是实际项。"
+            },
+            {
+              "value": "NON_STOCKUPABLE",
+              "description": "表示亚马逊不在其履行中心库存的直接发货库存。"
+            },
+            {
+              "value": "OBSOLETE",
+              "description": "表示项目已过时，不应订购。"
+            },
+            {
+              "value": "PLANNED_REPLENISHMENT",
+              "description": "指示应自动订购的活动项目。"
+            }
+          ],
+          "type": "string"
+        },
+        "subcategoryCode": {
+          "description": "与Amazon目录项关联的产品子类别。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "marketplaceId"
+      ],
+      "type": "object"
+    },
+    "ItemSearchResults": {
+      "description": "Amazon目录和搜索相关的元数据。",
+      "properties": {
+        "numberOfResults": {
+          "description": "与搜索查询匹配的产品的估计总数 (无论找到的数量如何，每个请求仅返回页面计数限制以内的结果)。\n\n注意: 可以返回和分页的最大项目数 (asin) 为1000。",
+          "type": "integer"
+        },
+        "pagination": {
+          "description": "如果可用，则返回分页结果所需的nextToken和/或previousToken值。",
+          "$ref": "#/definitions/Pagination"
+        },
+        "refinements": {
+          "$ref": "#/definitions/Refinements"
+        },
+        "items": {
+          "description": "来自Amazon目录的项目列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Item"
+          }
+        }
+      },
+      "required": [
+        "numberOfResults",
+        "pagination",
+        "refinements",
+        "items"
+      ],
+      "type": "object"
+    },
+    "Pagination": {
+      "description": "当请求产生超过页面大小的响应时，会发生分页。这意味着响应被分成单独的页面。要检索下一页或上一页，必须在下一个请求中传递nextToken值或previousToken值作为pageToken参数。当您收到最后一页时，分页对象中将没有nextToken键。",
+      "properties": {
+        "nextToken": {
+          "description": "可用于获取下一页的令牌。",
+          "type": "string"
+        },
+        "previousToken": {
+          "description": "可用于获取上一页的令牌。",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Refinements": {
+      "description": "搜索改进。",
+      "properties": {
+        "brands": {
+          "description": "品牌搜索改进。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BrandRefinement"
+          }
+        },
+        "classifications": {
+          "description": "分类搜索细化。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClassificationRefinement"
+          }
+        }
+      },
+      "required": [
+        "brands",
+        "classifications"
+      ],
+      "type": "object"
+    },
+    "BrandRefinement": {
+      "description": "可用于获得更细粒度搜索结果的品牌描述。",
+      "properties": {
+        "numberOfResults": {
+          "description": "如果应用了优化键，则仍将返回的估计结果数。",
+          "type": "integer"
+        },
+        "brandName": {
+          "description": "品牌名称。用于显示，并且可以用作搜索细化。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "numberOfResults",
+        "brandName"
+      ],
+      "type": "object"
+    },
+    "ClassificationRefinement": {
+      "description": "分类的描述，可用于获得更细粒度的搜索结果。",
+      "properties": {
+        "numberOfResults": {
+          "description": "如果应用了优化键，则仍将返回的估计结果数。",
+          "type": "integer"
+        },
+        "displayName": {
+          "description": "分类的显示名称。",
+          "type": "string"
+        },
+        "classificationId": {
+          "description": "可用于搜索优化目的的分类的标识符。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "numberOfResults",
+        "displayName",
+        "classificationId"
+      ],
+      "type": "object"
+    }
+  }
+}

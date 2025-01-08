@@ -1,0 +1,1714 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "** 2024年6月27日 ** 生效，Feeds v2020-09-04的销售合作伙伴API将不再可用，对它的所有调用都将失败。依赖于Feeds API的集成必须迁移到 [Feeds v2021-06-30](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) 以避免服务中断。",
+    "version": "2020-09-04",
+    "title": "Selling Partner API for Feeds",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/feeds/2020-09-04/feeds": {
+      "get": {
+        "tags": [
+          "feeds"
+        ],
+        "description": "2023年6月27日有效，“getfeeds” 操作将不再在Feeds v2020-09-04的销售合作伙伴API中可用，并且对它的所有调用都将失败。依赖此操作的集成应迁移到 [源v2021-06-30](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) 以避免服务中断。",
+        "operationId": "getFeeds",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "feedTypes",
+            "in": "query",
+            "description": "用于筛选提要的提要类型列表。当提供feedTypes时，还可以提供其他过滤器参数 (processingStatuses、marketplaceIds、createds因为、createdtypes) 和pageSize。feedTypes或nextToken是必需的。",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 1
+          },
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "用于筛选提要的市场标识符列表。返回的源将至少与您指定的一个市场匹配。",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 1
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "在单个调用中返回的最大提要数。",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "maximum": 100,
+            "minimum": 1
+          },
+          {
+            "name": "processingStatuses",
+            "in": "query",
+            "description": "用于筛选提要的处理状态的列表。",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "CANCELLED",
+                "DONE",
+                "FATAL",
+                "IN_PROGRESS",
+                "IN_QUEUE"
+              ],
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "CANCELLED",
+                  "description": "feed在开始处理之前被取消。"
+                },
+                {
+                  "value": "DONE",
+                  "description": "feed已完成处理。检查结果文档的内容以确定处理过程中是否存在任何错误。"
+                },
+                {
+                  "value": "FATAL",
+                  "description": "由于致命错误，feed被中止。馈送内的一些、没有或所有操作可能已成功完成。"
+                },
+                {
+                  "value": "IN_PROGRESS",
+                  "description": "饲料正在处理中。"
+                },
+                {
+                  "value": "IN_QUEUE",
+                  "description": "feed尚未开始处理。它可能正在等待另一个IN_PROGRESS提要。"
+                }
+              ]
+            },
+            "minItems": 1
+          },
+          {
+            "name": "createdSince",
+            "in": "query",
+            "description": "响应中包含的订阅源的最早创建日期和时间，采用ISO 8601格式。默认值为90天前。饲料最多保留90天。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createdUntil",
+            "in": "query",
+            "description": "响应中包含的订阅源的最新订阅源创建日期和时间，采用ISO 8601格式。默认值为now。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "nextToken",
+            "in": "query",
+            "description": "在对上一个请求的响应中返回的字符串令牌。当结果数超过指定的pageSize值时返回nextToken。若要获取下一页结果，请调用getFeeds操作并将此令牌作为唯一参数包含在内。使用任何其他参数指定nextToken将导致请求失败。",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "feedTypes": {
+                        "value": [
+                          "POST_PRODUCT_DATA"
+                        ]
+                      },
+                      "pageSize": {
+                        "value": 10
+                      },
+                      "processingStatuses": {
+                        "value": [
+                          "CANCELLED",
+                          "DONE"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": [
+                      {
+                        "feedId": "FeedId1",
+                        "feedType": "POST_PRODUCT_DATA",
+                        "createdTime": "2019-12-11T13:16:24.630Z",
+                        "processingStatus": "CANCELLED",
+                        "processingStartTime": "2019-12-11T13:16:24.630Z",
+                        "processingEndTime": "2019-12-11T13:16:24.630Z"
+                      }
+                    ],
+                    "nextToken": "VGhpcyB0b2tlbiBpcyBvcGFxdWUgYW5kIGludGVudGlvbmFsbHkgb2JmdXNjYXRlZA=="
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "feedTypes": {
+                        "value": [
+                          "POST_PRODUCT_DATA"
+                        ]
+                      },
+                      "processingStatuses": {
+                        "value": [
+                          "BAD_VALUE",
+                          "DONE"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Dates were not provided"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "feeds"
+        ],
+        "description": "2023年6月27日有效，“createfeed” 操作将不再在feed v2020-09-04的销售合作伙伴API中可用，对它的所有调用都将失败。依赖此操作的集成应迁移到 [源v2021-06-30](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) 以避免服务中断。",
+        "operationId": "createFeed",
+        "deprecated": true,
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateFeedSpecification"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "feedType": "POST_PRODUCT_DATA",
+                          "marketplaceIds": [
+                            "ATVPDKIKX0DER",
+                            "A1F83G8C2ARO7P"
+                          ],
+                          "inputFeedDocumentId": "3d4e42b5-1d6e-44e8-a89c-2abfca0625bb"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "feedId": "3485934"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "marketplaceIds": [
+                            "ATVPDKIKX0DER",
+                            "A1F83G8C2ARO7P"
+                          ],
+                          "inputFeedDocumentId": "badDocumentId"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feeds/2020-09-04/feeds/{feedId}": {
+      "get": {
+        "tags": [
+          "feeds"
+        ],
+        "description": "2023年6月27日有效，“getfeed” 操作将不再在feed v2020-09-04的销售合作伙伴API中可用，并且对它的所有调用都将失败。依赖此操作的集成应迁移到 [源v2021-06-30](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) 以避免服务中断。",
+        "operationId": "getFeed",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "feedId",
+            "in": "path",
+            "description": "源的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "feedId": {
+                        "value": "feedId1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "feedId": "FeedId1",
+                      "feedType": "POST_PRODUCT_DATA",
+                      "createdTime": "2019-12-11T13:16:24.630Z",
+                      "processingStatus": "CANCELLED",
+                      "processingStartTime": "2019-12-11T13:16:24.630Z",
+                      "processingEndTime": "2019-12-11T13:16:24.630Z"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "feedId": {
+                        "value": "badFeedId1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "feeds"
+        ],
+        "description": "2023年6月27日生效，“cancelfeed” 操作将不再在feed v2020-09-04的销售合作伙伴API中可用，并且对它的所有调用都将失败。依赖此操作的集成应迁移到 [源v2021-06-30](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) 以避免服务中断。",
+        "operationId": "cancelFeed",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "feedId",
+            "in": "path",
+            "description": "源的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CancelFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "feedId": {
+                        "value": "ID1"
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CancelFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "feedId": {
+                        "value": "BADID1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/CancelFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CancelFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CancelFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/CancelFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CancelFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CancelFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CancelFeedResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feeds/2020-09-04/documents": {
+      "post": {
+        "tags": [
+          "feeds"
+        ],
+        "description": "2023年6月27日生效，“createfeeddocument” 操作将不再在feed v2020-09-04的销售合作伙伴API中可用，对它的所有调用都将失败。依赖此操作的集成应迁移到 [源v2021-06-30](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) 以避免服务中断。",
+        "operationId": "createFeedDocument",
+        "deprecated": true,
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateFeedDocumentSpecification"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "已成功创建可接收内容的源文档。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "contentType": "text/tab-separated-values; charset=UTF-8"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "feedDocumentId": "3d4e42b5-1d6e-44e8-a89c-2abfca0625bb",
+                      "url": "https://d34o8swod1owfl.cloudfront.net/Feed_101__POST_PRODUCT_DATA_%2BKEY%3DFeed_101%2BMode%3DCBC%2BINITVEC%3D8f+6c+cc+56+0d+50+a2+d0+31+ec+80+be+f2+6a+1d+0a",
+                      "encryptionDetails": {
+                        "standard": "AES",
+                        "initializationVector": "8f 6c cc 56 0d 50 a2 d0 31 ec 80 be f2 6a 1d 0a",
+                        "key": "key"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {}
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feeds/2020-09-04/documents/{feedDocumentId}": {
+      "get": {
+        "tags": [
+          "feeds"
+        ],
+        "description": "从2023年6月27日开始，“getfeeddocument” 操作将不再在feed v2020-09-04的销售合作伙伴API中可用，对它的所有调用都将失败。依赖此操作的集成应迁移到 [源v2021-06-30](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) 以避免服务中断。",
+        "operationId": "getFeedDocument",
+        "deprecated": true,
+        "parameters": [
+          {
+            "name": "feedDocumentId",
+            "in": "path",
+            "description": "feed文档的标识符。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "feedDocumentId": {
+                        "value": "0356cf79-b8b0-4226-b4b9-0ee058ea5760"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "feedDocumentId": "0356cf79-b8b0-4226-b4b9-0ee058ea5760",
+                      "url": "https://d34o8swod1owfl.cloudfront.net/SampleResult%2BKey%3DSample%2BINITVEC%3D58+fa+bf+a7+08+11+95+0f+c1+a8+c6+e0+d5+6f+ae+c8",
+                      "encryptionDetails": {
+                        "standard": "AES",
+                        "initializationVector": "58 fa bf a7 08 11 95 0f c1 a8 c6 e0 d5 6f ae c8",
+                        "key": "Sample"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "feedDocumentId": {
+                        "value": "badDocumentId1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetFeedDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "以人类可读的形式描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "CancelFeedResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "响应架构。"
+    },
+    "CreateFeedResult": {
+      "type": "object",
+      "required": [
+        "feedId"
+      ],
+      "properties": {
+        "feedId": {
+          "type": "string",
+          "description": "源的标识符。该标识符仅在与卖方ID组合时是唯一的。"
+        }
+      }
+    },
+    "Feed": {
+      "type": "object",
+      "required": [
+        "createdTime",
+        "feedId",
+        "feedType",
+        "processingStatus"
+      ],
+      "properties": {
+        "feedId": {
+          "type": "string",
+          "description": "源的标识符。该标识符仅在与卖方ID组合时是唯一的。"
+        },
+        "feedType": {
+          "type": "string",
+          "description": "feed类型。"
+        },
+        "marketplaceIds": {
+          "type": "array",
+          "description": "应用feed的市场的标识符列表。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "创建提要的日期和时间，采用ISO 8601日期时间格式。"
+        },
+        "processingStatus": {
+          "type": "string",
+          "description": "feed的处理状态。",
+          "enum": [
+            "CANCELLED",
+            "DONE",
+            "FATAL",
+            "IN_PROGRESS",
+            "IN_QUEUE"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "CANCELLED",
+              "description": "feed在开始处理之前被取消。"
+            },
+            {
+              "value": "DONE",
+              "description": "feed已完成处理。检查结果文档的内容以确定处理过程中是否存在任何错误。"
+            },
+            {
+              "value": "FATAL",
+              "description": "由于致命错误，feed被中止。馈送内的一些操作、没有操作或所有操作可能已成功完成。"
+            },
+            {
+              "value": "IN_PROGRESS",
+              "description": "饲料正在处理中。"
+            },
+            {
+              "value": "IN_QUEUE",
+              "description": "feed尚未开始处理。它可能正在等待另一个IN_PROGRESS提要。"
+            }
+          ]
+        },
+        "processingStartTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "feed处理开始的日期和时间，采用ISO 8601日期时间格式。"
+        },
+        "processingEndTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "进给处理完成的日期和时间，采用ISO 8601日期时间格式。"
+        },
+        "resultFeedDocumentId": {
+          "type": "string",
+          "description": "feed文档的标识符。该标识符仅在与卖方ID组合时是唯一的。"
+        }
+      }
+    },
+    "FeedList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Feed"
+      }
+    },
+    "GetFeedsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/FeedList"
+        },
+        "nextToken": {
+          "type": "string",
+          "description": "当结果数超过pageSize时返回。要获取下一页结果，请使用此令牌作为唯一参数调用getFeeds操作。"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "响应架构。"
+    },
+    "GetFeedResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/Feed"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "响应架构。"
+    },
+    "FeedDocumentEncryptionDetails": {
+      "type": "object",
+      "required": [
+        "initializationVector",
+        "key",
+        "standard"
+      ],
+      "properties": {
+        "standard": {
+          "type": "string",
+          "description": "加密或解密文档内容所需的加密标准。",
+          "enum": [
+            "AES"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "AES",
+              "description": "高级加密标准 (AES)。"
+            }
+          ]
+        },
+        "initializationVector": {
+          "type": "string",
+          "description": "使用密码块链接 (CBC) 加密或解密文档内容的向量。"
+        },
+        "key": {
+          "type": "string",
+          "description": "用于加密或解密文档内容的加密密钥。"
+        }
+      },
+      "description": "所需的客户端加密和解密文档内容的加密详细信息。"
+    },
+    "FeedDocument": {
+      "type": "object",
+      "required": [
+        "encryptionDetails",
+        "feedDocumentId",
+        "url"
+      ],
+      "properties": {
+        "feedDocumentId": {
+          "type": "string",
+          "description": "feed文档的标识符。该标识符仅在与卖方ID组合时是唯一的。"
+        },
+        "url": {
+          "type": "string",
+          "description": "源文档的预签名URL。如果未返回 “compressionalgorithm”，则可以直接从此URL下载feed。此URL将在5分钟后过期。"
+        },
+        "encryptionDetails": {
+          "$ref": "#/definitions/FeedDocumentEncryptionDetails"
+        },
+        "compressionAlgorithm": {
+          "type": "string",
+          "description": "如果已压缩feed文档内容，则在此属性中返回使用的压缩算法，您必须在下载时解压缩feed。否则，您可以直接下载feed。请参阅用例指南中的 [步骤6.下载并解密提要处理报告](doc:feeds-api-v2020-09-04-use-case-guide # step-6-download-and-decrypt-the-feed-processing-report)，其中提供了示例代码。",
+          "enum": [
+            "GZIP"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "GZIP",
+              "description": "gzip压缩算法。"
+            }
+          ]
+        }
+      }
+    },
+    "GetFeedDocumentResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/FeedDocument"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "响应架构。"
+    },
+    "CreateFeedResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/CreateFeedResult"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "响应架构。"
+    },
+    "FeedOptions": {
+      "type": "object",
+      "description": "其他选项来控制饲料。对于使用feedOptions参数的feed，您可以在 [feedType值] 的feed描述中找到参数值 ( https://github.com/amzn/ sell-partne-api-docs/blob/main/references/feeds-api/feedtype-values.md)。",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "CreateFeedSpecification": {
+      "type": "object",
+      "required": [
+        "feedType",
+        "inputFeedDocumentId",
+        "marketplaceIds"
+      ],
+      "properties": {
+        "feedType": {
+          "type": "string",
+          "description": "feed类型。"
+        },
+        "marketplaceIds": {
+          "type": "array",
+          "description": "要应用feed的市场的标识符列表。",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 25,
+          "minItems": 1
+        },
+        "inputFeedDocumentId": {
+          "type": "string",
+          "description": "由createFeedDocument操作返回的文档标识符。在调用createFeed操作之前，先加密并上传feed文档内容。"
+        },
+        "feedOptions": {
+          "$ref": "#/definitions/FeedOptions"
+        }
+      }
+    },
+    "CreateFeedDocumentSpecification": {
+      "type": "object",
+      "required": [
+        "contentType"
+      ],
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "description": "feed的内容类型。"
+        }
+      }
+    },
+    "CreateFeedDocumentResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/CreateFeedDocumentResult"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "createFeedDocument操作的响应。"
+    },
+    "CreateFeedDocumentResult": {
+      "type": "object",
+      "required": [
+        "encryptionDetails",
+        "feedDocumentId",
+        "url"
+      ],
+      "properties": {
+        "feedDocumentId": {
+          "type": "string",
+          "description": "feed文档的标识符。"
+        },
+        "url": {
+          "type": "string",
+          "description": "用于上载feed内容的预签名URL。此URL将在5分钟后过期。"
+        },
+        "encryptionDetails": {
+          "$ref": "#/definitions/FeedDocumentEncryptionDetails"
+        }
+      },
+      "description": "加密和上传feed文档内容所需的信息。"
+    }
+  }
+}

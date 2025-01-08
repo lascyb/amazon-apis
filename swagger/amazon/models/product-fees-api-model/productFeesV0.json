@@ -1,0 +1,1316 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "产品费用的销售合作伙伴API允许您以编程方式检索产品的估计费用。然后，您可以在定价中考虑这些费用。",
+    "version": "v0",
+    "title": "Selling Partner API for Product Fees",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/products/fees/v0/listings/{SellerSKU}/feesEstimate": {
+      "post": {
+        "tags": [
+          "fees"
+        ],
+        "description": "返回请求正文中指定的marketplace中指定的卖家SKU指示的项目的估计费用。\n\n* * 说明: * * 本操作关联的参数可能包含特殊字符，需要URL编码才能调用API。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n在销售伙伴设定项目价格之前，您可以代表销售伙伴为项目调用 “getmyfeesestimateforsku”。然后，销售合作伙伴可以考虑任何估计的费用。每个费用估算请求必须包括原始标识符。此标识符包含在费用估算中，以便您可以将费用估算与原始请求相关联。\n\n** 注意: ** 此标识符值用于标识估算值。实际费用可能会有所不同。在 [Seller Central](https://sellercentral.amazon.com/) 中搜索 “费用”，并查阅商店特定的费用表以获取最新信息。\n\n** 注意: ** 当卖家使用 'getMyFeesEstimateForSKU' 操作与他们的 'SellerSKU'，他们得到准确的费用基于真实的项目测量，但只有在他们已经发送他们的项目到亚马逊。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 2 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getMyFeesEstimateForSKU",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateRequest"
+            }
+          },
+          {
+            "name": "SellerSKU",
+            "in": "path",
+            "description": "用于标识给定市场中的项目。SellerSKU由卖家的SellerId限定，它包含在您提交的每个操作中。",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "FeesEstimateRequest": {
+                            "MarketplaceId": "ATVPDKIKX0DER",
+                            "IsAmazonFulfilled": false,
+                            "PriceToEstimateFees": {
+                              "ListingPrice": {
+                                "CurrencyCode": "USD",
+                                "Amount": 10
+                              },
+                              "Shipping": {
+                                "CurrencyCode": "USD",
+                                "Amount": 10
+                              },
+                              "Points": {
+                                "PointsNumber": 0,
+                                "PointsMonetaryValue": {
+                                  "CurrencyCode": "USD",
+                                  "Amount": 0
+                                }
+                              }
+                            },
+                            "Identifier": "UmaS1"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "FeesEstimateResult": {
+                        "Status": "Success",
+                        "FeesEstimateIdentifier": {
+                          "MarketplaceId": "ATVPDKIKX0DER",
+                          "IdType": "ASIN",
+                          "SellerId": "AXXXXXXXXXXXXX",
+                          "SellerInputIdentifier": "UmaS1",
+                          "IsAmazonFulfilled": false,
+                          "IdValue": "B00V5DG6IQ",
+                          "PriceToEstimateFees": {
+                            "ListingPrice": {
+                              "CurrencyCode": "USD",
+                              "Amount": 10
+                            },
+                            "Shipping": {
+                              "CurrencyCode": "USD",
+                              "Amount": 10
+                            },
+                            "Points": {
+                              "PointsNumber": 0,
+                              "PointsMonetaryValue": {
+                                "CurrencyCode": "USD",
+                                "Amount": 0
+                              }
+                            }
+                          }
+                        },
+                        "FeesEstimate": {
+                          "TimeOfFeesEstimation": "Mon Oct 28 18:49:32 UTC 2019",
+                          "TotalFeesEstimate": {
+                            "CurrencyCode": "USD",
+                            "Amount": 3
+                          },
+                          "FeeDetailList": []
+                        },
+                        "Error": {
+                          "Type": "",
+                          "Code": "",
+                          "Message": "",
+                          "Detail": []
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "FeesEstimateRequest": {
+                            "MarketplaceId": "WRNGMRKTPLCE"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Incorrect Marketplace identifier.",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/products/fees/v0/items/{Asin}/feesEstimate": {
+      "post": {
+        "tags": [
+          "fees"
+        ],
+        "description": "返回请求正文中指定的市场中指定ASIN指示的项目的估计费用。\n\n在销售伙伴设定项目价格之前，您可以代表销售伙伴为项目调用 “getmyfeesestimateforasin”。然后，销售伙伴可以考虑估计的费用。每个费用请求必须包含一个原始标识符。此标识符包含在费用估算中，因此您可以将费用估算与原始请求相关联。\n\n** 注意: ** 此标识符值用于标识估算值。实际费用可能会有所不同。在 [Seller Central](https://sellercentral.amazon.com/) 中搜索 “费用”，并查阅商店特定的费用表以获取最新信息。\n\n** 注意: ** 将 “getmyfeesestimateforasin” 操作与ASIN一起使用时，费用估算可能会有所不同。这是因为这些估计使用商品的目录大小，这可能并不总是与发送到亚马逊的商品的实际大小相匹配。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 2 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getMyFeesEstimateForASIN",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateRequest"
+            }
+          },
+          {
+            "name": "Asin",
+            "in": "path",
+            "description": "商品的Amazon标准标识号 (ASIN)。",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "FeesEstimateRequest": {
+                            "MarketplaceId": "ATVPDKIKX0DER",
+                            "IsAmazonFulfilled": false,
+                            "PriceToEstimateFees": {
+                              "ListingPrice": {
+                                "CurrencyCode": "USD",
+                                "Amount": 10
+                              },
+                              "Shipping": {
+                                "CurrencyCode": "USD",
+                                "Amount": 10
+                              },
+                              "Points": {
+                                "PointsNumber": 0,
+                                "PointsMonetaryValue": {
+                                  "CurrencyCode": "USD",
+                                  "Amount": 0
+                                }
+                              }
+                            },
+                            "Identifier": "UmaS1"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "FeesEstimateResult": {
+                        "Status": "Success",
+                        "FeesEstimateIdentifier": {
+                          "MarketplaceId": "ATVPDKIKX0DER",
+                          "IdType": "ASIN",
+                          "SellerId": "AXXXXXXXXXXXXX",
+                          "SellerInputIdentifier": "UmaS1",
+                          "IsAmazonFulfilled": false,
+                          "IdValue": "B00V5DG6IQ",
+                          "PriceToEstimateFees": {
+                            "ListingPrice": {
+                              "CurrencyCode": "USD",
+                              "Amount": 10
+                            },
+                            "Shipping": {
+                              "CurrencyCode": "USD",
+                              "Amount": 10
+                            },
+                            "Points": {
+                              "PointsNumber": 0,
+                              "PointsMonetaryValue": {
+                                "CurrencyCode": "USD",
+                                "Amount": 0
+                              }
+                            }
+                          }
+                        },
+                        "FeesEstimate": {
+                          "TimeOfFeesEstimation": "Mon Oct 28 18:49:32 UTC 2019",
+                          "TotalFeesEstimate": {
+                            "CurrencyCode": "USD",
+                            "Amount": 3
+                          },
+                          "FeeDetailList": []
+                        },
+                        "Error": {
+                          "Type": "",
+                          "Code": "",
+                          "Message": "",
+                          "Detail": []
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "FeesEstimateRequest": {
+                            "MarketplaceId": "WRNGMRKTPLCE"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Incorrect Marketplace identifier.",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/products/fees/v0/feesEstimate": {
+      "post": {
+        "tags": [
+          "fees"
+        ],
+        "description": "返回产品列表的估计费用。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.5 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getMyFeesEstimates",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimatesRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": [
+                          {
+                            "FeesEstimateRequest": {
+                              "MarketplaceId": "ATVPDKIKX0DER",
+                              "IsAmazonFulfilled": false,
+                              "PriceToEstimateFees": {
+                                "ListingPrice": {
+                                  "CurrencyCode": "USD",
+                                  "Amount": 10
+                                },
+                                "Shipping": {
+                                  "CurrencyCode": "USD",
+                                  "Amount": 10
+                                },
+                                "Points": {
+                                  "PointsNumber": 0,
+                                  "PointsMonetaryValue": {
+                                    "CurrencyCode": "USD",
+                                    "Amount": 0
+                                  }
+                                }
+                              },
+                              "Identifier": "UmaS1"
+                            },
+                            "IdType": "ASIN",
+                            "IdValue": "asin123"
+                          },
+                          {
+                            "FeesEstimateRequest": {
+                              "MarketplaceId": "A1AM78C64UM0Y8",
+                              "IsAmazonFulfilled": true,
+                              "PriceToEstimateFees": {
+                                "ListingPrice": {
+                                  "CurrencyCode": "MXN",
+                                  "Amount": 10
+                                },
+                                "Shipping": {
+                                  "CurrencyCode": "MXN",
+                                  "Amount": 10
+                                },
+                                "Points": {
+                                  "PointsNumber": 0,
+                                  "PointsMonetaryValue": {
+                                    "CurrencyCode": "MXN",
+                                    "Amount": 0
+                                  }
+                                }
+                              },
+                              "Identifier": "UmaS2"
+                            },
+                            "IdType": "SellerSKU",
+                            "IdValue": "sku123"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "response": [
+                    {
+                      "Status": "Success",
+                      "FeesEstimateIdentifier": {
+                        "MarketplaceId": "ATVPDKIKX0DER",
+                        "IdType": "ASIN",
+                        "SellerId": "AXXXXXXXXXXXXX",
+                        "SellerInputIdentifier": "UmaS1",
+                        "IsAmazonFulfilled": false,
+                        "IdValue": "asin123",
+                        "PriceToEstimateFees": {
+                          "ListingPrice": {
+                            "CurrencyCode": "USD",
+                            "Amount": 10
+                          },
+                          "Shipping": {
+                            "CurrencyCode": "USD",
+                            "Amount": 10
+                          },
+                          "Points": {
+                            "PointsNumber": 0,
+                            "PointsMonetaryValue": {
+                              "CurrencyCode": "USD",
+                              "Amount": 0
+                            }
+                          }
+                        }
+                      },
+                      "FeesEstimate": {
+                        "TimeOfFeesEstimation": "Mon Oct 28 18:49:32 UTC 2019",
+                        "TotalFeesEstimate": {
+                          "CurrencyCode": "USD",
+                          "Amount": 3
+                        },
+                        "FeeDetailList": []
+                      },
+                      "Error": {
+                        "Type": "",
+                        "Code": "",
+                        "Message": "",
+                        "Detail": []
+                      }
+                    },
+                    {
+                      "Status": "Success",
+                      "FeesEstimateIdentifier": {
+                        "MarketplaceId": "A1AM78C64UM0Y8",
+                        "IdType": "SellerSKU",
+                        "SellerId": "AXXXXXXXXXXXXX",
+                        "SellerInputIdentifier": "UmaS2",
+                        "IsAmazonFulfilled": false,
+                        "IdValue": "sku123",
+                        "PriceToEstimateFees": {
+                          "ListingPrice": {
+                            "CurrencyCode": "MXN",
+                            "Amount": 10
+                          },
+                          "Shipping": {
+                            "CurrencyCode": "MXN",
+                            "Amount": 10
+                          },
+                          "Points": {
+                            "PointsNumber": 0,
+                            "PointsMonetaryValue": {
+                              "CurrencyCode": "MXN",
+                              "Amount": 0
+                            }
+                          }
+                        }
+                      },
+                      "FeesEstimate": {
+                        "TimeOfFeesEstimation": "Mon Oct 28 18:49:32 UTC 2019",
+                        "TotalFeesEstimate": {
+                          "CurrencyCode": "MXN",
+                          "Amount": 3
+                        },
+                        "FeeDetailList": []
+                      },
+                      "Error": {
+                        "Type": "",
+                        "Code": "",
+                        "Message": "",
+                        "Detail": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimatesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": [
+                          {
+                            "FeesEstimateRequest": {
+                              "MarketplaceId": "INVALIDMARKETPLACEID",
+                              "IsAmazonFulfilled": false,
+                              "PriceToEstimateFees": {
+                                "ListingPrice": {
+                                  "CurrencyCode": "USD",
+                                  "Amount": 10
+                                },
+                                "Shipping": {
+                                  "CurrencyCode": "USD",
+                                  "Amount": 10
+                                },
+                                "Points": {
+                                  "PointsNumber": 0,
+                                  "PointsMonetaryValue": {
+                                    "CurrencyCode": "USD",
+                                    "Amount": 0
+                                  }
+                                }
+                              },
+                              "Identifier": "UmaS1"
+                            },
+                            "IdType": "ASIN",
+                            "IdValue": "asin123"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Incorrect Marketplace identifier.",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimatesErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimatesErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括 ** 拒绝访问 ** 、 ** 未授权 ** 、 ** 令牌过期 ** 或 ** 签名无效 **。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimatesErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimatesErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimatesErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimatesErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetMyFeesEstimatesErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    }
+  },
+  "definitions": {
+    "GetMyFeesEstimateRequest": {
+      "description": "请求架构。",
+      "type": "object",
+      "properties": {
+        "FeesEstimateRequest": {
+          "$ref": "#/definitions/FeesEstimateRequest"
+        }
+      }
+    },
+    "GetMyFeesEstimatesRequest": {
+      "description": "申请产品清单的估计费用。",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FeesEstimateByIdRequest"
+      }
+    },
+    "FeesEstimateByIdRequest": {
+      "type": "object",
+      "description": "用于请求估计费用的产品、市场和建议价格。",
+      "required": [
+        "IdType",
+        "IdValue"
+      ],
+      "properties": {
+        "FeesEstimateRequest": {
+          "$ref": "#/definitions/FeesEstimateRequest"
+        },
+        "IdType": {
+          "$ref": "#/definitions/IdType"
+        },
+        "IdValue": {
+          "description": "项目标识符。",
+          "type": "string"
+        }
+      }
+    },
+    "FeesEstimateRequest": {
+      "description": "用于请求估计费用的产品、市场和建议价格。",
+      "type": "object",
+      "required": [
+        "MarketplaceId",
+        "PriceToEstimateFees",
+        "Identifier"
+      ],
+      "properties": {
+        "MarketplaceId": {
+          "description": "市场标识符。",
+          "type": "string"
+        },
+        "IsAmazonFulfilled": {
+          "description": "如果为true，则该报价由亚马逊履行。",
+          "type": "boolean"
+        },
+        "PriceToEstimateFees": {
+          "description": "费用估算所基于的产品价格。",
+          "$ref": "#/definitions/PriceToEstimateFees"
+        },
+        "Identifier": {
+          "description": "调用方提供的用于跟踪此请求的唯一标识符。",
+          "type": "string"
+        },
+        "OptionalFulfillmentProgram": {
+          "$ref": "#/definitions/OptionalFulfillmentProgram"
+        }
+      }
+    },
+    "GetMyFeesEstimateResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "操作的负载。",
+          "$ref": "#/definitions/GetMyFeesEstimateResult"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      }
+    },
+    "GetMyFeesEstimateResult": {
+      "description": "响应架构。",
+      "type": "object",
+      "properties": {
+        "FeesEstimateResult": {
+          "description": "该项目的估计费用。",
+          "$ref": "#/definitions/FeesEstimateResult"
+        }
+      }
+    },
+    "GetMyFeesEstimatesResponse": {
+      "description": "产品清单的估计费用。",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FeesEstimateResult"
+      }
+    },
+    "Points": {
+      "type": "object",
+      "properties": {
+        "PointsNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "PointsMonetaryValue": {
+          "$ref": "#/definitions/MoneyType"
+        }
+      }
+    },
+    "GetMyFeesEstimatesErrorList": {
+      "type": "object",
+      "description": "请求不成功时返回的错误响应列表。",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      }
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      }
+    },
+    "FeesEstimateResult": {
+      "description": "项目标识符和项目的估计费用。",
+      "type": "object",
+      "properties": {
+        "Status": {
+          "description": "费用请求的状态。可能的值: Success、ClientError、ServiceError。",
+          "type": "string"
+        },
+        "FeesEstimateIdentifier": {
+          "description": "用于标识费用估算请求的信息。",
+          "$ref": "#/definitions/FeesEstimateIdentifier"
+        },
+        "FeesEstimate": {
+          "description": "项目的总估计费用和详细信息列表。",
+          "$ref": "#/definitions/FeesEstimate"
+        },
+        "Error": {
+          "description": "具有类型、代码和消息的error对象。",
+          "$ref": "#/definitions/FeesEstimateError"
+        }
+      }
+    },
+    "FeesEstimateIdentifier": {
+      "description": "项目标识符、市场、请求时间和其他标识估计的详细信息。",
+      "type": "object",
+      "properties": {
+        "MarketplaceId": {
+          "description": "市场标识符。",
+          "type": "string"
+        },
+        "SellerId": {
+          "description": "卖方标识符。",
+          "type": "string"
+        },
+        "IdType": {
+          "$ref": "#/definitions/IdType"
+        },
+        "IdValue": {
+          "description": "项目标识符。",
+          "type": "string"
+        },
+        "IsAmazonFulfilled": {
+          "description": "如果为true，则该报价由亚马逊履行。",
+          "type": "boolean"
+        },
+        "PriceToEstimateFees": {
+          "description": "费用估算所基于的项目价格。",
+          "$ref": "#/definitions/PriceToEstimateFees"
+        },
+        "SellerInputIdentifier": {
+          "description": "调用方提供的用于跟踪此请求的唯一标识符。",
+          "type": "string"
+        },
+        "OptionalFulfillmentProgram": {
+          "$ref": "#/definitions/OptionalFulfillmentProgram"
+        }
+      }
+    },
+    "PriceToEstimateFees": {
+      "description": "项目的价格信息，用于估算费用。",
+      "type": "object",
+      "required": [
+        "ListingPrice"
+      ],
+      "properties": {
+        "ListingPrice": {
+          "description": "项目的价格。",
+          "$ref": "#/definitions/MoneyType"
+        },
+        "Shipping": {
+          "description": "运费。",
+          "$ref": "#/definitions/MoneyType"
+        },
+        "Points": {
+          "description": "购买商品时提供的亚马逊积分数量。",
+          "$ref": "#/definitions/Points"
+        }
+      }
+    },
+    "FeesEstimate": {
+      "description": "项目的总估计费用和详细信息列表。",
+      "type": "object",
+      "required": [
+        "TimeOfFeesEstimation"
+      ],
+      "properties": {
+        "TimeOfFeesEstimation": {
+          "description": "费用估算的时间。这默认为发出请求的时间。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "TotalFeesEstimate": {
+          "description": "给定商品、价格和履行渠道的估计费用总额。",
+          "$ref": "#/definitions/MoneyType"
+        },
+        "FeeDetailList": {
+          "$ref": "#/definitions/FeeDetailList"
+        }
+      }
+    },
+    "FeeDetailList": {
+      "description": "构成给定费用的其他费用的清单。",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/FeeDetail"
+      }
+    },
+    "FeesEstimateError": {
+      "description": "此操作期间发生意外错误。",
+      "type": "object",
+      "required": [
+        "Code",
+        "Detail",
+        "Message",
+        "Type"
+      ],
+      "properties": {
+        "Type": {
+          "description": "一种错误类型，将接收者或发送者标识为错误的发起者。",
+          "type": "string"
+        },
+        "Code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "Message": {
+          "description": "描述错误情况的消息。",
+          "type": "string"
+        },
+        "Detail": {
+          "$ref": "#/definitions/FeesEstimateErrorDetail"
+        }
+      }
+    },
+    "FeesEstimateErrorDetail": {
+      "description": "可帮助呼叫者了解或解决问题的其他信息。",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "FeeDetail": {
+      "description": "费用类型、费用金额和其他详细信息。",
+      "type": "object",
+      "required": [
+        "FeeType",
+        "FeeAmount",
+        "FinalFee"
+      ],
+      "properties": {
+        "FeeType": {
+          "description": "向卖方收取的费用类型。",
+          "type": "string"
+        },
+        "FeeAmount": {
+          "description": "对给定费用收取的金额。",
+          "$ref": "#/definitions/MoneyType"
+        },
+        "FeePromotion": {
+          "description": "给定费用的促销金额。",
+          "$ref": "#/definitions/MoneyType"
+        },
+        "TaxAmount": {
+          "description": "给定费用的税额。",
+          "$ref": "#/definitions/MoneyType"
+        },
+        "FinalFee": {
+          "description": "给定费用的最终费用金额。",
+          "$ref": "#/definitions/MoneyType"
+        },
+        "IncludedFeeDetailList": {
+          "$ref": "#/definitions/IncludedFeeDetailList"
+        }
+      }
+    },
+    "IncludedFeeDetailList": {
+      "description": "构成给定费用的其他费用的清单。",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/IncludedFeeDetail"
+      }
+    },
+    "IncludedFeeDetail": {
+      "description": "费用类型、费用金额和其他详细信息。",
+      "type": "object",
+      "required": [
+        "FeeType",
+        "FeeAmount",
+        "FinalFee"
+      ],
+      "properties": {
+        "FeeType": {
+          "description": "向卖方收取的费用类型。",
+          "type": "string"
+        },
+        "FeeAmount": {
+          "description": "对给定费用收取的金额。",
+          "$ref": "#/definitions/MoneyType"
+        },
+        "FeePromotion": {
+          "description": "给定费用的促销金额。",
+          "$ref": "#/definitions/MoneyType"
+        },
+        "TaxAmount": {
+          "description": "给定费用的税额。",
+          "$ref": "#/definitions/MoneyType"
+        },
+        "FinalFee": {
+          "description": "给定费用的最终费用金额。",
+          "$ref": "#/definitions/MoneyType"
+        }
+      }
+    },
+    "MoneyType": {
+      "type": "object",
+      "properties": {
+        "CurrencyCode": {
+          "description": "ISO 4217格式的货币代码。",
+          "type": "string"
+        },
+        "Amount": {
+          "description": "货币价值。",
+          "type": "number"
+        }
+      }
+    },
+    "OptionalFulfillmentProgram": {
+      "type": "string",
+      "description": "一个可选的注册计划，用于在Amazon履行优惠时返回估计的费用 (isamazonimpfmissionset设置为true)。",
+      "enum": [
+        "FBA_CORE",
+        "FBA_SNL",
+        "FBA_EFN"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "FBA_CORE",
+          "description": "返回优惠的标准Amazon履行费用。这是默认设置。"
+        },
+        {
+          "value": "FBA_SNL",
+          "description": "返回优惠的FBA小额和轻型 (SNL) 费用。SNL计划降低了合格商品的履行成本。要检查SNL计划的项目资格，请使用FBA小型和轻型API的getSmallAndLightEligibilityBySellerSKU操作。\n\n** 注: ** 美国和欧盟地区的FBA小型和轻型计划日落于 ** 2023年9月26日 **。该计划将于 ** 2024年3月31日 ** 和 ** 2024年4月1日日 ** 在JP地区弃用。宣布弃用的api在其弃用日期后将不再受支持。对已弃用的api的调用将从其日落日期开始失败。有关详细信息，请参阅 [FBA小型和轻型程序弃用](https:// developer-docs.amazon.com/sp-api/changelog/fba-小型和轻型程序弃用)。"
+        },
+        {
+          "value": "FBA_EFN",
+          "description": "返回该优惠在欧盟国家/地区的跨境欧洲履行网络费用。"
+        }
+      ]
+    },
+    "IdType": {
+      "type": "string",
+      "description": "“Feesestimatebyidrequest' 中使用的产品标识符的类型。",
+      "enum": [
+        "ASIN",
+        "SellerSKU"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "ASIN",
+          "description": "列表项的Amazon标准标识号 (ASIN)。"
+        },
+        {
+          "value": "SellerSKU",
+          "description": "销售合作伙伴提供了亚马逊列表的标识符。"
+        }
+      ]
+    }
+  }
+}

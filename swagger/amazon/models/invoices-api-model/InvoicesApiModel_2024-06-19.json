@@ -1,0 +1,2135 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "使用发票销售合作伙伴API检索和管理与发票相关的操作，这可以帮助销售合作伙伴管理其簿记流程。",
+    "version": "2024-06-19",
+    "title": "发票的销售合作伙伴API。",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/tax/invoices/2024-06-19/attributes": {
+      "get": {
+        "tags": [
+          "invoices"
+        ],
+        "description": "返回依赖于市场的模式及其各自的可能值集。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getInvoicesAttributes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "市场标识符。",
+            "type": "string",
+            "name": "marketplaceId",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/GetInvoicesAttributesResponse"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "marketplaceId": {
+                        "value": "A2Q3Y263D00KWC"
+                      }
+                    }
+                  },
+                  "response": {
+                    "invoicesAttributes": {
+                      "invoiceStatusOptions": [
+                        {
+                          "description": "政府批准了发票。",
+                          "value": "AUTHORIZED"
+                        },
+                        {
+                          "description": "政府拒绝了发票。",
+                          "value": "REJECTED"
+                        },
+                        {
+                          "description": "发票已取消。",
+                          "value": "CANCELED"
+                        }
+                      ],
+                      "invoiceTypeOptions": [],
+                      "transactionIdentifierNameOptions": [],
+                      "transactionTypeOptions": []
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "details": "Missing required parameter: 'marketplaceId'",
+                        "message": "Invalid Request."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求不成功时返回的错误响应列表。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    },
+    "/tax/invoices/2024-06-19/documents/{invoicesDocumentId}": {
+      "get": {
+        "tags": [
+          "invoices"
+        ],
+        "description": "返回发票文档的ID和URL。使用URL下载ZIP文件，该文件包含来自相应的 “createinvoicesexport” 请求的发票。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0167 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getInvoicesDocument",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "导出文档标识符。",
+            "type": "string",
+            "name": "invoicesDocumentId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/GetInvoicesDocumentResponse"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "invoicesDocumentId": {
+                        "value": "18c598f5-75db-4c1a-bd3e-4c64b36781c5"
+                      }
+                    }
+                  },
+                  "response": {
+                    "invoicesDocument": {
+                      "invoicesDocumentId": "18c598f5-75db-4c1a-bd3e-4c64b36781c5",
+                      "invoicesDocumentUrl": "https://invoicesdocumentbucket.s3.eu-east-1.amazonaws.com/18c598f5-75db-4c1a-bd3e-4c64b36781c5.xml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=<CREDENTIAL>&X-Amz-Date=20240710T171315Z&X-Amz-Expires=300&X-Amz-Signature=<SIGNATURE>&X-Amz-SignedHeaders=host"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "details": "Missing required parameter 'invoiceId'",
+                        "message": "Invalid Request."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求不成功时返回的错误响应列表。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    },
+    "/tax/invoices/2024-06-19/exports": {
+      "post": {
+        "tags": [
+          "invoices"
+        ],
+        "description": "创建发票导出请求。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.167 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createInvoicesExport",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "创建导出请求所需的信息。",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExportInvoicesRequest"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ExportInvoicesResponse"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "dateEnd": "2024-07-30T23:59:59",
+                          "dateStart": "2024-07-01T00:00:00",
+                          "externalInvoiceId": "1283743",
+                          "fileFormat": "XML",
+                          "invoiceType": "SYMBOLIC_RETURN",
+                          "marketplaceId": "A2Q3Y263D00KWC",
+                          "series": "32",
+                          "statuses": [
+                            "AUTHORIZED"
+                          ],
+                          "transactionIdentifier": {
+                            "name": "BUSINESS_TRANSACTION_ID",
+                            "id": "94cd4e1a-5cc5-486d-b592-045a95a168e1"
+                          },
+                          "transactionType": "CUSTOMER_SALES"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "exportId": "4bdd8293-0cd7-4208-bed5-78b2c6ecefef"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "details": "Missing required attribute(s): 'marketplaceId'.",
+                        "message": "Request has missing or invalid parameters and cannot be parsed."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求不成功时返回的错误响应列表。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "invoices"
+        ],
+        "description": "返回与您指定的筛选器匹配的导出的发票导出详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.1 | 20 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getInvoicesExports",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "返回的导出与指定的市场匹配。",
+            "type": "string",
+            "name": "marketplaceId",
+            "in": "query",
+            "required": true
+          },
+          {
+            "description": "要包含在响应中的导出的最早导出创建日期和时间。值采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。默认值为30天前。",
+            "type": "string",
+            "name": "dateStart",
+            "in": "query",
+            "format": "date-time"
+          },
+          {
+            "description": "当结果数超过指定的 “pagesize” 值时，响应包含 “nexttoken”。若要获取下一页结果，请使用此令牌调用操作，并包含与生成令牌的调用相同的参数。若要获取完整列表，请调用此操作，直到 “nexttoken” 为null。请注意，此操作可能会返回空页。",
+            "type": "string",
+            "name": "nextToken",
+            "in": "query"
+          },
+          {
+            "description": "单次呼叫中要返回的最大发票数。\n\n最小值: 1\n\n最大值: 100",
+            "type": "integer",
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "description": "要包含在响应中的导出的最新导出创建日期和时间。值采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。默认值为请求的时间。",
+            "type": "string",
+            "name": "dateEnd",
+            "in": "query",
+            "format": "date-time"
+          },
+          {
+            "description": "返回与指定状态匹配的导出。",
+            "type": "string",
+            "name": "status",
+            "in": "query",
+            "enum": [
+              "REQUESTED",
+              "PROCESSING",
+              "DONE",
+              "ERROR"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "description": "导出请求已创建，但尚未启动。",
+                "value": "REQUESTED"
+              },
+              {
+                "description": "正在处理导出请求",
+                "value": "PROCESSING"
+              },
+              {
+                "description": "导出请求已成功完成。使用文档id下载输出文档。",
+                "value": "DONE"
+              },
+              {
+                "description": "导出请求导致错误。有关更多详细信息，请检查 “errormessage” 属性。",
+                "value": "ERROR"
+              }
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/GetInvoicesExportsResponse"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "dateEnd": {
+                        "value": "2024-07-10T23:59:59.000Z"
+                      },
+                      "dateStart": {
+                        "value": "2024-07-10T00:00:00.000Z"
+                      },
+                      "marketplaceId": {
+                        "value": "A2Q3Y263D00KWC"
+                      },
+                      "pageSize": {
+                        "value": 1
+                      },
+                      "status": {
+                        "value": "DONE"
+                      }
+                    }
+                  },
+                  "response": {
+                    "exports": [
+                      {
+                        "errorMessage": "",
+                        "exportId": "4bdd8293-0cd7-4208-bed5-78b2c6ecefef",
+                        "generateExportFinishedAt": "2024-07-10T16:00:00.000Z",
+                        "generateExportStartedAt": "2024-07-10T15:00:00.000Z",
+                        "invoicesDocumentIds": [
+                          "18c598f5-75db-4c1a-bd3e-4c64b36781c5"
+                        ],
+                        "status": "DONE"
+                      }
+                    ],
+                    "nextToken": "WTtGLzlBkat22iOI5C1yrpSPqMpz9UHYxdvm5U4DqEVJL5hqxv9xMuXe3eg35i17"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "marketplaceId": {
+                        "value": "A2Q3Y263D00KWC"
+                      },
+                      "nextToken": {
+                        "value": "WTtGLzlBkat22iOI5C1yrpSPqMpz9UHYxdvm5U4DqEVJL5hqxv9xMuXe3eg35i17"
+                      },
+                      "status": {
+                        "value": "DONE"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "details": "Specifying nextToken with any other parameters will cause the request to fail.",
+                        "message": "Invalid Request."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求不成功时返回的错误响应列表。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    },
+    "/tax/invoices/2024-06-19/exports/{exportId}": {
+      "get": {
+        "tags": [
+          "invoices"
+        ],
+        "description": "返回指定导出的发票导出详细信息 (包括 “exportdocumentid' (如果可用))。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getInvoicesExport",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "导出的唯一标识符。",
+            "type": "string",
+            "name": "exportId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/GetInvoicesExportResponse"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "exportId": {
+                        "value": "4bdd8293-0cd7-4208-bed5-78b2c6ecefef"
+                      }
+                    }
+                  },
+                  "response": {
+                    "export": {
+                      "errorMessage": "",
+                      "exportId": "4bdd8293-0cd7-4208-bed5-78b2c6ecefef",
+                      "generateExportFinishedAt": "2024-07-10T16:00:00.000Z",
+                      "generateExportStartedAt": "2024-07-10T15:00:00.000Z",
+                      "invoicesDocumentIds": [
+                        "18c598f5-75db-4c1a-bd3e-4c64b36781c5"
+                      ],
+                      "status": "DONE"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "details": "Missing required parameter 'exportId'",
+                        "message": "Invalid Request."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求不成功时返回的错误响应列表。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    },
+    "/tax/invoices/2024-06-19/invoices": {
+      "get": {
+        "tags": [
+          "invoices"
+        ],
+        "description": "返回与您指定的筛选器匹配的发票详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.1 | 20 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getInvoices",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "事务标识符筛选器的名称。如果为此字段提供值，则还必须为 “transactionidentifierid” 字段提供值。使用 “getinvoicesattributes” 操作检查 “transactionidentifiername” 选项。",
+            "type": "string",
+            "name": "transactionIdentifierName",
+            "in": "query"
+          },
+          {
+            "description": "您希望在一次呼叫中退回的最大发票数。\n\n最小值: 1\n\n最大值: 200",
+            "type": "integer",
+            "name": "pageSize",
+            "in": "query"
+          },
+          {
+            "description": "要包括在响应中的发票的最新发票创建日期。日期采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。默认值为当前日期-时间。",
+            "type": "string",
+            "name": "dateEnd",
+            "in": "query",
+            "format": "date-time"
+          },
+          {
+            "description": "响应仅包括与指定市场匹配的发票。",
+            "type": "string",
+            "name": "marketplaceId",
+            "in": "query",
+            "required": true
+          },
+          {
+            "description": "为其创建发票的交易记录类型的特定于市场的分类。使用 “getinvoicesattributes” 操作检查 “transactiontype” 选项。",
+            "type": "string",
+            "name": "transactionType",
+            "in": "query"
+          },
+          {
+            "description": "事务标识符筛选器的ID。如果为此字段提供值，则还必须为 “transactionidentifiername” 字段提供值。",
+            "type": "string",
+            "name": "transactionIdentifierId",
+            "in": "query"
+          },
+          {
+            "description": "要包括在响应中的发票的最早发票创建日期。日期采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。默认值为请求时间之前的24小时。",
+            "type": "string",
+            "name": "dateStart",
+            "in": "query",
+            "format": "date-time"
+          },
+          {
+            "description": "返回具有指定序列号的发票。",
+            "type": "string",
+            "name": "series",
+            "in": "query"
+          },
+          {
+            "description": "当结果数超过指定的 “pagesize” 值时，响应包含 “nexttoken”。若要获取下一页结果，请使用此令牌调用操作，并包含与生成令牌的调用相同的参数。若要获取完整列表，请调用此操作，直到 “nexttoken” 为null。请注意，此操作可能会返回空页。",
+            "type": "string",
+            "name": "nextToken",
+            "in": "query"
+          },
+          {
+            "description": "按升序或降序对响应中的发票进行排序。",
+            "type": "string",
+            "name": "sortOrder",
+            "in": "query",
+            "enum": [
+              "DESC",
+              "ASC"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "description": "按降序排序。",
+                "value": "DESC"
+              },
+              {
+                "description": "按升序排序。",
+                "value": "ASC"
+              }
+            ]
+          },
+          {
+            "description": "发票类型的特定于市场的分类。使用 “getinvoicesattributes” 操作检查 “invoicetype” 选项。",
+            "type": "string",
+            "name": "invoiceType",
+            "in": "query"
+          },
+          {
+            "description": "可用于筛选发票的状态列表。使用 “getinvoicesattributes” 操作检查发票状态选项。\n\n最小计数: 1",
+            "type": "array",
+            "name": "statuses",
+            "in": "query",
+            "collectionFormat": "csv",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          {
+            "description": "返回与此外部ID匹配的发票。这通常是政府发票ID。",
+            "type": "string",
+            "name": "externalInvoiceId",
+            "in": "query"
+          },
+          {
+            "description": "您希望在响应中对发票进行排序的属性。",
+            "type": "string",
+            "name": "sortBy",
+            "in": "query",
+            "enum": [
+              "START_DATE_TIME"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "description": "按日期时间排序。",
+                "value": "START_DATE_TIME"
+              }
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/GetInvoicesResponse"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "dateEnd": {
+                        "value": "2024-07-20T23:59:59"
+                      },
+                      "dateStart": {
+                        "value": "2024-07-01T00:00:00"
+                      },
+                      "invoiceType": {
+                        "value": "SYMBOLIC_RETURN"
+                      },
+                      "marketplaceId": {
+                        "value": "A2Q3Y263D00KWC"
+                      },
+                      "pageSize": {
+                        "value": 1
+                      },
+                      "sortBy": {
+                        "value": "START_DATE_TIME"
+                      },
+                      "sortOrder": {
+                        "value": "DESC"
+                      },
+                      "transactionIdentifierId": {
+                        "value": "94cd4e1a-5cc5-486d-b592-045a95a168e1"
+                      },
+                      "transactionIdentifierName": {
+                        "value": "BUSINESS_TRANSACTION_ID"
+                      },
+                      "transactionType": {
+                        "value": "CUSTOMER_SALES"
+                      }
+                    }
+                  },
+                  "response": {
+                    "invoices": [
+                      {
+                        "date": "2024-07-10T15:00:00.000Z",
+                        "errorCode": "",
+                        "externalInvoiceId": "1283743",
+                        "govResponse": "",
+                        "id": "ad5b9dcd-6981-4dc4-a3d7-dd2568298a94",
+                        "invoiceType": "SYMBOLIC_RETURN",
+                        "series": "32",
+                        "status": "AUTHORIZED",
+                        "transactionIds": [
+                          {
+                            "name": "BUSINESS_TRANSACTION_ID",
+                            "id": "94cd4e1a-5cc5-486d-b592-045a95a168e1"
+                          }
+                        ],
+                        "transactionType": "CUSTOMER_SALES"
+                      }
+                    ],
+                    "nextToken": "WTtGLzlBkat22iOI5C1yrpSPqMpz9UHYxdvm5U4DqEVJL5hqxv9xMuXe3eg35i17"
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "externalInvoiceId": {
+                        "value": "1283743"
+                      },
+                      "marketplaceId": {
+                        "value": "A2Q3Y263D00KWC"
+                      },
+                      "series": {
+                        "value": "32"
+                      }
+                    }
+                  },
+                  "response": {
+                    "invoices": [
+                      {
+                        "date": "2024-07-10T15:00:00.000Z",
+                        "errorCode": "",
+                        "externalInvoiceId": "1283743",
+                        "govResponse": "",
+                        "id": "ad5b9dcd-6981-4dc4-a3d7-dd2568298a94",
+                        "invoiceType": "SYMBOLIC_RETURN",
+                        "series": "32",
+                        "status": "AUTHORIZED",
+                        "transactionIds": [
+                          {
+                            "name": "BUSINESS_TRANSACTION_ID",
+                            "id": "94cd4e1a-5cc5-486d-b592-045a95a168e1"
+                          }
+                        ],
+                        "transactionType": "CUSTOMER_SALES"
+                      }
+                    ],
+                    "nextToken": "WTtGLzlBkat22iOI5C1yrpSPqMpz9UHYxdvm5U4DqEVJL5hqxv9xMuXe3eg35i17"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "marketplaceId": {
+                        "value": "A2Q3Y263D00KWC"
+                      },
+                      "nextToken": {
+                        "value": "WTtGLzlBkat22iOI5C1yrpSPqMpz9UHYxdvm5U4DqEVJL5hqxv9xMuXe3eg35i17"
+                      },
+                      "statuses": {
+                        "value": [
+                          "REJECTED"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "details": "Specifying nextToken with any other parameters will cause the request to fail.",
+                        "message": "Invalid Request."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求不成功时返回的错误响应列表。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    },
+    "/tax/invoices/2024-06-19/invoices/{invoiceId}": {
+      "get": {
+        "tags": [
+          "invoices"
+        ],
+        "description": "返回指定发票的发票数据。此操作仅返回发票数据的子集; 请参考响应定义以获取所有可能的属性。\n要获取完整发票，请使用 “createinvoicesexport” 操作启动导出请求。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getInvoice",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "您要从中获取发票的市场。",
+            "type": "string",
+            "name": "marketplaceId",
+            "in": "query",
+            "required": true
+          },
+          {
+            "description": "发票标识符。",
+            "type": "string",
+            "name": "invoiceId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/GetInvoiceResponse"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "invoiceId": {
+                        "value": "ad5b9dcd-6981-4dc4-a3d7-dd2568298a94"
+                      },
+                      "marketplaceId": {
+                        "value": "A2Q3Y263D00KWC"
+                      }
+                    }
+                  },
+                  "response": {
+                    "invoice": {
+                      "date": "2024-07-10T15:00:00.000Z",
+                      "errorCode": "",
+                      "externalInvoiceId": "1283743",
+                      "govResponse": "",
+                      "id": "ad5b9dcd-6981-4dc4-a3d7-dd2568298a94",
+                      "invoiceType": "CUSTOMER_SALES",
+                      "series": "32",
+                      "status": "AUTHORIZED",
+                      "transactionIds": [
+                        {
+                          "name": "BUSINESS_TRANSACTION_ID",
+                          "id": "94cd4e1a-5cc5-486d-b592-045a95a168e1"
+                        }
+                      ],
+                      "transactionType": "CUSTOMER_SALES_SYMBOLIC"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "marketplaceId": {
+                        "value": "A2Q3Y263D00KWC"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "details": "Missing required parameter 'invoiceId'",
+                        "message": "Invalid Request."
+                      }
+                    ]
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "invoiceId": {
+                        "value": "ad5b9dcd-6981-4dc4-a3d7-dd2568298a94"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "details": "Missing required parameter 'marketplaceId'",
+                        "message": "Invalid Request."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求不成功时返回的错误响应列表。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AttributeOption": {
+      "description": "属性选项的定义。",
+      "type": "object",
+      "properties": {
+        "description": {
+          "description": "属性值的说明。",
+          "type": "string"
+        },
+        "value": {
+          "description": "attribute选项的可能值。",
+          "type": "string"
+        }
+      }
+    },
+    "Error": {
+      "description": "请求失败时返回的错误响应。",
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "details": {
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述错误情况的消息。",
+          "type": "string"
+        }
+      }
+    },
+    "Export": {
+      "description": "有关导出的详细信息。",
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "description": "当导出生成失败时，此属性包含错误的说明。",
+          "type": "string"
+        },
+        "exportId": {
+          "description": "导出标识符。",
+          "type": "string"
+        },
+        "generateExportFinishedAt": {
+          "description": "导出生成完成的日期和时间。值采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "generateExportStartedAt": {
+          "description": "导出生成开始的日期和时间。值采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "invoicesDocumentIds": {
+          "description": "导出文档的标识符。要获取检索导出文档内容所需的信息，请在 “getinvoicesdocument” 操作中传递每个ID。\n\n此列表为空，直到状态为 “完成”。",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "$ref": "#/definitions/ExportStatus"
+        }
+      }
+    },
+    "ExportInvoicesRequest": {
+      "description": "创建导出请求所需的信息。",
+      "type": "object",
+      "required": [
+        "marketplaceId"
+      ],
+      "properties": {
+        "dateEnd": {
+          "description": "要包括在响应中的发票的最新发票创建日期。日期采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。默认值为请求的时间。",
+          "type": "string",
+          "format": "date"
+        },
+        "dateStart": {
+          "description": "要包括在响应中的发票的最早发票创建日期。日期采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。默认值为请求时间之前的24小时。",
+          "type": "string",
+          "format": "date"
+        },
+        "externalInvoiceId": {
+          "description": "要包含在响应中的发票的外部ID。",
+          "type": "string"
+        },
+        "fileFormat": {
+          "$ref": "#/definitions/FileFormat"
+        },
+        "invoiceType": {
+          "description": "发票类型的特定于市场的分类。使用 “getinvoicesattributes” 操作检查 “invoicetype” 选项。",
+          "type": "string"
+        },
+        "marketplaceId": {
+          "description": "您要从中获取发票的市场的ID。",
+          "type": "string"
+        },
+        "series": {
+          "description": "要包含在响应中的发票的序列号。",
+          "type": "string"
+        },
+        "statuses": {
+          "description": "可用于筛选发票的状态列表。使用 “getinvoicesattributes” 操作检查发票状态选项。\n\n最小计数: 1",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "transactionIdentifier": {
+          "$ref": "#/definitions/TransactionIdentifier"
+        },
+        "transactionType": {
+          "description": "为其创建发票的交易记录类型的特定于市场的分类。使用 “getinvoicesattributes” 操作检查 “transactiontype” 选项",
+          "type": "string"
+        }
+      },
+      "example": {
+        "dateEnd": "2024-07-30T23:59:59",
+        "dateStart": "2024-07-01T00:00:00",
+        "externalInvoiceId": "1283743",
+        "fileFormat": "XML",
+        "invoiceType": "SYMBOLIC_RETURN",
+        "marketplaceId": "A2Q3Y263D00KWC",
+        "series": "32",
+        "statuses": [
+          "AUTHORIZED"
+        ],
+        "transactionIdentifier": {
+          "name": "BUSINESS_TRANSACTION_ID",
+          "id": "94cd4e1a-5cc5-486d-b592-045a95a168e1"
+        },
+        "transactionType": "CUSTOMER_SALES"
+      }
+    },
+    "ExportInvoicesResponse": {
+      "description": "成功。",
+      "type": "object",
+      "properties": {
+        "exportId": {
+          "description": "导出标识符。",
+          "type": "string"
+        }
+      }
+    },
+    "ExportStatus": {
+      "description": "请求的当前状态。",
+      "type": "string",
+      "enum": [
+        "REQUESTED",
+        "PROCESSING",
+        "DONE",
+        "ERROR"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "导出请求已创建，但尚未启动。",
+          "value": "REQUESTED"
+        },
+        {
+          "description": "正在处理导出请求。",
+          "value": "PROCESSING"
+        },
+        {
+          "description": "导出请求已成功完成。使用文档id下载输出文档。",
+          "value": "DONE"
+        },
+        {
+          "description": "导出请求导致错误。有关详细信息，请参阅 “errormessage” 属性。",
+          "value": "ERROR"
+        }
+      ]
+    },
+    "FileFormat": {
+      "description": "支持的发票文件扩展名。",
+      "type": "string",
+      "enum": [
+        "XML"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "description": "发票文件为XML格式。",
+          "value": "XML"
+        }
+      ]
+    },
+    "GetInvoiceResponse": {
+      "description": "成功。",
+      "type": "object",
+      "properties": {
+        "invoice": {
+          "$ref": "#/definitions/Invoice"
+        }
+      }
+    },
+    "GetInvoicesAttributesResponse": {
+      "description": "成功。",
+      "type": "object",
+      "properties": {
+        "invoicesAttributes": {
+          "$ref": "#/definitions/InvoicesAttributes"
+        }
+      }
+    },
+    "GetInvoicesDocumentResponse": {
+      "description": "成功。",
+      "type": "object",
+      "properties": {
+        "invoicesDocument": {
+          "$ref": "#/definitions/InvoicesDocument"
+        }
+      }
+    },
+    "GetInvoicesExportResponse": {
+      "description": "成功。",
+      "type": "object",
+      "properties": {
+        "export": {
+          "$ref": "#/definitions/Export"
+        }
+      }
+    },
+    "GetInvoicesExportsResponse": {
+      "description": "成功。",
+      "type": "object",
+      "properties": {
+        "exports": {
+          "description": "出口清单。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Export"
+          },
+          "maxItems": 100
+        },
+        "nextToken": {
+          "description": "当结果数超过指定的 “pagesize” 值时返回此标记。要获取下一页的结果，请调用 “getinvoices” 操作，并将此令牌与先前的调用参数一起包含在内。",
+          "type": "string"
+        }
+      }
+    },
+    "GetInvoicesResponse": {
+      "description": "成功。",
+      "type": "object",
+      "properties": {
+        "invoices": {
+          "description": "发票清单。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Invoice"
+          },
+          "maxItems": 100
+        },
+        "nextToken": {
+          "description": "当结果数超过指定的 “pagesize” 值时返回此标记。要获取下一页的结果，请调用 “getinvoices” 操作，并将此令牌与先前的调用参数一起包含在内。",
+          "type": "string"
+        }
+      }
+    },
+    "Invoice": {
+      "description": "提供有关发票的详细信息。",
+      "type": "object",
+      "properties": {
+        "date": {
+          "description": "开具发票的日期和时间。值采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "errorCode": {
+          "description": "如果发票处于错误状态，此属性将显示错误代码。",
+          "type": "string"
+        },
+        "externalInvoiceId": {
+          "description": "由外部方使用的发票标识符。这通常是授权发票的政府机构。",
+          "type": "string"
+        },
+        "govResponse": {
+          "description": "发票开具过程中出现错误时，来自政府部门的响应消息。",
+          "type": "string"
+        },
+        "id": {
+          "description": "发票标识符。",
+          "type": "string"
+        },
+        "invoiceType": {
+          "description": "发票类型的分类。这在不同的市场上有所不同。使用 “getinvoicesattributes” 操作检查 “invoicetype” 选项。",
+          "type": "string"
+        },
+        "series": {
+          "description": "将此标识符与 “externalinvoiceid” 结合使用，以标识来自同一卖方的发票。",
+          "type": "string"
+        },
+        "status": {
+          "description": "发票状态分类。使用 “getinvoicesattributes” 操作检查发票状态选项。",
+          "type": "string"
+        },
+        "transactionIds": {
+          "description": "包含与发票关联的交易记录的标识符的列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TransactionIdentifier"
+          }
+        },
+        "transactionType": {
+          "description": "产生此发票的交易记录的分类。使用 “getinvoicesattributes” 操作检查 “transactiontype” 选项。",
+          "type": "string"
+        }
+      }
+    },
+    "InvoicesAttributes": {
+      "description": "包含发票属性定义的对象。",
+      "type": "object",
+      "properties": {
+        "invoiceStatusOptions": {
+          "description": "可用于 “发票状态” 属性的所有选项的列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AttributeOption"
+          }
+        },
+        "invoiceTypeOptions": {
+          "description": "可用于 “发票类型” 属性的所有选项的列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AttributeOption"
+          }
+        },
+        "transactionIdentifierNameOptions": {
+          "description": "可用于事务标识符名称属性的所有选项的列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AttributeOption"
+          }
+        },
+        "transactionTypeOptions": {
+          "description": "可用于事务处理类型属性的所有选项的列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AttributeOption"
+          }
+        }
+      }
+    },
+    "InvoicesDocument": {
+      "description": "一个对象，其中包含 “documentid” 和可用于下载指定文件的S3预签名URL。",
+      "type": "object",
+      "properties": {
+        "invoicesDocumentId": {
+          "description": "导出文档的标识符。",
+          "type": "string"
+        },
+        "invoicesDocumentUrl": {
+          "description": "可用于下载zip格式的发票文档的预签名URL。此URL在30秒后过期。",
+          "type": "string"
+        }
+      }
+    },
+    "TransactionIdentifier": {
+      "description": "事务的标识符。",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "事务标识符名称。使用 “getinvoicesattributes” 操作检查 “transactionidentifiername” 选项。",
+          "type": "string"
+        },
+        "id": {
+          "description": "事务标识符。",
+          "type": "string"
+        }
+      }
+    },
+    "ErrorList": {
+      "type": "object",
+      "description": "请求不成功时返回的错误响应列表。",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array",
+          "description": "错误列表。",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      }
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "responses": {}
+}

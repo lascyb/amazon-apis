@@ -1,0 +1,1450 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "用于直接履行订单的销售合作伙伴API提供了对直接履行供应商的订单数据的编程访问。",
+    "version": "2021-12-28",
+    "title": "销售直接履行订单的合作伙伴API",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/vendor/directFulfillment/orders/2021-12-28/purchaseOrders": {
+      "get": {
+        "tags": [
+          "vendorOrders"
+        ],
+        "description": "返回在您指定的时间范围内创建的采购订单列表。使用createdafer和createdBefore参数定义时间范围。您必须同时使用这两个参数。您可以通过将includeDetails参数设置为false来选择仅获取采购订单编号。在这种情况下，该操作返回采购订单号的列表。然后可以调用getOrder操作以返回特定订单的详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getOrders",
+        "parameters": [
+          {
+            "name": "shipFromPartyId",
+            "in": "query",
+            "description": "履行仓库的供应商仓库标识符。如果未指定，则结果将包含所有仓库的订单。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "仅返回与指定状态匹配的采购订单。如果未指定，则结果将包含与任何状态匹配的订单。",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "NEW",
+              "SHIPPED",
+              "ACCEPTED",
+              "CANCELLED"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "NEW",
+                "description": "新创建的采购订单的状态。"
+              },
+              {
+                "value": "SHIPPED",
+                "description": "已发运的采购订单的状态。"
+              },
+              {
+                "value": "ACCEPTED",
+                "description": "供应商接受的采购订单的状态。"
+              },
+              {
+                "value": "CANCELLED",
+                "description": "已取消采购订单的状态。"
+              }
+            ]
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "返回的采购订单数量的限制。",
+            "required": false,
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "name": "createdAfter",
+            "in": "query",
+            "description": "在此日期和时间之后可用的采购订单将包括在结果中。必须采用ISO-8601日期/时间格式。",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createdBefore",
+            "in": "query",
+            "description": "在此日期和时间之前可用的采购订单将包括在结果中。必须采用ISO-8601日期/时间格式。",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "description": "按订单创建日期按升序或降序对列表进行排序。",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "ASC",
+                "description": "按订单创建日期按升序排序。"
+              },
+              {
+                "value": "DESC",
+                "description": "按订单创建日期降序排序。"
+              }
+            ]
+          },
+          {
+            "name": "nextToken",
+            "in": "query",
+            "description": "当订单超过指定的结果大小限制时，用于分页。token值在之前的API调用中返回。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "includeDetails",
+            "in": "query",
+            "description": "如果为true，则返回完整的采购订单详细信息。否则，只返回采购订单编号。",
+            "required": false,
+            "type": "string",
+            "default": "true",
+            "format": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/OrderList"
+            },
+            "examples": {
+              "pagination": {
+                "nextToken": "MDAwMDAwMDAwMQ=="
+              },
+              "orders": [
+                {
+                  "purchaseOrderNumber": "2JK3S9VC",
+                  "orderDetails": {
+                    "customerOrderNumber": "123-ABC",
+                    "orderDate": "2020-02-20T13:51:00Z",
+                    "orderStatus": "NEW",
+                    "shipmentDetails": {
+                      "isPriorityShipment": false,
+                      "isScheduledDeliveryShipment": false,
+                      "isPslipRequired": true,
+                      "isGift": false,
+                      "shipMethod": "UPS_2ND",
+                      "shipmentDates": {
+                        "requiredShipDate": "2020-02-21T00:00:00Z",
+                        "promisedDeliveryDate": "2020-02-24T00:00:00Z"
+                      },
+                      "messageToCustomer": "This shipment completes your order. You can always check the status of your orders from the \"Your Account\" link at the top of each page of our site.Thank you for shopping at Amazon.com"
+                    },
+                    "taxTotal": {
+                      "taxLineItem": [
+                        {
+                          "taxRate": "0.1",
+                          "taxAmount": {
+                            "currencyCode": "USD",
+                            "amount": "190"
+                          },
+                          "type": "TOTAL"
+                        }
+                      ]
+                    },
+                    "sellingParty": {
+                      "partyId": "999US"
+                    },
+                    "shipFromParty": {
+                      "partyId": "ABCD"
+                    },
+                    "shipToParty": {
+                      "name": "ABCD",
+                      "attention": "ABCD",
+                      "addressLine1": "123 XYZ Street",
+                      "addressLine2": "Apt 5",
+                      "city": "San Jose",
+                      "stateOrRegion": "CA",
+                      "postalCode": "94086",
+                      "countryCode": "USA"
+                    },
+                    "billToParty": {
+                      "partyId": "ABCD"
+                    },
+                    "items": [
+                      {
+                        "itemSequenceNumber": "00001",
+                        "buyerProductIdentifier": "B07DFVDRAB",
+                        "vendorProductIdentifier": "8806098286500",
+                        "title": "LG 8千克逆变器Wi-Fi全自动前装式洗衣机 (FHT1408SWS，sts-vcm，内置加热器)",
+                        "orderedQuantity": {
+                          "amount": 1,
+                          "unitOfMeasure": "EACH"
+                        },
+                        "netPrice": {
+                          "currencyCode": "USD",
+                          "amount": "500"
+                        },
+                        "taxDetails": {
+                          "taxLineItem": [
+                            {
+                              "taxRate": "0.1",
+                              "taxAmount": {
+                                "currencyCode": "USD",
+                                "amount": "50"
+                              },
+                              "type": "TOTAL"
+                            }
+                          ]
+                        },
+                        "buyerCustomizedInfo": {
+                          "customizedUrl": "aHR0cHM6Ly8xcC1kZi1wdWJsaWMtZGF0YS5zMy5hbWF6b25hd3MuY29tLzExMS0xMjYwNzQ1LTYyOTE0MTZfNTgzNjIxNTQwMTM1NjEuemlw"
+                        }
+                      },
+                      {
+                        "itemSequenceNumber": "00002",
+                        "buyerProductIdentifier": "B07DFYF5AB",
+                        "vendorProductIdentifier": "8806098286123",
+                        "title": "LG 6.5千克逆变器全自动前装洗衣机 (FHT1065SNW，蓝白相间，内置加热器)",
+                        "orderedQuantity": {
+                          "amount": 2,
+                          "unitOfMeasure": "EACH"
+                        },
+                        "netPrice": {
+                          "currencyCode": "USD",
+                          "amount": "700"
+                        },
+                        "taxDetails": {
+                          "taxLineItem": [
+                            {
+                              "taxRate": "0.1",
+                              "taxAmount": {
+                                "currencyCode": "USD",
+                                "amount": "140"
+                              },
+                              "type": "TOTAL"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "x-amzn-api-sandbox": {
+          "dynamic": {}
+        }
+      }
+    },
+    "/vendor/directFulfillment/orders/2021-12-28/purchaseOrders/{purchaseOrderNumber}": {
+      "get": {
+        "tags": [
+          "vendorOrders"
+        ],
+        "description": "返回您指定的purchaseOrderNumber的采购订单信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getOrder",
+        "parameters": [
+          {
+            "name": "purchaseOrderNumber",
+            "in": "path",
+            "description": "所需采购订单的订单标识符。格式说明: 字母数字代码。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            },
+            "examples": {
+              "application/json": {
+                "purchaseOrderNumber": "2JK3S9VC",
+                "orderDetails": {
+                  "customerOrderNumber": "123-ABC",
+                  "orderDate": "2020-02-20T13:51:00Z",
+                  "orderStatus": "NEW",
+                  "shipmentDetails": {
+                    "isPriorityShipment": false,
+                    "isScheduledDeliveryShipment": false,
+                    "isPslipRequired": true,
+                    "isGift": false,
+                    "shipMethod": "UPS_2ND",
+                    "shipmentDates": {
+                      "requiredShipDate": "2020-02-21T00:00:00Z",
+                      "promisedDeliveryDate": "2020-02-24T00:00:00Z"
+                    },
+                    "messageToCustomer": "This shipment completes your order. You can always check the status of your orders from the \"Your Account\" link at the top of each page of our site.Thank you for shopping at Amazon.com"
+                  },
+                  "taxTotal": {
+                    "taxLineItem": [
+                      {
+                        "taxAmount": {
+                          "currencyCode": "USD",
+                          "amount": "190"
+                        },
+                        "type": "TOTAL"
+                      }
+                    ]
+                  },
+                  "sellingParty": {
+                    "partyId": "999US"
+                  },
+                  "shipFromParty": {
+                    "partyId": "ABCD"
+                  },
+                  "shipToParty": {
+                    "name": "ABCD",
+                    "attention": "ABCD",
+                    "addressLine1": "123 XYZ Street",
+                    "addressLine2": "Apt 5",
+                    "city": "San Jose",
+                    "stateOrRegion": "CA",
+                    "postalCode": "94086",
+                    "countryCode": "USA"
+                  },
+                  "billToParty": {
+                    "partyId": "ABCD"
+                  },
+                  "items": [
+                    {
+                      "itemSequenceNumber": "00001",
+                      "buyerProductIdentifier": "B07DFVDRAB",
+                      "vendorProductIdentifier": "8806098286500",
+                      "title": "LG 8千克逆变器Wi-Fi全自动前装式洗衣机 (FHT1408SWS，sts-vcm，内置加热器)",
+                      "orderedQuantity": {
+                        "amount": 1,
+                        "unitOfMeasure": "EACH"
+                      },
+                      "netPrice": {
+                        "currencyCode": "USD",
+                        "amount": "500"
+                      },
+                      "taxDetails": {
+                        "taxLineItem": [
+                          {
+                            "taxRate": "0.1",
+                            "taxAmount": {
+                              "currencyCode": "USD",
+                              "amount": "50"
+                            },
+                            "type": "TOTAL"
+                          }
+                        ]
+                      },
+                      "buyerCustomizedInfo": {
+                        "customizedUrl": "aHR0cHM6Ly8xcC1kZi1wdWJsaWMtZGF0YS5zMy5hbWF6b25hd3MuY29tLzExMS0xMjYwNzQ1LTYyOTE0MTZfNTgzNjIxNTQwMTM1NjEuemlw"
+                      }
+                    },
+                    {
+                      "itemSequenceNumber": "00002",
+                      "buyerProductIdentifier": "B07DFYF5AB",
+                      "vendorProductIdentifier": "8806098286123",
+                      "title": "LG 6.5千克逆变器全自动前装洗衣机 (FHT1065SNW，蓝白相间，内置加热器)",
+                      "orderedQuantity": {
+                        "amount": 2,
+                        "unitOfMeasure": "EACH"
+                      },
+                      "netPrice": {
+                        "currencyCode": "USD",
+                        "amount": "700"
+                      },
+                      "taxDetails": {
+                        "taxLineItem": [
+                          {
+                            "taxRate": "0.1",
+                            "taxAmount": {
+                              "currencyCode": "USD",
+                              "amount": "140"
+                            },
+                            "type": "TOTAL"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "x-amzn-api-sandbox": {
+          "dynamic": {}
+        }
+      }
+    },
+    "/vendor/directFulfillment/orders/2021-12-28/acknowledgements": {
+      "post": {
+        "tags": [
+          "vendorOrders"
+        ],
+        "description": "提交一个或多个采购订单的确认。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "submitAcknowledgement",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubmitAcknowledgementRequest"
+            },
+            "description": "包含对订单的确认的请求正文"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/TransactionId"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "x-amzn-api-sandbox": {
+          "dynamic": {}
+        }
+      }
+    }
+  },
+  "definitions": {
+    "OrderList": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/Pagination",
+          "description": "检索剩余数据所需的分页元素。"
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Order"
+          },
+          "description": "表示OrderList中的采购订单。"
+        }
+      },
+      "description": "采购订单列表。"
+    },
+    "Pagination": {
+      "type": "object",
+      "properties": {
+        "nextToken": {
+          "type": "string",
+          "description": "用于将信息传递给下一个请求的生成字符串。如果返回NextToken，则将NextToken的值传递给下一个请求。如果不返回NextToken，则不再有要返回的订单项。"
+        }
+      },
+      "description": "检索剩余数据所需的分页元素。"
+    },
+    "Order": {
+      "description": "表示采购订单。",
+      "type": "object",
+      "required": [
+        "purchaseOrderNumber"
+      ],
+      "properties": {
+        "purchaseOrderNumber": {
+          "type": "string",
+          "description": "此订单的采购订单编号。格式说明: 字母数字代码。"
+        },
+        "orderDetails": {
+          "description": "采购订单详细信息。",
+          "$ref": "#/definitions/OrderDetails"
+        }
+      }
+    },
+    "OrderDetails": {
+      "type": "object",
+      "required": [
+        "billToParty",
+        "customerOrderNumber",
+        "items",
+        "orderDate",
+        "sellingParty",
+        "shipFromParty",
+        "shipToParty",
+        "shipmentDetails"
+      ],
+      "properties": {
+        "customerOrderNumber": {
+          "type": "string",
+          "description": "客户订单编号。"
+        },
+        "orderDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "下订单的日期。此字段应采用ISO-8601的日期/时间格式，例如: 2018-07-16 t23: 00:00Z/ 2018-16 t23: 00:00-05:00 /2018-07-16 t23: 00:00-08:00。如果未指定时区，则应假定为UTC。"
+        },
+        "orderStatus": {
+          "type": "string",
+          "description": "订单的当前状态。",
+          "enum": [
+            "NEW",
+            "SHIPPED",
+            "ACCEPTED",
+            "CANCELLED"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "NEW",
+              "description": "新创建的订单的状态。"
+            },
+            {
+              "value": "SHIPPED",
+              "description": "已发货的订单的状态。"
+            },
+            {
+              "value": "ACCEPTED",
+              "description": "供应商接受的订单的状态。"
+            },
+            {
+              "value": "CANCELLED",
+              "description": "已取消订单的状态。"
+            }
+          ]
+        },
+        "shipmentDetails": {
+          "$ref": "#/definitions/ShipmentDetails"
+        },
+        "taxTotal": {
+          "$ref": "#/definitions/TaxItemDetails"
+        },
+        "sellingParty": {
+          "description": "供应商代码的PartyID。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipFromParty": {
+          "description": "供应商仓库的PartyID。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipToParty": {
+          "description": "船方的名称/地址和税务细节。",
+          "$ref": "#/definitions/Address"
+        },
+        "billToParty": {
+          "description": "给方的账单的名称/地址和税务细节。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "items": {
+          "type": "array",
+          "description": "此采购订单中的项目列表。",
+          "items": {
+            "$ref": "#/definitions/OrderItem"
+          }
+        }
+      },
+      "description": "订单的详细信息。"
+    },
+    "PartyIdentification": {
+      "type": "object",
+      "description": "一方的名称、地址和税务细节。",
+      "required": [
+        "partyId"
+      ],
+      "properties": {
+        "partyId": {
+          "type": "string",
+          "description": "为该方指定的标识。例如，仓库代码或供应商代码。请参阅具体方了解更多详情。"
+        },
+        "address": {
+          "description": "党的详细地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "taxInfo": {
+          "description": "实体的税务登记详细信息。",
+          "$ref": "#/definitions/TaxRegistrationDetails"
+        }
+      }
+    },
+    "TaxRegistrationDetails": {
+      "type": "object",
+      "required": [
+        "taxRegistrationNumber"
+      ],
+      "properties": {
+        "taxRegistrationType": {
+          "type": "string",
+          "description": "实体的税务登记类型。",
+          "enum": [
+            "VAT",
+            "GST"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "VAT",
+              "description": "增值税。"
+            },
+            {
+              "value": "GST",
+              "description": "商品和服务税。"
+            }
+          ]
+        },
+        "taxRegistrationNumber": {
+          "type": "string",
+          "description": "当事人的税务登记号码。例如，VAT ID。"
+        },
+        "taxRegistrationAddress": {
+          "description": "与税务登记号关联的地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "taxRegistrationMessages": {
+          "type": "string",
+          "description": "可用于其他税务相关详细信息的税务登记消息。"
+        }
+      },
+      "description": "实体的税务登记详细信息。"
+    },
+    "Address": {
+      "type": "object",
+      "required": [
+        "addressLine1",
+        "countryCode",
+        "name",
+        "stateOrRegion"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "该地址的个人、企业或机构的名称。对于Amazon label only供应商，此字段将在对象 “shiptopart” 中具有值 “xxxxx”。"
+        },
+        "attention": {
+          "type": "string",
+          "description": "在该地址的人的注意姓名。对于Amazon label only供应商，此字段将在对象 “shiptopart” 中具有值 “xxxxx”。"
+        },
+        "addressLine1": {
+          "type": "string",
+          "description": "地址的第一行。对于Amazon label only供应商，此字段将在对象 “shiptopart” 中具有值 “xxxxx”。"
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "其他地址信息 (如果需要)。对于Amazon label only供应商，此字段将在对象 “shiptopart” 中具有值 “xxxxx”。"
+        },
+        "addressLine3": {
+          "type": "string",
+          "description": "其他地址信息 (如果需要)。对于Amazon label only供应商，此字段将在对象 “shiptopart” 中具有值 “xxxxx”。"
+        },
+        "city": {
+          "type": "string",
+          "description": "个人、企业或机构所在的城市。对于Amazon label only供应商，此字段将在对象 “shiptopart” 中具有值 “xxxxx”。"
+        },
+        "county": {
+          "type": "string",
+          "description": "个人、企业或机构所在的县。对于Amazon label only供应商，此字段将在对象 “shiptopart” 中具有值 “xxxxx”。"
+        },
+        "district": {
+          "type": "string",
+          "description": "个人、企业或机构所在的地区。对于Amazon label only供应商，此字段将在对象 “shiptopart” 中具有值 “xxxxx”。"
+        },
+        "stateOrRegion": {
+          "type": "string",
+          "description": "个人、企业或机构所在的州或地区。"
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "该地址的邮政编码。它包含一系列字母或数字或两者兼而有之，有时包括空格或标点符号。"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "两位数的国家代码。ISO 3166-1 alpha-2格式。"
+        },
+        "phone": {
+          "type": "string",
+          "description": "位于该地址的个人、企业或机构的电话号码。对于Amazon label only供应商，此字段将在对象 “shiptopart” 中具有值 “xxxxx”。"
+        }
+      },
+      "description": "党的地址。"
+    },
+    "OrderItem": {
+      "type": "object",
+      "required": [
+        "itemSequenceNumber",
+        "netPrice",
+        "orderedQuantity"
+      ],
+      "properties": {
+        "itemSequenceNumber": {
+          "type": "string",
+          "description": "采购订单上项目的编号。第一项将是1，第二项是2，依此类推。"
+        },
+        "buyerProductIdentifier": {
+          "type": "string",
+          "description": "Buyer's standard identification number (ASIN) of an item."
+        },
+        "vendorProductIdentifier": {
+          "type": "string",
+          "description": "供应商选择了项目的产品标识。"
+        },
+        "title": {
+          "type": "string",
+          "description": "项目的标题。"
+        },
+        "orderedQuantity": {
+          "description": "订购的项目数量。",
+          "$ref": "#/definitions/ItemQuantity"
+        },
+        "scheduledDeliveryShipment": {
+          "description": "计划交货装运的详细信息。",
+          "$ref": "#/definitions/ScheduledDeliveryShipment"
+        },
+        "giftDetails": {
+          "description": "礼品信息和wrapId详细信息。",
+          "$ref": "#/definitions/GiftDetails"
+        },
+        "netPrice": {
+          "description": "向供应商提供的净价 (税前) 以及货币详细信息。",
+          "$ref": "#/definitions/Money"
+        },
+        "taxDetails": {
+          "description": "行项目的总税额详细信息。",
+          "$ref": "#/definitions/TaxItemDetails"
+        },
+        "totalPrice": {
+          "description": "每个亚马逊的价格 (成本)。",
+          "$ref": "#/definitions/Money"
+        },
+        "buyerCustomizedInfo": {
+          "description": "供应商已配置为可自定义的产品的买方信息，指定自定义或配置的类型以及其产品的类型和范围。这为买方提供了根据供应商允许的定制产品的多个方面的能力。",
+          "$ref": "#/definitions/buyerCustomizedInfoDetail"
+        }
+      },
+      "description": "订单中的项目"
+    },
+    "Money": {
+      "type": "object",
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "ISO 4217格式的三位数货币代码。长度为3的字符串。"
+        },
+        "amount": {
+          "$ref": "#/definitions/Decimal"
+        }
+      },
+      "description": "货币的数量，包括货币形式的单位。"
+    },
+    "buyerCustomizedInfoDetail": {
+      "type": "object",
+      "properties": {
+        "customizedUrl": {
+          "type": "string",
+          "description": "使用UTF-8字符集的 [Base 64](https://datatracker.ietf.org/doc/html/ rfc4648 # section-4) 编码的URL。URL提供zip文件的位置，该文件指定供应商允许的自定义项或配置的类型，以及其产品属性的类型和范围。"
+        }
+      },
+      "description": "供应商已配置为可自定义的产品的详细信息。"
+    },
+    "Decimal": {
+      "type": "string",
+      "description": "无精度损失的十进制数。当精度损失不可接受时很有用，就像货币一样。遵循RFC7159的数字表示。"
+    },
+    "SubmitAcknowledgementResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "提交确认操作的负载。",
+          "$ref": "#/definitions/TransactionId"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "提交确认操作的响应架构。"
+    },
+    "TransactionId": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "description": "由Amazon分配的用于标识此事务的GUID。此值可与事务状态API一起使用，以返回此事务的状态。"
+        }
+      },
+      "description": "包含事务ID的响应。"
+    },
+    "ErrorList": {
+      "type": "object",
+      "description": "请求不成功时返回的错误响应列表。",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          },
+          "description": "表示请求期间遇到的各个错误的Error对象数组。"
+        }
+      }
+    },
+    "SubmitAcknowledgementRequest": {
+      "type": "object",
+      "properties": {
+        "orderAcknowledgements": {
+          "type": "array",
+          "description": "一个或多个采购订单的列表。",
+          "items": {
+            "$ref": "#/definitions/OrderAcknowledgementItem"
+          }
+        }
+      },
+      "description": "提交确认操作的请求架构。"
+    },
+    "OrderAcknowledgementItem": {
+      "type": "object",
+      "required": [
+        "acknowledgementDate",
+        "acknowledgementStatus",
+        "itemAcknowledgements",
+        "purchaseOrderNumber",
+        "sellingParty",
+        "shipFromParty",
+        "vendorOrderNumber"
+      ],
+      "properties": {
+        "purchaseOrderNumber": {
+          "type": "string",
+          "description": "此订单的采购订单编号。格式说明: 字母数字代码。"
+        },
+        "vendorOrderNumber": {
+          "type": "string",
+          "description": "此订单的供应商订单号。"
+        },
+        "acknowledgementDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "确认订单的日期和时间，采用ISO-8601日期/时间格式。例如: 2018-07-16 t23: 00:00Z/2018-16 t23: 00:00-05:00/2018-16 t23: 00:00-08:00。"
+        },
+        "acknowledgementStatus": {
+          "description": "确认状态。",
+          "$ref": "#/definitions/AcknowledgementStatus"
+        },
+        "sellingParty": {
+          "description": "PartyID作为供应商代码。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipFromParty": {
+          "description": "PartyID作为供应商的warehouseId。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "itemAcknowledgements": {
+          "type": "array",
+          "description": "项目详细信息，包括确认数量。",
+          "items": {
+            "$ref": "#/definitions/OrderItemAcknowledgement"
+          }
+        }
+      },
+      "description": "正在确认的单个订单的详细信息。"
+    },
+    "OrderItemAcknowledgement": {
+      "type": "object",
+      "required": [
+        "acknowledgedQuantity",
+        "itemSequenceNumber"
+      ],
+      "properties": {
+        "itemSequenceNumber": {
+          "type": "string",
+          "description": "项目的行项目序列号。"
+        },
+        "buyerProductIdentifier": {
+          "type": "string",
+          "description": "Buyer's standard identification number (ASIN) of an item."
+        },
+        "vendorProductIdentifier": {
+          "type": "string",
+          "description": "供应商选择了项目的产品标识。应与采购订单中提供的相同。"
+        },
+        "acknowledgedQuantity": {
+          "description": "使用上述确认码确认的数量详情。",
+          "$ref": "#/definitions/ItemQuantity"
+        }
+      },
+      "description": "正在确认的订单中单个项目的详细信息。"
+    },
+    "ItemQuantity": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "description": "确认数量。此值不应为零。"
+        },
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "确认数量的计量单位。",
+          "enum": [
+            "Each"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Each",
+              "description": "表示单个零件的度量单位。"
+            }
+          ]
+        }
+      },
+      "description": "订购数量的详细信息。"
+    },
+    "TaxLineItem": {
+      "type": "array",
+      "description": "税行项目列表。",
+      "items": {
+        "$ref": "#/definitions/TaxDetails"
+      }
+    },
+    "TaxDetails": {
+      "type": "object",
+      "required": [
+        "taxAmount"
+      ],
+      "properties": {
+        "taxRate": {
+          "$ref": "#/definitions/Decimal"
+        },
+        "taxAmount": {
+          "$ref": "#/definitions/Money"
+        },
+        "taxableAmount": {
+          "$ref": "#/definitions/Money"
+        },
+        "type": {
+          "type": "string",
+          "description": "税种。",
+          "enum": [
+            "CONSUMPTION",
+            "GST",
+            "MwSt.",
+            "PST",
+            "TOTAL",
+            "TVA",
+            "VAT"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "CONSUMPTION",
+              "description": "对商品和服务的消费支出征收的税。"
+            },
+            {
+              "value": "GST",
+              "description": "对出售给国内消费的大多数商品和服务征收的税。"
+            },
+            {
+              "value": "MwSt.",
+              "description": "Mehrwertsteuer，MwSt，是德国的增值税。"
+            },
+            {
+              "value": "PST",
+              "description": "在加拿大许多省份，对商品和特定服务的消费者征收省销售税 (PST)。"
+            },
+            {
+              "value": "TOTAL",
+              "description": "所有适用税项的合计总额。"
+            },
+            {
+              "value": "TVA",
+              "description": "Taxe sur la Valeur ajoutee (TVA) 是法国的增值税。"
+            },
+            {
+              "value": "VAT",
+              "description": "增值税。"
+            }
+          ]
+        }
+      },
+      "description": "与订单相关的税务详细信息。"
+    },
+    "AcknowledgementStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "确认码是指示确认状态的唯一两位数字值。有关Amazon支持的确认代码的列表，请参阅供应商直接履行api使用案例指南。"
+        },
+        "description": {
+          "type": "string",
+          "description": "确认代码的原因。"
+        }
+      },
+      "description": "确认状态。"
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "ShipmentDetails": {
+      "type": "object",
+      "required": [
+        "isPriorityShipment",
+        "isPslipRequired",
+        "messageToCustomer",
+        "shipMethod",
+        "shipmentDates"
+      ],
+      "properties": {
+        "isPriorityShipment": {
+          "type": "boolean",
+          "description": "当为true时，这是优先装运。"
+        },
+        "isScheduledDeliveryShipment": {
+          "type": "boolean",
+          "description": "如果为true，则此订单是计划交货计划的一部分。"
+        },
+        "isPslipRequired": {
+          "type": "boolean",
+          "description": "如果为true，则需要将装箱单发送给客户。"
+        },
+        "isGift": {
+          "type": "boolean",
+          "description": "当为true时，订单包含礼物。包括礼品信息和礼品包装信息。"
+        },
+        "shipMethod": {
+          "type": "string",
+          "description": "用于装运订单的装运方法。Amazon定义了指示运输承运人和运输服务级别的运输方法代码。要查看使用的ship方法的完整列表，包括代码和友好名称，请在Vendor Central的 “帮助” 部分搜索 “ship方法”。"
+        },
+        "shipmentDates": {
+          "$ref": "#/definitions/ShipmentDates"
+        },
+        "messageToCustomer": {
+          "type": "string",
+          "description": "给客户的订单状态消息。"
+        }
+      },
+      "description": "装运所需的装运详细信息。"
+    },
+    "ShipmentDates": {
+      "type": "object",
+      "required": [
+        "requiredShipDate"
+      ],
+      "properties": {
+        "requiredShipDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "要求供应商装运订单的时间。"
+        },
+        "promisedDeliveryDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "向亚马逊客户承诺的交货日期。"
+        }
+      },
+      "description": "装运日期。"
+    },
+    "ScheduledDeliveryShipment": {
+      "type": "object",
+      "properties": {
+        "scheduledDeliveryServiceType": {
+          "type": "string",
+          "description": "计划交货服务类型。"
+        },
+        "earliestNominatedDeliveryDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "计划交货的最早指定交货日期。"
+        },
+        "latestNominatedDeliveryDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "计划交付的最新指定交付日期。"
+        }
+      },
+      "description": "计划交货发运的日期。"
+    },
+    "GiftDetails": {
+      "type": "object",
+      "properties": {
+        "giftMessage": {
+          "type": "string",
+          "description": "礼品信息将在装运时打印。"
+        },
+        "giftWrapId": {
+          "type": "string",
+          "description": "礼品包装的礼品包装标识符 (如果有)。"
+        }
+      },
+      "description": "该项目的礼品详细信息。"
+    },
+    "TaxItemDetails": {
+      "type": "object",
+      "description": "行项目的总税额详细信息。",
+      "properties": {
+        "taxLineItem": {
+          "description": "税务详情。",
+          "$ref": "#/definitions/TaxLineItem"
+        }
+      }
+    }
+  }
+}

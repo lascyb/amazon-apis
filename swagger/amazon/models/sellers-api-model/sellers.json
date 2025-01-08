@@ -1,0 +1,823 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "[卖家销售伙伴API](https:// developer-docs.amazon.com/sp-api/docs/sellers-api-v1-reference) (卖家api) 提供卖家账号的基本信息，如:\n\n-卖家可以列出的市场\n-市场的默认语言和货币\n-卖方是否已暂停上市\n\n有关该API的操作、数据类型和架构的详细信息，请参考 [卖家api参考](https:// developer-docs.amazon.com/sp-api/docs/sellers-api-v1-reference)。",
+    "version": "v1",
+    "title": "Selling Partner API for Sellers",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/sellers/v1/marketplaceParticipations": {
+      "get": {
+        "tags": [
+          "sellers"
+        ],
+        "description": "返回一个市场列表，卖方可以在其中列出有关卖方参与这些市场的项目和信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.016 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getMarketplaceParticipations",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "已成功检索市场参与。",
+            "schema": {
+              "$ref": "#/definitions/GetMarketplaceParticipationsResponse"
+            },
+            "examples": {
+              "payload": [
+                {
+                  "marketplace": {
+                    "id": "ATVPDKIKX0DER",
+                    "name": "Amazon.com",
+                    "countryCode": "US",
+                    "defaultCurrencyCode": "USD",
+                    "defaultLanguageCode": "en_US",
+                    "domainName": "www.amazon.com"
+                  },
+                  "participation": {
+                    "isParticipating": true,
+                    "hasSuspendedListings": false
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "payload": [
+                      {
+                        "marketplace": {
+                          "id": "ATVPDKIKX0DER",
+                          "countryCode": "US",
+                          "name": "Amazon.com",
+                          "defaultCurrencyCode": "USD",
+                          "defaultLanguageCode": "en_US",
+                          "domainName": "www.amazon.com"
+                        },
+                        "participation": {
+                          "isParticipating": true,
+                          "hasSuspendedListings": false
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetMarketplaceParticipationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/GetMarketplaceParticipationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetMarketplaceParticipationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/GetMarketplaceParticipationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的实体的格式不受请求的资源支持。",
+            "schema": {
+              "$ref": "#/definitions/GetMarketplaceParticipationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetMarketplaceParticipationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetMarketplaceParticipationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetMarketplaceParticipationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sellers/v1/account": {
+      "get": {
+        "tags": [
+          "sellers"
+        ],
+        "description": "返回有关卖家帐户及其市场的信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.016 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getAccount",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "examples": {
+              "application/json": {
+                "payload": {
+                  "businessType": "PRIVATE_LIMITED",
+                  "marketplaceLevelAttributes": [
+                    {
+                      "marketplace": {
+                        "id": "ATVPDKIKX0DER",
+                        "name": "United States",
+                        "countryCode": "US",
+                        "domainName": "www.amazon.com"
+                      },
+                      "storeName": "BestSellerStore",
+                      "listingStatus": "ACTIVE",
+                      "sellingPlan": "PROFESSIONAL"
+                    }
+                  ],
+                  "business": {
+                    "name": "BestSeller Inc.",
+                    "nonLatinName": "ベストセラー株式会社",
+                    "registeredBusinessAddress": {
+                      "addressLine1": "123 Main St",
+                      "addressLine2": "Suite 500",
+                      "city": "Seattle",
+                      "stateOrProvinceCode": "WA",
+                      "postalCode": "98101",
+                      "countryCode": "US"
+                    },
+                    "companyRegistrationNumber": "123456789"
+                  },
+                  "primaryContact": {
+                    "name": "John Doe",
+                    "nonLatinName": "ジョン・ドゥ",
+                    "address": {
+                      "addressLine1": "456 Oak St",
+                      "addressLine2": "Apt 12",
+                      "city": "Seattle",
+                      "stateOrProvinceCode": "WA",
+                      "postalCode": "98102",
+                      "countryCode": "US"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "response": {
+                    "payload": {
+                      "marketplaceLevelAttributes": [
+                        {
+                          "marketplace": {
+                            "id": "ATVPDKIKX0DER",
+                            "name": "United States",
+                            "countryCode": "US",
+                            "domainName": "www.amazon.com"
+                          },
+                          "storeName": "BestSellerStore",
+                          "listingStatus": "ACTIVE",
+                          "sellingPlan": "PROFESSIONAL"
+                        }
+                      ],
+                      "businessType": "SOLE_PROPRIETORSHIP",
+                      "business": {
+                        "name": "BestSeller Inc.",
+                        "registeredBusinessAddress": {
+                          "addressLine1": "123 Main St",
+                          "addressLine2": "Suite 500",
+                          "city": "Seattle",
+                          "stateOrProvinceCode": "WA",
+                          "postalCode": "98101",
+                          "countryCode": "US"
+                        },
+                        "companyTaxIdentificationNumber": "TAX123456"
+                      },
+                      "primaryContact": {
+                        "name": "John Doe",
+                        "nonLatinName": "ジョン・ドゥ",
+                        "address": {
+                          "addressLine1": "456 Oak St",
+                          "addressLine2": "Apt 12",
+                          "city": "Seattle",
+                          "stateOrProvinceCode": "WA",
+                          "postalCode": "98102",
+                          "countryCode": "US"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "code": "400",
+                    "message": "Validation failed for obfuscatedId:ACUULBDVZHYZ1"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Validation failed for obfuscatedId:ACUULBDVZHYZ1"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetAccountResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "以人类可读的形式描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助您了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "MarketplaceParticipation": {
+      "type": "object",
+      "required": [
+        "marketplace",
+        "participation"
+      ],
+      "properties": {
+        "marketplace": {
+          "$ref": "#/definitions/Marketplace"
+        },
+        "participation": {
+          "$ref": "#/definitions/Participation"
+        }
+      }
+    },
+    "MarketplaceParticipationList": {
+      "type": "array",
+      "description": "市场参与列表。",
+      "items": {
+        "$ref": "#/definitions/MarketplaceParticipation"
+      }
+    },
+    "GetMarketplaceParticipationsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Getmarketplacepparticipations” 操作的负载。",
+          "$ref": "#/definitions/MarketplaceParticipationList"
+        },
+        "errors": {
+          "description": "“Getmarketplaceparticipations” 操作遇到的错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Getmarketplaceparticipations” 操作的响应架构。"
+    },
+    "Marketplace": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "countryCode",
+        "defaultCurrencyCode",
+        "defaultLanguageCode",
+        "domainName"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "加密的市场价值。"
+        },
+        "name": {
+          "type": "string",
+          "description": "市场名称。"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "市场的ISO 3166-1 alpha-2格式国家/地区代码。",
+          "pattern": "^([A-Z]{2})$"
+        },
+        "defaultCurrencyCode": {
+          "type": "string",
+          "description": "市场的ISO 4217格式货币代码。"
+        },
+        "defaultLanguageCode": {
+          "type": "string",
+          "description": "市场的ISO 639-1格式语言代码。"
+        },
+        "domainName": {
+          "type": "string",
+          "description": "市场的域名。"
+        }
+      },
+      "description": "有关Amazon marketplace的信息，卖家可以在其中列出商品，客户可以查看和购买商品。"
+    },
+    "Participation": {
+      "type": "object",
+      "required": [
+        "hasSuspendedListings",
+        "isParticipating"
+      ],
+      "properties": {
+        "isParticipating": {
+          "type": "boolean",
+          "description": "如果 “真”，则卖方参与市场。否则为 “假”。"
+        },
+        "hasSuspendedListings": {
+          "type": "boolean",
+          "description": "指定卖方是否已暂停列表。如果卖家列表状态设置为 “不活动”，则为 “真”，否则为 “假”。"
+        }
+      },
+      "description": "特定于市场中卖方的信息。"
+    },
+    "GetAccountResponse": {
+      "description": "“Getaccount” 操作的响应架构。",
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/Account"
+        },
+        "errors": {
+          "description": "“Getaccount” 操作遇到的错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      }
+    },
+    "MarketplaceLevelAttributes": {
+      "type": "object",
+      "required": [
+        "marketplace",
+        "storeName",
+        "listingStatus",
+        "sellingPlan"
+      ],
+      "properties": {
+        "marketplace": {
+          "$ref": "#/definitions/Marketplace"
+        },
+        "storeName": {
+          "type": "string",
+          "description": "在marketplace中显示的卖家商店的名称。"
+        },
+        "listingStatus": {
+          "type": "string",
+          "description": "卖方列表的当前状态。",
+          "enum": [
+            "ACTIVE",
+            "INACTIVE"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ACTIVE",
+              "description": "卖方的列表当前处于活动状态。"
+            },
+            {
+              "value": "INACTIVE",
+              "description": "卖方的列表当前处于非活动状态。"
+            }
+          ]
+        },
+        "sellingPlan": {
+          "type": "string",
+          "description": "销售计划的详细信息。",
+          "enum": [
+            "PROFESSIONAL",
+            "INDIVIDUAL"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "PROFESSIONAL",
+              "description": "卖家有专业的销售计划。"
+            },
+            {
+              "value": "INDIVIDUAL",
+              "description": "卖方有一个单独的销售计划。"
+            }
+          ]
+        }
+      },
+      "description": "定义卖方在特定市场中的存在和状态的属性。这些属性包括市场详细信息、商店名称、列表状态以及卖家订阅的销售计划。"
+    },
+    "Account": {
+      "description": "“Getaccount” 操作的响应架构。",
+      "type": "object",
+      "required": [
+        "businessType",
+        "marketplaceLevelAttributes"
+      ],
+      "properties": {
+        "marketplaceLevelAttributes": {
+          "type": "array",
+          "description": "卖方帐户处于活动状态的市场的详细信息列表。",
+          "items": {
+            "$ref": "#/definitions/MarketplaceLevelAttributes"
+          }
+        },
+        "businessType": {
+          "type": "string",
+          "description": "为卖方帐户注册的业务类型。",
+          "enum": [
+            "CHARITY",
+            "CRAFTSMAN",
+            "NATURAL_PERSON_COMPANY",
+            "PUBLIC_LISTED",
+            "PRIVATE_LIMITED",
+            "SOLE_PROPRIETORSHIP",
+            "STATE_OWNED",
+            "INDIVIDUAL"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "CHARITY",
+              "description": "该公司注册为慈善机构。"
+            },
+            {
+              "value": "CRAFTSMAN",
+              "description": "该企业注册为工匠。"
+            },
+            {
+              "value": "NATURAL_PERSON_COMPANY",
+              "description": "公司是自然人公司。"
+            },
+            {
+              "value": "PUBLIC_LISTED",
+              "description": "该业务是一家公开上市公司。"
+            },
+            {
+              "value": "PRIVATE_LIMITED",
+              "description": "该公司是一家私人有限公司。"
+            },
+            {
+              "value": "SOLE_PROPRIETORSHIP",
+              "description": "该企业是一家独资企业。"
+            },
+            {
+              "value": "STATE_OWNED",
+              "description": "企业是国有的。"
+            },
+            {
+              "value": "INDIVIDUAL",
+              "description": "实体不是企业，而是个人。"
+            }
+          ]
+        },
+        "business": {
+          "$ref": "#/definitions/Business"
+        },
+        "primaryContact": {
+          "$ref": "#/definitions/PrimaryContact"
+        }
+      }
+    },
+    "Business": {
+      "type": "object",
+      "description": "有关卖方业务的信息。根据卖方的 “businesstype”，某些字段可能会省略。",
+      "required": [
+        "name",
+        "registeredBusinessAddress"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "注册企业名称。"
+        },
+        "registeredBusinessAddress": {
+          "$ref": "#/definitions/Address",
+          "description": "注册的营业地址。"
+        },
+        "companyRegistrationNumber": {
+          "type": "string",
+          "description": "卖方公司注册号 (如适用)。个人卖家和独资企业将缺席这一领域。"
+        },
+        "companyTaxIdentificationNumber": {
+          "type": "string",
+          "description": "卖方的公司税号 (如适用)。此字段仅适用于某些业务类型，如独资企业。"
+        },
+        "nonLatinName": {
+          "type": "string",
+          "description": "注册企业名称的非拉丁文字版本 (如适用)。"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "description": "表示一个地址",
+      "required": [
+        "addressLine1",
+        "countryCode"
+      ],
+      "properties": {
+        "addressLine1": {
+          "type": "string",
+          "description": "街道地址信息。"
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "其他街道地址信息。"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "两个字符的ISO 3166-1 alpha-2格式的国家/地区代码。"
+        },
+        "stateOrProvinceCode": {
+          "type": "string",
+          "description": "州或省代码。"
+        },
+        "city": {
+          "type": "string",
+          "description": "城市。"
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "邮政编码。"
+        }
+      }
+    },
+    "PrimaryContact": {
+      "type": "object",
+      "description": "有关卖方主要联系人的信息。",
+      "required": [
+        "name",
+        "address"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "卖方主要联系人的全名。"
+        },
+        "address": {
+          "$ref": "#/definitions/Address",
+          "description": "主要联系人的住址。"
+        },
+        "nonLatinName": {
+          "type": "string",
+          "description": "主要联系人姓名的非拉丁脚本版本 (如果适用)。"
+        }
+      }
+    }
+  }
+}

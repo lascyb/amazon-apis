@@ -1,0 +1,351 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "用于直接履行交易状态的销售伙伴API提供对直接履行供应商的交易状态的编程访问。",
+    "version": "v1",
+    "title": "用于直接履行交易状态的销售合作伙伴API",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/vendor/directFulfillment/transactions/v1/transactions/{transactionId}": {
+      "get": {
+        "tags": [
+          "vendorTransaction"
+        ],
+        "description": "返回由指定的transactionId指示的事务的状态。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getTransactionStatus",
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "description": "以前在对特定事务的POST请求的响应中返回。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetTransactionResponse"
+            },
+            "examples": {
+              "application/json": {
+                "payload": {
+                  "transactionStatus": {
+                    "transactionId": "20190108091302-6ca0ac50-d06e-45f5-a1e2-eb448eadac50",
+                    "status": "Processing"
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "transactionId": {
+                        "value": "20190904190535-eef8cad8-418e-4ed3-ac72-789e2ee6214a"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "transactionStatus": {
+                        "transactionId": "20190904190535-eef8cad8-418e-4ed3-ac72-789e2ee6214a",
+                        "status": "Processing"
+                      }
+                    }
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "transactionId": {
+                        "value": "20190918190535-eef8cad8-418e-456f-ac72-789e2ee6813c"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "transactionStatus": {
+                        "transactionId": "20190918190535-eef8cad8-418e-456f-ac72-789e2ee6813c",
+                        "status": "Failure",
+                        "errors": [
+                          {
+                            "code": "INVALID_ORDER_ID",
+                            "message": "Invalid order ID."
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "payload": {
+                      "transactionStatus": {
+                        "transactionId": "20190904190535-eef8cad8-418e-4ed3-ac72-789e2ee6214a",
+                        "status": "Processing"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetTransactionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "transactionId": {
+                        "value": "Tran0904190535-eef8cad8-418e-4ed3-ac72-789e2ee6214a"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid transmission ID.",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetTransactionResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetTransactionResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetTransactionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetTransactionResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetTransactionResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetTransactionResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetTransactionResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    }
+  },
+  "definitions": {
+    "GetTransactionResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/TransactionStatus"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "getTransactionStatus操作的响应架构。"
+    },
+    "TransactionStatus": {
+      "type": "object",
+      "properties": {
+        "transactionStatus": {
+          "$ref": "#/definitions/Transaction"
+        }
+      },
+      "description": "getTransactionStatus操作的负载。"
+    },
+    "Transaction": {
+      "type": "object",
+      "required": [
+        "status",
+        "transactionId"
+      ],
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "description": "响应于特定事务的post请求在 “transactionid” 字段中发送的唯一标识符。"
+        },
+        "status": {
+          "type": "string",
+          "description": "事务处理的当前处理状态。",
+          "enum": [
+            "Failure",
+            "Processing",
+            "Success"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Failure",
+              "description": "事务已失败。"
+            },
+            {
+              "value": "Processing",
+              "description": "交易正在进行中。"
+            },
+            {
+              "value": "Success",
+              "description": "事务已成功完成。"
+            }
+          ]
+        },
+        "errors": {
+          "description": "失败事务的错误代码和消息。仅当事务状态为 “失败” 时可用。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "交易状态详细信息。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    }
+  }
+}
