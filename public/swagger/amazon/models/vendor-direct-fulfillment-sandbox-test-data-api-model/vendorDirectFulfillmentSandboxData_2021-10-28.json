@@ -1,0 +1,529 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "供应商直接履行沙箱测试数据的销售合作伙伴API提供了对供应商直接履行沙箱测试数据的编程访问。",
+    "version": "2021-10-28",
+    "title": "针对供应商直接履行沙箱测试数据的销售合作伙伴API",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sandbox.sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/vendor/directFulfillment/sandbox/2021-10-28/orders": {
+      "post": {
+        "tags": [
+          "vendorDFSandbox"
+        ],
+        "description": "提交请求以生成供应商直接履行API实体的测试订单数据。",
+        "operationId": "generateOrderScenarios",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "description": "包含用于生成测试订单数据方案的参数的请求负载。",
+            "schema": {
+              "$ref": "#/definitions/GenerateOrderScenarioRequest"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/TransactionReference"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "x-amzn-api-sandbox": {
+          "dynamic": {}
+        },
+        "x-amzn-api-sandbox-only": true
+      }
+    },
+    "/vendor/directFulfillment/sandbox/2021-10-28/transactions/{transactionId}": {
+      "get": {
+        "tags": [
+          "vendorDFSandboxtransactionstatus"
+        ],
+        "description": "返回由指定的transactionId指示的事务的状态。如果交易成功，还会返回请求的测试订单数据。",
+        "operationId": "getOrderScenarios",
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "transactionStatus": {
+                  "transactionId": "ff35f39e-e69f-499e-903e-6c4f6c32609f-20210827003391",
+                  "status": "Success",
+                  "testCaseData": {
+                    "scenarios": [
+                      {
+                        "scenarioId": "SCENARIO_1",
+                        "orders": [
+                          {
+                            "orderId": "T11121"
+                          },
+                          {
+                            "orderId": "T11123"
+                          }
+                        ]
+                      },
+                      {
+                        "scenarioId": "SCENARIO_2",
+                        "orders": [
+                          {
+                            "orderId": "T22241"
+                          },
+                          {
+                            "orderId": "T22244"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/TransactionStatus"
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "description": "在对generateorderscenaresis操作的响应中返回的事务标识符。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "x-amzn-api-sandbox": {
+          "dynamic": {}
+        },
+        "x-amzn-api-sandbox-only": true
+      }
+    }
+  },
+  "definitions": {
+    "GenerateOrderScenarioRequest": {
+      "description": "Generateorderscenes操作的请求正文。",
+      "type": "object",
+      "properties": {
+        "orders": {
+          "description": "由参与方标识符指示的请求的测试订单列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderScenarioRequest"
+          }
+        }
+      }
+    },
+    "OrderScenarioRequest": {
+      "description": "生成测试数据所需的参与方标识符。",
+      "type": "object",
+      "required": [
+        "sellingParty",
+        "shipFromParty"
+      ],
+      "properties": {
+        "sellingParty": {
+          "description": "销售方或供应商的标识符。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipFromParty": {
+          "description": "供应商的仓库代码。",
+          "$ref": "#/definitions/PartyIdentification"
+        }
+      }
+    },
+    "PartyIdentification": {
+      "description": "参与方信息的标识对象。例如，仓库代码或供应商代码。请参阅具体方了解更多详情。",
+      "type": "object",
+      "required": [
+        "partyId"
+      ],
+      "properties": {
+        "partyId": {
+          "type": "string",
+          "description": "为该方指定的标识。例如，仓库代码或供应商代码。请参阅具体方了解更多详情。"
+        }
+      }
+    },
+    "Pagination": {
+      "description": "用于将信息传递给下一个请求的生成字符串。如果返回NextToken，则将NextToken的值传递给下一个请求。如果不返回NextToken，则不再有要返回的订单项。",
+      "type": "object",
+      "properties": {
+        "nextToken": {
+          "type": "string",
+          "description": "要在下一个请求中传递以检索下一组结果的生成令牌。"
+        }
+      }
+    },
+    "TransactionReference": {
+      "description": "由Amazon分配的用于标识此事务的GUID。",
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "description": "由Amazon分配的用于唯一标识事务的GUID (全局唯一标识符)。"
+        }
+      }
+    },
+    "TransactionStatus": {
+      "description": "Getorderscenes操作的负载。",
+      "type": "object",
+      "properties": {
+        "transactionStatus": {
+          "$ref": "#/definitions/Transaction"
+        }
+      }
+    },
+    "Transaction": {
+      "description": "包括状态在内的事务详细信息。如果交易成功，还包括所请求的测试订单数据。",
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "description": "在对generateOrderScenarios请求的响应中返回的唯一标识符。",
+          "type": "string"
+        },
+        "status": {
+          "description": "事务的当前处理状态。",
+          "type": "string",
+          "enum": [
+            "FAILURE",
+            "PROCESSING",
+            "SUCCESS"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "FAILURE",
+              "description": "事务已失败。"
+            },
+            {
+              "value": "PROCESSING",
+              "description": "交易正在进行中。"
+            },
+            {
+              "value": "SUCCESS",
+              "description": "事务已成功完成。"
+            }
+          ]
+        },
+        "testCaseData": {
+          "description": "事务的测试用例数据。仅当事务状态为成功时可用。",
+          "$ref": "#/definitions/TestCaseData"
+        }
+      },
+      "required": [
+        "transactionId",
+        "status"
+      ]
+    },
+    "TestCaseData": {
+      "description": "响应于测试数据请求而返回的测试用例数据集。",
+      "type": "object",
+      "properties": {
+        "scenarios": {
+          "description": "描述可能的测试场景的用例集。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Scenario"
+          }
+        }
+      }
+    },
+    "Scenario": {
+      "description": "请求成功时返回的场景测试用例响应。",
+      "properties": {
+        "scenarioId": {
+          "description": "标识用户可用于测试的方案类型的标识符。",
+          "type": "string"
+        },
+        "orders": {
+          "description": "调用者可以用来测试每个生命周期或场景的订单列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TestOrder"
+          }
+        }
+      },
+      "required": [
+        "scenarioId",
+        "orders"
+      ],
+      "type": "object"
+    },
+    "TestOrder": {
+      "description": "请求不成功时返回的错误响应。",
+      "properties": {
+        "orderId": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "orderId"
+      ],
+      "type": "object"
+    },
+    "ErrorList": {
+      "description": "请求不成功时返回的错误响应列表。",
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "description": "包含错误详细信息的各个错误对象的数组。",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ]
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    }
+  }
+}

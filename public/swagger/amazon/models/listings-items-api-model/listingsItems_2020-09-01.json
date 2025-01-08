@@ -1,0 +1,950 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "列表项的销售合作伙伴API (列表项API) 提供了对Amazon上销售合作伙伴列表的编程访问。将此API与产品类型定义的销售合作伙伴API一起使用，您可以使用该API检索有关使用Listings Items API所需的Amazon产品类型的信息。\n\n有关更多信息，请参阅 [Listing Items API用例指南](doc:listings-items-api-v2020-09-01-use-case-guide)。",
+    "version": "2020-09-01",
+    "title": "Selling Partner API for Listings Items",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/listings/2020-09-01/items/{sellerId}/{sku}": {
+      "delete": {
+        "tags": [
+          "listings"
+        ],
+        "description": "删除销售合作伙伴的列表项。\n\n** 注意: ** 该操作的参数可能包含特殊字符，必须对这些特殊字符进行编码才能成功调用API。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "deleteListingsItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sellerId",
+            "description": "销售合作伙伴标识符，例如商家帐户或供应商代码。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sku",
+            "description": "销售合作伙伴提供了亚马逊列表的标识符。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "issueLocale",
+            "description": "用于本地化问题的区域设置。如果未提供，则使用第一市场的默认语言代码。示例: “en_US” 、 “fr_CA” 、 “fr_FR”。当本地化在指定的区域设置中不可用时，本地化消息默认为 “en_US”。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功理解列表项删除请求。查看响应以确定提交是否已被接受。",
+            "schema": {
+              "$ref": "#/definitions/ListingsItemSubmissionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "sku": "GM-ZDPI-9B4E",
+                "status": "ACCEPTED",
+                "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                "issues": []
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "sku": "GM-ZDPI-9B4E",
+                    "status": "ACCEPTED",
+                    "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                    "issues": []
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "BadSKU"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "listings"
+        ],
+        "description": "部分更新 (修补) 销售合作伙伴的列表项。只能修补顶级列表项属性。不支持修补嵌套属性。\n\n** 注意: ** 该操作的参数可能包含特殊字符，必须对这些特殊字符进行编码才能成功调用API。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "patchListingsItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sellerId",
+            "description": "销售合作伙伴标识符，例如商家帐户或供应商代码。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sku",
+            "description": "销售合作伙伴提供了亚马逊列表的标识符。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "issueLocale",
+            "description": "用于本地化问题的区域设置。如果未提供，则使用第一市场的默认语言代码。示例: “en_US” 、 “fr_CA” 、 “fr_FR”。当本地化在指定的区域设置中不可用时，本地化消息默认为 “en_US”。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          },
+          {
+            "name": "body",
+            "description": "patchListingsItem操作的请求正文架构。",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListingsItemPatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功理解列表项修补请求。请参阅响应以确定提交是否被接受。",
+            "schema": {
+              "$ref": "#/definitions/ListingsItemSubmissionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "sku": "GM-ZDPI-9B4E",
+                "status": "ACCEPTED",
+                "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                "issues": []
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {}
+                    }
+                  },
+                  "response": {
+                    "sku": "GM-ZDPI-9B4E",
+                    "status": "ACCEPTED",
+                    "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                    "issues": []
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "BadSKU"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "listings"
+        ],
+        "description": "为销售合作伙伴创建新的或完全更新现有列表项。\n\n** 注意: ** 该操作的参数可能包含特殊字符，必须对这些特殊字符进行编码才能成功调用API。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "putListingsItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sellerId",
+            "description": "销售合作伙伴标识符，例如商家帐户或供应商代码。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sku",
+            "description": "销售合作伙伴提供了亚马逊列表的标识符。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "issueLocale",
+            "description": "用于本地化问题的区域设置。如果未提供，则使用第一市场的默认语言代码。示例: “en_US” 、 “fr_CA” 、 “fr_FR”。当本地化在指定的区域设置中不可用时，本地化消息默认为 “en_US”。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          },
+          {
+            "name": "body",
+            "description": "putListingsItem操作的请求正文架构。",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListingsItemPutRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功理解创建或完全更新列表项的请求。查看响应以确定提交是否已被接受。",
+            "schema": {
+              "$ref": "#/definitions/ListingsItemSubmissionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "sku": "GM-ZDPI-9B4E",
+                "status": "ACCEPTED",
+                "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                "issues": []
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {}
+                    }
+                  },
+                  "response": {
+                    "sku": "GM-ZDPI-9B4E",
+                    "status": "ACCEPTED",
+                    "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                    "issues": []
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "BadSKU"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "description": "请求不成功时返回的错误响应。",
+      "properties": {
+        "code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述错误情况的消息。",
+          "type": "string"
+        },
+        "details": {
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "ErrorList": {
+      "description": "请求不成功时返回的错误响应列表。",
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ]
+    },
+    "Issue": {
+      "description": "列表项的问题。",
+      "properties": {
+        "code": {
+          "description": "标识问题类型的问题代码。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述问题的消息。",
+          "type": "string"
+        },
+        "severity": {
+          "description": "问题的严重性。",
+          "enum": [
+            "ERROR",
+            "WARNING",
+            "INFO"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ERROR",
+              "description": "指示发生了阻止处理提交的问题，如验证错误。"
+            },
+            {
+              "value": "WARNING",
+              "description": "表示发生了应审核的问题，但未阻止处理提交。"
+            },
+            {
+              "value": "INFO",
+              "description": "表示已提供应审查的其他信息。"
+            }
+          ],
+          "type": "string"
+        },
+        "attributeName": {
+          "description": "与问题关联的属性的名称 (如果适用)。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "severity"
+      ],
+      "type": "object"
+    },
+    "PatchOperation": {
+      "description": "HTTP补丁请求的单个JSON补丁操作。",
+      "properties": {
+        "op": {
+          "description": "JSON Patch操作的类型。支持的JSON补丁操作包括add、replace和delete。参见 < https://tools.ietf.org/html/ rfc6902>。",
+          "enum": [
+            "add",
+            "replace",
+            "delete"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "add",
+              "description": "“添加” 操作添加或替换目标属性。"
+            },
+            {
+              "value": "replace",
+              "description": "“替换” 操作添加或替换目标属性。"
+            },
+            {
+              "value": "delete",
+              "description": "“删除” 操作删除目标属性。供应商不支持 (供应商将收到HTTP状态代码400响应)。"
+            }
+          ],
+          "type": "string"
+        },
+        "path": {
+          "description": "要修补的元素的JSON指针路径。参见 < https://tools.ietf.org/html/ rfc6902>。",
+          "type": "string"
+        },
+        "value": {
+          "description": "要添加、替换或删除的JSON值。",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": [
+        "op",
+        "path"
+      ],
+      "type": "object"
+    },
+    "ListingsItemPatchRequest": {
+      "description": "patchListingsItem操作的请求正文架构。",
+      "properties": {
+        "productType": {
+          "description": "列表项的Amazon产品类型。",
+          "type": "string"
+        },
+        "patches": {
+          "description": "要对列表项执行的一个或多个JSON修补操作。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PatchOperation"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "productType",
+        "patches"
+      ],
+      "type": "object"
+    },
+    "ListingsItemPutRequest": {
+      "description": "putListingsItem操作的请求正文架构。",
+      "properties": {
+        "productType": {
+          "description": "列表项的Amazon产品类型。",
+          "type": "string"
+        },
+        "requirements": {
+          "description": "为提供的数据设置的要求的名称。",
+          "enum": [
+            "LISTING",
+            "LISTING_PRODUCT_ONLY",
+            "LISTING_OFFER_ONLY"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "LISTING",
+              "description": "表示提交的数据包含产品事实和销售条款。"
+            },
+            {
+              "value": "LISTING_PRODUCT_ONLY",
+              "description": "表示提交的数据仅包含产品事实。"
+            },
+            {
+              "value": "LISTING_OFFER_ONLY",
+              "description": "表示提交的数据仅包含销售术语。供应商不支持 (供应商将收到HTTP状态代码400响应)。"
+            }
+          ],
+          "type": "string"
+        },
+        "attributes": {
+          "description": "JSON对象，包含由属性名称键入的结构化列表项属性数据。",
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "productType",
+        "attributes"
+      ],
+      "type": "object"
+    },
+    "ListingsItemSubmissionResponse": {
+      "description": "包含向销售合作伙伴API提交列表项的结果的响应。",
+      "properties": {
+        "sku": {
+          "description": "销售合作伙伴提供了亚马逊列表的标识符。",
+          "type": "string"
+        },
+        "status": {
+          "description": "列表项提交的状态。",
+          "enum": [
+            "ACCEPTED",
+            "INVALID"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ACCEPTED",
+              "description": "列表提交被接受处理。"
+            },
+            {
+              "value": "INVALID",
+              "description": "列表提交无效，不接受处理。"
+            }
+          ],
+          "type": "string"
+        },
+        "submissionId": {
+          "description": "列表项提交的唯一标识符。",
+          "type": "string"
+        },
+        "issues": {
+          "description": "与列表项提交相关的列表项问题。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "sku",
+        "status",
+        "submissionId"
+      ],
+      "type": "object"
+    }
+  }
+}

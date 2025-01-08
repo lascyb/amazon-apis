@@ -1,0 +1,947 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "FBA库存的销售合作伙伴API允许您以编程方式检索有关Amazon履行网络中库存的信息。",
+        "version": "v1",
+        "title": "Selling Partner API for FBA Inventory",
+        "contact": {
+            "name": "Selling Partner API Developer Support",
+            "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+        },
+        "license": {
+            "name": "Apache License 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "host": "sellingpartnerapi-na.amazon.com",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/fba/inventory/v1/summaries": {
+            "x-amzn-api-sandbox": {
+                "dynamic": {}
+            },
+            "get": {
+                "tags": [
+                    "fbaInventory"
+                ],
+                "description": "返回清单摘要的列表。返回的摘要取决于是否存在startDateTime、sellerSkus和sellerSku参数:\n\n-当省略startDateTime、sellerSkus和sellerSku参数时，返回具有可用详细信息的所有库存摘要。\n-当提供startDateTime时，该操作将返回在指定的日期和时间之后发生更改的清单摘要。忽略sellerSkus和sellerSku参数。重要提示: 为避免出现错误，请同时使用startDateTime和nextToken获取在指定日期和时间之后更改的下一页清单摘要。\n-当提供sellerSkus参数时，该操作仅返回指定sellerSkus的库存摘要。忽略sellerSku参数。\n-当提供sellerSku参数时，该操作仅返回指定sellerSku的库存摘要。\n\n注意: 与此操作关联的参数可能包含特殊字符，必须对这些字符进行编码才能成功调用API。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n使用计划:\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 2 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits)。",
+                "operationId": "getInventorySummaries",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "details",
+                        "in": "query",
+                        "description": "返回具有附加汇总库存明细和数量的库存汇总。否则，仅返回库存汇总 (默认值)。",
+                        "required": false,
+                        "type": "boolean",
+                        "default": false
+                    },
+                    {
+                        "name": "granularityType",
+                        "in": "query",
+                        "description": "库存聚合级别的粒度类型。",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "Marketplace"
+                        ],
+                        "x-docgen-enum-table-extension": [
+                            {
+                                "value": "Marketplace",
+                                "description": "市场"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "granularityId",
+                        "in": "query",
+                        "description": "清单聚合级别的粒度ID。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "startDateTime",
+                        "in": "query",
+                        "description": "ISO8601格式的开始日期和时间。如果指定，则返回此后发生更改的所有清单摘要。您必须指定一个不早于调用API的日期和时间18个月的日期和时间。注意: 未检测到inboundWorkingQuantity，inboundShippedQuantity和inboundReceivingQuantity的更改。",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "sellerSkus",
+                        "in": "query",
+                        "description": "要返回库存摘要的卖方sku列表。您最多可以指定50个sku。",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "maxItems": 50
+                    },
+                    {
+                        "name": "sellerSku",
+                        "in": "query",
+                        "description": "用于查询指定的卖方SKU库存汇总的单个卖方SKU。",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nextToken",
+                        "in": "query",
+                        "description": "在您以前的请求的响应中返回的字符串令牌。字符串令牌将在创建后30秒过期。",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "marketplaceIds",
+                        "in": "query",
+                        "description": "要为其返回库存摘要的市场ID。",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "maxItems": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "好",
+                        "schema": {
+                            "$ref": "#/definitions/GetInventorySummariesResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "type": "string",
+                                "description": "此操作的速率限制 (每秒请求数)。"
+                            },
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "请求缺少参数或参数无效，无法对其进行分析。",
+                        "schema": {
+                            "$ref": "#/definitions/GetInventorySummariesResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "type": "string",
+                                "description": "此操作的速率限制 (每秒请求数)。"
+                            },
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期、签名无效或找不到资源。",
+                        "schema": {
+                            "$ref": "#/definitions/GetInventorySummariesResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "指定的资源不存在。",
+                        "schema": {
+                            "$ref": "#/definitions/GetInventorySummariesResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "type": "string",
+                                "description": "此操作的速率限制 (每秒请求数)。"
+                            },
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "请求的频率大于允许的频率。",
+                        "schema": {
+                            "$ref": "#/definitions/GetInventorySummariesResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "发生了阻止服务器完成请求的意外情况。",
+                        "schema": {
+                            "$ref": "#/definitions/GetInventorySummariesResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "服务器的临时过载或维护。",
+                        "schema": {
+                            "$ref": "#/definitions/GetInventorySummariesResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/fba/inventory/v1/items": {
+            "x-amzn-api-sandbox": {
+                "dynamic": {}
+            },
+            "x-amzn-api-sandbox-only": true,
+            "post": {
+                "tags": [
+                    "fbaInventory"
+                ],
+                "description": "请求Amazon在沙盒环境中的沙盒清单中创建产品详细信息。这是仅沙盒操作，必须定向到沙盒终结点。有关详细信息，请参阅 [销售合作伙伴API沙箱](https:// developer-docs.amazon.com/sp-api/docs/the-sell-partner-api-sandbox)。",
+                "operationId": "createInventoryItem",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "createInventoryItemRequestBody",
+                        "in": "body",
+                        "description": "CreateInventoryItem请求正文参数。",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateInventoryItemRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "好",
+                        "schema": {
+                            "$ref": "#/definitions/CreateInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "请求缺少参数或参数无效，无法对其进行分析。",
+                        "schema": {
+                            "$ref": "#/definitions/CreateInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期、签名无效或找不到资源。",
+                        "schema": {
+                            "$ref": "#/definitions/CreateInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "指定的资源不存在。",
+                        "schema": {
+                            "$ref": "#/definitions/CreateInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "请求的频率大于允许的频率。",
+                        "schema": {
+                            "$ref": "#/definitions/CreateInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "发生了阻止服务器完成请求的意外情况。",
+                        "schema": {
+                            "$ref": "#/definitions/CreateInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "服务器的临时过载或维护。",
+                        "schema": {
+                            "$ref": "#/definitions/CreateInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/fba/inventory/v1/items/{sellerSku}": {
+            "x-amzn-api-sandbox": {
+                "dynamic": {}
+            },
+            "x-amzn-api-sandbox-only": true,
+            "delete": {
+                "tags": [
+                    "fbaInventory"
+                ],
+                "description": "请求Amazon从沙盒环境中的沙盒清单中删除项目。这是仅沙盒操作，必须定向到沙盒终结点。有关详细信息，请参阅 [销售合作伙伴API沙箱](https:// developer-docs.amazon.com/sp-api/docs/the-Selling-partner-api-sandbox)。",
+                "operationId": "deleteInventoryItem",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sellerSku",
+                        "in": "path",
+                        "description": "用于查询指定的卖方SKU库存汇总的单个卖方SKU。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "marketplaceId",
+                        "in": "query",
+                        "description": "要删除其sellerSku的市场ID。",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "好",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "请求缺少参数或参数无效，无法对其进行分析。",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期、签名无效或找不到资源。",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "指定的资源不存在。",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "请求的频率大于允许的频率。",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "发生了阻止服务器完成请求的意外情况。",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "服务器的临时过载或维护。",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteInventoryItemResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/fba/inventory/v1/items/inventory": {
+            "x-amzn-api-sandbox": {
+                "dynamic": {}
+            },
+            "x-amzn-api-sandbox-only": true,
+            "post": {
+                "tags": [
+                    "fbaInventory"
+                ],
+                "description": "请求Amazon在沙盒环境中将具有所需数量的项目添加到沙盒清单。这是仅沙盒操作，必须定向到沙盒终结点。有关详细信息，请参阅 [销售合作伙伴API沙箱](https:// developer-docs.amazon.com/sp-api/docs/the-Selling-partner-api-sandbox)。",
+                "operationId": "addInventory",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "x-amzn-idempotency-token",
+                        "in": "header",
+                        "description": "与每个调用一起提供的唯一令牌/requestId，以确保幂等性。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "addInventoryRequestBody",
+                        "in": "body",
+                        "description": "要添加到沙盒清单的项目列表。",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AddInventoryRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "好",
+                        "schema": {
+                            "$ref": "#/definitions/AddInventoryResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "请求缺少参数或参数无效，无法对其进行分析。",
+                        "schema": {
+                            "$ref": "#/definitions/AddInventoryResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期、签名无效或找不到资源。",
+                        "schema": {
+                            "$ref": "#/definitions/AddInventoryResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "指定的资源不存在。",
+                        "schema": {
+                            "$ref": "#/definitions/AddInventoryResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "请求的频率大于允许的频率。",
+                        "schema": {
+                            "$ref": "#/definitions/AddInventoryResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "发生了阻止服务器完成请求的意外情况。",
+                        "schema": {
+                            "$ref": "#/definitions/AddInventoryResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "服务器的临时过载或维护。",
+                        "schema": {
+                            "$ref": "#/definitions/AddInventoryResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "CreateInventoryItemRequest": {
+            "description": "要在库存中创建的物料。",
+            "type": "object",
+            "properties": {
+                "sellerSku": {
+                    "description": "商品的卖家SKU。",
+                    "type": "string"
+                },
+                "marketplaceId": {
+                    "description": "marketplaceId。",
+                    "type": "string"
+                },
+                "productName": {
+                    "description": "项目的名称。",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "sellerSku",
+                "marketplaceId",
+                "productName"
+            ]
+        },
+        "AddInventoryRequest": {
+            "description": "具有要添加的库存列表的对象",
+            "type": "object",
+            "properties": {
+                "inventoryItems": {
+                    "$ref": "#/definitions/InventoryItems"
+                }
+            }
+        },
+        "InventoryItems": {
+            "description": "要添加的库存清单",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/InventoryItem"
+            }
+        },
+        "InventoryItem": {
+            "description": "要添加的库存列表中的项目。",
+            "type": "object",
+            "properties": {
+                "sellerSku": {
+                    "description": "商品的卖家SKU。",
+                    "type": "string"
+                },
+                "marketplaceId": {
+                    "description": "marketplaceId。",
+                    "type": "string"
+                },
+                "quantity": {
+                    "description": "要添加的项的数量。",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "sellerSku",
+                "marketplaceId",
+                "quantity"
+            ]
+        },
+        "CreateInventoryItemResponse": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "description": "CreateInventoryItem操作期间发生一个或多个意外错误。",
+                    "$ref": "#/definitions/ErrorList"
+                }
+            },
+            "description": "CreateInventoryItem操作的响应架构。"
+        },
+        "DeleteInventoryItemResponse": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "description": "在DeleteInventoryItem操作期间发生一个或多个意外错误。",
+                    "$ref": "#/definitions/ErrorList"
+                }
+            },
+            "description": "DeleteInventoryItem操作的响应架构。"
+        },
+        "AddInventoryResponse": {
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "description": "在AddInventory操作期间发生一个或多个意外错误。",
+                    "$ref": "#/definitions/ErrorList"
+                }
+            },
+            "description": "AddInventory操作的响应架构。"
+        },
+        "Granularity": {
+            "type": "object",
+            "properties": {
+                "granularityType": {
+                    "type": "string",
+                    "description": "库存聚合级别的粒度类型。",
+                    "x-docgen-enum-table-extension": [
+                        {
+                            "value": "Marketplace",
+                            "description": "市场"
+                        }
+                    ]
+                },
+                "granularityId": {
+                    "type": "string",
+                    "description": "指定粒度类型的粒度ID。当granularityType为Marketplace时，指定marketplaceId。"
+                }
+            },
+            "description": "描述可以聚合清单数据的粒度。例如，如果您使用市场粒度，则可履行数量将反映给定市场中可履行的库存。"
+        },
+        "ReservedQuantity": {
+            "type": "object",
+            "properties": {
+                "totalReservedQuantity": {
+                    "type": "integer",
+                    "description": "亚马逊履行网络中当前正在挑选、包装和运输的单位总数; 或被搁置以进行测量、取样或其他内部流程。"
+                },
+                "pendingCustomerOrderQuantity": {
+                    "type": "integer",
+                    "description": "为客户订单保留的单位数。"
+                },
+                "pendingTransshipmentQuantity": {
+                    "type": "integer",
+                    "description": "从一个履行中心转移到另一个履行中心的单位数。"
+                },
+                "fcProcessingQuantity": {
+                    "type": "integer",
+                    "description": "已在履行中心搁置以进行其他处理的单元数。"
+                }
+            },
+            "description": "预留存货的数量。"
+        },
+        "ResearchingQuantityEntry": {
+            "type": "object",
+            "required": [
+                "name",
+                "quantity"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "研究的持续时间。",
+                    "enum": [
+                        "researchingQuantityInShortTerm",
+                        "researchingQuantityInMidTerm",
+                        "researchingQuantityInLongTerm"
+                    ],
+                    "x-docgen-enum-table-extension": [
+                        {
+                            "value": "researchingQuantityInShortTerm",
+                            "description": "短期为1-10天。"
+                        },
+                        {
+                            "value": "researchingQuantityInMidTerm",
+                            "description": "中期为11-20天。"
+                        },
+                        {
+                            "value": "researchingQuantityInLongTerm",
+                            "description": "长期为21天或更长时间。"
+                        }
+                    ]
+                },
+                "quantity": {
+                    "type": "integer",
+                    "description": "单位的数量。"
+                }
+            },
+            "description": "我们的履行中心正在积极确认的错位或仓库损坏的库存。"
+        },
+        "ResearchingQuantity": {
+            "type": "object",
+            "properties": {
+                "totalResearchingQuantity": {
+                    "type": "integer",
+                    "description": "亚马逊履行网络中目前正在研究的单位总数。"
+                },
+                "researchingQuantityBreakdown": {
+                    "type": "array",
+                    "description": "当前正在研究的项目的数量详细信息列表。",
+                    "items": {
+                        "$ref": "#/definitions/ResearchingQuantityEntry"
+                    }
+                }
+            },
+            "description": "在我们的履行中心积极确认的错位或仓库损坏的单位数量。"
+        },
+        "UnfulfillableQuantity": {
+            "type": "object",
+            "properties": {
+                "totalUnfulfillableQuantity": {
+                    "type": "integer",
+                    "description": "亚马逊履行网络中处于不可售出状态的单位总数。"
+                },
+                "customerDamagedQuantity": {
+                    "type": "integer",
+                    "description": "客户损坏处置的单位数量。"
+                },
+                "warehouseDamagedQuantity": {
+                    "type": "integer",
+                    "description": "仓库中损坏处置的单位数量。"
+                },
+                "distributorDamagedQuantity": {
+                    "type": "integer",
+                    "description": "经销商损坏处置的单位数量。"
+                },
+                "carrierDamagedQuantity": {
+                    "type": "integer",
+                    "description": "承运人受损处置中的单位数量。"
+                },
+                "defectiveQuantity": {
+                    "type": "integer",
+                    "description": "有缺陷处置的单位数量。"
+                },
+                "expiredQuantity": {
+                    "type": "integer",
+                    "description": "过期处置中的单位数。"
+                }
+            },
+            "description": "未履行库存的数量。"
+        },
+        "InventoryDetails": {
+            "type": "object",
+            "properties": {
+                "fulfillableQuantity": {
+                    "type": "integer",
+                    "description": "可以提货、包装和发运的物料数量。"
+                },
+                "inboundWorkingQuantity": {
+                    "type": "integer",
+                    "description": "您已通知Amazon的入站货件的数量。"
+                },
+                "inboundShippedQuantity": {
+                    "type": "integer",
+                    "description": "您已通知Amazon并提供跟踪编号的入站货件数量。"
+                },
+                "inboundReceivingQuantity": {
+                    "type": "integer",
+                    "description": "尚未在Amazon履行中心收到以进行处理的单位数量，但这些单位是已收到并处理的入站货物的一部分。"
+                },
+                "reservedQuantity": {
+                    "$ref": "#/definitions/ReservedQuantity"
+                },
+                "researchingQuantity": {
+                    "$ref": "#/definitions/ResearchingQuantity"
+                },
+                "unfulfillableQuantity": {
+                    "$ref": "#/definitions/UnfulfillableQuantity"
+                }
+            },
+            "description": "汇总库存明细。如果请求中的details参数为false，则不会显示此对象。"
+        },
+        "InventorySummary": {
+            "type": "object",
+            "properties": {
+                "asin": {
+                    "type": "string",
+                    "description": "商品的Amazon标准标识号 (ASIN)。"
+                },
+                "fnSku": {
+                    "type": "string",
+                    "description": "亚马逊的履行网络SKU标识符。"
+                },
+                "sellerSku": {
+                    "type": "string",
+                    "description": "商品的卖家SKU。"
+                },
+                "condition": {
+                    "type": "string",
+                    "description": "卖方描述的项目条件 (例如，新项目)。"
+                },
+                "inventoryDetails": {
+                    "$ref": "#/definitions/InventoryDetails"
+                },
+                "lastUpdatedTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "上次更新任何数量的日期和时间。"
+                },
+                "productName": {
+                    "type": "string",
+                    "description": "特定市场中项目的本地化语言产品标题。"
+                },
+                "totalQuantity": {
+                    "type": "integer",
+                    "description": "入站货件或Amazon履行中心中的单位总数。"
+                },
+                "stores": {
+                    "type": "array",
+                    "description": "适用于此卖家SKU的卖家注册商店列表。",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "特定物料的库存汇总。"
+        },
+        "InventorySummaries": {
+            "type": "array",
+            "description": "库存摘要列表。",
+            "items": {
+                "$ref": "#/definitions/InventorySummary"
+            }
+        },
+        "Pagination": {
+            "type": "object",
+            "properties": {
+                "nextToken": {
+                    "type": "string",
+                    "description": "用于检索结果的下一页的生成字符串。如果返回nextToken，则将nextToken的值传递给下一个请求。如果不返回nextToken，则没有更多的项目要返回。"
+                }
+            },
+            "description": "以定义大小的批处理将结果返回给请求的过程，称为pages。这样做是为了对结果大小和总吞吐量进行一些控制。这是一种交通管理方式。"
+        },
+        "GetInventorySummariesResult": {
+            "type": "object",
+            "required": [
+                "granularity",
+                "inventorySummaries"
+            ],
+            "properties": {
+                "granularity": {
+                    "$ref": "#/definitions/Granularity"
+                },
+                "inventorySummaries": {
+                    "$ref": "#/definitions/InventorySummaries"
+                }
+            },
+            "description": "getInventorySummaries操作的负载架构。"
+        },
+        "GetInventorySummariesResponse": {
+            "type": "object",
+            "properties": {
+                "payload": {
+                    "description": "getInventorySummaries操作的负载。",
+                    "$ref": "#/definitions/GetInventorySummariesResult"
+                },
+                "pagination": {
+                    "$ref": "#/definitions/Pagination"
+                },
+                "errors": {
+                    "description": "在getInventorySummaries操作期间发生一个或多个意外错误。",
+                    "$ref": "#/definitions/ErrorList"
+                }
+            },
+            "description": "The Response schema."
+        },
+        "Error": {
+            "type": "object",
+            "required": [
+                "code"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "标识发生的错误类型的错误代码。"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "以人类可读的形式描述错误情况的消息。"
+                },
+                "details": {
+                    "type": "string",
+                    "description": "可帮助呼叫者了解或解决问题的其他信息。"
+                }
+            },
+            "description": "请求不成功时返回的错误响应。"
+        },
+        "ErrorList": {
+            "type": "array",
+            "description": "请求不成功时返回的错误响应列表。",
+            "items": {
+                "$ref": "#/definitions/Error"
+            }
+        }
+    }
+}

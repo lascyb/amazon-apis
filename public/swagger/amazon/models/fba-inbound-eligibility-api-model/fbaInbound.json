@@ -1,0 +1,664 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "使用FBA入站资格API，您可以构建应用程序，让卖家在将商品运送到亚马逊的履行中心之前获得商品的资格预览。使用此API，您可以了解商品是否符合向特定市场中的亚马逊配送中心发货的条件。您还可以了解某个项目是否符合使用制造商条形码进行FBA库存跟踪的条件。卖家可以使用这些信息来决定向亚马逊的配送中心运送哪些商品。",
+    "version": "v1",
+    "title": "Selling Partner API for FBA Inbound Eligibilty",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/fba/inbound/v1/eligibility/itemPreview": {
+      "get": {
+        "tags": [
+          "fbaInbound"
+        ],
+        "description": "此操作获取您指定的项目的资格预览。您可以指定所需的资格预览类型 (入站或混合)。对于入站预览，您可以指定要在其中确定项目资格的市场。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getItemEligibilityPreview",
+        "parameters": [
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "要在其中确定资格的市场的标识符。仅当program = INBOUND时需要。",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1
+          },
+          {
+            "name": "asin",
+            "in": "query",
+            "description": "要进行资格预览的项目的ASIN。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "program",
+            "in": "query",
+            "description": "要对其进行资格检查的程序。",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "INBOUND",
+              "COMMINGLING"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetItemEligibilityPreviewResponse"
+            },
+            "examples": {
+              "ItemEligibilityPreview": {
+                "payload": {
+                  "asin": "TEST_ASIN",
+                  "marketplaceId": "TEST_MARKETPLACE_ID",
+                  "program": "INBOUND",
+                  "isEligibleForProgram": true
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "TEST_CASE_200"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "asin": "TEST_CASE_200",
+                      "marketplaceId": "TEST_CASE_200",
+                      "program": "INBOUND",
+                      "isEligibleForProgram": true
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetItemEligibilityPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "TEST_CASE_400"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid input."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetItemEligibilityPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "TEST_CASE_401"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/GetItemEligibilityPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "TEST_CASE_403"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "Unauthorized",
+                        "message": "Access to requested resource is denied."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetItemEligibilityPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "TEST_CASE_404"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "NotFound",
+                        "message": "The requested resource doesn't exist."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetItemEligibilityPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "TEST_CASE_429"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "QuotaExceeded",
+                        "message": "You exceeded your quota for the requested resource."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetItemEligibilityPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "TEST_CASE_500"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InternalFailure",
+                        "message": "We encountered an internal error. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetItemEligibilityPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一的请求引用ID。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "asin": {
+                        "value": "TEST_CASE_503"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "ServiceUnavailable",
+                        "message": "Service is temporarily unavailable. Please try again."
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GetItemEligibilityPreviewResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "getItemEligibilityPreview操作的负载。",
+          "$ref": "#/definitions/ItemEligibilityPreview"
+        },
+        "errors": {
+          "description": "在执行GetItemEligibilityPreview操作期间发生了意外情况。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "getItemEligibilityPreview操作的响应架构。"
+    },
+    "ItemEligibilityPreview": {
+      "type": "object",
+      "required": [
+        "asin",
+        "isEligibleForProgram",
+        "program"
+      ],
+      "properties": {
+        "asin": {
+          "type": "string",
+          "description": "确定资格的ASIN。"
+        },
+        "marketplaceId": {
+          "type": "string",
+          "description": "确定资格的市场。"
+        },
+        "program": {
+          "type": "string",
+          "description": "已确定其资格的计划。",
+          "enum": [
+            "INBOUND",
+            "COMMINGLING"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "INBOUND",
+              "description": "入站装运。"
+            },
+            {
+              "value": "COMMINGLING",
+              "description": "使用制造商条形码进行FBA库存跟踪。"
+            }
+          ]
+        },
+        "isEligibleForProgram": {
+          "type": "boolean",
+          "description": "指示项目是否符合该计划的条件。"
+        },
+        "ineligibilityReasonList": {
+          "type": "array",
+          "description": "潜在的不合格原因代码。",
+          "items": {
+            "type": "string",
+            "description": "潜在的不合格原因代码。",
+            "enum": [
+              "FBA_INB_0004",
+              "FBA_INB_0006",
+              "FBA_INB_0007",
+              "FBA_INB_0008",
+              "FBA_INB_0009",
+              "FBA_INB_0010",
+              "FBA_INB_0011",
+              "FBA_INB_0012",
+              "FBA_INB_0013",
+              "FBA_INB_0014",
+              "FBA_INB_0015",
+              "FBA_INB_0016",
+              "FBA_INB_0017",
+              "FBA_INB_0018",
+              "FBA_INB_0019",
+              "FBA_INB_0034",
+              "FBA_INB_0035",
+              "FBA_INB_0036",
+              "FBA_INB_0037",
+              "FBA_INB_0038",
+              "FBA_INB_0050",
+              "FBA_INB_0051",
+              "FBA_INB_0053",
+              "FBA_INB_0055",
+              "FBA_INB_0056",
+              "FBA_INB_0059",
+              "FBA_INB_0065",
+              "FBA_INB_0066",
+              "FBA_INB_0067",
+              "FBA_INB_0068",
+              "FBA_INB_0095",
+              "FBA_INB_0097",
+              "FBA_INB_0098",
+              "FBA_INB_0099",
+              "FBA_INB_0100",
+              "FBA_INB_0103",
+              "FBA_INB_0104",
+              "FBA_INB_0197",
+              "UNKNOWN_INB_ERROR_CODE"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "FBA_INB_0004",
+                "description": "缺少包装尺寸。该产品缺少必要的信息; 尺寸需要在制造商的原始包装中提供。"
+              },
+              {
+                "value": "FBA_INB_0006",
+                "description": "此产品的SKU未知或找不到。"
+              },
+              {
+                "value": "FBA_INB_0007",
+                "description": "危险品 (Hazmat) 审查下的产品。我们没有足够的信息来确定产品是什么或附带什么，以使我们能够完成我们的危险品审查。在您提供必要的信息之前，产品将无法出售，并且您将无法向亚马逊履行中心发送更多的产品。您需要向产品列表添加更多详细信息，例如清晰的标题、项目符号、描述和图像。审核过程需要4个工作日。"
+              },
+              {
+                "value": "FBA_INB_0008",
+                "description": "危险品 (Hazmat) 审查下的产品。我们需要详细的电池信息来正确地对产品进行分类，在您提供必要的信息之前，产品将无法出售，您将无法向亚马逊履行中心发送更多的单位。在卖方中心的 “上传危险货物文件: 安全数据表 (SDS) 或豁免表” 中下载以多种语言提供的电池和电池供电产品的豁免表，并按照说明通过同一页面提交。审核过程需要4个工作日。"
+              },
+              {
+                "value": "FBA_INB_0009",
+                "description": "危险品 (Hazmat) 审查下的产品。我们没有足够的危险品信息来对产品进行正确分类，在您提供必要的信息之前，产品将无法出售，您将无法向亚马逊配送中心发送更多的产品。请通过卖方中心的 “上传危险品文件: 安全数据表 (SDS) 或豁免表” 提供安全数据表 (SDS)，并确保SDS符合所有要求。审核过程需要4个工作日。"
+              },
+              {
+                "value": "FBA_INB_0010",
+                "description": "危险品 (Hazmat) 审查下的产品。危险品信息不匹配，因此无法正确分类产品。在您提供必要的信息之前，产品将无法出售，并且您将无法向亚马逊履行中心发送更多的产品。请通过卖方中心的 “上传危险品文件: 安全数据表 (SDS) 或免责单” 提供符合要求的文件，并确保其符合所有要求。审核过程需要4个工作日，在审核过程完成之前，产品将无法履行。"
+              },
+              {
+                "value": "FBA_INB_0011",
+                "description": "危险品 (Hazmat) 审查下的产品。我们的危险品信息不完整、不准确或相互冲突，无法对产品进行正确分类。在您提供必要的信息之前，产品将无法出售，并且您将无法向亚马逊履行中心发送更多的产品。请通过卖方中心的 “上传危险品文件: 安全数据表 (SDS) 或免责单” 提供符合要求的文件，并确保其符合所有要求。审核过程需要4个工作日，在审核过程完成之前，产品将无法履行。"
+              },
+              {
+                "value": "FBA_INB_0012",
+                "description": "危险品 (Hazmat) 审查下的产品。我们已确定产品详细信息页面或产品的其他报价中存在冲突的产品信息 (标题，项目符号，图像或产品说明)。在冲突信息得到纠正之前，这些产品将无法出售，您将无法向亚马逊配送中心发送更多的产品。我们需要您确认产品详细信息页面上的信息。审核过程需要4个工作日。"
+              },
+              {
+                "value": "FBA_INB_0013",
+                "description": "危险品 (Hazmat) 审查下的产品。为了完成危险品审查过程，还需要其他信息。"
+              },
+              {
+                "value": "FBA_INB_0014",
+                "description": "危险品 (Hazmat) 审查下的产品。该产品已被确定为可能的危险品。审核过程通常需要4-7个工作日，在审核过程完成之前，产品无法履行，无法在亚马逊履行中心收到或由客户订购。有关危险品的更多信息，请参阅卖家中心的 “危险品识别指南 (hazmat)” 帮助页面。"
+              },
+              {
+                "value": "FBA_INB_0015",
+                "description": "危险品 (Hazmat)。该产品被监管为无法履行，不符合亚马逊的销售条件。我们要求您不要在新的装运中发送额外的单位。我们需要根据亚马逊商业服务协议的条款处理您的危险品库存。如果您有任何问题或疑虑，请在本通知的五个工作日内联系卖家支持。有关危险品的更多信息，请参阅Seller Central中的 “危险品识别指南 (hazmat)” 帮助页面。"
+              },
+              {
+                "value": "FBA_INB_0016",
+                "description": "危险品 (Hazmat)。该产品被规定为可履行的危险物品 (Hazmat)。您可能需要参加FBA危险商品 (Hazmat) 计划才能销售您的产品。有关FBA危险货物 (Hazmat) 计划的更多信息，请联系卖家支持。有关危险品的更多信息，请参阅卖家中心的 “危险品识别指南 (hazmat)” 帮助页面。"
+              },
+              {
+                "value": "FBA_INB_0017",
+                "description": "此产品在目标市场目录中不存在。需要先提供必要的产品信息，然后才能对其进行绑定。"
+              },
+              {
+                "value": "FBA_INB_0018",
+                "description": "产品缺少类别。此产品必须具有指定的类别，然后才能发送到Amazon。"
+              },
+              {
+                "value": "FBA_INB_0019",
+                "description": "此产品必须具有标题，然后才能发送到Amazon。"
+              },
+              {
+                "value": "FBA_INB_0034",
+                "description": "产品不能无粘性、混合。必须删除此产品。您可以通过为此产品创建需要产品标签的新列表来发送新清单。"
+              },
+              {
+                "value": "FBA_INB_0035",
+                "description": "过期/批次控制的产品需要贴上标签。该产品需要在我们的履行中心收到标签。"
+              },
+              {
+                "value": "FBA_INB_0036",
+                "description": "过期或批量控制的产品需要混合。该产品不能在没有混合的情况下运到亚马逊。无法从此处更正此错误条件。必须删除此产品。"
+              },
+              {
+                "value": "FBA_INB_0037",
+                "description": "此产品不符合运送到我们的履行中心的条件。您没有所需的所有税务文件。如果您已经提交了文件，请等待长达48小时的数据传播。"
+              },
+              {
+                "value": "FBA_INB_0038",
+                "description": "Amazon无法履行父ASIN。您可以通过创建针对子ASIN的列表来发送此产品。"
+              },
+              {
+                "value": "FBA_INB_0050",
+                "description": "目的地国家/地区目前没有能够接收此产品的履行中心。如果您认为这是错误，请从发货中删除此产品或联系卖家支持。"
+              },
+              {
+                "value": "FBA_INB_0051",
+                "description": "此产品已被FBA阻止，目前无法发送到亚马逊履行。"
+              },
+              {
+                "value": "FBA_INB_0053",
+                "description": "产品在目的地市场中不合格。此产品不合格，因为所需的运输选项不可用，或者因为产品太大或太重。"
+              },
+              {
+                "value": "FBA_INB_0055",
+                "description": "由于媒体区域限制，产品无法实现。此产品具有受此市场限制的区域代码。必须删除此产品。"
+              },
+              {
+                "value": "FBA_INB_0056",
+                "description": "产品不符合入站条件。使用过的非媒体商品无法运送到亚马逊。"
+              },
+              {
+                "value": "FBA_INB_0059",
+                "description": "未知异常。此时必须删除此产品。"
+              },
+              {
+                "value": "FBA_INB_0065",
+                "description": "产品不能无粘性、混合。必须删除此产品。您可以通过为此产品创建需要产品标签的新列表来发送新清单。"
+              },
+              {
+                "value": "FBA_INB_0066",
+                "description": "未知异常。此时必须删除此产品。"
+              },
+              {
+                "value": "FBA_INB_0067",
+                "description": "产品不适合货运。这个项目是不合格的货运航运与我们的全球航运服务。必须删除此项目。"
+              },
+              {
+                "value": "FBA_INB_0068",
+                "description": "帐户未配置为过期或批次控制的产品。如果您想配置您的帐户以处理过期或批量控制的库存，请联系TAM。一旦配置，您将能够发送此产品。"
+              },
+              {
+                "value": "FBA_INB_0095",
+                "description": "此产品的条形码 (UPC/EAN/JAN/ISBN) 与我们的履行系统中的多个产品相关联。必须删除此产品。您可以通过为此产品创建需要产品标签的新列表来发送新清单。"
+              },
+              {
+                "value": "FBA_INB_0097",
+                "description": "完全监管的危险物品。"
+              },
+              {
+                "value": "FBA_INB_0098",
+                "description": "商家无权将商品发送到目标市场。"
+              },
+              {
+                "value": "FBA_INB_0099",
+                "description": "卖家帐户先前已终止。"
+              },
+              {
+                "value": "FBA_INB_0100",
+                "description": "您没有将库存发送到墨西哥的履行中心所需的税务信息。"
+              },
+              {
+                "value": "FBA_INB_0103",
+                "description": "这是一个过期/批量控制的产品，目前无法处理。"
+              },
+              {
+                "value": "FBA_INB_0104",
+                "description": "项目需要制造商条形码。只有新产品可以存储在我们的履行中心，没有产品标签。"
+              },
+              {
+                "value": "FBA_INB_0197",
+                "description": "项目需要安全和合规性文件。没有所需的安全和合规性文件，FBA无法履行此产品的订单。"
+              },
+              {
+                "value": "UNKNOWN_INB_ERROR_CODE",
+                "description": "未知的不合格原因。"
+              }
+            ]
+          }
+        }
+      },
+      "description": "包含ASIN、marketplaceId (如果需要) 、资格程序、资格状态 (布尔值) 和不合格原因代码列表的响应对象。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "以人类可读的形式描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可帮助呼叫者了解或解决问题的其他信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    }
+  }
+}

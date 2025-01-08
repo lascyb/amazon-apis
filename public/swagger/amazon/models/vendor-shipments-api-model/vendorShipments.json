@@ -1,0 +1,3315 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "零售采购发货的销售合作伙伴API为供应商提供了对零售发货数据的编程访问。",
+    "version": "v1",
+    "title": "Vendor Shipments v1",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/vendor/shipping/v1/shipmentConfirmations": {
+      "post": {
+        "tags": [
+          "Vendor Shipments"
+        ],
+        "description": "为供应商订单提交一个或多个发货确认。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "SubmitShipmentConfirmations",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "提交发货确认的请求。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "examples": {
+              "application/json": {
+                "payload": {
+                  "transactionId": {
+                    "description": "由Amazon分配的用于标识此事务的GUID。它将在事务状态API中用作获取此事务状态的参考。",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "shipmentConfirmations": [
+                            {
+                              "shipmentIdentifier": "TestShipmentConfirmation202",
+                              "shipmentConfirmationDate": "2021-03-11T12:38:23.388Z",
+                              "sellingParty": {
+                                "partyId": "ABCD1"
+                              },
+                              "shipFromParty": {
+                                "partyId": "EFGH1"
+                              },
+                              "shipToParty": {
+                                "partyId": "JKL1"
+                              },
+                              "shipmentConfirmationType": "Original",
+                              "shippedItems": [
+                                {
+                                  "itemSequenceNumber": "001",
+                                  "shippedQuantity": {
+                                    "amount": 100,
+                                    "unitOfMeasure": "Eaches"
+                                  },
+                                  "itemDetails": {
+                                    "purchaseOrderNumber": "TestOrder202"
+                                  }
+                                },
+                                {
+                                  "itemSequenceNumber": "002",
+                                  "shippedQuantity": {
+                                    "amount": 100,
+                                    "unitOfMeasure": "Cases",
+                                    "totalWeight": {
+                                      "amount": "332.8",
+                                      "unitOfMeasure": "POUNDS"
+                                    }
+                                  },
+                                  "itemDetails": {
+                                    "purchaseOrderNumber": "TestOrder202"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "transactionId": "20190905010908-8a3b6901-ef20-412f-9270-21c021796605"
+                    }
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {}
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "transactionId": "mock-TransactionId-20190905010908-8a3b6901-ef20-412f-9270-21c021796605"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amazon-spds-sandbox-behaviors": [
+              {
+                "request": {
+                  "parameters": {
+                    "body": {
+                      "value": {
+                        "shipmentConfirmations": [
+                          {
+                            "shipmentIdentifier": "MOCKSHIPMENTID"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "response": {
+                  "errors": [
+                    {
+                      "code": "InvalidInput",
+                      "message": "Invalid Shipment ID"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "SubmitShipmentConfirmations"
+      }
+    },
+    "/vendor/shipping/v1/shipments": {
+      "post": {
+        "tags": [
+          "Vendor Shipments"
+        ],
+        "description": "为供应商订单提交一个或多个发运请求。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "SubmitShipments",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "提交发运请求的请求。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubmitShipments"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amazon-spds-sandbox-behaviors": [
+              {
+                "request": {
+                  "parameters": {
+                    "body": {
+                      "value": {
+                        "shipments": [
+                          {
+                            "vendorShipmentIdentifier": "00050003",
+                            "buyerReferenceNumber": "1234567",
+                            "transactionType": "New",
+                            "transactionDate": "2019-08-07T19:56:45.632",
+                            "shipmentFreightTerm": "Collect",
+                            "sellingParty": {
+                              "partyId": "PQRSS"
+                            },
+                            "shipFromParty": {
+                              "address": {
+                                "name": "ABC electronics warehouse",
+                                "addressLine1": "DEF 1st street",
+                                "city": "Lisses",
+                                "stateOrRegion": "abcland",
+                                "postalCode": "91090",
+                                "countryCode": "DE"
+                              },
+                              "partyId": "999US"
+                            },
+                            "shipToParty": {
+                              "partyId": "ABCDF"
+                            },
+                            "shipmentMeasurements": {
+                              "totalCartonCount": 30,
+                              "totalPalletStackable": 30,
+                              "totalPalletNonStackable": 30,
+                              "shipmentWeight": {
+                                "unitOfMeasure": "Kg",
+                                "value": "120.45"
+                              },
+                              "shipmentVolume": {
+                                "unitOfMeasure": "CuFt",
+                                "value": "2.4"
+                              }
+                            },
+                            "collectFreightPickupDetails": {
+                              "requestedPickUp": "2019-08-07T19:56:45.632"
+                            },
+                            "purchaseOrders": [
+                              {
+                                "purchaseOrderNumber": "1BBBAAAA",
+                                "items": [
+                                  {
+                                    "itemSequenceNumber": "001",
+                                    "vendorProductIdentifier": "9782700001659",
+                                    "buyerProductIdentifier": "9782700001610",
+                                    "shippedQuantity": {
+                                      "amount": 100,
+                                      "unitOfMeasure": "Eaches",
+                                      "unitSize": 1
+                                    },
+                                    "maximumRetailPrice": {
+                                      "currencyCode": "USD",
+                                      "amount": "90.80"
+                                    }
+                                  },
+                                  {
+                                    "itemSequenceNumber": "002",
+                                    "vendorProductIdentifier": "9782700001600",
+                                    "buyerProductIdentifier": "9782700001680",
+                                    "shippedQuantity": {
+                                      "amount": 100,
+                                      "unitOfMeasure": "Cases",
+                                      "unitSize": 1,
+                                      "totalWeight": {
+                                        "amount": "182.3",
+                                        "unitOfMeasure": "POUNDS"
+                                      }
+                                    },
+                                    "maximumRetailPrice": {
+                                      "currencyCode": "USD",
+                                      "amount": "10000"
+                                    }
+                                  }
+                                ]
+                              }
+                            ],
+                            "importDetails": {
+                              "methodOfPayment": "PaidByBuyer",
+                              "sealNumber": "0010101",
+                              "route": {
+                                "stops": [
+                                  {
+                                    "functionCode": "PortOfDischarge",
+                                    "locationIdentification": {
+                                      "type": "string",
+                                      "locationCode": "string",
+                                      "countryCode": "US"
+                                    },
+                                    "arrivalTime": "2021-07-12T22:22:25.038Z",
+                                    "departureTime": "2021-07-12T22:22:25.038Z"
+                                  }
+                                ]
+                              },
+                              "importContainers": "string",
+                              "billableWeight": {
+                                "unitOfMeasure": "G",
+                                "value": "string"
+                              },
+                              "estimatedShipByDate": "2021-07-12T22:22:25.038Z"
+                            },
+                            "containers": [
+                              {
+                                "containerType": "carton",
+                                "containerSequenceNumber": "001",
+                                "containerIdentifiers": [
+                                  {
+                                    "containerIdentificationType": "SSCC",
+                                    "containerIdentificationNumber": "4251245123534"
+                                  }
+                                ],
+                                "trackingNumber": "1Z69663R0347795889",
+                                "dimensions": {
+                                  "length": "12",
+                                  "width": "12",
+                                  "height": "12",
+                                  "unitOfMeasure": "IN"
+                                },
+                                "weight": {
+                                  "unitOfMeasure": "KG",
+                                  "value": "10"
+                                },
+                                "packedItems": [
+                                  {
+                                    "itemSequenceNumber": "001",
+                                    "buyerProductIdentifier": "B07DFVDRAA",
+                                    "vendorProductIdentifier": "12312412421",
+                                    "packedQuantity": {
+                                      "amount": 1,
+                                      "unitOfMeasure": "Each"
+                                    },
+                                    "itemDetails": {
+                                      "purchaseOrderNumber": "MBvnLr0fw",
+                                      "lotNumber": "10101010",
+                                      "expiry": {
+                                        "manufacturerDate": "2021-07-12T22:22:25.038Z",
+                                        "expiryDate": "2021-07-12T22:22:25.038Z",
+                                        "expiryAfterDuration": {
+                                          "durationUnit": "Days",
+                                          "durationValue": 0
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "containerType": "pallet",
+                                "containerSequenceNumber": "002",
+                                "containerIdentifiers": [
+                                  {
+                                    "containerIdentificationType": "SSCC",
+                                    "containerIdentificationNumber": "ATR123213216"
+                                  }
+                                ],
+                                "trackingNumber": "TRACK12345",
+                                "dimensions": {
+                                  "length": "12",
+                                  "width": "12",
+                                  "height": "12",
+                                  "unitOfMeasure": "IN"
+                                },
+                                "weight": {
+                                  "unitOfMeasure": "KG",
+                                  "value": "10"
+                                },
+                                "tier": 2,
+                                "block": 2,
+                                "innerContainersDetails": {
+                                  "containerCount": 10,
+                                  "containerSequenceNumbers": [
+                                    {
+                                      "containerSequenceNumber": "002"
+                                    },
+                                    {
+                                      "containerSequenceNumber": "003"
+                                    }
+                                  ]
+                                },
+                                "packedItems": [
+                                  {
+                                    "itemSequenceNumber": "001",
+                                    "buyerProductIdentifier": "B07DFVDRAA",
+                                    "vendorProductIdentifier": "12312412421",
+                                    "packedQuantity": {
+                                      "amount": 1,
+                                      "unitOfMeasure": "Each"
+                                    },
+                                    "itemDetails": {
+                                      "purchaseOrderNumber": "MBvnLr0fw",
+                                      "lotNumber": "101001",
+                                      "expiry": {
+                                        "manufacturerDate": "2021-07-12T22:22:25.038Z",
+                                        "expiryDate": "2021-07-12T22:22:25.038Z",
+                                        "expiryAfterDuration": {
+                                          "durationUnit": "Days",
+                                          "durationValue": 0
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ],
+                            "transportationDetails": {
+                              "shipMode": "LessThanTruckLoad",
+                              "transportationMode": "Road",
+                              "shippedDate": "2019-08-07T19:56:45.632",
+                              "estimatedDeliveryDate": "2019-08-07T19:56:45.632",
+                              "shipmentDeliveryDate": "2019-08-07T19:56:45.632",
+                              "carrierDetails": {
+                                "name": "UPS",
+                                "phone": "1234567890",
+                                "email": "abc@xyz.com",
+                                "code": "string",
+                                "shipmentReferenceNumber": "TRACK123123"
+                              },
+                              "billOfLadingNumber": "1234567890"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "response": {
+                  "payload": {
+                    "transactionId": "mock-TransactionId-5a3066ab-e904-42bd-b6ae-bc70ca1c37e6-20210728234390"
+                  }
+                }
+              },
+              {
+                "request": {
+                  "parameters": {
+                    "body": {
+                      "value": {
+                        "shipments": [
+                          {
+                            "vendorShipmentIdentifier": "00050003",
+                            "buyerReferenceNumber": "1234567",
+                            "transactionType": "Cancel",
+                            "transactionDate": "2019-08-07T19:56:45.632",
+                            "shipmentFreightTerm": "Collect",
+                            "sellingParty": {
+                              "partyId": "PQRSS"
+                            },
+                            "shipFromParty": {
+                              "address": {
+                                "name": "ABC electronics warehouse",
+                                "addressLine1": "DEF 1st street",
+                                "city": "Lisses",
+                                "stateOrRegion": "abcland",
+                                "postalCode": "91090",
+                                "countryCode": "DE"
+                              },
+                              "partyId": "999US"
+                            },
+                            "shipToParty": {
+                              "partyId": "ABCDF"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "response": {
+                  "payload": {
+                    "transactionId": "mock-TransactionId-5a3066ab-e904-42bd-b6ae-bc70ca1c37e6-20210728234390"
+                  }
+                }
+              },
+              {
+                "request": {
+                  "parameters": {
+                    "body": {}
+                  }
+                },
+                "response": {
+                  "payload": {
+                    "transactionId": "mock-TransactionId-a3066ab-e904-42bd-b6ae-bc70ca1c37e6-20210728234395"
+                  }
+                }
+              }
+            ]
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amazon-spds-sandbox-behaviors": [
+              {
+                "request": {
+                  "parameters": {
+                    "body": {
+                      "value": {
+                        "shipments": [
+                          {
+                            "vendorShipmentIdentifier": "MOCKSHIPID"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "response": {
+                  "errors": [
+                    {
+                      "code": "InvalidInput",
+                      "message": "Invalid Vendor Shipment ID"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/SubmitShipmentConfirmationsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "SubmitShipments"
+      },
+      "get": {
+        "tags": [
+          "Vendor Shipments"
+        ],
+        "description": "根据您指定的筛选参数值，返回有关装运、承运人详细信息、装运状态、集装箱详细信息以及与装运相关的其他详细信息的详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "GetShipmentDetails",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "返回的记录数限制。默认值为50条记录。",
+            "required": false,
+            "type": "integer",
+            "maximum": 50,
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "description": "按采购订单创建日期按升序或降序排序。",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "ASC",
+                "description": "按发运创建日期按升序排序。"
+              },
+              {
+                "value": "DESC",
+                "description": "按发运创建日期按降序排序。"
+              }
+            ]
+          },
+          {
+            "name": "nextToken",
+            "in": "query",
+            "description": "当出货量超过指定的结果大小限制时，用于分页。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "createdAfter",
+            "in": "query",
+            "description": "获取在此时间戳之后可用的货件详细信息将包含在结果中。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createdBefore",
+            "in": "query",
+            "description": "获取在此时间戳之前可用的货件详细信息将包含在结果中。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "shipmentConfirmedBefore",
+            "in": "query",
+            "description": "通过传递货件确认创建日期之前获取货件详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "shipmentConfirmedAfter",
+            "in": "query",
+            "description": "通过传递货件确认创建日期后获取货件详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "packageLabelCreatedBefore",
+            "in": "query",
+            "description": "通过按买方传递包装标签创建日期来获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "packageLabelCreatedAfter",
+            "in": "query",
+            "description": "通过在买方之后传递包装标签创建日期来获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "shippedBefore",
+            "in": "query",
+            "description": "通过之前的发货日期获取发货详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "shippedAfter",
+            "in": "query",
+            "description": "通过传递装运日期后获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "estimatedDeliveryBefore",
+            "in": "query",
+            "description": "通过之前的估计交货日期获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "estimatedDeliveryAfter",
+            "in": "query",
+            "description": "通过之前的估计交货日期获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "shipmentDeliveryBefore",
+            "in": "query",
+            "description": "通过之前的装运交货日期获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "shipmentDeliveryAfter",
+            "in": "query",
+            "description": "通过传递装运交货日期后获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "requestedPickUpBefore",
+            "in": "query",
+            "description": "在要求的提货日期之前通过获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "requestedPickUpAfter",
+            "in": "query",
+            "description": "在请求的取货日期后通过获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "scheduledPickUpBefore",
+            "in": "query",
+            "description": "在预定提货日期之前通过获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "scheduledPickUpAfter",
+            "in": "query",
+            "description": "在预定取货日期后通过获取装运详细信息。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "currentShipmentStatus",
+            "in": "query",
+            "description": "通过传递当前装运状态获取装运详细信息。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "vendorShipmentIdentifier",
+            "in": "query",
+            "description": "通过传递供应商装运ID获取装运详细信息",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "buyerReferenceNumber",
+            "in": "query",
+            "description": "通过传递买方参考ID获取装运详细信息",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "buyerWarehouseCode",
+            "in": "query",
+            "description": "根据买方仓库代码获取运输详细信息。此值应与装运中的 “shiptoparty.Partyid” 相同。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sellerWarehouseCode",
+            "in": "query",
+            "description": "根据供应商仓库代码获取运输详细信息。此值应与装运中的 “sellingparty.Partyid” 相同。",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "examples": {
+              "application/json": {
+                "payload": {
+                  "pagination": {
+                    "nextToken": "MDAwMDAwMDAwMQ=="
+                  },
+                  "shipments": [
+                    {
+                      "vendorShipmentIdentifier": "00050003",
+                      "buyerReferenceNumber": "1234567",
+                      "currentShipmentStatus": "CarrierAssigned",
+                      "currentshipmentStatusDate": "2019-08-09T19:56:45.632",
+                      "shipmentStatusDetails": [
+                        {
+                          "shipmentStatus": "CarrierAssigned",
+                          "shipmentStatusDate": "2019-08-09T19:56:45.632"
+                        },
+                        {
+                          "shipmentStatus": "TransportationRequested",
+                          "shipmentStatusDate": "2019-07-07T19:56:45.632"
+                        },
+                        {
+                          "shipmentStatus": "Created",
+                          "shipmentStatusDate": "2019-07-06T19:56:45.632"
+                        }
+                      ],
+                      "shipmentCreateDate": "2019-07-07T19:56:45.632",
+                      "shipmentConfirmDate": "2019-08-07T19:56:45.632",
+                      "packageLabelCreateDate": "2019-08-07T19:56:45.632",
+                      "shipmentFreightTerm": "Collect",
+                      "sellingParty": {
+                        "partyId": "998US"
+                      },
+                      "shipFromParty": {
+                        "address": {
+                          "name": "ABC electronics warehouse",
+                          "addressLine1": "DEF 1st street",
+                          "city": "Lisses",
+                          "stateOrRegion": "abcland",
+                          "postalCode": "91090",
+                          "countryCode": "DE"
+                        },
+                        "partyId": "ABCD12"
+                      },
+                      "shipToParty": {
+                        "partyId": "999US"
+                      },
+                      "shipmentMeasurements": {
+                        "totalCartonCount": 30,
+                        "totalPalletStackable": 30,
+                        "totalPalletNonStackable": 30,
+                        "shipmentWeight": {
+                          "unitOfMeasure": "Kg",
+                          "value": "120.45"
+                        },
+                        "shipmentVolume": {
+                          "unitOfMeasure": "CuFt",
+                          "value": "2.4"
+                        }
+                      },
+                      "collectFreightPickupDetails": {
+                        "requestedPickUp": "2019-08-07T19:56:45.632",
+                        "scheduledPickUp": "2019-08-07T19:56:45.632",
+                        "carrierAssignmentDate": "2019-08-07T19:56:45.632"
+                      },
+                      "purchaseOrders": [
+                        {
+                          "purchaseOrderNumber": "1BBBAAAA",
+                          "purchaseOrderDate": "2019-08-06T19:56:45.632",
+                          "shipWindow": "08/25/2021 - 08/31/2021",
+                          "items": [
+                            {
+                              "itemSequenceNumber": "001",
+                              "vendorProductIdentifier": "9782700001659",
+                              "buyerProductIdentifier": "9782700001690",
+                              "shippedQuantity": {
+                                "amount": 100,
+                                "unitOfMeasure": "Eaches",
+                                "unitSize": 1
+                              },
+                              "maximumRetailPrice": {
+                                "currencyCode": "USD",
+                                "amount": "12345"
+                              }
+                            },
+                            {
+                              "itemSequenceNumber": "002",
+                              "vendorProductIdentifier": "9782700001600",
+                              "buyerProductIdentifier": "9782700001680",
+                              "shippedQuantity": {
+                                "amount": 100,
+                                "unitOfMeasure": "Cases",
+                                "unitSize": 1,
+                                "totalWeight": {
+                                  "amount": "182.3",
+                                  "unitOfMeasure": "POUNDS"
+                                }
+                              },
+                              "maximumRetailPrice": {
+                                "currencyCode": "USD",
+                                "amount": "10000"
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "importDetails": {
+                        "methodOfPayment": "PaidByBuyer",
+                        "sealNumber": "1232142132",
+                        "route": {
+                          "stops": [
+                            {
+                              "functionCode": "PortOfDischarge",
+                              "locationIdentification": {
+                                "type": "string",
+                                "locationCode": "string",
+                                "countryCode": "US"
+                              },
+                              "arrivalTime": "2021-07-12T22:22:25.038Z",
+                              "departureTime": "2021-07-12T22:22:25.038Z"
+                            }
+                          ]
+                        },
+                        "importContainers": "string",
+                        "billableWeight": {
+                          "unitOfMeasure": "G",
+                          "value": "10"
+                        },
+                        "estimatedShipByDate": "2021-07-12T22:22:25.038Z",
+                        "handlingInstructions": "Oversized"
+                      },
+                      "containers": [
+                        {
+                          "containerType": "carton",
+                          "containerSequenceNumber": "001",
+                          "containerIdentifiers": [
+                            {
+                              "containerIdentificationType": "SSCC",
+                              "containerIdentificationNumber": "213124134213"
+                            }
+                          ],
+                          "trackingNumber": "XXXX",
+                          "dimensions": {
+                            "length": "12",
+                            "width": "12",
+                            "height": "12",
+                            "unitOfMeasure": "IN"
+                          },
+                          "weight": {
+                            "unitOfMeasure": "KG",
+                            "value": "10"
+                          },
+                          "packedItems": [
+                            {
+                              "itemSequenceNumber": "001",
+                              "buyerProductIdentifier": "B07DFVDRAA",
+                              "vendorProductIdentifier": "12312412421",
+                              "packedQuantity": {
+                                "amount": 1,
+                                "unitOfMeasure": "Each"
+                              },
+                              "itemDetails": {
+                                "purchaseOrderNumber": "string",
+                                "lotNumber": "string",
+                                "expiry": {
+                                  "manufacturerDate": "2021-07-12T22:22:25.038Z",
+                                  "expiryDate": "2021-07-12T22:22:25.038Z",
+                                  "expiryAfterDuration": {
+                                    "durationUnit": "Days",
+                                    "durationValue": 0
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "containerType": "pallet",
+                              "containerSequenceNumber": "002",
+                              "containerIdentifiers": [
+                                {
+                                  "containerIdentificationType": "SSCC",
+                                  "containerIdentificationNumber": "ARK123214214213"
+                                }
+                              ],
+                              "trackingNumber": "TRACK001",
+                              "dimensions": {
+                                "length": "12",
+                                "width": "12",
+                                "height": "12",
+                                "unitOfMeasure": "IN"
+                              },
+                              "weight": {
+                                "unitOfMeasure": "KG",
+                                "value": "10"
+                              },
+                              "tier": 2,
+                              "block": 2,
+                              "innerContainersDetails": {
+                                "containerCount": 10,
+                                "containerSequenceNumbers": [
+                                  {
+                                    "containerSequenceNumber": "002"
+                                  },
+                                  {
+                                    "containerSequenceNumber": "003"
+                                  }
+                                ]
+                              },
+                              "packedItems": [
+                                {
+                                  "itemSequenceNumber": "001",
+                                  "buyerProductIdentifier": "B07DFVDRAA",
+                                  "vendorProductIdentifier": "12312412421",
+                                  "packedQuantity": {
+                                    "amount": 1,
+                                    "unitOfMeasure": "Each"
+                                  },
+                                  "itemDetails": {
+                                    "purchaseOrderNumber": "string",
+                                    "lotNumber": "string",
+                                    "expiry": {
+                                      "manufacturerDate": "2021-07-12T22:22:25.038Z",
+                                      "expiryDate": "2021-07-12T22:22:25.038Z",
+                                      "expiryAfterDuration": {
+                                        "durationUnit": "Days",
+                                        "durationValue": 0
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "transportationDetails": {
+                        "shipMode": "LessThanTruckLoad",
+                        "transportationMode": "Road",
+                        "shippedDate": "2019-08-07T19:56:45.632",
+                        "estimatedDeliveryDate": "2019-08-07T19:56:45.632",
+                        "shipmentDeliveryDate": "2019-08-07T19:56:45.632",
+                        "carrierDetails": {
+                          "name": "UPS",
+                          "phone": "1234567890",
+                          "email": "abc@xyz.com",
+                          "code": "string",
+                          "shipmentReferenceNumber": "TRACK001"
+                        },
+                        "billOfLadingNumber": "string"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amazon-spds-sandbox-behaviors": [
+              {
+                "request": {
+                  "parameters": {
+                    "vendorShipmentIdentifier": {
+                      "value": "12345678"
+                    }
+                  }
+                },
+                "response": {
+                  "payload": {
+                    "pagination": {
+                      "nextToken": "MDAwMDAwMDAwMQ=="
+                    },
+                    "shipments": [
+                      {
+                        "vendorShipmentIdentifier": "00050003",
+                        "buyerReferenceNumber": "1234567",
+                        "currentShipmentStatus": "Created",
+                        "currentshipmentStatusDate": "2019-08-07T19:56:45.632",
+                        "shipmentStatusDetails": [
+                          {
+                            "shipmentStatus": "Created",
+                            "shipmentStatusDate": "2019-08-07T19:56:45.632"
+                          }
+                        ],
+                        "shipmentCreateDate": "2019-07-07T19:56:45.632",
+                        "shipmentConfirmDate": "2019-08-07T19:56:45.632",
+                        "packageLabelCreateDate": "2019-08-07T19:56:45.632",
+                        "shipmentFreightTerm": "Collect",
+                        "sellingParty": {
+                          "partyId": "998US"
+                        },
+                        "shipFromParty": {
+                          "address": {
+                            "name": "ABC electronics warehouse",
+                            "addressLine1": "DEF 1st street",
+                            "city": "Lisses",
+                            "stateOrRegion": "abcland",
+                            "postalCode": "91090",
+                            "countryCode": "DE"
+                          },
+                          "partyId": "ABCD12"
+                        },
+                        "shipToParty": {
+                          "partyId": "999US"
+                        },
+                        "shipmentMeasurements": {
+                          "totalCartonCount": 30,
+                          "totalPalletStackable": 30,
+                          "totalPalletNonStackable": 30,
+                          "shipmentWeight": {
+                            "unitOfMeasure": "Kg",
+                            "value": "120.45"
+                          },
+                          "shipmentVolume": {
+                            "unitOfMeasure": "CuFt",
+                            "value": "2.4"
+                          }
+                        },
+                        "collectFreightPickupDetails": {
+                          "requestedPickUp": "2019-08-07T19:56:45.632",
+                          "scheduledPickUp": "2019-08-07T19:56:45.632",
+                          "carrierAssignmentDate": "2019-08-07T19:56:45.632"
+                        },
+                        "purchaseOrders": [
+                          {
+                            "purchaseOrderNumber": "1BBBAAAA",
+                            "purchaseOrderDate": "2019-08-07T19:56:45.632",
+                            "shipWindow": "08/25/2021 - 08/31/2021",
+                            "items": [
+                              {
+                                "itemSequenceNumber": "001",
+                                "vendorProductIdentifier": "9782700001659",
+                                "buyerProductIdentifier": "9782700001690",
+                                "shippedQuantity": {
+                                  "amount": 100,
+                                  "unitOfMeasure": "Eaches",
+                                  "unitSize": 1
+                                },
+                                "maximumRetailPrice": {
+                                  "currencyCode": "USD",
+                                  "amount": "12345"
+                                }
+                              },
+                              {
+                                "itemSequenceNumber": "002",
+                                "vendorProductIdentifier": "9782700001600",
+                                "buyerProductIdentifier": "9782700001680",
+                                "shippedQuantity": {
+                                  "amount": 100,
+                                  "unitOfMeasure": "Cases",
+                                  "unitSize": 1,
+                                  "totalWeight": {
+                                    "amount": "182.3",
+                                    "unitOfMeasure": "POUNDS"
+                                  }
+                                },
+                                "maximumRetailPrice": {
+                                  "currencyCode": "USD",
+                                  "amount": "10000"
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "importDetails": {
+                          "methodOfPayment": "PaidByBuyer",
+                          "sealNumber": "1232142132",
+                          "route": {
+                            "stops": [
+                              {
+                                "functionCode": "PortOfDischarge",
+                                "locationIdentification": {
+                                  "type": "string",
+                                  "locationCode": "string",
+                                  "countryCode": "US"
+                                },
+                                "arrivalTime": "2021-07-12T22:22:25.038Z",
+                                "departureTime": "2021-07-12T22:22:25.038Z"
+                              }
+                            ]
+                          },
+                          "importContainers": "string",
+                          "billableWeight": {
+                            "unitOfMeasure": "G",
+                            "value": "10"
+                          },
+                          "estimatedShipByDate": "2021-07-12T22:22:25.038Z",
+                          "handlingInstructions": "Oversized"
+                        },
+                        "containers": [
+                          {
+                            "containerType": "carton",
+                            "containerSequenceNumber": "001",
+                            "containerIdentifiers": [
+                              {
+                                "containerIdentificationType": "SSCC",
+                                "containerIdentificationNumber": "213124134213"
+                              }
+                            ],
+                            "trackingNumber": "XXXX",
+                            "dimensions": {
+                              "length": "12",
+                              "width": "12",
+                              "height": "12",
+                              "unitOfMeasure": "IN"
+                            },
+                            "weight": {
+                              "unitOfMeasure": "KG",
+                              "value": "10"
+                            },
+                            "packedItems": [
+                              {
+                                "itemSequenceNumber": "001",
+                                "buyerProductIdentifier": "B07DFVDRAA",
+                                "vendorProductIdentifier": "12312412421",
+                                "packedQuantity": {
+                                  "amount": 1,
+                                  "unitOfMeasure": "Each"
+                                },
+                                "itemDetails": {
+                                  "purchaseOrderNumber": "string",
+                                  "lotNumber": "string",
+                                  "expiry": {
+                                    "manufacturerDate": "2021-07-12T22:22:25.038Z",
+                                    "expiryDate": "2021-07-12T22:22:25.038Z",
+                                    "expiryAfterDuration": {
+                                      "durationUnit": "Days",
+                                      "durationValue": 0
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "containerType": "pallet",
+                            "containerSequenceNumber": "002",
+                            "containerIdentifiers": [
+                              {
+                                "containerIdentificationType": "SSCC",
+                                "containerIdentificationNumber": "ARK123214214213"
+                              }
+                            ],
+                            "trackingNumber": "TRACK001",
+                            "dimensions": {
+                              "length": "12",
+                              "width": "12",
+                              "height": "12",
+                              "unitOfMeasure": "IN"
+                            },
+                            "weight": {
+                              "unitOfMeasure": "KG",
+                              "value": "10"
+                            },
+                            "tier": 2,
+                            "block": 2,
+                            "innerContainersDetails": {
+                              "containerCount": 10,
+                              "containerSequenceNumbers": [
+                                {
+                                  "containerSequenceNumber": "002"
+                                },
+                                {
+                                  "containerSequenceNumber": "003"
+                                }
+                              ]
+                            },
+                            "packedItems": [
+                              {
+                                "itemSequenceNumber": "001",
+                                "buyerProductIdentifier": "B07DFVDRAA",
+                                "vendorProductIdentifier": "12312412421",
+                                "packedQuantity": {
+                                  "amount": 1,
+                                  "unitOfMeasure": "Each"
+                                },
+                                "itemDetails": {
+                                  "purchaseOrderNumber": "123142341",
+                                  "lotNumber": "A12312412",
+                                  "expiry": {
+                                    "manufacturerDate": "2021-07-12T22:22:25.038Z",
+                                    "expiryDate": "2021-07-12T22:22:25.038Z",
+                                    "expiryAfterDuration": {
+                                      "durationUnit": "Days",
+                                      "durationValue": 0
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "transportationDetails": {
+                          "shipMode": "LessThanTruckLoad",
+                          "transportationMode": "Road",
+                          "shippedDate": "2019-08-07T19:56:45.632",
+                          "estimatedDeliveryDate": "2019-08-07T19:56:45.632",
+                          "shipmentDeliveryDate": "2019-08-07T19:56:45.632",
+                          "carrierDetails": {
+                            "name": "UPS",
+                            "phone": "1234567890",
+                            "email": "abc@xyz.com",
+                            "code": "1-1231",
+                            "shipmentReferenceNumber": "TRACK001"
+                          },
+                          "billOfLadingNumber": "12534233421"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amazon-spds-sandbox-behaviors": [
+              {
+                "request": {
+                  "parameters": {
+                    "vendorShipmentIdentifier": {
+                      "value": "null"
+                    }
+                  }
+                },
+                "response": {
+                  "errors": [
+                    {
+                      "code": "InvalidRequest",
+                      "message": "Request is missing or has invalid parameters",
+                      "details": "vendor Shipment Identifier cannot be null"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "GetShipmentDetails"
+      }
+    }
+  },
+  "definitions": {
+    "SubmitShipmentConfirmationsRequest": {
+      "type": "object",
+      "properties": {
+        "shipmentConfirmations": {
+          "type": "array",
+          "description": "一个或多个装运确认的列表。",
+          "items": {
+            "$ref": "#/definitions/ShipmentConfirmation"
+          }
+        }
+      },
+      "description": "SubmitShipmentConfirmations操作的请求架构。"
+    },
+    "SubmitShipments": {
+      "type": "object",
+      "properties": {
+        "shipments": {
+          "type": "array",
+          "description": "包含基本详细信息的一个或多个装运的列表。",
+          "items": {
+            "$ref": "#/definitions/Shipment"
+          }
+        }
+      },
+      "description": "Submit装运操作的请求架构。"
+    },
+    "GetShipmentDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/ShipmentDetails"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "GetShipmentDetails操作的响应架构。"
+    },
+    "ShipmentDetails": {
+      "type": "object",
+      "description": "GetShipmentDetails操作的请求架构。",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/Pagination"
+        },
+        "shipments": {
+          "type": "array",
+          "description": "包含基本详细信息的一个或多个装运的列表。",
+          "items": {
+            "$ref": "#/definitions/Shipment"
+          }
+        }
+      }
+    },
+    "Pagination": {
+      "type": "object",
+      "description": "检索剩余数据所需的分页元素。",
+      "properties": {
+        "nextToken": {
+          "type": "string",
+          "description": "用于将信息传递给下一个请求的生成字符串。如果返回NextToken，则将NextToken的值传递给下一个请求。如果不返回NextToken，则不再有要返回的装运项目。"
+        }
+      }
+    },
+    "ShipmentConfirmation": {
+      "type": "object",
+      "description": "一个或多个装运确认的列表。",
+      "required": [
+        "sellingParty",
+        "shipFromParty",
+        "shipToParty",
+        "shipmentConfirmationDate",
+        "shipmentConfirmationType",
+        "shipmentIdentifier",
+        "shippedItems"
+      ],
+      "properties": {
+        "shipmentIdentifier": {
+          "type": "string",
+          "description": "唯一的货件ID (在过去365天内未使用)。"
+        },
+        "shipmentConfirmationType": {
+          "type": "string",
+          "description": "指明此发运确认书是初始确认书，还是打算替换已过帐的发运确认书。如果替换现有的装运确认书，请确保提供与先前确认书中相同的装运标识和卖方信息。",
+          "enum": [
+            "Original",
+            "Replace"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Original",
+              "description": "初始发货确认消息。"
+            },
+            {
+              "value": "Replace",
+              "description": "替换原始的发货确认消息。"
+            }
+          ]
+        },
+        "shipmentType": {
+          "type": "string",
+          "description": "装运的类型。",
+          "enum": [
+            "TruckLoad",
+            "LessThanTruckLoad",
+            "SmallParcel"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "TruckLoad",
+              "description": "卡车运输是大量均质货物的移动，通常是填充整个半挂车或联运集装箱所需的量。"
+            },
+            {
+              "value": "LessThanTruckLoad",
+              "description": "运输不会填满整个卡车。"
+            },
+            {
+              "value": "SmallParcel",
+              "description": "小包裹装运在70镑以下，并以您自己的包装或承运人提供的盒子运送。"
+            }
+          ]
+        },
+        "shipmentStructure": {
+          "type": "string",
+          "description": "装运层次结构。",
+          "enum": [
+            "PalletizedAssortmentCase",
+            "LooseAssortmentCase",
+            "PalletOfItems",
+            "PalletizedStandardCase",
+            "LooseStandardCase",
+            "MasterPallet",
+            "MasterCase"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "PalletizedAssortmentCase",
+              "description": "装运-> 订单-> 托盘/Tare -> 纸箱/包装-> 项目"
+            },
+            {
+              "value": "LooseAssortmentCase",
+              "description": "装运-> 订单-> 纸箱/包装-> 项目"
+            },
+            {
+              "value": "PalletOfItems",
+              "description": "装运-> 订单-> 托盘/皮重-> 项目"
+            },
+            {
+              "value": "PalletizedStandardCase",
+              "description": "装运-> 订单-> 托盘/Tare -> 项目-> 纸箱/包装"
+            },
+            {
+              "value": "LooseStandardCase",
+              "description": "装运-> 订单-> 项目-> 纸箱/包装"
+            },
+            {
+              "value": "MasterPallet",
+              "description": "装运-> 托盘/皮-> 订单-> 项目"
+            },
+            {
+              "value": "MasterCase",
+              "description": "装运-> 纸箱/包装-> 订单-> 项目"
+            }
+          ]
+        },
+        "transportationDetails": {
+          "description": "这批货物的运输细节。",
+          "$ref": "#/definitions/TransportationDetailsForShipmentConfirmation"
+        },
+        "amazonReferenceNumber": {
+          "type": "string",
+          "description": "Amazon参考编号是在您提交路由请求时由Amazon为所有Collect/WePay货件生成的唯一标识符。此字段对于托收/WePay发运是必填字段。"
+        },
+        "shipmentConfirmationDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "提交装运确认书的日期。"
+        },
+        "shippedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time of the departure of the shipment from the vendor's location. Vendors are requested to send ASNs within 30 minutes of departure from their warehouse/distribution center or at least 6 hours prior to the appointment time at the buyer destination warehouse, whichever is sooner. Shipped date mentioned in the shipment confirmation should not be in the future."
+        },
+        "estimatedDeliveryDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "估计货物到达买方仓库的日期和时间。它需要是基于船舶从位置到目的地之间的平均运输时间的估计。确切的预约时间将由买方提供，并且在创建装运确认书时可能不知道。"
+        },
+        "sellingParty": {
+          "description": "销售方的名称/地址和税务详细信息。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipFromParty": {
+          "description": "来自一方的船舶的名称/地址和税务详细信息。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipToParty": {
+          "description": "装运货物的目的地仓库的名称/地址。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipmentMeasurements": {
+          "$ref": "#/definitions/ShipmentMeasurements"
+        },
+        "importDetails": {
+          "description": "仅当此装运是直接导入时，才提供这些字段。",
+          "$ref": "#/definitions/ImportDetails"
+        },
+        "shippedItems": {
+          "type": "array",
+          "description": "此装运中的项目及其相关详细信息的列表。如果任何项目详细信息字段在纸箱或托盘级别是通用的，请在相应的纸箱或托盘级别提供它们。",
+          "items": {
+            "$ref": "#/definitions/Item"
+          }
+        },
+        "cartons": {
+          "type": "array",
+          "description": "这批货物的纸箱清单。",
+          "items": {
+            "$ref": "#/definitions/Carton"
+          }
+        },
+        "pallets": {
+          "type": "array",
+          "description": "这批货物的货盘清单。",
+          "items": {
+            "$ref": "#/definitions/Pallet"
+          }
+        }
+      }
+    },
+    "Shipment": {
+      "type": "object",
+      "description": "具有各自详细信息的一个或多个装运的列表。",
+      "required": [
+        "sellingParty",
+        "shipFromParty",
+        "shipToParty",
+        "transactionDate",
+        "transactionType",
+        "vendorShipmentIdentifier"
+      ],
+      "properties": {
+        "vendorShipmentIdentifier": {
+          "type": "string",
+          "description": "供应商创建的唯一运输ID (在过去365天内不应使用)。"
+        },
+        "transactionType": {
+          "type": "string",
+          "description": "指示运输请求的类型，例如 (New、Cancel、Confirm和PackageLabelRequest)。每个transactiontype都有一组唯一的操作，并且要为每个操作填充相应的详细信息。",
+          "enum": [
+            "New",
+            "Cancel"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "New",
+              "description": "初始装运请求。"
+            },
+            {
+              "value": "Cancel",
+              "description": "取消现有的发运请求消息。应仅用于取消发运请求"
+            },
+            {
+              "value": "Confirm",
+              "description": "确认原始传输请求确认消息。"
+            },
+            {
+              "value": "PackageLabelRequest",
+              "description": "标签请求原始传输请求确认消息。"
+            }
+          ]
+        },
+        "buyerReferenceNumber": {
+          "type": "string",
+          "description": "买方参考编号是在您提交运输请求时由买方为所有托收/WePay货件生成的唯一标识符。此字段对于托收/WePay发运是必填字段。"
+        },
+        "transactionDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "提交运输请求的日期。"
+        },
+        "currentShipmentStatus": {
+          "type": "string",
+          "description": "指示当前发运状态。",
+          "enum": [
+            "Created",
+            "TransportationRequested",
+            "CarrierAssigned",
+            "Shipped"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Created",
+              "description": "买方已收到装运请求。"
+            },
+            {
+              "value": "Transportation requested",
+              "description": "买方与承运人确认提货"
+            },
+            {
+              "value": "Carrier assigned",
+              "description": "将装运分配给承运人，以便从供应商仓库取货到买方FC/仓库。"
+            },
+            {
+              "value": "Shipped",
+              "description": "发运至买方仓库。"
+            }
+          ]
+        },
+        "currentshipmentStatusDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "更新上次状态的日期和时间。"
+        },
+        "shipmentStatusDetails": {
+          "type": "array",
+          "description": "指示当前发运状态详细信息的列表，以及从承运人收到上次更新的时间，这在发运详细信息响应中可用。",
+          "items": {
+            "$ref": "#/definitions/ShipmentStatusDetails"
+          }
+        },
+        "shipmentCreateDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "供应商创建的发运请求的日期和时间。"
+        },
+        "shipmentConfirmDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "发货离开供应商所在地的日期和时间。要求供应商在离开其仓库/配送中心后30分钟内或在买方目的地仓库的预约时间前至少6小时内发送asn，以较早者为准。装运确认书中提到的装运日期不应在将来。"
+        },
+        "packageLabelCreateDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "买方为装运创建的包装标签的日期和时间。"
+        },
+        "shipmentFreightTerm": {
+          "type": "string",
+          "description": "指示此运输请求是WePay/Collect还是TheyPay/prepaed。这是一个强制性的信息。",
+          "enum": [
+            "Collect",
+            "Prepaid"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Collect",
+              "description": "买方支付/我们支付运输费用。买方支付装运费用，并提供供应商，并从供应商仓库/地点提货"
+            },
+            {
+              "value": "Prepaid",
+              "description": "供应商支付/他们支付运输费用。供应商支付装运费用，并将货物运送到买方仓库/地点"
+            }
+          ]
+        },
+        "sellingParty": {
+          "description": "销售方的名称/地址和税务详细信息。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipFromParty": {
+          "description": "来自一方的船舶的名称/地址和税务详细信息。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipToParty": {
+          "description": "装运货物的目的地仓库的名称/地址。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "shipmentMeasurements": {
+          "description": "作为此请求的一部分，指示有关纸箱和托盘数量以及总运输重量和体积的装运测量详细信息。这是一个强制性的细节，将有助于有效地确定运输成本，卡车分配和路线确定。",
+          "$ref": "#/definitions/TransportShipmentMeasurements"
+        },
+        "collectFreightPickupDetails": {
+          "description": "指示从供应商仓库运输的最早提货日期。此信息是强制性的，必须填写从买方 (WePay/Collect) 请求运输。",
+          "$ref": "#/definitions/CollectFreightPickupDetails"
+        },
+        "purchaseOrders": {
+          "type": "array",
+          "description": "指示运输请求涉及的采购订单。该组是一个数组，为每个PO创建1并列出其相应的项目。该信息用于有效地决定路线、卡车分配和存储。这是买方从供应商仓库 (WePay/Collect) 执行运输的强制性信息",
+          "items": {
+            "$ref": "#/definitions/PurchaseOrders"
+          }
+        },
+        "importDetails": {
+          "description": "仅当此装运是直接导入时，才提供这些字段。",
+          "$ref": "#/definitions/ImportDetails"
+        },
+        "containers": {
+          "type": "array",
+          "description": "此运输中的物料列表及其相关的内部容器详细信息。如果任何项目详细信息字段在纸箱或托盘级别是通用的，请在相应的纸箱或托盘级别提供它们。",
+          "items": {
+            "$ref": "#/definitions/Containers"
+          }
+        },
+        "transportationDetails": {
+          "description": "运输详细信息此为强制性信息，其中说明交货日期，运输日期和承运人详细信息。",
+          "$ref": "#/definitions/TransportationDetails"
+        }
+      }
+    },
+    "ShipmentMeasurements": {
+      "type": "object",
+      "properties": {
+        "grossShipmentWeight": {
+          "description": "货物的毛重。",
+          "$ref": "#/definitions/Weight"
+        },
+        "shipmentVolume": {
+          "description": "装运的总体积。",
+          "$ref": "#/definitions/Volume"
+        },
+        "cartonCount": {
+          "type": "integer",
+          "description": "货物中存在的纸箱数量。仅为非托盘装运提供装箱计数。"
+        },
+        "palletCount": {
+          "type": "integer",
+          "description": "货件中存在的托盘数量。仅提供托盘装运的货盘数。"
+        }
+      },
+      "description": "装运计量详细信息。"
+    },
+    "ShipmentStatusDetails": {
+      "type": "object",
+      "properties": {
+        "shipmentStatus": {
+          "type": "string",
+          "description": "装运的当前状态是已提货还是已计划。",
+          "enum": [
+            "Created",
+            "TransportationRequested",
+            "CarrierAssigned",
+            "Shipped"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Created",
+              "description": "买方已收到装运请求。"
+            },
+            {
+              "value": "Transportation requested",
+              "description": "买方与承运人确认提货"
+            },
+            {
+              "value": "Carrier assigned",
+              "description": "将装运分配给承运人，以便从供应商仓库取货到买方FC/仓库。"
+            },
+            {
+              "value": "Shipped",
+              "description": "装运到买方仓库。"
+            }
+          ]
+        },
+        "shipmentStatusDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "收到货件的上次状态更新的日期和时间"
+        }
+      },
+      "description": "装运状态详细信息。"
+    },
+    "TransportShipmentMeasurements": {
+      "type": "object",
+      "properties": {
+        "totalCartonCount": {
+          "type": "integer",
+          "description": "货物中存在的纸箱总数。仅为非托盘装运提供装箱计数。"
+        },
+        "totalPalletStackable": {
+          "type": "integer",
+          "description": "货物中存在的可堆叠托盘总数。"
+        },
+        "totalPalletNonStackable": {
+          "type": "integer",
+          "description": "货物中不可堆叠托盘的总数。"
+        },
+        "shipmentWeight": {
+          "description": "货物的总重量。",
+          "$ref": "#/definitions/Weight"
+        },
+        "shipmentVolume": {
+          "description": "装运的总体积。",
+          "$ref": "#/definitions/Volume"
+        }
+      },
+      "description": "装运计量详细信息。"
+    },
+    "CollectFreightPickupDetails": {
+      "type": "object",
+      "properties": {
+        "requestedPickUp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "用于WePay/Collect供应商的买方可以从供应商仓库提取物品的日期。"
+        },
+        "scheduledPickUp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "用于WePay/Collect供应商的买方计划从供应商仓库提货的日期。"
+        },
+        "carrierAssignmentDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "承运人计划由用于WePay/Collect供应商的Byer从供应商仓库提货的日期。"
+        }
+      },
+      "description": "买方从供应商仓库的运输请求提货日期"
+    },
+    "PurchaseOrders": {
+      "type": "object",
+      "properties": {
+        "purchaseOrderNumber": {
+          "type": "string",
+          "description": "此装运中涉及的采购订单编号，列出此装运中涉及的所有PO。"
+        },
+        "purchaseOrderDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "此装运中涉及的采购订单编号，列出此装运中涉及的所有PO。"
+        },
+        "shipWindow": {
+          "type": "string",
+          "description": "这些采购订单的预计装运日期范围。"
+        },
+        "items": {
+          "type": "array",
+          "description": "与此运输中的PO关联的项目及其关联详细信息的列表。",
+          "items": {
+            "$ref": "#/definitions/PurchaseOrderItems"
+          }
+        }
+      },
+      "description": "运输请求提货日期"
+    },
+    "TransportationDetails": {
+      "type": "object",
+      "description": "这批货物的运输细节。",
+      "properties": {
+        "shipMode": {
+          "type": "string",
+          "description": "装运的类型。",
+          "enum": [
+            "TruckLoad",
+            "LessThanTruckLoad",
+            "SmallParcel"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "TruckLoad",
+              "description": "卡车运输是大量均质货物的移动，通常是填充整个半挂车或联运集装箱所需的量。"
+            },
+            {
+              "value": "LessThanTruckLoad",
+              "description": "运输不会填满整个卡车。"
+            },
+            {
+              "value": "SmallParcel",
+              "description": "小包裹运输是在70镑每个包裹和运输与您自己的包装或承运人提供的箱子。"
+            }
+          ]
+        },
+        "transportationMode": {
+          "type": "string",
+          "description": "这批货物的运输方式。",
+          "enum": [
+            "Road",
+            "Air",
+            "Ocean"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Road",
+              "description": "运输方式是公路 (卡车)。"
+            },
+            {
+              "value": "Air",
+              "description": "运输方式是空运 (在飞机上)。"
+            },
+            {
+              "value": "Ocean",
+              "description": "运输方式是海运 (在船上)。"
+            }
+          ]
+        },
+        "shippedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "卖方向买方进行装运的日期"
+        },
+        "estimatedDeliveryDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "卖方向买方交付货物的预计日期"
+        },
+        "shipmentDeliveryDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "卖方向买方交付货物的日期"
+        },
+        "carrierDetails": {
+          "description": "指示承运人的详细信息及其联系信息",
+          "$ref": "#/definitions/CarrierDetails"
+        },
+        "billOfLadingNumber": {
+          "type": "string",
+          "description": "提单 (BOL) 编号是供应商或托运人在创建提单期间分配给每批货物的唯一编号。此编号对于每个货件必须是唯一的，并且不能是日期/时间或单个字符。对于FTL和LTL装运，BOL编号在装运确认消息中是强制性的，并且必须与随装运提供的纸质BOL匹配。代替BOL，也可以在该字段中发送装运的替代参考编号 (如交货单编号)。"
+        }
+      }
+    },
+    "TransportationDetailsForShipmentConfirmation": {
+      "type": "object",
+      "description": "这批货物的运输细节。",
+      "properties": {
+        "carrierScac": {
+          "type": "string",
+          "description": "标识装运承运人的代码。标准运营商字母码 (SCAC) 是用于标识运营商的唯一的两到四字母代码。承运人SCAC代码由NMFTA (国家汽车货运协会) 分配和维护。对于US，CA，MX装运确认，此字段为必填字段。"
+        },
+        "carrierShipmentReferenceNumber": {
+          "type": "string",
+          "description": "该字段也称为PRO编号，是由运营商分配的唯一编号。它用于识别和跟踪外出交货的货物。对于UA、CA、MX发货确认，此字段为必填字段。"
+        },
+        "transportationMode": {
+          "type": "string",
+          "description": "这批货物的运输方式。",
+          "enum": [
+            "Road",
+            "Air",
+            "Ocean"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Road",
+              "description": "运输方式是公路 (卡车)。"
+            },
+            {
+              "value": "Air",
+              "description": "运输方式是空运 (在飞机上)。"
+            },
+            {
+              "value": "Ocean",
+              "description": "运输方式是海运 (在船上)。"
+            }
+          ]
+        },
+        "billOfLadingNumber": {
+          "type": "string",
+          "description": "提单 (BOL) 编号是供应商或托运人在创建提单期间分配给每批货物的唯一编号。此编号对于每个货件必须是唯一的，并且不能是日期/时间或单个字符。对于FTL和LTL装运，BOL编号在装运确认消息中是强制性的，并且必须与随装运提供的纸质BOL匹配。代替BOL，也可以在该字段中发送装运的替代参考编号 (如交货单编号)。"
+        }
+      }
+    },
+    "CarrierDetails": {
+      "type": "object",
+      "description": "指示承运人的详细信息及其联系信息",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "该字段用于表示用于执行装运的承运人。"
+        },
+        "code": {
+          "type": "string",
+          "description": "标识装运承运人的代码。标准运营商字母码 (SCAC) 是用于标识运营商的唯一的两到四字母代码。承运人SCAC代码由NMFTA (国家汽车货运协会) 分配和维护。"
+        },
+        "phone": {
+          "type": "string",
+          "description": "该字段用于表示运营商联系号码。"
+        },
+        "email": {
+          "type": "string",
+          "description": "该字段用于表示运营商电子邮件id。"
+        },
+        "shipmentReferenceNumber": {
+          "type": "string",
+          "description": "该字段也称为PRO编号，是运营商分配的唯一编号。它用于识别和跟踪外出交货的货物。对于US，CA，MX装运确认，此字段为必填字段。"
+        }
+      }
+    },
+    "ImportDetails": {
+      "type": "object",
+      "description": "仅当此装运是直接导入时，才提供这些字段。",
+      "properties": {
+        "methodOfPayment": {
+          "type": "string",
+          "description": "这仅用于导入采购订单。如果收件人请求，此字段将包含付款的发货方式。",
+          "enum": [
+            "PaidByBuyer",
+            "CollectOnDelivery",
+            "DefinedByBuyerAndSeller",
+            "FOBPortOfCall",
+            "PrepaidBySeller",
+            "PaidBySeller"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "PaidByBuyer",
+              "description": "买方支付运费。"
+            },
+            {
+              "value": "CollectOnDelivery",
+              "description": "买方支付运费到付。"
+            },
+            {
+              "value": "DefinedByBuyerAndSeller",
+              "description": "按照买卖双方约定支付的运费。"
+            },
+            {
+              "value": "FOBPortOfCall",
+              "description": "卖方支付运输费用，包括。装载，运输。"
+            },
+            {
+              "value": "PrepaidBySeller",
+              "description": "卖方预付运费。"
+            },
+            {
+              "value": "PaidBySeller",
+              "description": "卖家支付运费。"
+            }
+          ]
+        },
+        "sealNumber": {
+          "type": "string",
+          "description": "集装箱的封条编号。"
+        },
+        "route": {
+          "description": "此装运的路线和停靠站详细信息。",
+          "$ref": "#/definitions/Route"
+        },
+        "importContainers": {
+          "type": "string",
+          "description": "进口采购订单的容器类型和数量。如果装运具有多个集装箱，则可以是逗号分隔的列表。",
+          "maxLength": 64
+        },
+        "billableWeight": {
+          "description": "直接进口货物的计费重量。",
+          "$ref": "#/definitions/Weight"
+        },
+        "estimatedShipByDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "预计装运的日期。这个值不应该在过去，不超过60天的未来。"
+        },
+        "handlingInstructions": {
+          "type": "string",
+          "description": "关于如何处理指定物品/纸箱/托盘的说明的标识。",
+          "enum": [
+            "Oversized",
+            "Fragile",
+            "Food",
+            "HandleWithCare"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Oversized",
+              "description": "重量小于或等于150镑且长度和周长大于130英寸的包装被归类为超大包装。"
+            },
+            {
+              "value": "Fragile",
+              "description": "包含易破碎物品的包裹。"
+            },
+            {
+              "value": "Food",
+              "description": "包含可食用物品的包装。"
+            },
+            {
+              "value": "HandleWithCare",
+              "description": "装有易碎或危险物品的包装。"
+            }
+          ]
+        }
+      }
+    },
+    "Containers": {
+      "type": "object",
+      "description": "此运输中的物料列表及其相关的内部容器详细信息。如果任何项目详细信息字段在纸箱或托盘级别是通用的，请在相应的纸箱或托盘级别提供它们。",
+      "required": [
+        "containerIdentifiers",
+        "containerType"
+      ],
+      "properties": {
+        "containerType": {
+          "type": "string",
+          "description": "容器的类型。",
+          "enum": [
+            "carton",
+            "pallet"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "carton",
+              "description": "纸箱是通常由液体包装板，纸板和有时瓦楞纤维板制成的盒子或容器"
+            },
+            {
+              "value": "pallet",
+              "description": "一种扁平的运输结构，在叉车提升时以稳定的方式支撑货物。"
+            }
+          ]
+        },
+        "containerSequenceNumber": {
+          "type": "string",
+          "description": "一个整数，必须仅针对多箱装运提交，其中一个项目可能包含在单独的包装中。"
+        },
+        "containerIdentifiers": {
+          "type": "array",
+          "description": "纸箱标识符列表。",
+          "items": {
+            "$ref": "#/definitions/ContainerIdentification"
+          }
+        },
+        "trackingNumber": {
+          "type": "string",
+          "description": "用于标识装运的跟踪号。"
+        },
+        "dimensions": {
+          "$ref": "#/definitions/Dimensions"
+        },
+        "weight": {
+          "$ref": "#/definitions/Weight"
+        },
+        "tier": {
+          "type": "integer",
+          "description": "每个托盘的层数。"
+        },
+        "block": {
+          "type": "integer",
+          "description": "托盘上每层的纸箱数量。"
+        },
+        "innerContainersDetails": {
+          "$ref": "#/definitions/InnerContainersDetails"
+        },
+        "packedItems": {
+          "type": "array",
+          "description": "打包物品的列表。",
+          "items": {
+            "$ref": "#/definitions/PackedItems"
+          }
+        }
+      }
+    },
+    "PackedItems": {
+      "type": "object",
+      "properties": {
+        "itemSequenceNumber": {
+          "type": "string",
+          "description": "项目的项目序列号。第一项将是001，第二项是002，依此类推。这个数字是用来作为参考，指这个项目从纸箱或托盘水平。"
+        },
+        "buyerProductIdentifier": {
+          "type": "string",
+          "description": "项目的买方标准标识号 (ASIN)。"
+        },
+        "vendorProductIdentifier": {
+          "type": "string",
+          "description": "供应商选择了项目的产品标识。应与采购订单中发送的相同。"
+        },
+        "packedQuantity": {
+          "description": "此装运中已装运的项目总数量。",
+          "$ref": "#/definitions/ItemQuantity"
+        },
+        "itemDetails": {
+          "$ref": "#/definitions/PackageItemDetails"
+        }
+      },
+      "description": "正在发运的项目的详细信息。"
+    },
+    "Item": {
+      "type": "object",
+      "required": [
+        "itemSequenceNumber",
+        "shippedQuantity"
+      ],
+      "properties": {
+        "itemSequenceNumber": {
+          "type": "string",
+          "description": "项目的项目序列号。第一项将是001，第二项是002，依此类推。这个数字是用来作为参考，指这个项目从纸箱或托盘水平。"
+        },
+        "amazonProductIdentifier": {
+          "type": "string",
+          "description": "项目的买方标准标识号 (ASIN)。"
+        },
+        "vendorProductIdentifier": {
+          "type": "string",
+          "description": "供应商选择了项目的产品标识。应与采购订单中发送的相同。"
+        },
+        "shippedQuantity": {
+          "description": "此装运中已装运的项目总数量。",
+          "$ref": "#/definitions/ItemQuantity"
+        },
+        "itemDetails": {
+          "$ref": "#/definitions/ItemDetails"
+        }
+      },
+      "description": "正在发运的项目的详细信息。"
+    },
+    "PurchaseOrderItems": {
+      "type": "object",
+      "required": [
+        "itemSequenceNumber",
+        "shippedQuantity"
+      ],
+      "properties": {
+        "itemSequenceNumber": {
+          "type": "string",
+          "description": "项目的项目序列号。第一项将是001，第二项是002，依此类推。这个数字是用来作为参考，指这个项目从纸箱或托盘水平。"
+        },
+        "buyerProductIdentifier": {
+          "type": "string",
+          "description": "SKU的Amazon标准标识号 (ASIN)"
+        },
+        "vendorProductIdentifier": {
+          "type": "string",
+          "description": "供应商选择了项目的产品标识。应与采购订单中发送的相同。"
+        },
+        "shippedQuantity": {
+          "description": "此装运中已装运的项目总数量。",
+          "$ref": "#/definitions/ItemQuantity"
+        },
+        "maximumRetailPrice": {
+          "$ref": "#/definitions/Money"
+        }
+      },
+      "description": "正在发运的项目的详细信息。"
+    },
+    "Carton": {
+      "type": "object",
+      "required": [
+        "cartonSequenceNumber",
+        "items"
+      ],
+      "properties": {
+        "cartonIdentifiers": {
+          "type": "array",
+          "description": "纸箱标识符列表。",
+          "items": {
+            "$ref": "#/definitions/ContainerIdentification"
+          }
+        },
+        "cartonSequenceNumber": {
+          "type": "string",
+          "description": "纸箱的纸箱序列号。第一个纸箱将是001，第二个002，依此类推。这个数字是用来作为参考从托盘水平这个纸箱。"
+        },
+        "dimensions": {
+          "$ref": "#/definitions/Dimensions"
+        },
+        "weight": {
+          "$ref": "#/definitions/Weight"
+        },
+        "trackingNumber": {
+          "type": "string",
+          "description": "这需要为小包装运中的每个纸箱提供。"
+        },
+        "items": {
+          "type": "array",
+          "description": "容器项详细信息的列表。",
+          "items": {
+            "$ref": "#/definitions/ContainerItem"
+          }
+        }
+      },
+      "description": "正在装运的纸箱/包装的详细信息。"
+    },
+    "InnerContainersDetails": {
+      "type": "object",
+      "properties": {
+        "containerCount": {
+          "type": "integer",
+          "description": "作为装运一部分的总集装箱"
+        },
+        "containerSequenceNumbers": {
+          "type": "array",
+          "description": "此装运中涉及的集装箱序列号。",
+          "items": {
+            "$ref": "#/definitions/ContainerSequenceNumbers"
+          }
+        }
+      },
+      "description": "innerContainersDetails的详细信息。"
+    },
+    "ContainerSequenceNumbers": {
+      "type": "object",
+      "description": "此装运中涉及的集装箱序列号。",
+      "properties": {
+        "containerSequenceNumber": {
+          "type": "string",
+          "description": "装运的集装箱清单"
+        }
+      }
+    },
+    "Pallet": {
+      "type": "object",
+      "required": [
+        "palletIdentifiers"
+      ],
+      "properties": {
+        "palletIdentifiers": {
+          "type": "array",
+          "description": "托盘标识符列表。",
+          "items": {
+            "$ref": "#/definitions/ContainerIdentification"
+          }
+        },
+        "tier": {
+          "type": "integer",
+          "description": "每个托盘的层数。仅适用于集装箱式托盘。"
+        },
+        "block": {
+          "type": "integer",
+          "description": "托盘上每层的纸箱数量。仅适用于集装箱式托盘。"
+        },
+        "dimensions": {
+          "$ref": "#/definitions/Dimensions"
+        },
+        "weight": {
+          "$ref": "#/definitions/Weight"
+        },
+        "cartonReferenceDetails": {
+          "description": "纸箱参考细节。",
+          "$ref": "#/definitions/CartonReferenceDetails"
+        },
+        "items": {
+          "type": "array",
+          "description": "容器项详细信息的列表。",
+          "items": {
+            "$ref": "#/definitions/ContainerItem"
+          }
+        }
+      },
+      "description": "装运的托盘/车箱的详细信息。"
+    },
+    "ItemDetails": {
+      "type": "object",
+      "properties": {
+        "purchaseOrderNumber": {
+          "type": "string",
+          "description": "正在确认的装运的采购订单编号。如果此装运中的项目属于多个采购订单编号，这些采购订单编号在装运中的特定纸箱或托盘中，则在相应的纸箱或托盘级别提供采购订单编号。格式说明: 8字符字母数字代码。"
+        },
+        "lotNumber": {
+          "type": "string",
+          "description": "批号或批号将物料与制造商认为与应用元素字符串的贸易物料的可追溯性相关的信息相关联。数据可以指交易项目本身或包含的项目。对于所有易腐物品，此字段为必填字段。"
+        },
+        "expiry": {
+          "description": "到期是指收集某些项目所需的日期。这些可以是expiryDate或mfgDate和expiryAfterDuration。这些对于易腐物品是强制性的。",
+          "$ref": "#/definitions/Expiry"
+        },
+        "maximumRetailPrice": {
+          "description": "正在发货的商品的最高零售价。",
+          "$ref": "#/definitions/Money"
+        },
+        "handlingCode": {
+          "type": "string",
+          "description": "关于如何处理指定物品/纸箱/托盘的说明的标识。",
+          "enum": [
+            "Oversized",
+            "Fragile",
+            "Food",
+            "HandleWithCare"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Oversized",
+              "description": "重量小于或等于150镑且长度和周长大于130英寸的包装被归类为超大包装。"
+            },
+            {
+              "value": "Fragile",
+              "description": "包含易破碎物品的包裹。"
+            },
+            {
+              "value": "Food",
+              "description": "包含可食用物品的包装。"
+            },
+            {
+              "value": "HandleWithCare",
+              "description": "装有易碎或危险物品的包装。"
+            }
+          ]
+        }
+      },
+      "description": "在项目或纸箱或托盘级别为装运中的每个项目提供项目详细信息，以适当的为准。"
+    },
+    "PackageItemDetails": {
+      "type": "object",
+      "properties": {
+        "purchaseOrderNumber": {
+          "type": "string",
+          "description": "正在确认的装运的采购订单编号。如果此装运中的项目属于多个采购订单编号，这些采购订单编号在装运中的特定纸箱或托盘中，则在相应的纸箱或托盘级别提供采购订单编号。格式说明: 8字符字母数字代码。"
+        },
+        "lotNumber": {
+          "type": "string",
+          "description": "批号或批号将物料与制造商认为与应用元素字符串的贸易物料的可追溯性相关的信息相关联。数据可以指交易项目本身或包含的项目。对于所有易腐物品，此字段为必填字段。"
+        },
+        "expiry": {
+          "description": "易腐物品必须使用expiryDate或mfgDate和expiryAfterDuration。",
+          "$ref": "#/definitions/Expiry"
+        }
+      },
+      "description": "在项目或纸箱或托盘级别为装运中的每个项目提供项目详细信息，以适当的为准。"
+    },
+    "ContainerIdentification": {
+      "type": "object",
+      "description": "纸箱标识符列表。",
+      "required": [
+        "containerIdentificationNumber",
+        "containerIdentificationType"
+      ],
+      "properties": {
+        "containerIdentificationType": {
+          "type": "string",
+          "description": "容器标识类型。",
+          "enum": [
+            "SSCC",
+            "AMZNCC",
+            "GTIN",
+            "BPS",
+            "CID"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "SSCC",
+              "description": "2位应用程序标识符 (00)，后跟唯一的18位串行装运容器代码 (SSCC)，用于定义托盘/纸箱并识别其内容。"
+            },
+            {
+              "value": "AMZNCC",
+              "description": "Amazon容器代码-由Amazon为小型供应商生成并与托盘/纸箱标签关联的SSCC的替代品。"
+            },
+            {
+              "value": "GTIN",
+              "description": "全球贸易识别号 (标准GS1条形码和产品识别系统的一部分)。"
+            },
+            {
+              "value": "BPS",
+              "description": "条形码装箱单。"
+            },
+            {
+              "value": "CID",
+              "description": "进口货物的集装箱标识符。"
+            }
+          ]
+        },
+        "containerIdentificationNumber": {
+          "type": "string",
+          "description": "符合容器标识类型定义的容器标识号。"
+        }
+      }
+    },
+    "ContainerItem": {
+      "type": "object",
+      "required": [
+        "itemReference",
+        "shippedQuantity"
+      ],
+      "properties": {
+        "itemReference": {
+          "type": "string",
+          "description": "项目的参考编号。请在 “items” 段中提供itemSequenceNumber，以在此处引用该项目的详细信息。"
+        },
+        "shippedQuantity": {
+          "description": "此纸箱/托盘中装运的总项目数量。",
+          "$ref": "#/definitions/ItemQuantity"
+        },
+        "itemDetails": {
+          "$ref": "#/definitions/ItemDetails"
+        }
+      },
+      "description": "该项目的纸箱/托盘级别详细信息。"
+    },
+    "CartonReferenceDetails": {
+      "type": "object",
+      "description": "纸箱参考细节。",
+      "required": [
+        "cartonReferenceNumbers"
+      ],
+      "properties": {
+        "cartonCount": {
+          "type": "integer",
+          "description": "托盘级纸箱计数是强制性的单一项目托盘和可选的混合项目托盘。"
+        },
+        "cartonReferenceNumbers": {
+          "type": "array",
+          "description": "纸箱的参考编号阵列是此托盘/货物的一部分。请提供 “cartonsegment” 中的cartonSequenceNumber，以在此处引用该纸箱的详细信息。",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "PartyIdentification": {
+      "type": "object",
+      "description": "当事人的姓名/地址和税务细节。",
+      "required": [
+        "partyId"
+      ],
+      "properties": {
+        "address": {
+          "description": "通过地址识别当事人。",
+          "$ref": "#/definitions/Address"
+        },
+        "partyId": {
+          "type": "string",
+          "description": "为该方指定的标识。"
+        },
+        "taxRegistrationDetails": {
+          "type": "array",
+          "description": "实体的税务登记详细信息。",
+          "items": {
+            "$ref": "#/definitions/TaxRegistrationDetails"
+          }
+        }
+      }
+    },
+    "TaxRegistrationDetails": {
+      "type": "object",
+      "required": [
+        "taxRegistrationNumber",
+        "taxRegistrationType"
+      ],
+      "properties": {
+        "taxRegistrationType": {
+          "type": "string",
+          "description": "实体的税务登记类型。",
+          "enum": [
+            "VAT",
+            "GST"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "VAT",
+              "description": "增值税。"
+            },
+            {
+              "value": "GST",
+              "description": "商品和服务税。"
+            }
+          ]
+        },
+        "taxRegistrationNumber": {
+          "type": "string",
+          "description": "实体的税务登记编号。例如，VAT ID。"
+        }
+      },
+      "description": "实体的税务登记详细信息。"
+    },
+    "Address": {
+      "type": "object",
+      "required": [
+        "addressLine1",
+        "countryCode",
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "该地址的个人、企业或机构的名称。"
+        },
+        "addressLine1": {
+          "type": "string",
+          "description": "地址的第一行。"
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "其他街道地址信息 (如果需要)。"
+        },
+        "addressLine3": {
+          "type": "string",
+          "description": "其他街道地址信息 (如果需要)。"
+        },
+        "city": {
+          "type": "string",
+          "description": "个人、企业或机构所在的城市。"
+        },
+        "county": {
+          "type": "string",
+          "description": "个人、企业或机构所在的县。"
+        },
+        "district": {
+          "type": "string",
+          "description": "个人、企业或机构所在的地区。"
+        },
+        "stateOrRegion": {
+          "type": "string",
+          "description": "个人、企业或机构所在的州或地区。"
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "该地址的邮政编码。它包含一系列字母或数字或两者，有时包括空格或标点符号。"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2格式的两位数国家代码。"
+        },
+        "phone": {
+          "type": "string",
+          "description": "位于该地址的个人、企业或机构的电话号码。"
+        }
+      },
+      "description": "党的地址。"
+    },
+    "Route": {
+      "type": "object",
+      "required": [
+        "stops"
+      ],
+      "properties": {
+        "stops": {
+          "type": "array",
+          "description": "运输合同或运营计划中规定的运输货物的港口或地点。",
+          "items": {
+            "$ref": "#/definitions/Stop"
+          }
+        }
+      },
+      "description": "这仅用于直接进口装运确认。"
+    },
+    "Stop": {
+      "type": "object",
+      "required": [
+        "functionCode"
+      ],
+      "properties": {
+        "functionCode": {
+          "type": "string",
+          "description": "提供函数代码。",
+          "enum": [
+            "PortOfDischarge",
+            "FreightPayableAt",
+            "PortOfLoading"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "PortOfDischarge",
+              "description": "卸货港是船舶排放或卸载部分或全部货物的地方。"
+            },
+            {
+              "value": "FreightPayableAt",
+              "description": "支付运费的地点。"
+            },
+            {
+              "value": "PortOfLoading",
+              "description": "货物装船的港口。"
+            }
+          ]
+        },
+        "locationIdentification": {
+          "$ref": "#/definitions/Location"
+        },
+        "arrivalTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "货物到达的日期和时间。"
+        },
+        "departureTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "货物离开的日期和时间。"
+        }
+      },
+      "description": "与货物移动有关的合同或运营港口或点。"
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "位置标识的类型。"
+        },
+        "locationCode": {
+          "type": "string",
+          "description": "位置代码。"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "两位数的国家代码。ISO 3166-1 alpha-2格式。"
+        }
+      },
+      "description": "位置标识符。"
+    },
+    "Dimensions": {
+      "type": "object",
+      "required": [
+        "height",
+        "length",
+        "unitOfMeasure",
+        "width"
+      ],
+      "properties": {
+        "length": {
+          "description": "容器的长度。",
+          "$ref": "#/definitions/Decimal"
+        },
+        "width": {
+          "description": "容器的宽度。",
+          "$ref": "#/definitions/Decimal"
+        },
+        "height": {
+          "description": "容器的高度。",
+          "$ref": "#/definitions/Decimal"
+        },
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "尺寸的度量单位。",
+          "enum": [
+            "In",
+            "Ft",
+            "Meter",
+            "Yard"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "In",
+              "description": "英寸"
+            },
+            {
+              "value": "Ft",
+              "description": "脚"
+            },
+            {
+              "value": "Meter",
+              "description": "米"
+            },
+            {
+              "value": "Yard",
+              "description": "码"
+            }
+          ]
+        }
+      },
+      "description": "容器的物理尺寸测量。"
+    },
+    "Volume": {
+      "type": "object",
+      "required": [
+        "unitOfMeasure",
+        "value"
+      ],
+      "properties": {
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "测量单位。",
+          "enum": [
+            "CuFt",
+            "CuIn",
+            "CuM",
+            "CuY"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "CuFt",
+              "description": "立方英尺。"
+            },
+            {
+              "value": "CuIn",
+              "description": "立方英寸。"
+            },
+            {
+              "value": "CuM",
+              "description": "立方米。"
+            },
+            {
+              "value": "CuY",
+              "description": "立方码。"
+            }
+          ]
+        },
+        "value": {
+          "description": "测量值。",
+          "$ref": "#/definitions/Decimal"
+        }
+      },
+      "description": "装运的体积。"
+    },
+    "Weight": {
+      "type": "object",
+      "required": [
+        "unitOfMeasure",
+        "value"
+      ],
+      "properties": {
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "测量单位。",
+          "enum": [
+            "G",
+            "Kg",
+            "Oz",
+            "Lb"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "G",
+              "description": "克"
+            },
+            {
+              "value": "Kg",
+              "description": "公斤"
+            },
+            {
+              "value": "Oz",
+              "description": "盎司"
+            },
+            {
+              "value": "Lb",
+              "description": "英镑"
+            }
+          ]
+        },
+        "value": {
+          "description": "测量值。",
+          "$ref": "#/definitions/Decimal"
+        }
+      },
+      "description": "货物的重量。"
+    },
+    "Money": {
+      "type": "object",
+      "required": [
+        "amount",
+        "currencyCode"
+      ],
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "ISO 4217格式的三位数货币代码。"
+        },
+        "amount": {
+          "$ref": "#/definitions/Decimal"
+        }
+      },
+      "description": "货币的数量，包括货币形式的单位。"
+    },
+    "Decimal": {
+      "type": "string",
+      "description": "无精度损失的十进制数。当精度损失不可接受时很有用，就像货币一样。遵循RFC7159的数字表示。<br>** 模式 **: '^-？(0 |([1-9]\\ d * ))(\\.\\ d )？( [eE][ -]？\\ d )？$'。"
+    },
+    "ItemQuantity": {
+      "type": "object",
+      "required": [
+        "amount",
+        "unitOfMeasure"
+      ],
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "description": "在发运级别为特定物料发运的单位数量。如果物品仅存在于货物中的某些纸箱或托盘中，请在适当的纸箱或托盘级别提供。"
+        },
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "装运数量的度量单位。",
+          "enum": [
+            "Cases",
+            "Eaches"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Cases",
+              "description": "将单个物品包装到箱子中。"
+            },
+            {
+              "value": "Eaches",
+              "description": "个别项目。"
+            }
+          ]
+        },
+        "unitSize": {
+          "type": "integer",
+          "description": "案例大小，在我们订购使用案例的情况下。否则，1。"
+        },
+        "totalWeight": {
+          "$ref": "#/definitions/TotalWeight"
+        }
+      },
+      "description": "物料数量明细。"
+    },
+    "TotalWeight": {
+      "type": "object",
+      "required": [
+        "amount",
+        "unitOfMeasure"
+      ],
+      "properties": {
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "此字段表示按案例订购并支持按重量定价的项目的重量单位。",
+          "enum": [
+            "POUNDS",
+            "OUNCES",
+            "GRAMS",
+            "KILOGRAMS"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "POUNDS",
+              "description": "以磅为单位的重量。"
+            },
+            {
+              "value": "OUNCES",
+              "description": "重量 (盎司)。"
+            },
+            {
+              "value": "GRAMS",
+              "description": "重量 (克)。"
+            },
+            {
+              "value": "KILOGRAMS",
+              "description": "重量 (千克)。"
+            }
+          ]
+        },
+        "amount": {
+          "$ref": "#/definitions/Decimal"
+        }
+      },
+      "description": "在装运级别按重量销售的物品的装运单位数量。"
+    },
+    "Expiry": {
+      "type": "object",
+      "description": "到期是指收集某些项目所需的日期。这些可以是expiryDate或mfgDate和expiryAfterDuration。这些对于易腐物品是强制性的。",
+      "properties": {
+        "manufacturerDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "生产、包装或组装日期由制造商确定。其含义是根据贸易项目上下文确定的。"
+        },
+        "expiryDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "决定产品消费或使用限制的日期。其含义是根据贸易项目上下文确定的。"
+        },
+        "expiryAfterDuration": {
+          "description": "生产日期后的持续时间，在此期间产品可供消费。",
+          "$ref": "#/definitions/Duration"
+        }
+      }
+    },
+    "Duration": {
+      "type": "object",
+      "description": "生产日期后的持续时间，在此期间产品可供消费。",
+      "required": [
+        "durationUnit",
+        "durationValue"
+      ],
+      "properties": {
+        "durationUnit": {
+          "type": "string",
+          "description": "持续时间的单位。",
+          "enum": [
+            "Days",
+            "Months"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Days",
+              "description": "天数"
+            },
+            {
+              "value": "Months",
+              "description": "月"
+            }
+          ]
+        },
+        "durationValue": {
+          "type": "integer",
+          "description": "以durationUnit表示的持续时间值。"
+        }
+      }
+    },
+    "SubmitShipmentConfirmationsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "SubmitShipmentConfirmations操作的响应负载。",
+          "$ref": "#/definitions/TransactionReference"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "SubmitShipmentConfirmations操作的响应架构。"
+    },
+    "TransactionReference": {
+      "type": "object",
+      "description": "SubmitShipmentConfirmations操作的响应负载。",
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "description": "由买方分配的用于标识此交易的GUID。此值可与事务状态API一起使用，以返回此事务的状态。"
+        }
+      }
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    }
+  }
+}

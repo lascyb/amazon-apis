@@ -1,0 +1,5300 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "用于出站履行的销售合作伙伴API允许您创建应用程序，帮助卖家使用亚马逊履行网络中的库存履行多渠道履行订单。您可以获取有关潜在和现有履行订单的信息。",
+    "version": "2020-07-01",
+    "title": "Selling Partner APIs for Fulfillment Outbound",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/fba/outbound/2020-07-01/fulfillmentOrders/preview": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "post": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "根据您指定的发运标准返回履行订单预览列表。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getFulfillmentPreview",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewRequest"
+            },
+            "description": "Getfillmentpreviewrequest参数"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "examples": {
+              "payload": {
+                "fulfillmentPreviews": [
+                  {
+                    "shippingSpeedCategory": "Standard",
+                    "isFulfillable": true,
+                    "estimatedShippingWeight": {
+                      "unit": "POUNDS",
+                      "value": "22"
+                    },
+                    "estimatedFees": [
+                      {
+                        "name": "FBAPerUnitFulfillmentFee",
+                        "amount": {
+                          "currencyCode": "USD",
+                          "value": "19.71"
+                        }
+                      }
+                    ],
+                    "fulfillmentPreviewShipments": [
+                      {
+                        "earliestShipDate": "2020-02-11T18:16:16Z",
+                        "latestShipDate": "2020-02-11T18:16:16Z",
+                        "earliestArrivalDate": "2020-02-17T18:16:16Z",
+                        "latestArrivalDate": "2020-02-17T18:16:16Z",
+                        "fulfillmentPreviewItems": [
+                          {
+                            "sellerSku": "PSMM-TEST-SKU-Jan-21_19_39_23-0788",
+                            "quantity": 1,
+                            "sellerFulfillmentOrderItemId": "OrderItemID2",
+                            "estimatedShippingWeight": {
+                              "unit": "POUNDS",
+                              "value": "20"
+                            },
+                            "shippingWeightCalculationMethod": "Package"
+                          }
+                        ]
+                      }
+                    ],
+                    "unfulfillablePreviewItems": [],
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "featureConstraints": [
+                      {
+                        "featureName": "BLANK_BOX",
+                        "featureFulfillmentPolicy": "NotRequired"
+                      },
+                      {
+                        "featureName": "BLOCK_AMZL",
+                        "featureFulfillmentPolicy": "Required"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/deliveryOffers": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "post": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "根据您指定的条件，返回包括估计交货日期和优惠到期日的交货选项。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "deliveryOffers",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetDeliveryOffersRequest"
+            },
+            "description": "GetDeliveryOffersRequest参数"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetDeliveryOffersResponse"
+            },
+            "examples": {
+              "payload": {
+                "deliveryOffers": [
+                  {
+                    "expiresAt": "2023-10-11T18:00:00Z",
+                    "dateRange": {
+                      "earliest": "2023-10-13T10:00:00Z",
+                      "latest": "2023-10-14T16:00:00Z"
+                    },
+                    "policy": {
+                      "messaging": {
+                        "text": "Get it as soon as Wed, Aug 23",
+                        "locale": "en_US"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetDeliveryOffersResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetDeliveryOffersResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetDeliveryOffersResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetDeliveryOffersResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetDeliveryOffersResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetDeliveryOffersResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetDeliveryOffersResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/fulfillmentOrders": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "get": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "返回在指定日期-时间之后 (或在指定日期-时间) 或由下一个令牌参数指示的履行订单的列表。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)",
+        "operationId": "listAllFulfillmentOrders",
+        "parameters": [
+          {
+            "name": "queryStartDate",
+            "in": "query",
+            "description": "用于选择在指定时间之后 (或在指定时间) 最后更新的履行订单的日期。更新定义为履行订单状态的任何更改，包括创建新的履行订单。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "nextToken",
+            "in": "query",
+            "description": "在对上一个请求的响应中返回的字符串令牌。",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ListAllFulfillmentOrdersResponse"
+            },
+            "examples": {
+              "payload": {
+                "fulfillmentOrders": [
+                  {
+                    "sellerFulfillmentOrderId": "902-6018020-0202003",
+                    "displayableOrderId": "mws-test-query-20100713023203751",
+                    "displayableOrderDate": "2020-01-09T19:46:45Z",
+                    "displayableOrderComment": "TestOrder",
+                    "shippingSpeedCategory": "Standard",
+                    "destinationAddress": {
+                      "name": "Amazon",
+                      "addressLine1": "1234 Amazon Way",
+                      "addressLine2": "Suite 123",
+                      "addressLine3": "Lane1",
+                      "city": "Troy",
+                      "stateOrRegion": "MI",
+                      "countryCode": "US",
+                      "postalCode": "48084"
+                    },
+                    "fulfillmentPolicy": "FillOrKill",
+                    "receivedDate": "2020-01-21T21:07:13Z",
+                    "fulfillmentOrderStatus": "RECEIVED",
+                    "statusUpdatedDate": "2020-01-21T21:07:30Z",
+                    "featureConstraints": [
+                      {
+                        "featureName": "BLANK_BOX",
+                        "featureFulfillmentPolicy": "Required"
+                      },
+                      {
+                        "featureName": "BLOCK_AMZL",
+                        "featureFulfillmentPolicy": "Required"
+                      }
+                    ]
+                  },
+                  {
+                    "sellerFulfillmentOrderId": "601-2020200-12345678",
+                    "displayableOrderId": "TestOrder-FBAOutbound",
+                    "displayableOrderDate": "2020-01-09T19:46:45Z",
+                    "displayableOrderComment": "TestOrder",
+                    "shippingSpeedCategory": "Standard",
+                    "destinationAddress": {
+                      "name": "Amazon",
+                      "addressLine1": "1234 Amazon Way",
+                      "addressLine2": "Suite 123",
+                      "addressLine3": "Lane1",
+                      "city": "Troy",
+                      "stateOrRegion": "MI",
+                      "countryCode": "US",
+                      "postalCode": "48084"
+                    },
+                    "fulfillmentPolicy": "FillOrKill",
+                    "receivedDate": "2020-01-23T19:56:41Z",
+                    "fulfillmentOrderStatus": "COMPLETE",
+                    "statusUpdatedDate": "2020-01-24T15:28:27Z",
+                    "featureConstraints": null
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ListAllFulfillmentOrdersResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ListAllFulfillmentOrdersResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ListAllFulfillmentOrdersResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ListAllFulfillmentOrdersResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ListAllFulfillmentOrdersResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ListAllFulfillmentOrdersResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ListAllFulfillmentOrdersResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "请求亚马逊将商品从亚马逊履行网络中的卖家库存运送到目标地址。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)",
+        "operationId": "createFulfillmentOrder",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentOrderRequest"
+            },
+            "description": "Createfillmentorderrequest参数"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/tracking": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "get": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "返回多渠道履行订单的出站发运中包裹的交货跟踪信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getPackageTrackingDetails",
+        "parameters": [
+          {
+            "name": "packageNumber",
+            "in": "query",
+            "description": "“Getculfillmentorder'” 操作返回的未加密的包标识符。",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetPackageTrackingDetailsResponse"
+            },
+            "examples": {
+              "payload": {
+                "packageNumber": 212794778,
+                "trackingNumber": "1Z50V7420354708051",
+                "customerTrackingLink": "https%3A%2F%2Fwww.swiship.com%2Ftrack%3Fid%3D1Z50V7420354708051%0A",
+                "carrierCode": "UPS",
+                "shipToAddress": {
+                  "name": "Amazon",
+                  "addressLine1": "1234 Amazon Way",
+                  "addressLine2": "Suite 123",
+                  "addressLine3": "Lane1",
+                  "city": "Troy",
+                  "stateOrRegion": "MI",
+                  "countryCode": "US",
+                  "postalCode": "48084"
+                },
+                "currentStatus": "DELIVERED",
+                "currentStatusDescription": "Delivered to the destination address",
+                "additionalLocationInfo": "AS_INSTRUCTED",
+                "trackingEvents": [
+                  {
+                    "eventDate": "2020-01-22T00:15:55Z",
+                    "eventAddress": {
+                      "city": "Troy",
+                      "state": "MI",
+                      "country": "US"
+                    },
+                    "eventCode": "EVENT_301",
+                    "eventDescription": "Delivered."
+                  },
+                  {
+                    "eventDate": "2019-10-30T23:33:28Z",
+                    "eventAddress": {
+                      "city": "Phoenix",
+                      "state": "AZ",
+                      "country": "US"
+                    },
+                    "eventCode": "EVENT_206",
+                    "eventDescription": "In transit to pickup location"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetPackageTrackingDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetPackageTrackingDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetPackageTrackingDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetPackageTrackingDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetPackageTrackingDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetPackageTrackingDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetPackageTrackingDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/returnReasonCodes": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "get": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "返回给定市场中卖家SKU的退货原因代码列表。此操作的参数可能包含需要URL编码的特殊字符。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "listReturnReasonCodes",
+        "parameters": [
+          {
+            "name": "sellerSku",
+            "in": "query",
+            "description": "需要退货原因代码的卖方SKU。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "卖家想要退货原因代码的市场。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sellerFulfillmentOrderId",
+            "in": "query",
+            "description": "创建履行订单时由卖方分配给物料的标识符。该服务使用此值来确定卖家想要退货原因代码的市场。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "“Reasoncodedetails” 响应对象的 “translateddescription” 属性应转换成的语言。",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ListReturnReasonCodesResponse"
+            },
+            "examples": {
+              "payload": {
+                "reasonCodeDetails": [
+                  {
+                    "returnReasonCode": "CR-UNWANTED_ITEM",
+                    "description": "不再需要/想要"
+                  },
+                  {
+                    "returnReasonCode": "AMZ-PG-BAD-DESC",
+                    "description": "与网站描述不同"
+                  },
+                  {
+                    "returnReasonCode": "CR-DEFECTIVE",
+                    "description": "有缺陷/不能正常工作"
+                  },
+                  {
+                    "returnReasonCode": "CR-ORDERED_WRONG_ITEM",
+                    "description": "意外订单"
+                  },
+                  {
+                    "returnReasonCode": "CR-FOUND_BETTER_PRICE",
+                    "description": "提供更好的价格"
+                  },
+                  {
+                    "returnReasonCode": "CR-DAMAGED_BY_FC",
+                    "description": "由于包装不当而损坏"
+                  },
+                  {
+                    "returnReasonCode": "CR-MISSED_ESTIMATED_DELIVERY",
+                    "description": "错过预计交货日期"
+                  },
+                  {
+                    "returnReasonCode": "CR-MISSING_PARTS",
+                    "description": "缺少零件或附件"
+                  },
+                  {
+                    "returnReasonCode": "CR-DAMAGED_BY_CARRIER",
+                    "description": "运输过程中损坏"
+                  },
+                  {
+                    "returnReasonCode": "CR-SWITCHEROO",
+                    "description": "与订购的不同"
+                  },
+                  {
+                    "returnReasonCode": "CR-EXTRA_ITEM",
+                    "description": "到了除了点了什么"
+                  },
+                  {
+                    "returnReasonCode": "CR-UNAUTHORIZED_PURCHASE",
+                    "description": "未经授权的购买"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ListReturnReasonCodesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ListReturnReasonCodesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ListReturnReasonCodesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ListReturnReasonCodesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ListReturnReasonCodesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ListReturnReasonCodesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ListReturnReasonCodesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/fulfillmentOrders/{sellerFulfillmentOrderId}/return": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "put": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "创建一个完成退货。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createFulfillmentReturn",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentReturnRequest"
+            },
+            "description": "Createfillmentreturnrequest参数"
+          },
+          {
+            "name": "sellerFulfillmentOrderId",
+            "in": "path",
+            "description": "在创建订单时由卖方分配给订单的标识符。卖方根据买方的退货要求，使用自己的记录找到正确的 'sellerfillmentorderid' 值。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentReturnResponse"
+            },
+            "examples": {
+              "payload": {
+                "returnItems": [
+                  {
+                    "sellerReturnItemId": "testReturn11",
+                    "sellerFulfillmentOrderItemId": "OrderItemID2",
+                    "amazonShipmentId": "D4yZjWZVN",
+                    "returnComment": "TestReturn",
+                    "amazonReturnReasonCode": "UNKNOWN_OTHER_REASON",
+                    "status": "New",
+                    "statusChangedDate": "2020-02-07T04:14:38Z",
+                    "returnAuthorizationId": "RMA3JTIPBJM42UU6"
+                  }
+                ],
+                "invalidReturnItems": [],
+                "returnAuthorizations": [
+                  {
+                    "returnAuthorizationId": "RMA3JTIPBJM42UU6",
+                    "fulfillmentCenterId": "TUS1",
+                    "returnToAddress": {
+                      "name": "Returns Department",
+                      "addressLine1": "5333 W. Lower Buckeye Road",
+                      "districtOrCounty": "US",
+                      "city": "Phoenix",
+                      "stateOrRegion": "AZ",
+                      "countryCode": "US",
+                      "postalCode": "85043"
+                    },
+                    "amazonRmaId": "D50WttPHRRMA",
+                    "rmaPageURL": "https://www.amazon.com/gp/orc/rml/D50WttPHRRMA"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentReturnResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentReturnResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentReturnResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentReturnResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentReturnResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentReturnResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CreateFulfillmentReturnResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/fulfillmentOrders/{sellerFulfillmentOrderId}": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "get": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "返回由指定的订单标识符指示的履行订单。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getFulfillmentOrder",
+        "parameters": [
+          {
+            "name": "sellerFulfillmentOrderId",
+            "in": "path",
+            "description": "创建履行订单时由卖方分配给物料的标识符。",
+            "required": true,
+            "type": "string",
+            "maxLength": 40
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentOrderResponse"
+            },
+            "examples": {
+              "payload": {
+                "fulfillmentOrder": {
+                  "sellerFulfillmentOrderId": "FBATestOrder-1",
+                  "marketplaceId": "ATVPDKIKX0DER",
+                  "displayableOrderId": "TestOrder-FBAOutbound",
+                  "displayableOrderDate": "2020-01-09T19:46:45Z",
+                  "displayableOrderComment": "TestOrder",
+                  "shippingSpeedCategory": "Standard",
+                  "destinationAddress": {
+                    "name": "Amazon",
+                    "addressLine1": "1234 Amazon Way",
+                    "addressLine2": "Suite 123",
+                    "addressLine3": "Lane1",
+                    "city": "Troy",
+                    "stateOrRegion": "MI",
+                    "countryCode": "US",
+                    "postalCode": "48084"
+                  },
+                  "fulfillmentAction": "Ship",
+                  "fulfillmentPolicy": "FillOrKill",
+                  "receivedDate": "2020-02-07T01:23:30Z",
+                  "fulfillmentOrderStatus": "PROCESSING",
+                  "statusUpdatedDate": "2020-02-07T02:33:31Z",
+                  "notificationEmails": [
+                    "test2@amazon.com",
+                    "test1@amazon.com"
+                  ]
+                },
+                "fulfillmentOrderItems": [
+                  {
+                    "sellerSku": "PSMM-TEST-SKU-Jan-21_19_59_44-0738",
+                    "sellerFulfillmentOrderItemId": "OrderItemID2",
+                    "quantity": 1,
+                    "fulfillmentNetworkSku": "B07CGHKWZP",
+                    "orderItemDisposition": "Sellable",
+                    "cancelledQuantity": 0,
+                    "unfulfillableQuantity": 0,
+                    "estimatedShipDate": "2020-02-08T01:23:31Z",
+                    "estimatedArrivalDate": "2020-02-15T01:23:31Z",
+                    "perUnitDeclaredValue": {
+                      "currencyCode": "USD",
+                      "value": "18.99"
+                    }
+                  },
+                  {
+                    "sellerSku": "CR-47K6-H6QN",
+                    "sellerFulfillmentOrderItemId": "OrderItemID1",
+                    "quantity": 3,
+                    "fulfillmentNetworkSku": "X0014BIZ8T",
+                    "orderItemDisposition": "Sellable",
+                    "cancelledQuantity": 0,
+                    "unfulfillableQuantity": 0,
+                    "estimatedShipDate": "2020-02-08T01:23:31Z",
+                    "estimatedArrivalDate": "2020-02-15T01:23:31Z",
+                    "perUnitDeclaredValue": {
+                      "currencyCode": "USD",
+                      "value": "2.00"
+                    }
+                  }
+                ],
+                "fulfillmentShipments": [
+                  {
+                    "amazonShipmentId": "DchKfcZ9N",
+                    "fulfillmentCenterId": "RNO1",
+                    "fulfillmentShipmentStatus": "PENDING",
+                    "shippingDate": "2020-02-07T02:33:23Z",
+                    "estimatedArrivalDate": "2020-02-07T02:33:23Z",
+                    "fulfillmentShipmentItem": [
+                      {
+                        "sellerSku": "PSMM-TEST-SKU-Jan-21_19_59_44-0738",
+                        "sellerFulfillmentOrderItemId": "OrderItemID2",
+                        "quantity": 1,
+                        "packageNumber": 0,
+                        "serialNumber": "a1b2c"
+                      },
+                      {
+                        "sellerSku": "CR-47K6-H6QN",
+                        "sellerFulfillmentOrderItemId": "OrderItemID1",
+                        "quantity": 3,
+                        "packageNumber": 0,
+                        "serialNumber": "",
+                        "manufacturerLotCodes": [
+                          "LOT0822-1234",
+                          "LOT1030-5678"
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "returnItems": [],
+                "returnAuthorizations": []
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "更新和/或请求装运带有订单保留的履行订单。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "updateFulfillmentOrder",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateFulfillmentOrderRequest"
+            },
+            "description": "Updatefillmentorderrequest参数"
+          },
+          {
+            "name": "sellerFulfillmentOrderId",
+            "in": "path",
+            "description": "创建履行订单时由卖方分配给物料的标识符。",
+            "required": true,
+            "type": "string",
+            "maxLength": 40
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/UpdateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/UpdateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/UpdateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/UpdateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/UpdateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/UpdateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/UpdateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/UpdateFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/fulfillmentOrders/{sellerFulfillmentOrderId}/cancel": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "put": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "请求Amazon停止尝试履行由指定的订单标识符指示的履行订单。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "cancelFulfillmentOrder",
+        "parameters": [
+          {
+            "name": "sellerFulfillmentOrderId",
+            "in": "path",
+            "description": "创建履行订单时由卖方分配给物料的标识符。",
+            "required": true,
+            "type": "string",
+            "maxLength": 40
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CancelFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/CancelFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/CancelFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/CancelFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/CancelFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/CancelFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/CancelFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/CancelFulfillmentOrderResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/fulfillmentOrders/{sellerFulfillmentOrderId}/status": {
+      "x-amzn-api-sandbox-only": true,
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "put": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "请求Amazon在沙盒测试环境中更新订单的状态。这是仅沙盒操作，必须定向到沙盒终结点。请参阅 [Fulfillment Outbound动态沙盒指南](https:// developer-docs.amazon.com/sp-api/docs/fulfillment-outbound-Dynamic-sandbox-guide) 和 [Selling Partner api Sandbox](https:// developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox) 了解更多信息。",
+        "operationId": "submitFulfillmentOrderStatusUpdate",
+        "parameters": [
+          {
+            "name": "sellerFulfillmentOrderId",
+            "in": "path",
+            "description": "创建履行订单时由卖方分配给物料的标识符。",
+            "required": true,
+            "type": "string",
+            "maxLength": 40
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubmitFulfillmentOrderStatusUpdateRequest"
+            },
+            "description": "创建履行订单时由卖方分配给物料的标识符。"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/SubmitFulfillmentOrderStatusUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/SubmitFulfillmentOrderStatusUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/SubmitFulfillmentOrderStatusUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/SubmitFulfillmentOrderStatusUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/SubmitFulfillmentOrderStatusUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/SubmitFulfillmentOrderStatusUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/SubmitFulfillmentOrderStatusUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/SubmitFulfillmentOrderStatusUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/features": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "get": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "返回您指定的市场中可用于多渠道履行订单的功能列表，以及您为其拨打电话的卖家是否已注册每个功能。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getFeatures",
+        "parameters": [
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "要为其返回功能列表的市场。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetFeaturesResponse"
+            },
+            "examples": {
+              "payload": {
+                "features": [
+                  {
+                    "featureName": "BLANK_BOX",
+                    "featureDescription": "Provides the ability to ship in non-Amazon branded packaging (blank boxes).",
+                    "sellerEligible": true
+                  },
+                  {
+                    "featureName": "PSLIP",
+                    "featureDescription": "Provides the ability to insert customized packing slips with messages.",
+                    "sellerEligible": true
+                  }
+                ],
+                "schema": null
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetFeaturesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetFeaturesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFeaturesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetFeaturesResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetFeaturesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetFeaturesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetFeaturesResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/features/inventory/{featureName}": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "get": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "返回符合您指定的履行功能的库存物料列表。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getFeatureInventory",
+        "parameters": [
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "要为其返回符合指定功能的清单列表的marketplace。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "featureName",
+            "in": "path",
+            "description": "要为其返回合格库存列表的功能的名称。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "nextToken",
+            "in": "query",
+            "description": "在对上一个请求的响应中返回的字符串令牌，用于返回下一个响应页面。null值将返回第一页。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "queryStartDate",
+            "in": "query",
+            "description": "可用于选择自指定日期以来已更新的库存的日期。更新定义为启用功能的库存可用性的任何更改。日期格式必须为yyyy-mm-ddthh: MM: ss.sssZ",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureInventoryResponse"
+            },
+            "examples": {
+              "payload": {
+                "marketplaceId": "ATVPDKIKX0DER",
+                "featureName": "TEST_FEATURE",
+                "nextToken": null,
+                "featureSkus": [
+                  {
+                    "sellerSku": "sellerSku1",
+                    "fnSku": "fnSku",
+                    "asin": "asin",
+                    "skuCount": 23,
+                    "overlappingSkus": [
+                      "sellerSku2",
+                      "sellerSku3",
+                      "sellerSku4"
+                    ]
+                  },
+                  {
+                    "sellerSku": "sellerSku2",
+                    "fnSku": "sadf",
+                    "asin": "ssss",
+                    "skuCount": 1,
+                    "overlappingSkus": [
+                      "sellerSku1",
+                      "sellerSku3",
+                      "sellerSku4"
+                    ]
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureInventoryResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureInventoryResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureInventoryResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureInventoryResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureInventoryResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureInventoryResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureInventoryResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/2020-07-01/features/inventory/{featureName}/{sellerSku}": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "get": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "返回具有您指定的sellerSKU的可使用指定功能履行订单的项目数。请注意，如果sellerSKU不符合条件，则响应将包含空skuInfo对象。此操作的参数可能包含需要URL编码的特殊字符。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getFeatureSKU",
+        "parameters": [
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "要为其返回计数的市场。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "featureName",
+            "in": "path",
+            "description": "功能的名称。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sellerSku",
+            "in": "path",
+            "description": "用于标识给定市场中的项目。'SellerSKU' 由卖方的 'SellerId' 限定，它包含在您提交的每个操作中。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureSkuResponse"
+            },
+            "examples": {
+              "payload": {
+                "marketplaceId": "ATVPDKIKX0DER",
+                "featureName": "BLANK_BOX",
+                "isEligible": true,
+                "ineligibleReasons": [],
+                "skuInfo": {
+                  "sellerSku": "TEST_SKU",
+                  "fnSku": "TEST_fnSku",
+                  "asin": "TEST_asin",
+                  "skuCount": 33
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureSkuResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureSkuResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureSkuResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureSkuResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureSkuResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureSkuResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetFeatureSkuResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Address": {
+      "type": "object",
+      "required": [
+        "addressLine1",
+        "countryCode",
+        "stateOrRegion",
+        "name",
+        "postalCode"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "地址上的个人、企业或机构的名称。"
+        },
+        "addressLine1": {
+          "type": "string",
+          "description": "地址的第一行。"
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "其他地址信息 (如果需要)。"
+        },
+        "addressLine3": {
+          "type": "string",
+          "description": "其他地址信息 (如果需要)。"
+        },
+        "city": {
+          "type": "string",
+          "description": "个人、企业或机构所在的城市。除日本外，所有国家都需要此属性。它不应该在日本使用。"
+        },
+        "districtOrCounty": {
+          "type": "string",
+          "description": "个人、企业或机构所在的地区或县。"
+        },
+        "stateOrRegion": {
+          "type": "string",
+          "description": "个人、企业或机构所在的州或地区。"
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "地址的邮政编码。"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "两位数的国家代码。ISO 3166-1 alpha-2格式。"
+        },
+        "phone": {
+          "type": "string",
+          "description": "位于该地址的个人、企业或机构的电话号码。"
+        }
+      },
+      "description": "物理地址。"
+    },
+    "CODSettings": {
+      "type": "object",
+      "required": [
+        "isCodRequired"
+      ],
+      "properties": {
+        "isCodRequired": {
+          "type": "boolean",
+          "description": "当为true时，此履行订单需要COD (货到付款) 付款。"
+        },
+        "codCharge": {
+          "description": "从COD订单的接收方收取的COD费用金额。",
+          "$ref": "#/definitions/Money"
+        },
+        "codChargeTax": {
+          "description": "从COD订单的收件人处收取的COD费用的税额。",
+          "$ref": "#/definitions/Money"
+        },
+        "shippingCharge": {
+          "description": "从COD订单的收件人处收取的COD费用的税额。",
+          "$ref": "#/definitions/Money"
+        },
+        "shippingChargeTax": {
+          "description": "从COD订单的收件人处收取的运费的税额。",
+          "$ref": "#/definitions/Money"
+        }
+      },
+      "description": "与COD履行订单关联的COD (货到付款) 费用。"
+    },
+    "CreateFulfillmentOrderItem": {
+      "type": "object",
+      "required": [
+        "quantity",
+        "sellerFulfillmentOrderItemId",
+        "sellerSku"
+      ],
+      "properties": {
+        "sellerSku": {
+          "type": "string",
+          "description": "商品的卖家SKU。",
+          "maxLength": 50
+        },
+        "sellerFulfillmentOrderItemId": {
+          "type": "string",
+          "description": "卖方创建的用于跟踪履行订单项目的履行订单项目标识符。用于消除具有相同 “sellersku” 的多个履行项目的歧义。例如，卖家可能会将不同的 “sellerfillmentorderitemid” 值分配给履行订单中共享相同 “sellersku” 但具有不同 “giftmessage” 值的两个商品。",
+          "maxLength": 50
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "giftMessage": {
+          "type": "string",
+          "description": "给礼物接收者的消息 (如果适用)。",
+          "maxLength": 512
+        },
+        "displayableComment": {
+          "type": "string",
+          "description": "在面向收件人的材料 (如出站发运装箱单) 中显示的项目特定文本。",
+          "maxLength": 250
+        },
+        "fulfillmentNetworkSku": {
+          "type": "string",
+          "description": "该商品的亚马逊履行网络SKU。"
+        },
+        "perUnitDeclaredValue": {
+          "description": "卖方分配给此项目的货币价值。这是印度MCF订单的必填字段。",
+          "$ref": "#/definitions/Money"
+        },
+        "perUnitPrice": {
+          "description": "在COD (货到付款) 订单中，从收件人处收取此项目的金额。",
+          "$ref": "#/definitions/Money"
+        },
+        "perUnitTax": {
+          "description": "在COD (货到付款) 订单中从收件人处收取的该项目金额的税款。",
+          "$ref": "#/definitions/Money"
+        }
+      },
+      "description": "用于创建履行订单的物料信息。"
+    },
+    "CreateFulfillmentOrderItemList": {
+      "type": "array",
+      "description": "用于创建履行订单的物料信息数组。",
+      "items": {
+        "$ref": "#/definitions/CreateFulfillmentOrderItem"
+      }
+    },
+    "FulfillmentPolicy": {
+      "type": "string",
+      "description": "提交 “createfilullmentorder'” 操作时指定的 “实现策略” 值。",
+      "enum": [
+        "FillOrKill",
+        "FillAll",
+        "FillAllAvailable"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "FillOrKill",
+          "description": "如果在订单中的任何装运获得待定状态 (从库存中拣选单元的过程已经开始) 之前，履行订单中的项目被确定为无法履行，则整个订单被视为无法履行。但是，如果在订单中的发货获得待定状态后，确定履行订单中的商品无法履行，则Amazon会尽可能多地取消履行订单。有关发运状态定义，请参阅 “fulfillmentshipment” 对象。"
+        },
+        {
+          "value": "FillAll",
+          "description": "履行订单中的所有可履行项目均已发货。履行订单将保持处理状态，直到所有商品由亚马逊发货或由卖家取消。"
+        },
+        {
+          "value": "FillAllAvailable",
+          "description": "履行订单中的所有可履行项目均已发货。订单中所有无法履行的项目都将被取消。"
+        }
+      ]
+    },
+    "FulfillmentOrderStatus": {
+      "type": "string",
+      "description": "履行订单的当前状态。",
+      "enum": [
+        "New",
+        "Received",
+        "Planning",
+        "Processing",
+        "Cancelled",
+        "Complete",
+        "CompletePartialled",
+        "Unfulfillable",
+        "Invalid"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "New",
+          "description": "已收到履行订单，但尚未验证。"
+        },
+        {
+          "value": "Received",
+          "description": "已收到并验证履行订单。验证包括确定目的地地址是有效的，并且亚马逊的记录指示卖家具有足够的可销售 (未损坏) 库存来履行订单。卖方可以取消状态为 “已接收” 的履行订单。"
+        },
+        {
+          "value": "Planning",
+          "description": "已将履行订单发送到亚马逊的履行网络以开始发货计划，但尚未从库存中挑选任何货物中的任何单位。卖方可以取消状态为 “计划” 的履行订单。"
+        },
+        {
+          "value": "Processing",
+          "description": "已在履行订单中的至少一个装运上开始从库存中拣选单元的过程。卖方无法取消状态为 “正在处理” 的履行订单。"
+        },
+        {
+          "value": "Cancelled",
+          "description": "履行订单已被卖方取消。"
+        },
+        {
+          "value": "Complete",
+          "description": "已完成履行订单中的所有项目数量。"
+        },
+        {
+          "value": "CompletePartialled",
+          "description": "履行订单中的某些项目数量已完成; 其余的已取消或无法履行。"
+        },
+        {
+          "value": "Unfulfillable",
+          "description": "由于Amazon fulfillment center工作人员未找到这些商品的库存或未找到处于可供 (未损坏) 状态的库存，因此无法履行履行订单中的任何商品数量。"
+        },
+        {
+          "value": "Invalid",
+          "description": "已收到履行订单，但无法验证。造成这种情况的原因包括无效的目标地址或亚马逊的记录表明卖家没有足够的可销售库存来完成订单。发生这种情况时，履行订单无效，订单中的任何物品都不会发货。"
+        }
+      ]
+    },
+    "CreateFulfillmentOrderRequest": {
+      "type": "object",
+      "required": [
+        "destinationAddress",
+        "displayableOrderComment",
+        "displayableOrderDate",
+        "displayableOrderId",
+        "items",
+        "sellerFulfillmentOrderId",
+        "shippingSpeedCategory"
+      ],
+      "properties": {
+        "marketplaceId": {
+          "type": "string",
+          "description": "履行订单所针对的市场。"
+        },
+        "sellerFulfillmentOrderId": {
+          "type": "string",
+          "description": "卖方为跟踪其履行订单而创建的履行订单标识符。对于卖方创建的每个履行订单，“sellerfillmentorderid” 必须是唯一的。如果卖方的系统已经创建了唯一的订单标识符，那么这些可能是他们使用的好价值。",
+          "maxLength": 40
+        },
+        "displayableOrderId": {
+          "type": "string",
+          "description": "卖方创建的履行订单标识符。此值显示为面向收件人的物料 (如出站发运装箱单) 中的订单标识符。“Displayableorderid” 的值应与卖方提供给收件人的订单标识符匹配。卖方可以将 “sellerfulfillmentorderid” 用于此值，或者如果他们希望收件人引用备用订单标识符，则可以指定备用值。\n\n该值必须是字母数字或符合ISO 8859-1的字符串，长度为1到40个字符。一行中不能包含两个空格。删除前导和尾随空白。",
+          "maxLength": 40
+        },
+        "displayableOrderDate": {
+          "description": "履行订单的日期和时间。在面向收件人的物料 (如出站发运装箱单) 中显示为订单日期。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "displayableOrderComment": {
+          "type": "string",
+          "description": "出现在面向收件人的材料 (如出站发运装箱单) 中的订单特定文本。",
+          "maxLength": 750
+        },
+        "shippingSpeedCategory": {
+          "description": "履行订单的发运方式。当此值为 'ScheduledDelivery' 时，为 'fulfillmentAction' 选择Ship。当 “shippingspeedcategory” 值为 “scheduleddelivery” 时，Hold不是有效的 “fulfillmentaction' 值。\n注: 发运方法服务级别协议因市场而异。卖家可以参考【卖家中心】 (https:// developer-docs.amazon.com/sp-api/docs/seller-central-urls) 了解发货方式服务等级协议和多渠道履约费用。",
+          "$ref": "#/definitions/ShippingSpeedCategory"
+        },
+        "deliveryWindow": {
+          "$ref": "#/definitions/DeliveryWindow"
+        },
+        "destinationAddress": {
+          "description": "履行订单的目标地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "deliveryPreferences": {
+          "description": "应用于目标地址的传递首选项。这些首选项在可能的情况下应用，并且是尽力而为的。对于符合条件的订单，默认的交付首选项是将包裹留在前门无人看管。\n此功能目前仅在JP marketplace中受支持，不适用于其他市场。\n对于符合条件的订单，默认的交付首选项将是在前门无人值守交付包裹，除非您另有指定。",
+          "$ref": "#/definitions/DeliveryPreferences"
+        },
+        "fulfillmentAction": {
+          "$ref": "#/definitions/FulfillmentAction"
+        },
+        "fulfillmentPolicy": {
+          "$ref": "#/definitions/FulfillmentPolicy"
+        },
+        "codSettings": {
+          "$ref": "#/definitions/CODSettings"
+        },
+        "shipFromCountryCode": {
+          "type": "string",
+          "description": "履行订单发货的国家/地区的两个字符的国家/地区代码。必须采用ISO 3166-1 alpha-2格式。"
+        },
+        "notificationEmails": {
+          "$ref": "#/definitions/NotificationEmailList"
+        },
+        "featureConstraints": {
+          "type": "array",
+          "description": "要应用于订单的功能及其履行策略的列表。",
+          "items": {
+            "$ref": "#/definitions/FeatureSettings"
+          }
+        },
+        "items": {
+          "description": "要包括在履行订单预览中的物料列表，包括数量。每个订单最多250个单位的100行项目。",
+          "$ref": "#/definitions/CreateFulfillmentOrderItemList"
+        },
+        "paymentInformation": {
+          "description": "与此履行订单相关的各种付款属性的数组。如果订单是针对印度市场的，则需要此属性。",
+          "$ref": "#/definitions/PaymentInformationList"
+        }
+      },
+      "description": "“Createfillmentorder'” 操作的请求正文架构。"
+    },
+    "CreateFulfillmentReturnRequest": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "$ref": "#/definitions/CreateReturnItemList"
+        }
+      },
+      "description": "“Createfilullmentreturn” 操作为使用 “createfilullmentreturn” 操作履行的项目创建履行退货。对于对 “createfillmentreturn' 的调用，必须包括由对“ listreturnreasoncodes ”操作的先前调用返回的“ returnreascode ”值。"
+    },
+    "CreateFulfillmentReturnResult": {
+      "description": "Createfillmentreturn操作的结果。",
+      "type": "object",
+      "properties": {
+        "returnItems": {
+          "$ref": "#/definitions/ReturnItemList"
+        },
+        "invalidReturnItems": {
+          "$ref": "#/definitions/InvalidReturnItemList"
+        },
+        "returnAuthorizations": {
+          "$ref": "#/definitions/ReturnAuthorizationList"
+        }
+      }
+    },
+    "CreateFulfillmentReturnResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Createfillmentreturn'” 操作的有效负载。",
+          "$ref": "#/definitions/CreateFulfillmentReturnResult"
+        },
+        "errors": {
+          "description": "在执行 “createfulfillmentreturn” 操作期间发生了一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Createfillmentreturn'” 操作的响应架构。"
+    },
+    "CreateReturnItem": {
+      "type": "object",
+      "required": [
+        "amazonShipmentId",
+        "returnReasonCode",
+        "sellerFulfillmentOrderItemId",
+        "sellerReturnItemId"
+      ],
+      "properties": {
+        "sellerReturnItemId": {
+          "type": "string",
+          "description": "由卖方分配给退货的标识符。",
+          "maxLength": 80
+        },
+        "sellerFulfillmentOrderItemId": {
+          "type": "string",
+          "description": "创建履行订单时由卖方分配给物料的标识符。"
+        },
+        "amazonShipmentId": {
+          "type": "string",
+          "description": "与退货项目关联的装运的标识符。"
+        },
+        "returnReasonCode": {
+          "type": "string",
+          "description": "由卖方分配给退货项目的退货原因代码。"
+        },
+        "returnComment": {
+          "type": "string",
+          "description": "关于退货的可选注释。",
+          "maxLength": 1000
+        }
+      },
+      "description": "亚马逊接受退货的商品。"
+    },
+    "CreateReturnItemList": {
+      "type": "array",
+      "description": "要返回的项的数组。",
+      "items": {
+        "$ref": "#/definitions/CreateReturnItem"
+      }
+    },
+    "Money": {
+      "type": "object",
+      "required": [
+        "currencyCode",
+        "value"
+      ],
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "ISO 4217格式的三位数货币代码。"
+        },
+        "value": {
+          "$ref": "#/definitions/Decimal"
+        }
+      },
+      "description": "货币的数量，包括货币形式的单位。"
+    },
+    "Decimal": {
+      "type": "string",
+      "description": "无精度损失的十进制数。当精度损失不可接受时很有用，就像货币一样。遵循RFC7159的数字表示。"
+    },
+    "DeliveryWindow": {
+      "type": "object",
+      "required": [
+        "endDate",
+        "startDate"
+      ],
+      "properties": {
+        "startDate": {
+          "description": "计划交货窗口的开始日期和时间。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "endDate": {
+          "description": "计划交货窗口结束的日期和时间。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+          "$ref": "#/definitions/Timestamp"
+        }
+      },
+      "description": "计划交付的履行订单应交付的时间范围。这仅在JP marketplace中可用。"
+    },
+    "DeliveryWindowList": {
+      "type": "array",
+      "description": "交付窗口的数组。",
+      "items": {
+        "$ref": "#/definitions/DeliveryWindow"
+      }
+    },
+    "DeliveryPreferences": {
+      "type": "object",
+      "properties": {
+        "deliveryInstructions": {
+          "type": "string",
+          "description": "额外的交货说明。例如，这可以是关于如何进入建筑物的指令、附近的地标或导航指令、 “小心狗” 等。",
+          "maxLength": 250
+        },
+        "dropOffLocation": {
+          "description": "将包裹留在目标地址的首选位置。",
+          "$ref": "#/definitions/DropOffLocation"
+        }
+      },
+      "description": "应用于目标地址的传递首选项。这些首选项在可能的情况下应用，并且是尽力而为的。\n此功能目前仅在JP marketplace中受支持，不适用于其他市场。\n对于符合条件的订单，默认的交付首选项将是在前门无人值守交付包裹，除非您另有指定。"
+    },
+    "DropOffLocation": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "指定将包留在目标地址的首选位置。",
+          "enum": [
+            "FRONT_DOOR",
+            "DELIVERY_BOX",
+            "GAS_METER_BOX",
+            "BICYCLE_BASKET",
+            "GARAGE",
+            "RECEPTIONIST",
+            "FALLBACK_NEIGHBOR_DELIVERY",
+            "DO_NOT_LEAVE_UNATTENDED"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "FRONT_DOOR",
+              "description": "表示交货优先于前门。"
+            },
+            {
+              "value": "DELIVERY_BOX",
+              "description": "表示优先于交货箱的交货。"
+            },
+            {
+              "value": "GAS_METER_BOX",
+              "description": "表示交付首选燃气表箱。"
+            },
+            {
+              "value": "BICYCLE_BASKET",
+              "description": "表示比自行车篮更喜欢送货。"
+            },
+            {
+              "value": "GARAGE",
+              "description": "表示送货首选车库。"
+            },
+            {
+              "value": "RECEPTIONIST",
+              "description": "表示有接待员的优先送货。"
+            },
+            {
+              "value": "FALLBACK_NEIGHBOR_DELIVERY",
+              "description": "指示如果收件人在目标地址不可用，则首选与指定邻居的传递。"
+            },
+            {
+              "value": "DO_NOT_LEAVE_UNATTENDED",
+              "description": "表示优先交付为出席。"
+            }
+          ]
+        },
+        "attributes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "有关投放位置的其他信息，这些信息可能会因 “类型” 字段中指定的投放位置类型而异。\n如果 “type” 设置为 “FALLBACK_NEIGHBOR_DELIVERY”，则 “attributes” 对象应包含确切的键 “neighborname” 和 “housenumber”，以提供指定邻居的名称和门牌号码。"
+        }
+      },
+      "description": "将包裹留在目标地址的首选位置。"
+    },
+    "Fee": {
+      "type": "object",
+      "required": [
+        "amount",
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "费用的类型。",
+          "enum": [
+            "FBAPerUnitFulfillmentFee",
+            "FBAPerOrderFulfillmentFee",
+            "FBATransportationFee",
+            "FBAFulfillmentCODFee"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "FBAPerUnitFulfillmentFee",
+              "description": "履行订单中每个单位的预计费用。"
+            },
+            {
+              "value": "FBAPerOrderFulfillmentFee",
+              "description": "预计订单级别费用。"
+            },
+            {
+              "value": "FBATransportationFee",
+              "description": "估计运费。"
+            },
+            {
+              "value": "FBAFulfillmentCODFee",
+              "description": "预计COD (货到付款) 费用。此费用仅适用于COD的履行订单预览。"
+            }
+          ]
+        },
+        "amount": {
+          "description": "费用的金额。",
+          "$ref": "#/definitions/Money"
+        }
+      },
+      "description": "费用类型和成本。"
+    },
+    "FeeList": {
+      "type": "array",
+      "description": "费用类型和成本对的数组。",
+      "items": {
+        "$ref": "#/definitions/Fee"
+      }
+    },
+    "FulfillmentAction": {
+      "type": "string",
+      "description": "指定履行订单是否应立即发货或在其上放置订单保留。",
+      "enum": [
+        "Ship",
+        "Hold"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "Ship",
+          "description": "履行订单现在发货。"
+        },
+        {
+          "value": "Hold",
+          "description": "订单保留在履行订单上。"
+        }
+      ]
+    },
+    "FulfillmentOrder": {
+      "type": "object",
+      "required": [
+        "destinationAddress",
+        "displayableOrderComment",
+        "displayableOrderDate",
+        "displayableOrderId",
+        "fulfillmentOrderStatus",
+        "marketplaceId",
+        "receivedDate",
+        "sellerFulfillmentOrderId",
+        "shippingSpeedCategory",
+        "statusUpdatedDate"
+      ],
+      "properties": {
+        "sellerFulfillmentOrderId": {
+          "type": "string",
+          "description": "使用 “createfulfillmentorder” 操作提交的履行订单标识符。"
+        },
+        "marketplaceId": {
+          "type": "string",
+          "description": "履行订单所针对的市场的标识符。"
+        },
+        "displayableOrderId": {
+          "type": "string",
+          "description": "使用 “createfillmentorder” 操作提交的履行订单标识符。在面向收件人的物料 (如装箱单) 中显示为订单标识符。"
+        },
+        "displayableOrderDate": {
+          "description": "使用 “createfillmentorder'” 操作提交的日期和时间。显示为面向收件人的物料 (如装箱单) 中的订单日期。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "displayableOrderComment": {
+          "type": "string",
+          "description": "使用 “createfillmentorder'” 操作提交的文本块。显示在面向收件人的材料中，如装箱单。"
+        },
+        "shippingSpeedCategory": {
+          "$ref": "#/definitions/ShippingSpeedCategory"
+        },
+        "deliveryWindow": {
+          "$ref": "#/definitions/DeliveryWindow"
+        },
+        "destinationAddress": {
+          "description": "使用 “createfillmentorder'” 操作提交的目标地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "fulfillmentAction": {
+          "$ref": "#/definitions/FulfillmentAction"
+        },
+        "fulfillmentPolicy": {
+          "$ref": "#/definitions/FulfillmentPolicy"
+        },
+        "codSettings": {
+          "$ref": "#/definitions/CODSettings"
+        },
+        "receivedDate": {
+          "description": "Amazon履行中心收到履行订单的日期和时间。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "fulfillmentOrderStatus": {
+          "$ref": "#/definitions/FulfillmentOrderStatus"
+        },
+        "statusUpdatedDate": {
+          "description": "上次更改履行订单状态的日期和时间。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "notificationEmails": {
+          "$ref": "#/definitions/NotificationEmailList"
+        },
+        "featureConstraints": {
+          "type": "array",
+          "description": "要应用于订单的功能及其履行策略的列表。",
+          "items": {
+            "$ref": "#/definitions/FeatureSettings"
+          }
+        }
+      },
+      "description": "有关履行订单的一般信息，包括其状态。"
+    },
+    "FulfillmentOrderItem": {
+      "type": "object",
+      "required": [
+        "cancelledQuantity",
+        "quantity",
+        "sellerFulfillmentOrderItemId",
+        "sellerSku",
+        "unfulfillableQuantity"
+      ],
+      "properties": {
+        "sellerSku": {
+          "type": "string",
+          "description": "商品的卖家SKU。"
+        },
+        "sellerFulfillmentOrderItemId": {
+          "type": "string",
+          "description": "通过调用 “createfulfillmentorder” 操作提交的履行订单项目标识符。"
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "giftMessage": {
+          "type": "string",
+          "description": "给礼物接收者的消息 (如果适用)。"
+        },
+        "displayableComment": {
+          "type": "string",
+          "description": "在面向收件人的材料 (如出站发运装箱单) 中显示的项目特定文本。"
+        },
+        "fulfillmentNetworkSku": {
+          "type": "string",
+          "description": "该商品的亚马逊履行网络SKU。"
+        },
+        "orderItemDisposition": {
+          "type": "string",
+          "description": "指示项目是可买卖的还是不可买卖的。"
+        },
+        "cancelledQuantity": {
+          "description": "卖家取消的物料数量。",
+          "$ref": "#/definitions/Quantity"
+        },
+        "unfulfillableQuantity": {
+          "description": "无法履行的项目数量。",
+          "$ref": "#/definitions/Quantity"
+        },
+        "estimatedShipDate": {
+          "description": "计划从履行中心发运物料数量的估计日期和时间。请注意，此值可能会随时间而更改。如果已取消包含物料数量的发运，则不返回 “estimatedshipdate”。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "estimatedArrivalDate": {
+          "description": "物料数量的预计到货日期和时间。请注意，此值可能会随时间而更改。如果已取消包含物料数量的发运，则不返回 “estimatedarrivaldate”。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "perUnitPrice": {
+          "description": "在COD (货到付款) 订单中，从收件人处收取此项目的金额。",
+          "$ref": "#/definitions/Money"
+        },
+        "perUnitTax": {
+          "description": "在COD (货到付款) 订单中从收件人处收取的该项目金额的税款。",
+          "$ref": "#/definitions/Money"
+        },
+        "perUnitDeclaredValue": {
+          "description": "卖方分配给此项目的货币价值。这是印度MCF订单的必填字段。",
+          "$ref": "#/definitions/Money"
+        }
+      },
+      "description": "履行订单的项目信息。"
+    },
+    "FulfillmentOrderItemList": {
+      "type": "array",
+      "description": "履行订单项目信息的数组。",
+      "items": {
+        "$ref": "#/definitions/FulfillmentOrderItem"
+      }
+    },
+    "FulfillmentPreview": {
+      "type": "object",
+      "required": [
+        "isCODCapable",
+        "isFulfillable",
+        "marketplaceId",
+        "shippingSpeedCategory"
+      ],
+      "properties": {
+        "shippingSpeedCategory": {
+          "$ref": "#/definitions/ShippingSpeedCategory"
+        },
+        "scheduledDeliveryInfo": {
+          "$ref": "#/definitions/ScheduledDeliveryInfo"
+        },
+        "isFulfillable": {
+          "type": "boolean",
+          "description": "如果为true，则此履行订单预览是可履行的。"
+        },
+        "isCODCapable": {
+          "type": "boolean",
+          "description": "如果为true，则此履行订单预览适用于COD (货到付款)。"
+        },
+        "estimatedShippingWeight": {
+          "description": "此履行订单预览的估计发运重量。",
+          "$ref": "#/definitions/Weight"
+        },
+        "estimatedFees": {
+          "description": "此履行订单预览的预计履行费用 (如果适用)。费用数据将不适用于市场订单。",
+          "$ref": "#/definitions/FeeList"
+        },
+        "fulfillmentPreviewShipments": {
+          "$ref": "#/definitions/FulfillmentPreviewShipmentList"
+        },
+        "unfulfillablePreviewItems": {
+          "$ref": "#/definitions/UnfulfillablePreviewItemList"
+        },
+        "orderUnfulfillableReasons": {
+          "description": "与履行订单预览关联的错误代码，指示订单无法履行的原因。\n\n错误代码示例:\n\n'DeliverySLAUnavailable'\n'InvalidDestinationAddress'",
+          "$ref": "#/definitions/StringList"
+        },
+        "marketplaceId": {
+          "type": "string",
+          "description": "履行订单所针对的市场。"
+        },
+        "featureConstraints": {
+          "type": "array",
+          "description": "要应用于订单的功能及其履行策略的列表。",
+          "items": {
+            "$ref": "#/definitions/FeatureSettings"
+          }
+        }
+      },
+      "description": "有关履行订单预览的信息，包括基于运输方式的交货和费用信息。"
+    },
+    "FulfillmentPreviewItem": {
+      "type": "object",
+      "required": [
+        "quantity",
+        "sellerFulfillmentOrderItemId",
+        "sellerSku"
+      ],
+      "properties": {
+        "sellerSku": {
+          "type": "string",
+          "description": "商品的卖家SKU。"
+        },
+        "quantity": {
+          "description": "项目数量。",
+          "$ref": "#/definitions/Quantity"
+        },
+        "sellerFulfillmentOrderItemId": {
+          "type": "string",
+          "description": "卖方通过调用 “createfillmentorder'” 操作创建的履行订单项目标识符。"
+        },
+        "estimatedShippingWeight": {
+          "description": "装运中单个项目的项目数量的估计装运重量，由 “ellersku” 标识。",
+          "$ref": "#/definitions/Weight"
+        },
+        "shippingWeightCalculationMethod": {
+          "type": "string",
+          "description": "用于计算估计装运重量的方法。",
+          "enum": [
+            "Package",
+            "Dimensional"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Package",
+              "description": "根据物品的实际重量。"
+            },
+            {
+              "value": "Dimensional",
+              "description": "基于项目占据的立方空间。"
+            }
+          ]
+        }
+      },
+      "description": "履行订单预览中装运的项目信息。"
+    },
+    "FulfillmentPreviewItemList": {
+      "type": "array",
+      "description": "履行预览项目信息的数组。",
+      "items": {
+        "$ref": "#/definitions/FulfillmentPreviewItem"
+      }
+    },
+    "FulfillmentPreviewList": {
+      "type": "array",
+      "description": "履行预览信息的数组。",
+      "items": {
+        "$ref": "#/definitions/FulfillmentPreview"
+      }
+    },
+    "FulfillmentPreviewShipment": {
+      "type": "object",
+      "required": [
+        "fulfillmentPreviewItems"
+      ],
+      "properties": {
+        "earliestShipDate": {
+          "description": "预计从履行中心发送货件的最早日期。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "latestShipDate": {
+          "description": "预计从履行中心发送货件的最迟日期。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "earliestArrivalDate": {
+          "description": "预计货物到达目的地的最早日期。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "latestArrivalDate": {
+          "description": "预计货物到达目的地的最迟日期。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "shippingNotes": {
+          "type": "array",
+          "description": "当无法预先计算确切的交货日期时，提供对装运时间表的进一步了解。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fulfillmentPreviewItems": {
+          "description": "有关装运物品的信息。",
+          "$ref": "#/definitions/FulfillmentPreviewItemList"
+        }
+      },
+      "description": "履行订单预览中装运的交货和项目信息。"
+    },
+    "FulfillmentPreviewShipmentList": {
+      "type": "array",
+      "description": "履行预览发运信息的数组。",
+      "items": {
+        "$ref": "#/definitions/FulfillmentPreviewShipment"
+      }
+    },
+    "FulfillmentReturnItemStatus": {
+      "type": "string",
+      "description": "指示退货项目是否已由履行中心处理。",
+      "enum": [
+        "New",
+        "Processed"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "New",
+          "description": "退货项目尚未由履行中心处理。"
+        },
+        {
+          "value": "Processed",
+          "description": "退货项目已由履行中心处理。"
+        }
+      ]
+    },
+    "FulfillmentShipment": {
+      "type": "object",
+      "required": [
+        "amazonShipmentId",
+        "fulfillmentCenterId",
+        "fulfillmentShipmentItem",
+        "fulfillmentShipmentStatus"
+      ],
+      "properties": {
+        "amazonShipmentId": {
+          "type": "string",
+          "description": "由Amazon分配的装运标识符。"
+        },
+        "fulfillmentCenterId": {
+          "type": "string",
+          "description": "将从其发送货件的履行中心的标识符。"
+        },
+        "fulfillmentShipmentStatus": {
+          "type": "string",
+          "description": "装运的当前状态。",
+          "enum": [
+            "PENDING",
+            "SHIPPED",
+            "CANCELLED_BY_FULFILLER",
+            "CANCELLED_BY_SELLER"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "PENDING",
+              "description": "从库存中拣选设备的过程已经开始。"
+            },
+            {
+              "value": "SHIPPED",
+              "description": "装运中的所有包裹都已离开履行中心。"
+            },
+            {
+              "value": "CANCELLED_BY_FULFILLER",
+              "description": "亚马逊履行中心无法按计划履行发货。这可能是因为库存不在履行中心的预期位置。取消履行订单后，亚马逊会立即创建新的履行货件，并再次尝试履行订单。"
+            },
+            {
+              "value": "CANCELLED_BY_SELLER",
+              "description": "已使用 “cancelfulfillmentor” 请求取消装运。"
+            }
+          ]
+        },
+        "shippingDate": {
+          "description": "“Shippingdate” 值的含义取决于装运的当前状态。如果 “履行” status的当前值为:\n\n* 待定-“shippingdate” 表示货件离开亚马逊履行中心的估计时间。\n\n* Shipping-“shippingdate” 表示货件离开亚马逊履行中心的日期。\n如果装运包含多个包裹，则 “装运日期” 适用于装运中的所有包裹。如果 “fulfillmentshipmentstatus” 的值为 “cancelledbyfulfilller” 或 “cancelledbyseller”，则不返回 “shippingdate”。必须为 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "estimatedArrivalDate": {
+          "description": "装运的预计到达日期和时间。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。请注意，此值可能会随时间而更改。如果装运包含多个包裹，则 “估计到达日期” 适用于装运中的所有包裹。如果已取消装运，则不返回 “estimatedarrivaldate”。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "shippingNotes": {
+          "type": "array",
+          "description": "提供对装运时间表的额外洞察。Primairly用来传达实际交货日期不可用。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fulfillmentShipmentItem": {
+          "$ref": "#/definitions/FulfillmentShipmentItemList"
+        },
+        "fulfillmentShipmentPackage": {
+          "$ref": "#/definitions/FulfillmentShipmentPackageList"
+        }
+      },
+      "description": "履行订单中装运的交货和项目信息。"
+    },
+    "FulfillmentShipmentItem": {
+      "type": "object",
+      "required": [
+        "quantity",
+        "sellerFulfillmentOrderItemId",
+        "sellerSku"
+      ],
+      "properties": {
+        "sellerSku": {
+          "type": "string",
+          "description": "商品的卖家SKU。"
+        },
+        "sellerFulfillmentOrderItemId": {
+          "type": "string",
+          "description": "卖方通过调用 “createfillmentorder” 操作创建并提交的履行订单项目标识符。"
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "packageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "description": "包含物料数量的包的标识符。"
+        },
+        "serialNumber": {
+          "type": "string",
+          "description": "已发运项目的序列号。"
+        },
+        "manufacturerLotCodes": {
+          "description": "装运项目的制造商批次代码。",
+          "$ref": "#/definitions/StringList"
+        }
+      },
+      "description": "履行订单中装运的项目信息。"
+    },
+    "FulfillmentShipmentItemList": {
+      "type": "array",
+      "description": "履行发运项目信息的数组。",
+      "items": {
+        "$ref": "#/definitions/FulfillmentShipmentItem"
+      }
+    },
+    "FulfillmentShipmentList": {
+      "type": "array",
+      "description": "履行发运信息的数组。",
+      "items": {
+        "$ref": "#/definitions/FulfillmentShipment"
+      }
+    },
+    "FulfillmentShipmentPackage": {
+      "type": "object",
+      "required": [
+        "carrierCode",
+        "packageNumber"
+      ],
+      "properties": {
+        "packageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "description": "标识装运中的包裹。"
+        },
+        "carrierCode": {
+          "type": "string",
+          "description": "标识将货物交付给收件人的承运人。"
+        },
+        "trackingNumber": {
+          "type": "string",
+          "description": "跟踪号 (如果提供的话) 可用于获得跟踪和递送信息。"
+        },
+        "estimatedArrivalDate": {
+          "description": "包裹的预计到达日期和时间。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "lockerDetails": {
+          "description": "如果提供了储物柜详细信息，则可用于访问储物柜交付箱。",
+          "$ref": "#/definitions/LockerDetails"
+        },
+        "deliveryInformation": {
+          "description": "包的传递信息。此信息在包裹交付后可用。",
+          "$ref": "#/definitions/DeliveryInformation"
+        }
+      },
+      "description": "履行订单中装运的包裹信息。"
+    },
+    "FulfillmentShipmentPackageList": {
+      "type": "array",
+      "description": "履行装运包信息的数组。",
+      "items": {
+        "$ref": "#/definitions/FulfillmentShipmentPackage"
+      }
+    },
+    "GetFulfillmentOrderResult": {
+      "description": "Getfillmentorder操作的请求。",
+      "type": "object",
+      "required": [
+        "fulfillmentOrder",
+        "fulfillmentOrderItems",
+        "returnAuthorizations",
+        "returnItems"
+      ],
+      "properties": {
+        "fulfillmentOrder": {
+          "$ref": "#/definitions/FulfillmentOrder"
+        },
+        "fulfillmentOrderItems": {
+          "$ref": "#/definitions/FulfillmentOrderItemList"
+        },
+        "fulfillmentShipments": {
+          "$ref": "#/definitions/FulfillmentShipmentList"
+        },
+        "returnItems": {
+          "$ref": "#/definitions/ReturnItemList"
+        },
+        "returnAuthorizations": {
+          "$ref": "#/definitions/ReturnAuthorizationList"
+        },
+        "paymentInformation": {
+          "$ref": "#/definitions/PaymentInformationList"
+        }
+      }
+    },
+    "GetFulfillmentOrderResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Getimulfillmentorder” 操作的有效负载。",
+          "$ref": "#/definitions/GetFulfillmentOrderResult"
+        },
+        "errors": {
+          "description": "在执行 “getfillmentorder'” 操作期间发生了一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Getfillmentorder'” 操作的响应架构。"
+    },
+    "GetFulfillmentPreviewItem": {
+      "type": "object",
+      "required": [
+        "quantity",
+        "sellerFulfillmentOrderItemId",
+        "sellerSku"
+      ],
+      "properties": {
+        "sellerSku": {
+          "type": "string",
+          "description": "商品的卖家SKU。",
+          "maxLength": 50
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "perUnitDeclaredValue": {
+          "description": "卖方分配给此项目的货币价值。如果此订单是出口订单或印度MCF订单，则此字段为必填字段。",
+          "$ref": "#/definitions/Money"
+        },
+        "sellerFulfillmentOrderItemId": {
+          "type": "string",
+          "description": "卖家创建的用于跟踪履行预览中的商品的履行订单商品标识符。",
+          "maxLength": 50
+        }
+      },
+      "description": "执行订单预览的项目信息。"
+    },
+    "GetFulfillmentPreviewItemList": {
+      "type": "array",
+      "description": "履行预览项目信息的数组。",
+      "items": {
+        "$ref": "#/definitions/GetFulfillmentPreviewItem"
+      }
+    },
+    "GetFulfillmentPreviewRequest": {
+      "type": "object",
+      "required": [
+        "address",
+        "items"
+      ],
+      "properties": {
+        "marketplaceId": {
+          "type": "string",
+          "description": "履行订单所针对的市场。"
+        },
+        "address": {
+          "description": "履行订单预览的目标地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "items": {
+          "description": "履行订单预览中项目的标识信息和数量信息。每个订单最多250个单位的100行项目。",
+          "$ref": "#/definitions/GetFulfillmentPreviewItemList"
+        },
+        "shippingSpeedCategories": {
+          "description": "用于创建履行订单预览的发运方法的列表。\n\nPossible values:\n\n* “标准”-标准运输方法。\n* “加急”-加急发货方式。\n* “优先级”-优先运输方法。\n* 'ScheduledDelivery'-计划交付运输方式。\n注: 发运方法服务级别协议因市场而异。卖方应参考其市场中的卖方中心网站了解运输方式服务水平协议和履行费用。",
+          "$ref": "#/definitions/ShippingSpeedCategoryList"
+        },
+        "includeCODFulfillmentPreview": {
+          "type": "boolean",
+          "description": "如果为true，则返回COD而不是COD的所有履行订单预览。否则，仅返回不用于COD的履行订单预览。"
+        },
+        "includeDeliveryWindows": {
+          "type": "boolean",
+          "description": "如果为true，则返回 “scheduleddeliveryinfo” 响应对象，该对象包含计划交付的可用交付窗口。对于具有 “shippingspeedcategories” = “scheduleddeliveryinfo” 的履行订单预览，只能返回 “scheduleddeliveryinfo” 响应对象。"
+        },
+        "featureConstraints": {
+          "type": "array",
+          "description": "要应用于订单的功能及其履行策略的列表。",
+          "items": {
+            "$ref": "#/definitions/FeatureSettings"
+          }
+        }
+      },
+      "description": "“Getfillmentpreview” 操作的请求正文架构。"
+    },
+    "GetFulfillmentPreviewResult": {
+      "type": "object",
+      "properties": {
+        "fulfillmentPreviews": {
+          "$ref": "#/definitions/FulfillmentPreviewList"
+        }
+      },
+      "description": "履行订单预览的列表，包括估计装运重量、估计装运费用以及估计装运日期和到达日期。"
+    },
+    "GetFulfillmentPreviewResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Getculfillmentpreview” 操作的响应负载。",
+          "$ref": "#/definitions/GetFulfillmentPreviewResult"
+        },
+        "errors": {
+          "description": "在执行 “getfillmentpreview” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Getrefillmentpreview” 操作的响应架构。"
+    },
+    "GetDeliveryOffersRequest": {
+      "type": "object",
+      "required": [
+        "product",
+        "terms"
+      ],
+      "properties": {
+        "product": {
+          "$ref": "#/definitions/GetDeliveryOffersProduct",
+          "description": "交货优惠的产品详细信息。"
+        },
+        "terms": {
+          "$ref": "#/definitions/GetDeliveryOffersTerms",
+          "description": "交货报价的条款。"
+        }
+      },
+      "description": "getDeliveryOffers操作的请求正文架构。"
+    },
+    "GetDeliveryOffersResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/GetDeliveryOffersResult",
+          "description": "getDeliveryOffers操作的响应负载。"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList",
+          "description": "在getDeliveryOffers操作期间发生了一个或多个意外错误。"
+        }
+      },
+      "description": "getDeliveryOffers操作的响应架构。"
+    },
+    "GetDeliveryOffersResult": {
+      "type": "object",
+      "properties": {
+        "deliveryOffers": {
+          "$ref": "#/definitions/DeliveryOffersList",
+          "description": "一系列送货优惠。"
+        }
+      },
+      "description": "交货优惠列表，包括优惠到期日、最早和最晚日期和时间范围以及交货优惠政策。"
+    },
+    "DeliveryOffersList": {
+      "type": "array",
+      "description": "一组交货报价信息。",
+      "items": {
+        "$ref": "#/definitions/DeliveryOffer"
+      }
+    },
+    "DeliveryOffer": {
+      "type": "object",
+      "properties": {
+        "expiresAt": {
+          "$ref": "#/definitions/Timestamp",
+          "description": "交货优惠过期的时间戳。"
+        },
+        "dateRange": {
+          "$ref": "#/definitions/DateRange",
+          "description": "预期交付的范围。"
+        },
+        "policy": {
+          "$ref": "#/definitions/DeliveryPolicy",
+          "description": "传递优惠的策略，包括本地化的消息传递。"
+        }
+      },
+      "description": "产品交付的可用报价。"
+    },
+    "GetDeliveryOffersProduct": {
+      "type": "object",
+      "required": [
+        "productIdentifier"
+      ],
+      "properties": {
+        "productIdentifier": {
+          "$ref": "#/definitions/ProductIdentifier",
+          "description": "为MCF定位产品的产品标识符输入。"
+        },
+        "amount": {
+          "$ref": "#/definitions/Amount",
+          "description": "请求的产品数量。"
+        }
+      },
+      "description": "交货优惠的产品详细信息。"
+    },
+    "Amount": {
+      "type": "object",
+      "required": [
+        "unitOfMeasure",
+        "value"
+      ],
+      "properties": {
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "金额的度量单位。",
+          "enum": [
+            "Eaches"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Eaches",
+              "description": "指定单位的整数计数。"
+            }
+          ]
+        },
+        "value": {
+          "$ref": "#/definitions/Decimal",
+          "description": "以关联的度量单位表示的产品数量。"
+        }
+      },
+      "description": "基于度量单位的数量。"
+    },
+    "GetDeliveryOffersTerms": {
+      "type": "object",
+      "required": [
+        "origin",
+        "destination"
+      ],
+      "properties": {
+        "origin": {
+          "$ref": "#/definitions/Origin",
+          "description": "交货报价的来源。"
+        },
+        "destination": {
+          "$ref": "#/definitions/Destination",
+          "description": "交货优惠的目的地。"
+        }
+      },
+      "description": "交货报价的交货条款。"
+    },
+    "IpAddress": {
+      "type": "string",
+      "format": "ip",
+      "description": "一个IP地址。"
+    },
+    "Destination": {
+      "type": "object",
+      "properties": {
+        "deliveryAddress": {
+          "$ref": "#/definitions/VariablePrecisionAddress"
+        },
+        "ipAddress": {
+          "$ref": "#/definitions/IpAddress",
+          "description": "客户的IP地址。"
+        }
+      },
+      "description": "交货优惠的目的地。"
+    },
+    "ProductIdentifier": {
+      "type": "object",
+      "required": [
+        "merchantSku"
+      ],
+      "properties": {
+        "merchantSku": {
+          "type": "string",
+          "description": "产品的商家SKU。",
+          "maxLength": 50
+        }
+      },
+      "description": "为MCF定位产品的产品标识符输入。"
+    },
+    "Origin": {
+      "type": "object",
+      "required": [
+        "countryCode"
+      ],
+      "description": "交货报价的来源。",
+      "properties": {
+        "countryCode": {
+          "type": "string",
+          "description": "项目应从发货的两位数国家代码。ISO 3166-1 alpha-2格式。",
+          "minLength": 2,
+          "maxLength": 2
+        }
+      }
+    },
+    "VariablePrecisionAddress": {
+      "type": "object",
+      "required": [
+        "countryCode",
+        "postalCode"
+      ],
+      "properties": {
+        "addressLine1": {
+          "type": "string",
+          "description": "地址的第一行。"
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "其他地址信息 (如果需要)。"
+        },
+        "addressLine3": {
+          "type": "string",
+          "description": "其他地址信息 (如果需要)。"
+        },
+        "city": {
+          "type": "string",
+          "description": "个人、企业或机构所在的城市。此属性不应在日本使用。"
+        },
+        "districtOrCounty": {
+          "type": "string",
+          "description": "个人、企业或机构所在的地区或县。"
+        },
+        "stateOrRegion": {
+          "type": "string",
+          "description": "个人、企业或机构所在的州或地区。"
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "地址的邮政编码。"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "两位数的国家代码。ISO 3166-1 alpha-2格式。",
+          "minLength": 2,
+          "maxLength": 2
+        }
+      },
+      "description": "具有不同精度的物理地址。与国家代码和邮政编码相比，更精确的地址可以提供更准确的结果。"
+    },
+    "DateRange": {
+      "type": "object",
+      "required": [
+        "earliest",
+        "latest"
+      ],
+      "properties": {
+        "earliest": {
+          "$ref": "#/definitions/Timestamp",
+          "description": "日期范围中的最早点。"
+        },
+        "latest": {
+          "$ref": "#/definitions/Timestamp",
+          "description": "日期范围中的最晚点。"
+        }
+      },
+      "description": "发生某些事情 (例如，交付) 的时间范围。"
+    },
+    "DeliveryPolicy": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/DeliveryMessage",
+          "description": "交付产品的本地化消息传递。"
+        }
+      },
+      "description": "送货服务的政策。"
+    },
+    "DeliveryMessage": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "投放产品的消息内容。"
+        },
+        "locale": {
+          "type": "string",
+          "description": "消息的区域设置 (例如，en_US)。"
+        }
+      },
+      "description": "交付产品的本地化消息传递。"
+    },
+    "InvalidItemReasonCode": {
+      "type": "string",
+      "description": "该项目无效退货的原因的代码。",
+      "enum": [
+        "InvalidValues",
+        "DuplicateRequest",
+        "NoCompletedShipItems",
+        "NoReturnableQuantity"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "InvalidValues",
+          "description": "在履行订单中找不到该项目。"
+        },
+        {
+          "value": "DuplicateRequest",
+          "description": "已为此物料请求了履行退货。"
+        },
+        {
+          "value": "NoCompletedShipItems",
+          "description": "包含此项目的履行订单尚未发运。"
+        },
+        {
+          "value": "NoReturnableQuantity",
+          "description": "所有可退货的物料数量已分配给其他退货物料。"
+        }
+      ]
+    },
+    "InvalidItemReason": {
+      "type": "object",
+      "required": [
+        "description",
+        "invalidItemReasonCode"
+      ],
+      "properties": {
+        "invalidItemReasonCode": {
+          "$ref": "#/definitions/InvalidItemReasonCode"
+        },
+        "description": {
+          "type": "string",
+          "description": "无效物料原因代码的可读描述。"
+        }
+      },
+      "description": "该项目无效退货的原因。"
+    },
+    "InvalidReturnItem": {
+      "type": "object",
+      "required": [
+        "invalidItemReason",
+        "sellerFulfillmentOrderItemId",
+        "sellerReturnItemId"
+      ],
+      "properties": {
+        "sellerReturnItemId": {
+          "type": "string",
+          "description": "由卖方分配给退货的标识符。"
+        },
+        "sellerFulfillmentOrderItemId": {
+          "type": "string",
+          "description": "创建履行订单时由卖方分配给物料的标识符。"
+        },
+        "invalidItemReason": {
+          "$ref": "#/definitions/InvalidItemReason"
+        }
+      },
+      "description": "返回无效的项目。"
+    },
+    "InvalidReturnItemList": {
+      "type": "array",
+      "description": "无效的返回项信息的数组。",
+      "items": {
+        "$ref": "#/definitions/InvalidReturnItem"
+      }
+    },
+    "ListAllFulfillmentOrdersResult": {
+      "description": "Listallfillmentorders操作的请求。",
+      "type": "object",
+      "properties": {
+        "nextToken": {
+          "type": "string",
+          "description": "当存在且不为空时，在下一个请求中传递此字符串令牌以返回下一个响应页面。"
+        },
+        "fulfillmentOrders": {
+          "type": "array",
+          "description": "履行订单信息的数组。",
+          "items": {
+            "$ref": "#/definitions/FulfillmentOrder"
+          }
+        }
+      }
+    },
+    "ListAllFulfillmentOrdersResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Listallfillmentorders” 操作的负载。",
+          "$ref": "#/definitions/ListAllFulfillmentOrdersResult"
+        },
+        "errors": {
+          "description": "在 “listallfillmentorders” 操作期间发生了一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Listallfillmentorders” 操作的响应架构。"
+    },
+    "ListReturnReasonCodesResult": {
+      "description": "listReturnReasonCodes操作的请求。",
+      "type": "object",
+      "properties": {
+        "reasonCodeDetails": {
+          "$ref": "#/definitions/ReasonCodeDetailsList"
+        }
+      }
+    },
+    "ListReturnReasonCodesResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Listreturnreasoncodes'” 操作的有效载荷。",
+          "$ref": "#/definitions/ListReturnReasonCodesResult"
+        },
+        "errors": {
+          "description": "“Listreturnreasoncodes'” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Listreturnreasoncodes'” 操作的响应架构。"
+    },
+    "LockerDetails": {
+      "type": "object",
+      "properties": {
+        "lockerNumber": {
+          "type": "string",
+          "description": "表示储物柜编号"
+        },
+        "lockerAccessCode": {
+          "type": "string",
+          "description": "表示储物柜访问代码"
+        }
+      },
+      "description": "储物柜详细信息，您可以使用它来访问储物柜交付箱。"
+    },
+    "DeliveryInformation": {
+      "type": "object",
+      "properties": {
+        "deliveryDocumentList": {
+          "description": "包裹的所有交货文件。",
+          "$ref": "#/definitions/DeliveryDocumentList"
+        },
+        "dropOffLocation": {
+          "description": "包的放置位置。",
+          "$ref": "#/definitions/DropOffLocation"
+        }
+      },
+      "description": "包的传递信息。此信息在包裹交付后可用。"
+    },
+    "DeliveryDocumentList": {
+      "type": "array",
+      "description": "包的交货文档列表。",
+      "items": {
+        "$ref": "#/definitions/DeliveryDocument"
+      }
+    },
+    "DeliveryDocument": {
+      "type": "object",
+      "required": [
+        "documentType"
+      ],
+      "properties": {
+        "documentType": {
+          "type": "string",
+          "description": "交货单据类型。值为 “signature” 和 “DELIVERY_IMAGE”。"
+        },
+        "url": {
+          "type": "string",
+          "description": "可用于下载文档的URL。此URL具有 “Content-type” 标头。请注意，URL会在一小时后过期。要获取新的URL，您必须再次调用API。"
+        }
+      },
+      "description": "包裹的交付文档。"
+    },
+    "NotificationEmailList": {
+      "type": "array",
+      "description": "卖家提供的电子邮件地址列表，Amazon用于代表卖家向收件人发送发货完成通知。",
+      "items": {
+        "type": "string",
+        "maxLength": 64
+      }
+    },
+    "CurrentStatus": {
+      "type": "string",
+      "description": "包的当前传递状态。",
+      "enum": [
+        "IN_TRANSIT",
+        "DELIVERED",
+        "RETURNING",
+        "RETURNED",
+        "UNDELIVERABLE",
+        "DELAYED",
+        "AVAILABLE_FOR_PICKUP",
+        "CUSTOMER_ACTION",
+        "UNKNOWN",
+        "OUT_FOR_DELIVERY",
+        "DELIVERY_ATTEMPTED",
+        "PICKUP_SUCCESSFUL",
+        "PICKUP_CANCELLED",
+        "PICKUP_ATTEMPTED",
+        "PICKUP_SCHEDULED",
+        "RETURN_REQUEST_ACCEPTED",
+        "REFUND_ISSUED",
+        "RETURN_RECEIVED_IN_FC"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "IN_TRANSIT",
+          "description": "在传输到目标地址的过程中。"
+        },
+        {
+          "value": "DELIVERED",
+          "description": "发送到目标地址。"
+        },
+        {
+          "value": "RETURNING",
+          "description": "正在返回亚马逊的履行网络。"
+        },
+        {
+          "value": "RETURNED",
+          "description": "返回亚马逊的履行网络。"
+        },
+        {
+          "value": "UNDELIVERABLE",
+          "description": "无法送达，因为包裹丢失或毁坏。"
+        },
+        {
+          "value": "DELAYED",
+          "description": "延迟。"
+        },
+        {
+          "value": "AVAILABLE_FOR_PICKUP",
+          "description": "可用于拾取。"
+        },
+        {
+          "value": "CUSTOMER_ACTION",
+          "description": "需要客户采取行动。"
+        },
+        {
+          "value": "UNKNOWN",
+          "description": "返回了未知的状态代码。"
+        },
+        {
+          "value": "OUT_FOR_DELIVERY",
+          "description": "Out for Delivery."
+        },
+        {
+          "value": "DELIVERY_ATTEMPTED",
+          "description": "Delivery Attempted."
+        },
+        {
+          "value": "PICKUP_SUCCESSFUL",
+          "description": "拾取成功。"
+        },
+        {
+          "value": "PICKUP_CANCELLED",
+          "description": "取消取件。"
+        },
+        {
+          "value": "PICKUP_ATTEMPTED",
+          "description": "试图接机。"
+        },
+        {
+          "value": "PICKUP_SCHEDULED",
+          "description": "已安排接送。"
+        },
+        {
+          "value": "RETURN_REQUEST_ACCEPTED",
+          "description": "退货请求已接受。"
+        },
+        {
+          "value": "REFUND_ISSUED",
+          "description": "退款已发出。"
+        },
+        {
+          "value": "RETURN_RECEIVED_IN_FC",
+          "description": "在FC中收到退货。"
+        }
+      ]
+    },
+    "AdditionalLocationInfo": {
+      "type": "string",
+      "description": "其他位置信息。",
+      "enum": [
+        "AS_INSTRUCTED",
+        "CARPORT",
+        "CUSTOMER_PICKUP",
+        "DECK",
+        "DOOR_PERSON",
+        "FRONT_DESK",
+        "FRONT_DOOR",
+        "GARAGE",
+        "GUARD",
+        "MAIL_ROOM",
+        "MAIL_SLOT",
+        "MAILBOX",
+        "MC_BOY",
+        "MC_GIRL",
+        "MC_MAN",
+        "MC_WOMAN",
+        "NEIGHBOR",
+        "OFFICE",
+        "OUTBUILDING",
+        "PATIO",
+        "PORCH",
+        "REAR_DOOR",
+        "RECEPTIONIST",
+        "RECEIVER",
+        "SECURE_LOCATION",
+        "SIDE_DOOR"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "AS_INSTRUCTED",
+          "description": "按照指示。"
+        },
+        {
+          "value": "CARPORT",
+          "description": "车库。"
+        },
+        {
+          "value": "CUSTOMER_PICKUP",
+          "description": "由客户接手。"
+        },
+        {
+          "value": "DECK",
+          "description": "甲板。"
+        },
+        {
+          "value": "DOOR_PERSON",
+          "description": "居民。"
+        },
+        {
+          "value": "FRONT_DESK",
+          "description": "前台。"
+        },
+        {
+          "value": "FRONT_DOOR",
+          "description": "前门。"
+        },
+        {
+          "value": "GARAGE",
+          "description": "车库。"
+        },
+        {
+          "value": "GUARD",
+          "description": "住宅警卫。"
+        },
+        {
+          "value": "MAIL_ROOM",
+          "description": "邮件室。"
+        },
+        {
+          "value": "MAIL_SLOT",
+          "description": "邮件插槽。"
+        },
+        {
+          "value": "MAILBOX",
+          "description": "邮箱。"
+        },
+        {
+          "value": "MC_BOY",
+          "description": "交付给男孩。"
+        },
+        {
+          "value": "MC_GIRL",
+          "description": "送到女孩子。"
+        },
+        {
+          "value": "MC_MAN",
+          "description": "交付给成年男性。"
+        },
+        {
+          "value": "MC_WOMAN",
+          "description": "交付给成年女性。"
+        },
+        {
+          "value": "NEIGHBOR",
+          "description": "送到邻居。"
+        },
+        {
+          "value": "OFFICE",
+          "description": "办公室。"
+        },
+        {
+          "value": "OUTBUILDING",
+          "description": "外屋。"
+        },
+        {
+          "value": "PATIO",
+          "description": "天井。"
+        },
+        {
+          "value": "PORCH",
+          "description": "门廊。"
+        },
+        {
+          "value": "REAR_DOOR",
+          "description": "后车门。"
+        },
+        {
+          "value": "RECEPTIONIST",
+          "description": "接待员."
+        },
+        {
+          "value": "RECEIVER",
+          "description": "居民。"
+        },
+        {
+          "value": "SECURE_LOCATION",
+          "description": "安全位置。"
+        },
+        {
+          "value": "SIDE_DOOR",
+          "description": "侧门。"
+        }
+      ]
+    },
+    "PackageTrackingDetails": {
+      "description": "跟踪包的详细信息",
+      "type": "object",
+      "required": [
+        "packageNumber"
+      ],
+      "properties": {
+        "packageNumber": {
+          "type": "integer",
+          "format": "int32",
+          "description": "包标识符。"
+        },
+        "trackingNumber": {
+          "type": "string",
+          "description": "包的跟踪号。"
+        },
+        "customerTrackingLink": {
+          "type": "string",
+          "description": "链接o允许客户跟踪包裹的n swiship.com。"
+        },
+        "carrierCode": {
+          "type": "string",
+          "description": "承运人的名称。"
+        },
+        "carrierPhoneNumber": {
+          "type": "string",
+          "description": "运营商的电话号码。"
+        },
+        "carrierURL": {
+          "type": "string",
+          "description": "运营商网站的URL。"
+        },
+        "shipDate": {
+          "description": "包裹的装运日期。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "estimatedArrivalDate": {
+          "description": "预计到达日期。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "shipToAddress": {
+          "description": "包的目的地城市。",
+          "$ref": "#/definitions/TrackingAddress"
+        },
+        "currentStatus": {
+          "$ref": "#/definitions/CurrentStatus"
+        },
+        "currentStatusDescription": {
+          "type": "string",
+          "description": "与 “currentstatus” 值对应的说明。"
+        },
+        "signedForBy": {
+          "type": "string",
+          "description": "签名者的姓名。"
+        },
+        "additionalLocationInfo": {
+          "$ref": "#/definitions/AdditionalLocationInfo"
+        },
+        "trackingEvents": {
+          "$ref": "#/definitions/TrackingEventList"
+        }
+      }
+    },
+    "GetPackageTrackingDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "“Getpackagetrackingdetails” 操作的负载。",
+          "$ref": "#/definitions/PackageTrackingDetails"
+        },
+        "errors": {
+          "description": "在执行 “getpackagetrackingdetails” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Getpackagetrackingdetails” 操作的响应架构。"
+    },
+    "ReasonCodeDetails": {
+      "type": "object",
+      "required": [
+        "description",
+        "returnReasonCode"
+      ],
+      "properties": {
+        "returnReasonCode": {
+          "type": "string",
+          "description": "指示有效退货原因的代码。"
+        },
+        "description": {
+          "type": "string",
+          "description": "退货原因代码的可读描述。"
+        },
+        "translatedDescription": {
+          "type": "string",
+          "description": "描述的翻译。翻译使用语言请求参数中指定的语言。"
+        }
+      },
+      "description": "退货原因代码、说明和可选说明翻译。"
+    },
+    "ReasonCodeDetailsList": {
+      "type": "array",
+      "description": "返回原因代码详细信息的数组。",
+      "items": {
+        "$ref": "#/definitions/ReasonCodeDetails"
+      }
+    },
+    "PaymentInformation": {
+      "type": "object",
+      "required": [
+        "paymentTransactionId",
+        "paymentMode",
+        "paymentDate"
+      ],
+      "properties": {
+        "paymentTransactionId": {
+          "type": "string",
+          "description": "此付款的交易标识符。"
+        },
+        "paymentMode": {
+          "type": "string",
+          "description": "此付款的交易模式。"
+        },
+        "paymentDate": {
+          "description": "此付款的交易日期。",
+          "$ref": "#/definitions/Timestamp"
+        }
+      },
+      "description": "与此订单从客户到卖方的付款相关的属性。"
+    },
+    "ReturnAuthorization": {
+      "type": "object",
+      "required": [
+        "amazonRmaId",
+        "fulfillmentCenterId",
+        "returnAuthorizationId",
+        "returnToAddress",
+        "rmaPageURL"
+      ],
+      "properties": {
+        "returnAuthorizationId": {
+          "type": "string",
+          "description": "返回授权的标识符。此标识符将返回项与用于返回它们的返回授权相关联。"
+        },
+        "fulfillmentCenterId": {
+          "type": "string",
+          "description": "退货应发送到的Amazon fulfilment center的标识符。"
+        },
+        "returnToAddress": {
+          "description": "退货应发送到的亚马逊配送中心的地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "amazonRmaId": {
+          "type": "string",
+          "description": "亚马逊处理退货所需的退货商品授权 (RMA)。"
+        },
+        "rmaPageURL": {
+          "type": "string",
+          "description": "包含退货授权条形码和邮寄标签的网页的URL。这不包括预付运费。"
+        }
+      },
+      "description": "接受退货的物品的退货授权信息。"
+    },
+    "PaymentInformationList": {
+      "type": "array",
+      "description": "与此履行订单相关的各种付款属性的数组。",
+      "items": {
+        "$ref": "#/definitions/PaymentInformation"
+      }
+    },
+    "ReturnAuthorizationList": {
+      "type": "array",
+      "description": "返回授权信息的数组。",
+      "items": {
+        "$ref": "#/definitions/ReturnAuthorization"
+      }
+    },
+    "ReturnItem": {
+      "type": "object",
+      "required": [
+        "amazonShipmentId",
+        "sellerFulfillmentOrderItemId",
+        "sellerReturnItemId",
+        "sellerReturnReasonCode",
+        "status",
+        "statusChangedDate"
+      ],
+      "properties": {
+        "sellerReturnItemId": {
+          "type": "string",
+          "description": "由卖方分配给退货的标识符。"
+        },
+        "sellerFulfillmentOrderItemId": {
+          "type": "string",
+          "description": "创建履行订单时由卖方分配给物料的标识符。"
+        },
+        "amazonShipmentId": {
+          "type": "string",
+          "description": "与退货项目关联的装运的标识符。"
+        },
+        "sellerReturnReasonCode": {
+          "type": "string",
+          "description": "由卖方分配给退货项目的退货原因代码。"
+        },
+        "returnComment": {
+          "type": "string",
+          "description": "关于退货的可选注释。"
+        },
+        "amazonReturnReasonCode": {
+          "type": "string",
+          "description": "亚马逊配送中心分配给退货项目的退货原因代码。"
+        },
+        "status": {
+          "description": "指示退货项目是否已由Amazon fulfilment center处理。",
+          "$ref": "#/definitions/FulfillmentReturnItemStatus"
+        },
+        "statusChangedDate": {
+          "description": "指示上次更改状态的时间。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "returnAuthorizationId": {
+          "type": "string",
+          "description": "标识用于返回此项目的返回授权。请参阅 “returnauthorization”。"
+        },
+        "returnReceivedCondition": {
+          "$ref": "#/definitions/ReturnItemDisposition"
+        },
+        "fulfillmentCenterId": {
+          "type": "string",
+          "description": "处理退货的Amazon fulfilment center的标识符。"
+        }
+      },
+      "description": "亚马逊接受退货的商品。"
+    },
+    "ReturnItemDisposition": {
+      "type": "string",
+      "description": "亚马逊配送中心收到退货时的退货条件。",
+      "enum": [
+        "Sellable",
+        "Defective",
+        "CustomerDamaged",
+        "CarrierDamaged",
+        "FulfillerDamaged"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "Sellable",
+          "description": "项目处于可卖方状态。"
+        },
+        {
+          "value": "Defective",
+          "description": "项目有缺陷。"
+        },
+        {
+          "value": "CustomerDamaged",
+          "description": "物品被买方或卖方损坏。"
+        },
+        {
+          "value": "CarrierDamaged",
+          "description": "物品被承运人损坏。"
+        },
+        {
+          "value": "FulfillerDamaged",
+          "description": "物品被亚马逊损坏了。"
+        }
+      ]
+    },
+    "ReturnItemList": {
+      "type": "array",
+      "description": "Amazon接受退货的商品数组。如果不接受任何返回项，则返回空。",
+      "items": {
+        "$ref": "#/definitions/ReturnItem"
+      }
+    },
+    "ScheduledDeliveryInfo": {
+      "type": "object",
+      "required": [
+        "deliveryTimeZone",
+        "deliveryWindows"
+      ],
+      "properties": {
+        "deliveryTimeZone": {
+          "type": "string",
+          "description": "完成订单预览的目标地址的时区。必须是IANA时区名称。例如: 亚洲/东京。"
+        },
+        "deliveryWindows": {
+          "description": "可用于计划交付的时间范围的数组。",
+          "$ref": "#/definitions/DeliveryWindowList"
+        }
+      },
+      "description": "计划交货的交货信息。这仅在JP marketplace中可用。"
+    },
+    "ShippingSpeedCategoryList": {
+      "description": "ShippingSpeedCategory列表",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ShippingSpeedCategory"
+      }
+    },
+    "StringList": {
+      "description": "字符串列表",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "Timestamp": {
+      "description": "日期时间戳",
+      "type": "string",
+      "format": "date-time"
+    },
+    "TrackingAddress": {
+      "type": "object",
+      "required": [
+        "city",
+        "country",
+        "state"
+      ],
+      "properties": {
+        "city": {
+          "type": "string",
+          "description": "城市。",
+          "maxLength": 150
+        },
+        "state": {
+          "type": "string",
+          "description": "州。",
+          "maxLength": 150
+        },
+        "country": {
+          "type": "string",
+          "description": "国家。",
+          "maxLength": 6
+        }
+      },
+      "description": "用于跟踪包裹的地址信息。"
+    },
+    "EventCode": {
+      "type": "string",
+      "description": "交付事件的事件代码。",
+      "enum": [
+        "EVENT_101",
+        "EVENT_102",
+        "EVENT_201",
+        "EVENT_202",
+        "EVENT_203",
+        "EVENT_204",
+        "EVENT_205",
+        "EVENT_206",
+        "EVENT_301",
+        "EVENT_302",
+        "EVENT_304",
+        "EVENT_306",
+        "EVENT_307",
+        "EVENT_308",
+        "EVENT_309",
+        "EVENT_401",
+        "EVENT_402",
+        "EVENT_403",
+        "EVENT_404",
+        "EVENT_405",
+        "EVENT_406",
+        "EVENT_407",
+        "EVENT_408",
+        "EVENT_409",
+        "EVENT_411",
+        "EVENT_412",
+        "EVENT_413",
+        "EVENT_414",
+        "EVENT_415",
+        "EVENT_416",
+        "EVENT_417",
+        "EVENT_418",
+        "EVENT_419"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "EVENT_101",
+          "description": "已通知承运人领取包裹。"
+        },
+        {
+          "value": "EVENT_102",
+          "description": "从卖方的工厂提货。"
+        },
+        {
+          "value": "EVENT_201",
+          "description": "到达扫描。"
+        },
+        {
+          "value": "EVENT_202",
+          "description": "出发扫描。"
+        },
+        {
+          "value": "EVENT_203",
+          "description": "到达目的地国家。"
+        },
+        {
+          "value": "EVENT_204",
+          "description": "启动清关程序。"
+        },
+        {
+          "value": "EVENT_205",
+          "description": "完成清关流程。"
+        },
+        {
+          "value": "EVENT_206",
+          "description": "在前往取货地点的途中。"
+        },
+        {
+          "value": "EVENT_301",
+          "description": "交付。"
+        },
+        {
+          "value": "EVENT_302",
+          "description": "出去送货。"
+        },
+        {
+          "value": "EVENT_304",
+          "description": "已尝试交付。"
+        },
+        {
+          "value": "EVENT_306",
+          "description": "联系客户安排送货。"
+        },
+        {
+          "value": "EVENT_307",
+          "description": "已安排交货预约。"
+        },
+        {
+          "value": "EVENT_308",
+          "description": "可用于拾取。"
+        },
+        {
+          "value": "EVENT_309",
+          "description": "回到卖家。"
+        },
+        {
+          "value": "EVENT_401",
+          "description": "由承运人持有-地址不正确。"
+        },
+        {
+          "value": "EVENT_402",
+          "description": "海关清关延迟。"
+        },
+        {
+          "value": "EVENT_403",
+          "description": "客户感动"
+        },
+        {
+          "value": "EVENT_404",
+          "description": "由于外部因素导致的交货延迟。"
+        },
+        {
+          "value": "EVENT_405",
+          "description": "货物损坏。"
+        },
+        {
+          "value": "EVENT_406",
+          "description": "由承运人持有。"
+        },
+        {
+          "value": "EVENT_407",
+          "description": "客户拒绝交货。"
+        },
+        {
+          "value": "EVENT_408",
+          "description": "回到卖家。"
+        },
+        {
+          "value": "EVENT_409",
+          "description": "承运人丢失了。"
+        },
+        {
+          "value": "EVENT_411",
+          "description": "收到文书工作-未收到装运。"
+        },
+        {
+          "value": "EVENT_412",
+          "description": "已收到货物-未收到文书工作。"
+        },
+        {
+          "value": "EVENT_413",
+          "description": "由承运人持有-客户因海关费用拒绝装运。"
+        },
+        {
+          "value": "EVENT_414",
+          "description": "承运人分类错误。"
+        },
+        {
+          "value": "EVENT_415",
+          "description": "从以前的承运人收到。"
+        },
+        {
+          "value": "EVENT_416",
+          "description": "无法送达。"
+        },
+        {
+          "value": "EVENT_417",
+          "description": "货物分类错误。"
+        },
+        {
+          "value": "EVENT_418",
+          "description": "装运延迟。"
+        },
+        {
+          "value": "EVENT_419",
+          "description": "地址已更正-已重新安排交货时间。"
+        }
+      ]
+    },
+    "TrackingEvent": {
+      "type": "object",
+      "required": [
+        "eventAddress",
+        "eventCode",
+        "eventDate",
+        "eventDescription"
+      ],
+      "properties": {
+        "eventDate": {
+          "description": "交付事件发生的日期和时间。必须采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 格式。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "eventAddress": {
+          "description": "交付事件发生的城市。",
+          "$ref": "#/definitions/TrackingAddress"
+        },
+        "eventCode": {
+          "description": "交付事件的事件代码。",
+          "$ref": "#/definitions/EventCode"
+        },
+        "eventDescription": {
+          "type": "string",
+          "description": "相应事件代码的说明。"
+        }
+      },
+      "description": "跟踪包裹递送的信息。"
+    },
+    "TrackingEventList": {
+      "type": "array",
+      "description": "跟踪事件信息的数组。",
+      "items": {
+        "$ref": "#/definitions/TrackingEvent"
+      }
+    },
+    "UnfulfillablePreviewItem": {
+      "type": "object",
+      "required": [
+        "quantity",
+        "sellerFulfillmentOrderItemId",
+        "sellerSku"
+      ],
+      "properties": {
+        "sellerSku": {
+          "type": "string",
+          "description": "商品的卖家SKU。",
+          "maxLength": 50
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "sellerFulfillmentOrderItemId": {
+          "type": "string",
+          "description": "通过调用 “getculfillmentpreview” 操作创建的履行订单项目标识符。",
+          "maxLength": 50
+        },
+        "itemUnfulfillableReasons": {
+          "description": "与履行订单预览相关联的错误代码，指示项目无法履行的原因。",
+          "$ref": "#/definitions/StringList"
+        }
+      },
+      "description": "有关履行订单预览中无法履行的商品的信息。"
+    },
+    "UnfulfillablePreviewItemList": {
+      "type": "array",
+      "description": "无法实现的预览项信息的数组。",
+      "items": {
+        "$ref": "#/definitions/UnfulfillablePreviewItem"
+      }
+    },
+    "UpdateFulfillmentOrderItem": {
+      "type": "object",
+      "required": [
+        "quantity",
+        "sellerFulfillmentOrderItemId"
+      ],
+      "properties": {
+        "sellerSku": {
+          "type": "string",
+          "description": "商品的卖家SKU。"
+        },
+        "sellerFulfillmentOrderItemId": {
+          "type": "string",
+          "description": "标识要更新的履行订单项。通过先前对 “createfillmentorder'” 操作的调用创建。",
+          "maxLength": 50
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "giftMessage": {
+          "type": "string",
+          "description": "给礼物接收者的消息 (如果适用)。",
+          "maxLength": 512
+        },
+        "displayableComment": {
+          "type": "string",
+          "description": "在面向收件人的材料 (如出站发运装箱单) 中显示的项目特定文本。",
+          "maxLength": 250
+        },
+        "fulfillmentNetworkSku": {
+          "type": "string",
+          "description": "该商品的亚马逊履行网络SKU。"
+        },
+        "orderItemDisposition": {
+          "type": "string",
+          "description": "指示项目是可买卖的还是不可买卖的。"
+        },
+        "perUnitDeclaredValue": {
+          "description": "卖方分配给此项目的货币价值。这是印度MCF订单的必填字段。",
+          "$ref": "#/definitions/Money"
+        },
+        "perUnitPrice": {
+          "description": "在COD (货到付款) 订单中，从收件人处收取此项目的金额。",
+          "$ref": "#/definitions/Money"
+        },
+        "perUnitTax": {
+          "description": "在COD (货到付款) 订单中从收件人处收取的该项目金额的税款。",
+          "$ref": "#/definitions/Money"
+        }
+      },
+      "description": "用于更新履行订单的物料信息。"
+    },
+    "UpdateFulfillmentOrderItemList": {
+      "type": "array",
+      "description": "用于更新履行订单的履行订单项目信息的数组。",
+      "items": {
+        "$ref": "#/definitions/UpdateFulfillmentOrderItem"
+      }
+    },
+    "UpdateFulfillmentOrderRequest": {
+      "type": "object",
+      "description": "“Updatefulfillmentorder” 操作的请求正文架构。",
+      "properties": {
+        "marketplaceId": {
+          "type": "string",
+          "description": "履行订单所针对的市场。"
+        },
+        "displayableOrderId": {
+          "type": "string",
+          "description": "卖方创建的履行订单标识符。此值显示为面向收件人的物料 (如出站发运装箱单) 中的订单标识符。“Displayableorderid” 的值应与卖方提供给收件人的订单标识符匹配。卖方可以将 “sellerfulfillmentorderid” 用于此值，或者如果他们希望收件人引用备用订单标识符，则可以指定备用值。",
+          "maxLength": 40
+        },
+        "displayableOrderDate": {
+          "description": "履行订单的日期和时间。在面向收件人的物料 (如出站发运装箱单) 中显示为订单日期。",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "displayableOrderComment": {
+          "type": "string",
+          "description": "出现在面向收件人的材料 (如出站发运装箱单) 中的订单特定文本。",
+          "maxLength": 750
+        },
+        "shippingSpeedCategory": {
+          "$ref": "#/definitions/ShippingSpeedCategory"
+        },
+        "destinationAddress": {
+          "description": "履行订单的目标地址。",
+          "$ref": "#/definitions/Address"
+        },
+        "fulfillmentAction": {
+          "$ref": "#/definitions/FulfillmentAction"
+        },
+        "fulfillmentPolicy": {
+          "$ref": "#/definitions/FulfillmentPolicy"
+        },
+        "shipFromCountryCode": {
+          "type": "string",
+          "description": "履行订单发货的国家/地区的两个字符的国家/地区代码。必须采用ISO 3166-1 alpha-2格式。"
+        },
+        "notificationEmails": {
+          "$ref": "#/definitions/NotificationEmailList"
+        },
+        "featureConstraints": {
+          "type": "array",
+          "description": "要应用于订单的功能及其履行策略的列表。",
+          "items": {
+            "$ref": "#/definitions/FeatureSettings"
+          }
+        },
+        "items": {
+          "description": "要包括在履行订单预览中的物料列表，包括数量。",
+          "$ref": "#/definitions/UpdateFulfillmentOrderItemList"
+        }
+      }
+    },
+    "UpdateFulfillmentOrderResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "description": "在执行 “updatefulfillmentorder” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Updatefulfillmentorder” 操作的响应架构。"
+    },
+    "CreateFulfillmentOrderResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "description": "在执行 “createfillmentorder'” 操作期间发生了一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Createfillmentorder'” 操作的响应架构。"
+    },
+    "CancelFulfillmentOrderResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "description": "在执行 “cancelfilfillmentorder'” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Cancelfillmentorder'” 操作的响应架构。"
+    },
+    "Weight": {
+      "type": "object",
+      "required": [
+        "unit",
+        "value"
+      ],
+      "properties": {
+        "unit": {
+          "type": "string",
+          "description": "重量的单位。",
+          "enum": [
+            "KG",
+            "KILOGRAMS",
+            "LB",
+            "POUNDS"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "KG",
+              "description": "公斤。"
+            },
+            {
+              "value": "KILOGRAMS",
+              "description": "公斤。"
+            },
+            {
+              "value": "LB",
+              "description": "磅。"
+            },
+            {
+              "value": "POUNDS",
+              "description": "磅。"
+            }
+          ]
+        },
+        "value": {
+          "type": "string",
+          "description": "权重值。"
+        }
+      },
+      "description": "重量。"
+    },
+    "Quantity": {
+      "type": "integer",
+      "format": "int32",
+      "description": "项目数量。"
+    },
+    "ShippingSpeedCategory": {
+      "type": "string",
+      "description": "用于履行订单的发运方法。当此值为 'ScheduledDelivery' 时，为 'fulfillmentAction' 选择 'Ship'。当 “shippingspeedcategory” 值为 “scheduleddelivery” 时，“hold'” 不是有效的 “fulfillmentaction' 值。\n注: 发运方法服务级别协议因市场而异。卖家应参考其市场中的 [卖家中心](https:// developer-docs.amazon.com/sp-api/docs/seller-central-urls) 网站，了解运输方式服务水平协议和履行费用。",
+      "enum": [
+        "Standard",
+        "Expedited",
+        "Priority",
+        "ScheduledDelivery"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "Standard",
+          "description": "标准装运方法。"
+        },
+        {
+          "value": "Expedited",
+          "description": "加急装运方法。"
+        },
+        {
+          "value": "Priority",
+          "description": "优先装运方法。"
+        },
+        {
+          "value": "ScheduledDelivery",
+          "description": "计划交货运输方式。这仅在JP marketplace中可用。"
+        }
+      ]
+    },
+    "GetFeatureInventoryResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/GetFeatureInventoryResult"
+        },
+        "errors": {
+          "description": "在执行 “getfeatureinventory” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "按功能划分的资格清单细分。"
+    },
+    "GetFeatureInventoryResult": {
+      "type": "object",
+      "required": [
+        "featureName",
+        "marketplaceId"
+      ],
+      "properties": {
+        "marketplaceId": {
+          "type": "string",
+          "description": "请求的市场。"
+        },
+        "featureName": {
+          "type": "string",
+          "description": "功能的名称。"
+        },
+        "nextToken": {
+          "type": "string",
+          "description": "当存在且不为空时，在下一个请求中传递此字符串令牌以返回下一个响应页面。"
+        },
+        "featureSkus": {
+          "type": "array",
+          "description": "符合此功能的sku数组和可用数量。",
+          "items": {
+            "$ref": "#/definitions/FeatureSku"
+          }
+        }
+      },
+      "description": "“Geteligibileinventory” 操作的负载。"
+    },
+    "FeatureSku": {
+      "type": "object",
+      "properties": {
+        "sellerSku": {
+          "type": "string",
+          "description": "用于标识给定市场中的项目。'SellerSKU' 由卖方的SellerId限定，该id包含在您提交的每个操作中。"
+        },
+        "fnSku": {
+          "type": "string",
+          "description": "亚马逊履行网络使用的独特SKU。"
+        },
+        "asin": {
+          "type": "string",
+          "description": "商品的Amazon标准标识号 (ASIN)。"
+        },
+        "skuCount": {
+          "type": "number",
+          "description": "此服务可用的sku数量。"
+        },
+        "overlappingSkus": {
+          "type": "array",
+          "description": "在同一库存中共享的其他卖家sku。",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "有关SKU的信息，包括可用数量、标识符以及共享同一库存池的重叠SKU列表。"
+    },
+    "GetFeaturesResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/GetFeaturesResult"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Getfeatures” 操作的响应架构。"
+    },
+    "GetFeaturesResult": {
+      "type": "object",
+      "required": [
+        "features"
+      ],
+      "properties": {
+        "features": {
+          "$ref": "#/definitions/Features"
+        }
+      },
+      "description": "“Getfeatures” 操作的有效负载。"
+    },
+    "Features": {
+      "type": "array",
+      "description": "一组功能。",
+      "items": {
+        "$ref": "#/definitions/Feature"
+      }
+    },
+    "Feature": {
+      "type": "object",
+      "required": [
+        "featureDescription",
+        "featureName"
+      ],
+      "properties": {
+        "featureName": {
+          "type": "string",
+          "description": "功能名称。"
+        },
+        "featureDescription": {
+          "type": "string",
+          "description": "功能说明。"
+        },
+        "sellerEligible": {
+          "type": "boolean",
+          "description": "如果为true，则表示卖方有资格使用该功能。"
+        }
+      },
+      "description": "多渠道履行功能。"
+    },
+    "GetFeatureSkuResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "$ref": "#/definitions/GetFeatureSkuResult"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Getfeaturesku” 操作的响应架构。"
+    },
+    "GetFeatureSkuResult": {
+      "type": "object",
+      "required": [
+        "featureName",
+        "isEligible",
+        "marketplaceId"
+      ],
+      "properties": {
+        "marketplaceId": {
+          "type": "string",
+          "description": "请求的市场。"
+        },
+        "featureName": {
+          "type": "string",
+          "description": "功能的名称。"
+        },
+        "isEligible": {
+          "type": "boolean",
+          "description": "当为true时，卖方SKU有资格获得所请求的特征。"
+        },
+        "ineligibleReasons": {
+          "type": "array",
+          "description": "卖方SKU不适合该功能的一个或多个原因的列表。\n\nPossible values:\n* 'Merchant_not_已注册'-商家未注册该功能。\n* 'Sku_not_eligibient'-SKU不驻留在支持该功能的仓库中。\n* 'INVALID_SKU'-提供的SKU存在问题。",
+          "items": {
+            "type": "string"
+          }
+        },
+        "skuInfo": {
+          "description": "有关SKU的信息，包括可用数量、标识符以及共享同一库存池的重叠SKU列表。",
+          "$ref": "#/definitions/FeatureSku"
+        }
+      },
+      "description": "“Getfeaturesku” 操作的有效负载。"
+    },
+    "FeatureSettings": {
+      "type": "object",
+      "properties": {
+        "featureName": {
+          "type": "string",
+          "description": "功能的名称。"
+        },
+        "featureFulfillmentPolicy": {
+          "type": "string",
+          "description": "指定履行订单时要使用的策略。",
+          "enum": [
+            "Required",
+            "NotRequired"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "Required",
+              "description": "如果优惠不能与所选功能一起发货，请拒绝订单。"
+            },
+            {
+              "value": "NotRequired",
+              "description": "运输不需要该功能。"
+            }
+          ]
+        }
+      },
+      "description": "“Featuresettings” 允许用户将履行功能应用于订单。要使用Amazon Logistics (AMZL) 和AMZL跟踪号阻止订单发货，请使用 “featurename” 作为 “BLOCK_AMZL”，使用 “featurefulfillmentpolicy” 作为 “required”。如果没有其他可用的承运人，阻止AMZL将对您的MCF订单产生额外的附加费用，并增加一些订单无法履行或延迟交付的风险。在订单请求中使用 'BLOCK_AMZL' 将优先于您的卖家中央帐户设置。要以非亚马逊品牌包装 (空白框) 发货，请使用featureName 'BLANK_BOX'。"
+    },
+    "SubmitFulfillmentOrderStatusUpdateRequest": {
+      "type": "object",
+      "description": "“Submitfillmentorderstatusupdate” 操作的请求正文架构。",
+      "properties": {
+        "fulfillmentOrderStatus": {
+          "$ref": "#/definitions/FulfillmentOrderStatus"
+        }
+      }
+    },
+    "SubmitFulfillmentOrderStatusUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "description": "在执行 “submitfillmentorderstatupdate” 操作期间出现一个或多个意外错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "“Submitfillmentorderstatupdate” 操作的响应架构。"
+    }
+  }
+}

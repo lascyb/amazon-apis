@@ -1,0 +1,871 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "用于财务的销售伙伴API提供与卖方的业务相关的财务信息。您可以获取给定订单或日期范围的财务事件，而不必等到报表期间关闭。",
+    "version": "2024-06-19",
+    "title": "The Selling Partner API for Finances",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/finances/2024-06-19/transactions": {
+      "get": {
+        "description": "返回给定参数的事务。过去48小时的订单可能不包括在财务事件中。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.5 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表包含此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能具有比此处显示的更高的速率和突发值。有关详细信息，请参阅 [使用计划和速率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits)。",
+        "operationId": "listTransactions",
+        "parameters": [
+          {
+            "name": "postedAfter",
+            "in": "query",
+            "description": "响应包括在此日期之后 (或当天) 发布的财务事件。此日期必须采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。日期时间必须比请求时间早两分钟以上。",
+            "required": true,
+            "type": "string",
+            "format": "date-time",
+            "x-example": "2023-01-12"
+          },
+          {
+            "name": "postedBefore",
+            "in": "query",
+            "description": "响应包括在此日期之前 (但不在此日期) 发布的财务事件。此日期必须采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。\n\n日期-时间必须晚于 'pastedafter'，并且在提交请求前两分钟以上。如果 'pastedafter' 和 'pastedbefore' 相隔超过180天，则响应为空。\n\n** 默认值: ** 请求时间前两分钟。",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "x-example": "2023-02-12"
+          },
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "要从中检索交易的市场的ID。",
+            "required": false,
+            "type": "string",
+            "x-example": "ATIV93840DER"
+          },
+          {
+            "name": "nextToken",
+            "in": "query",
+            "description": "当结果数超过指定的 “pagesize” 值时，响应包含 “nexttoken”。若要获取下一页结果，请使用此令牌调用操作，并包含与生成令牌的调用相同的参数。若要获取完整列表，请调用此操作，直到 “nexttoken” 为null。请注意，此操作可能会返回空页。",
+            "required": false,
+            "type": "string",
+            "x-example": "jehgri34yo7jr9e8f984tr9i4o"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ListTransactionsResponse"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "postedAfter": {
+                        "value": "2023-03-07"
+                      },
+                      "nextToken": {
+                        "value": "jehgri34yo7jr9e8f984tr9i4o"
+                      }
+                    }
+                  },
+                  "response": {
+                    "nextToken": "Next token value",
+                    "transactions": [
+                      {
+                        "sellingPartnerMetadata": {
+                          "sellingPartnerId": "A3TH9S8BH6GOGM",
+                          "accountType": "PAYABLE",
+                          "marketplaceId": "ATIV93840DER"
+                        },
+                        "relatedIdentifiers": [
+                          {
+                            "relatedIdentifierName": "ORDER_ID",
+                            "relatedIdentifierValue": "8129762527551"
+                          }
+                        ],
+                        "transactionType": "Shipment",
+                        "postedDate": "2020-07-14T03:35:13.214Z",
+                        "totalAmount": {
+                          "currencyAmount": 10,
+                          "currencyCode": "USD"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "postedBefore": {
+                        "value": "2022-03-07"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Start date cannot be null",
+                        "details": "Start date cannot be null"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ListTransactionsResponse": {
+      "type": "object",
+      "properties": {
+        "nextToken": {
+          "type": "string",
+          "description": "当结果数超过指定的 “pagesize” 值时，响应包含 “nexttoken”。若要获取下一页结果，请使用此令牌调用操作，并包含与生成令牌的调用相同的参数。若要获取完整列表，请调用此操作，直到 “nexttoken” 为null。请注意，此操作可能会返回空页。"
+        },
+        "transactions": {
+          "$ref": "#/definitions/Transactions"
+        }
+      },
+      "description": "“Listtransactions” 操作的响应架构。"
+    },
+    "Transactions": {
+      "type": "array",
+      "description": "指定时间段内的事务列表。",
+      "items": {
+        "$ref": "#/definitions/Transaction"
+      }
+    },
+    "Transaction": {
+      "type": "object",
+      "properties": {
+        "sellingPartnerMetadata": {
+          "description": "描述卖方的元数据。",
+          "$ref": "#/definitions/SellingPartnerMetadata"
+        },
+        "relatedIdentifiers": {
+          "description": "与交易相关的标识符，如订单和发货id。",
+          "$ref": "#/definitions/RelatedIdentifiers"
+        },
+        "transactionType": {
+          "type": "string",
+          "description": "事务的类型。\n\n** 可能值: ** “shipment”"
+        },
+        "transactionId": {
+          "type": "string",
+          "description": "事务的唯一标识符。"
+        },
+        "transactionStatus": {
+          "type": "string",
+          "description": "事务处理的状态。\n\n** 可能值: **\n\n* '延期'\n* '释放'"
+        },
+        "description": {
+          "type": "string",
+          "description": "描述事务处理的原因。\n\n** 示例: ** '订单付款'，'退款订单'"
+        },
+        "postedDate": {
+          "description": "过帐交易记录的日期和时间。",
+          "$ref": "#/definitions/Date"
+        },
+        "totalAmount": {
+          "description": "交易中的总金额。",
+          "$ref": "#/definitions/Currency"
+        },
+        "marketplaceDetails": {
+          "description": "有关发生交易的市场的信息。",
+          "$ref": "#/definitions/MarketplaceDetails"
+        },
+        "items": {
+          "description": "有关事务处理中项目的其他信息。",
+          "$ref": "#/definitions/Items"
+        },
+        "contexts": {
+          "description": "有关交易的其他信息。",
+          "$ref": "#/definitions/Contexts"
+        },
+        "breakdowns": {
+          "description": "提供有关如何计算交易总额的详细信息的细分列表。",
+          "$ref": "#/definitions/Breakdowns"
+        }
+      },
+      "description": "与交易相关的所有信息。",
+      "example": {
+        "sellingPartnerMetadata": {
+          "sellingPartnerId": "XXXXXXXXXXXXXX",
+          "accountType": "PAYABLE",
+          "marketplaceId": "ATVPDKIKX0DER"
+        },
+        "relatedIdentifiers": [
+          {
+            "relatedIdentifierName": "ORDER_ID",
+            "relatedIdentifierValue": "8129762527551"
+          }
+        ],
+        "transactionType": "Shipment",
+        "transactionId": "b1qD0oAliFkLiqRyGbmeT0DoS2Z2kHzi7TZ92z-vARI",
+        "transactionStatus": "Released",
+        "description": "订单付款",
+        "postedDate": "2020-07-14T03:35:13.214Z",
+        "totalAmount": {
+          "currencyAmount": 10,
+          "currencyCode": "USD"
+        },
+        "marketplaceDetails": {
+          "marketplaceId": "ATVPDKIKX0DER",
+          "marketplaceName": "Amazon.com"
+        },
+        "items": [
+          {
+            "description": "项目标题",
+            "totalAmount": {
+              "currencyAmount": 10,
+              "currencyCode": "USD"
+            },
+            "relatedIdentifiers": [
+              {
+                "itemRelatedIdentifierName": "ORDER_ADJUSTMENT_ITEM_ID",
+                "itemRelatedIdentifierValue": "81297625-121-27551"
+              }
+            ],
+            "breakdowns": [
+              {
+                "breakdownType": "Product Charges",
+                "breakdownAmount": {
+                  "currencyAmount": 10,
+                  "currencyCode": "USD"
+                },
+                "breakdowns": [
+                  {
+                    "breakdownType": "Principle",
+                    "breakdownAmount": {
+                      "currencyAmount": 10,
+                      "currencyCode": "USD"
+                    },
+                    "breakdowns": []
+                  }
+                ]
+              }
+            ],
+            "contexts": [
+              {
+                "contextType": "ProductContext",
+                "asin": "B07FGXZQZ1",
+                "sku": "sku-12",
+                "quantityShipped": 1,
+                "fulfillmentNetwork": "MFN"
+              }
+            ]
+          }
+        ],
+        "breakdowns": {
+          "breakdowns": [
+            {
+              "breakdownType": "Sales",
+              "breakdownAmount": {
+                "currencyAmount": 10,
+                "currencyCode": "USD"
+              },
+              "breakdowns": [
+                {
+                  "breakdownType": "Product Charges",
+                  "breakdownAmount": {
+                    "currencyAmount": 10,
+                    "currencyCode": "USD"
+                  },
+                  "breakdowns": []
+                }
+              ]
+            }
+          ]
+        },
+        "contexts": [
+          {
+            "contextType": "AmazonPayContext",
+            "storeName": "Store 1",
+            "orderType": "Order Type",
+            "channel": "MFN"
+          }
+        ]
+      }
+    },
+    "BigDecimal": {
+      "type": "number",
+      "description": "带符号的十进制数。"
+    },
+    "Currency": {
+      "type": "object",
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "ISO 4217格式的三位数货币代码。"
+        },
+        "currencyAmount": {
+          "description": "货币价值。",
+          "$ref": "#/definitions/BigDecimal"
+        }
+      },
+      "description": "货币类型和金额。"
+    },
+    "SellingPartnerMetadata": {
+      "type": "object",
+      "properties": {
+        "sellingPartnerId": {
+          "type": "string",
+          "description": "唯一的卖家标识符。"
+        },
+        "accountType": {
+          "type": "string",
+          "description": "交易记录中的帐户类型。"
+        },
+        "marketplaceId": {
+          "type": "string",
+          "description": "发生交易的市场的标识符。"
+        }
+      },
+      "description": "描述卖方的元数据。"
+    },
+    "RelatedIdentifier": {
+      "type": "object",
+      "properties": {
+        "relatedIdentifierName": {
+          "type": "string",
+          "description": "相关业务标识符名称的枚举集。",
+          "enum": [
+            "ORDER_ID",
+            "SHIPMENT_ID",
+            "EVENT_GROUP_ID",
+            "REFUND_ID",
+            "INVOICE_ID",
+            "DISBURSEMENT_ID",
+            "TRANSFER_ID",
+            "DEFERRED_TRANSACTION_ID"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ORDER_ID",
+              "description": "与事务关联的 “orderid”。"
+            },
+            {
+              "value": "SHIPMENT_ID",
+              "description": "与交易关联的 “已发货”。"
+            },
+            {
+              "value": "EVENT_GROUP_ID",
+              "description": "与交易记录的财务事件组关联的标识符。"
+            },
+            {
+              "value": "REFUND_ID",
+              "description": "与交易关联的 “退款”。"
+            },
+            {
+              "value": "INVOICE_ID",
+              "description": "与交易关联的 “invoiceid”。"
+            },
+            {
+              "value": "DISBURSEMENT_ID",
+              "description": "亚马逊银行转账的支付ID。"
+            },
+            {
+              "value": "TRANSFER_ID",
+              "description": "与事务关联的 “transferid”。"
+            },
+            {
+              "value": "DEFERRED_TRANSACTION_ID",
+              "description": "相关的延迟事务处理的事务处理ID"
+            }
+          ]
+        },
+        "relatedIdentifierValue": {
+          "type": "string",
+          "description": "'RelatedIdentifierName' 的对应值。"
+        }
+      },
+      "description": "事务处理的相关业务标识符。"
+    },
+    "RelatedIdentifiers": {
+      "type": "array",
+      "description": "事务的相关业务标识符。",
+      "items": {
+        "$ref": "#/definitions/RelatedIdentifier"
+      }
+    },
+    "Date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "[ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式的日期。"
+    },
+    "MarketplaceDetails": {
+      "type": "object",
+      "properties": {
+        "marketplaceId": {
+          "type": "string",
+          "description": "发生事务的市场的标识符。"
+        },
+        "marketplaceName": {
+          "type": "string",
+          "description": "发生事务的市场的名称。例如: “amazon.Com” 、 “amazon in”。"
+        }
+      },
+      "description": "有关发生交易的市场的信息。",
+      "example": {
+        "marketplaceId": "ATVPDKIKX0DER",
+        "marketplaceName": "Amazon.com"
+      }
+    },
+    "Items": {
+      "type": "array",
+      "description": "事务中的项目列表。",
+      "items": {
+        "$ref": "#/definitions/Item"
+      }
+    },
+    "Item": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "事务处理中项目的说明。"
+        },
+        "relatedIdentifiers": {
+          "description": "项目的相关业务标识符。",
+          "$ref": "#/definitions/ItemRelatedIdentifiers"
+        },
+        "totalAmount": {
+          "description": "项目的总货币金额。",
+          "$ref": "#/definitions/Currency"
+        },
+        "breakdowns": {
+          "description": "提供有关如何计算交易总额的详细信息的细分列表。",
+          "$ref": "#/definitions/Breakdowns"
+        },
+        "contexts": {
+          "description": "有关项目的其他信息。",
+          "$ref": "#/definitions/Contexts"
+        }
+      },
+      "description": "有关事务处理中项目的其他信息。"
+    },
+    "ItemRelatedIdentifier": {
+      "type": "object",
+      "properties": {
+        "itemRelatedIdentifierName": {
+          "type": "string",
+          "description": "项目的相关项目标识符名称的枚举集。",
+          "enum": [
+            "ORDER_ADJUSTMENT_ITEM_ID",
+            "COUPON_ID",
+            "REMOVAL_SHIPMENT_ITEM_ID",
+            "TRANSACTION_ID"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ORDER_ADJUSTMENT_ITEM_ID",
+              "description": "为退款、担保索赔和调配事件定义的Amazon定义的订单调整标识符。"
+            },
+            {
+              "value": "COUPON_ID",
+              "description": "应用于交易的优惠券的标识符。"
+            },
+            {
+              "value": "REMOVAL_SHIPMENT_ITEM_ID",
+              "description": "移除装运中的项目的标识符。"
+            },
+            {
+              "value": "TRANSACTION_ID",
+              "description": "项目的交易ID。"
+            }
+          ]
+        },
+        "itemRelatedIdentifierValue": {
+          "type": "string",
+          "description": "与 “itemrelatedidentifiername” 对应的值。"
+        }
+      },
+      "description": "项目的相关业务标识符。",
+      "example": {
+        "itemRelatedIdentifierName": "ORDER_ADJUSTMENT_ITEM_ID",
+        "itemRelatedIdentifierValue": "OAI-123456789"
+      }
+    },
+    "ItemRelatedIdentifiers": {
+      "type": "array",
+      "description": "事务中项目的相关业务标识符。",
+      "items": {
+        "$ref": "#/definitions/ItemRelatedIdentifier"
+      }
+    },
+    "Breakdowns": {
+      "type": "array",
+      "description": "提供有关如何计算交易总额的详细信息的细分列表。",
+      "items": {
+        "$ref": "#/definitions/Breakdown"
+      }
+    },
+    "Breakdown": {
+      "type": "object",
+      "properties": {
+        "breakdownType": {
+          "type": "string",
+          "description": "电荷的类型。"
+        },
+        "breakdownAmount": {
+          "description": "费用的货币金额。",
+          "$ref": "#/definitions/Currency"
+        },
+        "breakdowns": {
+          "description": "进一步细分 “细分类型”。",
+          "$ref": "#/definitions/Breakdown"
+        }
+      },
+      "description": "有关金融交易中资金流动的详细信息。细分进一步分为细分类型、细分金额和进一步细分。"
+    },
+    "Contexts": {
+      "type": "array",
+      "description": "有关项目的附加信息的列表。",
+      "items": {
+        "$ref": "#/definitions/Context"
+      }
+    },
+    "Context": {
+      "description": "有关项目的其他信息。",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "contextType"
+          ],
+          "properties": {
+            "contextType": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/AmazonPayContext"
+        },
+        {
+          "$ref": "#/definitions/ProductContext"
+        },
+        {
+          "$ref": "#/definitions/PaymentsContext"
+        },
+        {
+          "$ref": "#/definitions/DeferredContext"
+        },
+        {
+          "$ref": "#/definitions/TimeRangeContext"
+        }
+      ],
+      "x-example": [
+        {
+          "contextType": "ProductContext",
+          "asin": "B07FGXZQZ1",
+          "sku": "sku-12",
+          "quantityShipped": 1,
+          "fulfillmentNetwork": "MFN"
+        },
+        {
+          "contextType": "AmazonPayContext",
+          "storeName": "Store 1",
+          "orderType": "Order Type",
+          "channel": "MFN"
+        }
+      ]
+    },
+    "ProductContext": {
+      "description": "与产品相关的其他信息。",
+      "type": "object",
+      "properties": {
+        "asin": {
+          "type": "string",
+          "description": "商品的Amazon标准标识号 (ASIN)。"
+        },
+        "sku": {
+          "type": "string",
+          "description": "物料的库存单位 (SKU)。"
+        },
+        "quantityShipped": {
+          "type": "integer",
+          "format": "int32",
+          "description": "发运的项目的数量。"
+        },
+        "fulfillmentNetwork": {
+          "type": "string",
+          "description": "物料的履行网络。"
+        }
+      },
+      "example": {
+        "asin": "B07FGXZQZ1",
+        "sku": "sku-12",
+        "quantityShipped": 1,
+        "fulfillmentNetwork": "MFN"
+      }
+    },
+    "AmazonPayContext": {
+      "description": "与Amazon Pay相关的其他信息。",
+      "type": "object",
+      "properties": {
+        "storeName": {
+          "type": "string",
+          "description": "与事务相关的存储的名称。"
+        },
+        "orderType": {
+          "type": "string",
+          "description": "交易记录的订单类型。"
+        },
+        "channel": {
+          "type": "string",
+          "description": "关联交易的渠道明细。"
+        }
+      },
+      "example": {
+        "storeName": "Store 1",
+        "orderType": "Order Type",
+        "channel": "MFN"
+      }
+    },
+    "PaymentsContext": {
+      "description": "与付款相关交易相关的其他信息。",
+      "type": "object",
+      "properties": {
+        "paymentType": {
+          "type": "string",
+          "description": "付款的类型。"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "description": "付款方式。"
+        },
+        "paymentReference": {
+          "type": "string",
+          "description": "付款的参考编号。"
+        },
+        "paymentDate": {
+          "$ref": "#/definitions/Date",
+          "description": "付款日期。"
+        }
+      },
+      "example": {
+        "paymentType": "Debit Card",
+        "paymentMethod": "BANK",
+        "paymentReference": "XXXXX123",
+        "paymentDate": "2020-07-14T03:35:13.214Z"
+      }
+    },
+    "DeferredContext": {
+      "description": "与递延交易相关的其他信息。",
+      "type": "object",
+      "properties": {
+        "deferralReason": {
+          "type": "string",
+          "description": "对事务应用的延迟策略。\n\n** 示例: ** “B2B” 、 “DD7”"
+        },
+        "maturityDate": {
+          "$ref": "#/definitions/Date",
+          "description": "交易记录的发布日期。"
+        },
+        "deferralStatus": {
+          "type": "string",
+          "description": "事务处理的状态。例如，'HOLD'，'RELEASE'。"
+        }
+      },
+      "example": {
+        "deferralReason": "B2B",
+        "maturityDate": "2024-07-14T00:00:00Z",
+        "deferralStatus": "HOLD"
+      }
+    },
+    "TimeRangeContext": {
+      "description": "与事务处理的时间范围相关的附加信息。",
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "$ref": "#/definitions/Date",
+          "description": "事务的开始时间。"
+        },
+        "endTime": {
+          "$ref": "#/definitions/Date",
+          "description": "事务的结束时间。"
+        }
+      },
+      "example": {
+        "startTime": "2020-07-14T03:35:13.214Z",
+        "endTime": "2020-07-14T03:35:13.214Z"
+      }
+    },
+    "ErrorList": {
+      "type": "object",
+      "description": "请求不成功时返回的错误响应列表。",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "description": "请求不成功时返回的错误响应。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    }
+  }
+}

@@ -1,0 +1,3284 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "使用内容API，您可以构建应用程序，帮助销售合作伙伴将丰富的营销内容添加到其亚马逊产品详细信息页面。内容帮助销售合作伙伴分享他们的品牌和产品故事，这有助于买家做出明智的购买决策。销售合作伙伴通过从内容模块中进行选择并添加图像和文本来组装内容。",
+    "version": "2020-11-01",
+    "title": "Selling Partner API for A+ Content Management",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/aplus/2020-11-01/contentDocuments": {
+      "get": {
+        "tags": [
+          "aplusContent"
+        ],
+        "description": "返回分配给销售合作伙伴的所有内容文档的列表。此操作仅返回内容文档的元数据。调用getContentDocument操作以获取内容文档的实际内容。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认值 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "searchContentDocuments",
+        "parameters": [
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "发布内容的市场的标识符。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "您以前对此操作的调用返回的nextPageToken响应元素中的页面令牌。当调用的结果超过页面大小时，返回nextPageToken。要获取下一页结果，请调用该操作并包含pageToken作为唯一参数。使用任何其他参数指定pageToken将导致请求失败。当没有返回nextPageToken值时，没有更多的页面返回。pageToken值不可用于不同的操作。",
+            "required": false,
+            "type": "string",
+            "minLength": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/SearchContentDocumentsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "410": {
+            "description": "指定的资源不再存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "aplusContent"
+        ],
+        "description": "创建新的内容文档。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认值 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "createContentDocument",
+        "parameters": [
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "发布内容的市场的标识符。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "in": "body",
+            "description": "内容文档请求详细信息。",
+            "name": "postContentDocumentRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostContentDocumentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/PostContentDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/aplus/2020-11-01/contentDocuments/{contentReferenceKey}": {
+      "get": {
+        "tags": [
+          "aplusContent"
+        ],
+        "description": "返回一个内容文档 (如果可用)。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认值 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "getContentDocument",
+        "parameters": [
+          {
+            "name": "contentReferenceKey",
+            "in": "path",
+            "description": "内容文档的唯一引用键。内容引用密钥不能形成永久链接，并且可能在将来改变。不保证内容引用密钥与任何内容标识符匹配。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "发布内容的市场的标识符。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "includedDataSet",
+            "in": "query",
+            "description": "要包含在响应中的内容数据类型集。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "CONTENTS",
+                "METADATA"
+              ],
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "CONTENTS",
+                  "description": "内容文档的内容。"
+                },
+                {
+                  "value": "METADATA",
+                  "description": "内容文档的元数据。"
+                }
+              ]
+            },
+            "collectionFormat": "csv",
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetContentDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "410": {
+            "description": "指定的资源不再存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "aplusContent"
+        ],
+        "description": "更新现有的内容文档。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认值 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "updateContentDocument",
+        "parameters": [
+          {
+            "name": "contentReferenceKey",
+            "in": "path",
+            "description": "内容文档的唯一引用键。内容引用密钥不能形成永久链接，并且可能在将来改变。不保证内容引用密钥与任何内容标识符匹配。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "发布内容的市场的标识符。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "in": "body",
+            "name": "postContentDocumentRequest",
+            "description": "内容文档请求详细信息。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostContentDocumentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/PostContentDocumentResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "410": {
+            "description": "指定的资源不再存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/aplus/2020-11-01/contentDocuments/{contentReferenceKey}/asins": {
+      "get": {
+        "tags": [
+          "aplusContent"
+        ],
+        "description": "返回与指定内容文档相关的asin列表 (如果可用)。如果不包括asinSet参数，该操作将返回与内容文档相关的所有asin。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认值 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "listContentDocumentAsinRelations",
+        "parameters": [
+          {
+            "name": "contentReferenceKey",
+            "in": "path",
+            "description": "内容文档的唯一引用键。内容引用密钥不能形成永久链接，并且可能在将来改变。不保证内容引用密钥与任何内容标识符匹配。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "发布内容的市场的标识符。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "includedDataSet",
+            "in": "query",
+            "description": "要包含在响应中的内容数据类型集。如果不包含此参数，该操作将返回不带元数据的相关asin。",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "METADATA"
+              ],
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "METADATA",
+                  "description": "内容文档的元数据。"
+                }
+              ]
+            },
+            "collectionFormat": "csv",
+            "minItems": 0,
+            "uniqueItems": true
+          },
+          {
+            "name": "asinSet",
+            "in": "query",
+            "description": "一套asin。",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 10
+            },
+            "collectionFormat": "csv",
+            "uniqueItems": true
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "您以前对此操作的调用返回的nextPageToken响应元素中的页面令牌。当调用的结果超过页面大小时，返回nextPageToken。要获取下一页结果，请调用该操作并包含pageToken作为唯一参数。使用任何其他参数指定pageToken将导致请求失败。当没有返回nextPageToken值时，没有更多的页面返回。pageToken值不可用于不同的操作。",
+            "required": false,
+            "type": "string",
+            "minLength": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ListContentDocumentAsinRelationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "410": {
+            "description": "指定的资源不再存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "aplusContent"
+        ],
+        "description": "替换与指定内容文档相关的所有asin (如果可用)。这可能会添加或删除asin，具体取决于当前的相关asin集。删除ASIN具有从该ASIN暂停内容文档的副作用。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认值 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "postContentDocumentAsinRelations",
+        "parameters": [
+          {
+            "name": "contentReferenceKey",
+            "in": "path",
+            "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ content identifier.",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "发布内容的市场的标识符。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "in": "body",
+            "name": "postContentDocumentAsinRelationsRequest",
+            "description": "内容文档ASIN关系请求详细信息。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostContentDocumentAsinRelationsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/PostContentDocumentAsinRelationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "410": {
+            "description": "指定的资源不再存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/aplus/2020-11-01/contentAsinValidations": {
+      "post": {
+        "tags": [
+          "aplusContent"
+        ],
+        "description": "检查内容文档对于在一组asin上使用是否有效。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认值 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "validateContentDocumentAsinRelations",
+        "parameters": [
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "发布内容的市场的标识符。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "asinSet",
+            "in": "query",
+            "description": "一套asin。",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 10
+            },
+            "collectionFormat": "csv",
+            "uniqueItems": true
+          },
+          {
+            "in": "body",
+            "name": "postContentDocumentRequest",
+            "description": "内容文档请求详细信息。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostContentDocumentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ValidateContentDocumentAsinRelationsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/aplus/2020-11-01/contentPublishRecords": {
+      "get": {
+        "tags": [
+          "aplusContent"
+        ],
+        "description": "搜索内容发布记录 (如果可用)。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认值 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "searchContentPublishRecords",
+        "parameters": [
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "发布内容的市场的标识符。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "asin",
+            "in": "query",
+            "description": "Amazon标准标识号 (ASIN)。",
+            "required": true,
+            "type": "string",
+            "minLength": 10
+          },
+          {
+            "name": "pageToken",
+            "in": "query",
+            "description": "您以前对此操作的调用返回的nextPageToken响应元素中的页面令牌。当调用的结果超过页面大小时，返回nextPageToken。要获取下一页结果，请调用该操作并包含pageToken作为唯一参数。使用任何其他参数指定pageToken将导致请求失败。当没有返回nextPageToken值时，没有更多的页面返回。pageToken值不可用于不同的操作。",
+            "required": false,
+            "type": "string",
+            "minLength": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/SearchContentPublishRecordsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/aplus/2020-11-01/contentDocuments/{contentReferenceKey}/approvalSubmissions": {
+      "post": {
+        "tags": [
+          "aplusContent"
+        ],
+        "description": "提交内容文档以供审阅、批准和发布。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认值 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "postContentDocumentApprovalSubmission",
+        "parameters": [
+          {
+            "name": "contentReferenceKey",
+            "in": "path",
+            "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ content identifier.",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "发布内容的市场的标识符。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/PostContentDocumentApprovalSubmissionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "410": {
+            "description": "指定的资源不再存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/aplus/2020-11-01/contentDocuments/{contentReferenceKey}/suspendSubmissions": {
+      "post": {
+        "tags": [
+          "aplusContent"
+        ],
+        "description": "提交暂停可见内容的请求。这既不会删除内容文档，也不会删除ASIN关系。\n\n** 使用计划: **\n\n| 计划类型 | 速率 (每秒请求数) | 突发 |\n| ---- | ---- | ---- |\n| 默认值 | 10 |\n| 特定于销售合作伙伴 | 变量 |\n\nX-amzn-ratelimit-limit响应标头返回应用于请求的操作的使用计划费率限制。某些销售合作伙伴的费率限制将与上表中显示的默认费率和突发费率有所不同。有关更多信息，请参阅销售合作伙伴API文档中的 “使用计划和费率限制”。",
+        "operationId": "postContentDocumentSuspendSubmission",
+        "parameters": [
+          {
+            "name": "contentReferenceKey",
+            "in": "path",
+            "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ content identifier.",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "name": "marketplaceId",
+            "in": "query",
+            "description": "发布内容的市场的标识符。",
+            "required": true,
+            "type": "string",
+            "minLength": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/PostContentDocumentSuspendSubmissionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "410": {
+            "description": "指定的资源不再存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    }
+  },
+  "definitions": {
+    "AplusResponse": {
+      "type": "object",
+      "properties": {
+        "warnings": {
+          "$ref": "#/definitions/MessageSet"
+        }
+      },
+      "description": "当请求成功或部分成功时，所有内容操作的基本响应数据。各个操作可以用附加数据来扩展这一点。"
+    },
+    "AplusPaginatedResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AplusResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nextPageToken": {
+              "$ref": "#/definitions/PageToken"
+            }
+          }
+        }
+      ],
+      "description": "分页内容操作的基本响应数据。各个操作可以用附加数据来扩展这一点。如果不返回nextPageToken，则没有更多的页面要返回。"
+    },
+    "ErrorList": {
+      "type": "object",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          },
+          "description": "请求不成功时返回的错误响应列表。"
+        }
+      },
+      "description": "请求不成功时的错误响应。"
+    },
+    "MessageSet": {
+      "type": "array",
+      "description": "给用户的一组消息，如警告或注释。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      },
+      "uniqueItems": true
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识错误情况类型的代码。",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "description": "错误条件的可读描述。",
+          "minLength": 1
+        },
+        "details": {
+          "type": "string",
+          "description": "附加信息 (如果可用)，以阐明错误情况。",
+          "minLength": 1
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "ContentMetadataRecordList": {
+      "type": "array",
+      "description": "内容元数据记录的列表。",
+      "items": {
+        "$ref": "#/definitions/ContentMetadataRecord"
+      },
+      "uniqueItems": false
+    },
+    "ContentMetadataRecord": {
+      "type": "object",
+      "required": [
+        "contentMetadata",
+        "contentReferenceKey"
+      ],
+      "properties": {
+        "contentReferenceKey": {
+          "$ref": "#/definitions/ContentReferenceKey"
+        },
+        "contentMetadata": {
+          "$ref": "#/definitions/ContentMetadata"
+        }
+      },
+      "description": "内容文档的元数据，以及用于内容管理的附加信息。"
+    },
+    "ContentMetadata": {
+      "type": "object",
+      "required": [
+        "badgeSet",
+        "marketplaceId",
+        "name",
+        "status",
+        "updateTime"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "内容文档名称。",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "marketplaceId": {
+          "$ref": "#/definitions/MarketplaceId"
+        },
+        "status": {
+          "$ref": "#/definitions/ContentStatus"
+        },
+        "badgeSet": {
+          "$ref": "#/definitions/ContentBadgeSet"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "内容文档和元数据的大致年龄。"
+        }
+      },
+      "description": "内容文档的元数据。"
+    },
+    "ContentType": {
+      "type": "string",
+      "description": "内容文档类型。",
+      "enum": [
+        "EBC",
+        "EMC"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "EBC",
+          "description": "通过Seller Central中的内容管理器发布的内容。"
+        },
+        {
+          "value": "EMC",
+          "description": "通过Vendor Central中的内容管理器发布的内容。"
+        }
+      ]
+    },
+    "ContentSubType": {
+      "type": "string",
+      "minLength": 1,
+      "description": "内容文档子类型。这表示内容文档的特殊用途类型。并非每个内容文档类型都有子类型，子类型可能随时更改。"
+    },
+    "ContentStatus": {
+      "type": "string",
+      "description": "内容文档的提交状态。",
+      "enum": [
+        "APPROVED",
+        "DRAFT",
+        "REJECTED",
+        "SUBMITTED"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "APPROVED",
+          "description": "内容获得批准，并将发布到应用ASINs。"
+        },
+        {
+          "value": "DRAFT",
+          "description": "内容尚未提交审批。"
+        },
+        {
+          "value": "REJECTED",
+          "description": "内容已被适度拒绝，需要根据提供的拒绝原因进行修订和重新提交。"
+        },
+        {
+          "value": "SUBMITTED",
+          "description": "内容已提交审批，目前正在等待审核。"
+        }
+      ]
+    },
+    "ContentBadgeSet": {
+      "type": "array",
+      "description": "内容徽章的集合。",
+      "items": {
+        "$ref": "#/definitions/ContentBadge"
+      },
+      "uniqueItems": true
+    },
+    "ContentBadge": {
+      "type": "string",
+      "description": "提供有关内容文档的附加信息的标志。",
+      "enum": [
+        "BULK",
+        "GENERATED",
+        "LAUNCHPAD",
+        "PREMIUM",
+        "STANDARD"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "BULK",
+          "description": "此内容适用于批量asin。"
+        },
+        {
+          "value": "GENERATED",
+          "description": "此内容由自动化过程生成。如果任何用户修改此内容，它将丢失生成的徽章。"
+        },
+        {
+          "value": "LAUNCHPAD",
+          "description": "Launchpad内容。"
+        },
+        {
+          "value": "PREMIUM",
+          "description": "高级内容"
+        },
+        {
+          "value": "STANDARD",
+          "description": "标准内容。"
+        }
+      ]
+    },
+    "AsinBadgeSet": {
+      "type": "array",
+      "description": "一套ASIN徽章。",
+      "items": {
+        "$ref": "#/definitions/AsinBadge"
+      },
+      "uniqueItems": true
+    },
+    "AsinBadge": {
+      "type": "string",
+      "description": "提供有关ASIN的附加信息的标志。这是上下文的，并且可以根据生成它的请求而改变。",
+      "enum": [
+        "BRAND_NOT_ELIGIBLE",
+        "CATALOG_NOT_FOUND",
+        "CONTENT_NOT_PUBLISHED",
+        "CONTENT_PUBLISHED"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "BRAND_NOT_ELIGIBLE",
+          "description": "这个ASIN不是当前用户品牌的一部分。如果当前用户更正其品牌注册以包含此ASIN，则它将丢失 “brandnoteligible” 徽章。"
+        },
+        {
+          "value": "CATALOG_NOT_FOUND",
+          "description": "在Amazon目录中找不到此ASIN。如果任何用户创建或恢复此ASIN，它将丢失 “未找到目录” 徽章。"
+        },
+        {
+          "value": "CONTENT_NOT_PUBLISHED",
+          "description": "此ASIN没有向它发布指定的内容。如果当前用户发布此ASIN的指定内容，它将丢失 “contentnotpublished” 徽章。"
+        },
+        {
+          "value": "CONTENT_PUBLISHED",
+          "description": "此ASIN具有发布给它的指定内容。如果当前用户挂起此ASIN的指定内容，它将丢失 “contentpublished” 徽章。"
+        }
+      ]
+    },
+    "MarketplaceId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "发布内容的市场的标识符。"
+    },
+    "LanguageTag": {
+      "type": "string",
+      "minLength": 5,
+      "description": "IETF语言标记。这只支持带有一个辅助语言子标记的主要语言子标记。次要语言子标签几乎总是一个区域名称。这不支持除主要子标记和辅助子标记之外的其他子标记。\n** 图案: ** ^[a-z]{2，}-[A-Z0-9]{2 ，}$"
+    },
+    "AsinSet": {
+      "type": "array",
+      "description": "一套asin。",
+      "items": {
+        "$ref": "#/definitions/Asin"
+      },
+      "uniqueItems": true
+    },
+    "Asin": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Amazon标准标识号 (ASIN)。"
+    },
+    "AsinMetadataSet": {
+      "type": "array",
+      "description": "ASIN元数据的集合。",
+      "items": {
+        "$ref": "#/definitions/AsinMetadata"
+      },
+      "uniqueItems": true
+    },
+    "AsinMetadata": {
+      "type": "object",
+      "required": [
+        "asin"
+      ],
+      "properties": {
+        "asin": {
+          "$ref": "#/definitions/Asin"
+        },
+        "badgeSet": {
+          "$ref": "#/definitions/AsinBadgeSet"
+        },
+        "parent": {
+          "$ref": "#/definitions/Asin"
+        },
+        "title": {
+          "type": "string",
+          "description": "Amazon目录中ASIN的标题。",
+          "minLength": 1
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Amazon目录中ASIN的默认映像。",
+          "minLength": 1
+        },
+        "contentReferenceKeySet": {
+          "$ref": "#/definitions/ContentReferenceKeySet"
+        }
+      },
+      "description": "内容ASIN具有用于内容管理的附加元数据。如果在对listContentDocumentAsinRelations操作的调用中不包括 “includeddataset” 参数，则返回相关asin而不带元数据。"
+    },
+    "PublishRecordList": {
+      "type": "array",
+      "description": "内容发布记录的列表。",
+      "items": {
+        "$ref": "#/definitions/PublishRecord"
+      },
+      "uniqueItems": false
+    },
+    "PublishRecord": {
+      "type": "object",
+      "required": [
+        "asin",
+        "contentReferenceKey",
+        "contentType",
+        "locale",
+        "marketplaceId"
+      ],
+      "properties": {
+        "marketplaceId": {
+          "$ref": "#/definitions/MarketplaceId"
+        },
+        "locale": {
+          "$ref": "#/definitions/LanguageTag"
+        },
+        "asin": {
+          "$ref": "#/definitions/Asin"
+        },
+        "contentType": {
+          "$ref": "#/definitions/ContentType"
+        },
+        "contentSubType": {
+          "$ref": "#/definitions/ContentSubType"
+        },
+        "contentReferenceKey": {
+          "$ref": "#/definitions/ContentReferenceKey"
+        }
+      },
+      "description": "内容发布事件的完整上下文。"
+    },
+    "ContentReferenceKeySet": {
+      "type": "array",
+      "description": "一组内容引用键。",
+      "items": {
+        "$ref": "#/definitions/ContentReferenceKey"
+      },
+      "uniqueItems": true
+    },
+    "ContentReferenceKey": {
+      "type": "string",
+      "minLength": 1,
+      "description": "内容文档的唯一引用键。内容引用密钥不能形成永久链接，并且可能在将来改变。不保证内容引用密钥与任何内容标识符匹配。"
+    },
+    "PageToken": {
+      "type": "string",
+      "minLength": 1,
+      "description": "调用结果超过页面大小时返回的页面令牌。若要获取另一页结果，请再次调用该操作，并使用pageToken参数传入此值。"
+    },
+    "ImageCropSpecification": {
+      "type": "object",
+      "required": [
+        "size"
+      ],
+      "properties": {
+        "size": {
+          "$ref": "#/definitions/ImageDimensions"
+        },
+        "offset": {
+          "$ref": "#/definitions/ImageOffsets"
+        }
+      },
+      "description": "用于可选地裁剪图像的指令。如果不需要裁剪，请将尺寸设置为原始图像大小。如果图像被裁剪并且没有提供偏移值，则裁剪图像的左上角相对于原始图像的坐标被默认为 (0,0)。"
+    },
+    "ImageDimensions": {
+      "type": "object",
+      "required": [
+        "height",
+        "width"
+      ],
+      "properties": {
+        "width": {
+          "$ref": "#/definitions/IntegerWithUnits"
+        },
+        "height": {
+          "$ref": "#/definitions/IntegerWithUnits"
+        }
+      },
+      "description": "从裁剪图像的左上角延伸的尺寸，如果没有裁剪，则从原始图像的左上角延伸。仅允许 “像素” 作为ImageDimensions的单位值。"
+    },
+    "ImageOffsets": {
+      "type": "object",
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "$ref": "#/definitions/IntegerWithUnits"
+        },
+        "y": {
+          "$ref": "#/definitions/IntegerWithUnits"
+        }
+      },
+      "description": "裁剪图像的左上角，在原始图像的坐标空间中指定。"
+    },
+    "IntegerWithUnits": {
+      "type": "object",
+      "required": [
+        "units",
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "integer",
+          "description": "尺寸值。"
+        },
+        "units": {
+          "type": "string",
+          "description": "测量单位。"
+        }
+      },
+      "description": "整数维数及其度量单位。例如，这可以表示100像素。"
+    },
+    "ContentRecord": {
+      "type": "object",
+      "description": "包含用于内容管理的附加信息的内容文档。",
+      "required": [
+        "contentReferenceKey"
+      ],
+      "properties": {
+        "contentReferenceKey": {
+          "$ref": "#/definitions/ContentReferenceKey"
+        },
+        "contentMetadata": {
+          "$ref": "#/definitions/ContentMetadata"
+        },
+        "contentDocument": {
+          "$ref": "#/definitions/ContentDocument"
+        }
+      }
+    },
+    "ContentDocument": {
+      "type": "object",
+      "required": [
+        "contentModuleList",
+        "contentType",
+        "locale",
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "内容文档名称。",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "contentType": {
+          "$ref": "#/definitions/ContentType"
+        },
+        "contentSubType": {
+          "$ref": "#/definitions/ContentSubType"
+        },
+        "locale": {
+          "$ref": "#/definitions/LanguageTag"
+        },
+        "contentModuleList": {
+          "$ref": "#/definitions/ContentModuleList"
+        }
+      },
+      "description": "内容文档。这是发布到产品详细信息页面的增强内容。"
+    },
+    "ContentModuleList": {
+      "type": "array",
+      "description": "内容模块的列表。",
+      "items": {
+        "$ref": "#/definitions/ContentModule"
+      },
+      "uniqueItems": false,
+      "minItems": 1,
+      "maxItems": 100
+    },
+    "ContentModule": {
+      "type": "object",
+      "required": [
+        "contentModuleType"
+      ],
+      "properties": {
+        "contentModuleType": {
+          "$ref": "#/definitions/ContentModuleType"
+        },
+        "standardCompanyLogo": {
+          "$ref": "#/definitions/StandardCompanyLogoModule"
+        },
+        "standardComparisonTable": {
+          "$ref": "#/definitions/StandardComparisonTableModule"
+        },
+        "standardFourImageText": {
+          "$ref": "#/definitions/StandardFourImageTextModule"
+        },
+        "standardFourImageTextQuadrant": {
+          "$ref": "#/definitions/StandardFourImageTextQuadrantModule"
+        },
+        "standardHeaderImageText": {
+          "$ref": "#/definitions/StandardHeaderImageTextModule"
+        },
+        "standardImageSidebar": {
+          "$ref": "#/definitions/StandardImageSidebarModule"
+        },
+        "standardImageTextOverlay": {
+          "$ref": "#/definitions/StandardImageTextOverlayModule"
+        },
+        "standardMultipleImageText": {
+          "$ref": "#/definitions/StandardMultipleImageTextModule"
+        },
+        "standardProductDescription": {
+          "$ref": "#/definitions/StandardProductDescriptionModule"
+        },
+        "standardSingleImageHighlights": {
+          "$ref": "#/definitions/StandardSingleImageHighlightsModule"
+        },
+        "standardSingleImageSpecsDetail": {
+          "$ref": "#/definitions/StandardSingleImageSpecsDetailModule"
+        },
+        "standardSingleSideImage": {
+          "$ref": "#/definitions/StandardSingleSideImageModule"
+        },
+        "standardTechSpecs": {
+          "$ref": "#/definitions/StandardTechSpecsModule"
+        },
+        "standardText": {
+          "$ref": "#/definitions/StandardTextModule"
+        },
+        "standardThreeImageText": {
+          "$ref": "#/definitions/StandardThreeImageTextModule"
+        }
+      },
+      "description": "一个内容模块。内容文档由内容模块组成。contentModuleType属性选择要使用的内容模块类型。"
+    },
+    "ContentModuleType": {
+      "type": "string",
+      "description": "内容模块的类型。",
+      "enum": [
+        "STANDARD_COMPANY_LOGO",
+        "STANDARD_COMPARISON_TABLE",
+        "STANDARD_FOUR_IMAGE_TEXT",
+        "STANDARD_FOUR_IMAGE_TEXT_QUADRANT",
+        "STANDARD_HEADER_IMAGE_TEXT",
+        "STANDARD_IMAGE_SIDEBAR",
+        "STANDARD_IMAGE_TEXT_OVERLAY",
+        "STANDARD_MULTIPLE_IMAGE_TEXT",
+        "STANDARD_PRODUCT_DESCRIPTION",
+        "STANDARD_SINGLE_IMAGE_HIGHLIGHTS",
+        "STANDARD_SINGLE_IMAGE_SPECS_DETAIL",
+        "STANDARD_SINGLE_SIDE_IMAGE",
+        "STANDARD_TECH_SPECS",
+        "STANDARD_TEXT",
+        "STANDARD_THREE_IMAGE_TEXT"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "STANDARD_COMPANY_LOGO",
+          "description": "标准公司徽标图像。"
+        },
+        {
+          "value": "STANDARD_COMPARISON_TABLE",
+          "description": "标准产品比较表或图表。"
+        },
+        {
+          "value": "STANDARD_FOUR_IMAGE_TEXT",
+          "description": "四个带有文本的标准图像，显示在一行上。"
+        },
+        {
+          "value": "STANDARD_FOUR_IMAGE_TEXT_QUADRANT",
+          "description": "四个带有文本的标准图像，显示在四个象限的网格上。"
+        },
+        {
+          "value": "STANDARD_HEADER_IMAGE_TEXT",
+          "description": "标准标题文本、图像和正文文本。"
+        },
+        {
+          "value": "STANDARD_IMAGE_SIDEBAR",
+          "description": "两个图像、两个段落和两个项目符号列表。一个图像较小，并显示在边栏中。"
+        },
+        {
+          "value": "STANDARD_IMAGE_TEXT_OVERLAY",
+          "description": "带有浮动文本框的标准背景图像。"
+        },
+        {
+          "value": "STANDARD_MULTIPLE_IMAGE_TEXT",
+          "description": "带文本的标准图像，一次呈现一个。用户点击缩略图以查看每个块。"
+        },
+        {
+          "value": "STANDARD_PRODUCT_DESCRIPTION",
+          "description": "标准产品描述文本。"
+        },
+        {
+          "value": "STANDARD_SINGLE_IMAGE_HIGHLIGHTS",
+          "description": "带有多个段落和项目符号列表的标准图像。"
+        },
+        {
+          "value": "STANDARD_SINGLE_IMAGE_SPECS_DETAIL",
+          "description": "带有段落和项目符号列表的标准图像，以及用于技术细节的额外空间。"
+        },
+        {
+          "value": "STANDARD_SINGLE_SIDE_IMAGE",
+          "description": "侧面带有图像的标准标题和正文文本。"
+        },
+        {
+          "value": "STANDARD_TECH_SPECS",
+          "description": "技术特征名称和定义的标准表。"
+        },
+        {
+          "value": "STANDARD_TEXT",
+          "description": "标准标题和正文文本。"
+        },
+        {
+          "value": "STANDARD_THREE_IMAGE_TEXT",
+          "description": "三个带有文本的标准图像，显示在一行中。"
+        }
+      ]
+    },
+    "StandardCompanyLogoModule": {
+      "type": "object",
+      "required": [
+        "companyLogo"
+      ],
+      "properties": {
+        "companyLogo": {
+          "$ref": "#/definitions/ImageComponent"
+        }
+      },
+      "description": "标准公司徽标图像。"
+    },
+    "StandardComparisonTableModule": {
+      "type": "object",
+      "properties": {
+        "productColumns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StandardComparisonProductBlock"
+          },
+          "maxItems": 6,
+          "minItems": 0
+        },
+        "metricRowLabels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlainTextItem"
+          },
+          "maxItems": 10,
+          "minItems": 0
+        }
+      },
+      "description": "标准产品对照表。"
+    },
+    "StandardFourImageTextModule": {
+      "type": "object",
+      "properties": {
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "block1": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        },
+        "block2": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        },
+        "block3": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        },
+        "block4": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        }
+      },
+      "description": "四个带有文本的标准图像，显示在一行上。"
+    },
+    "StandardFourImageTextQuadrantModule": {
+      "type": "object",
+      "required": [
+        "block1",
+        "block2",
+        "block3",
+        "block4"
+      ],
+      "properties": {
+        "block1": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        },
+        "block2": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        },
+        "block3": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        },
+        "block4": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        }
+      },
+      "description": "四个带有文本的标准图像，显示在四个象限的网格上。"
+    },
+    "StandardHeaderImageTextModule": {
+      "type": "object",
+      "properties": {
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "block": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        }
+      },
+      "description": "标准标题文本、图像和正文文本。"
+    },
+    "StandardImageSidebarModule": {
+      "type": "object",
+      "properties": {
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "imageCaptionBlock": {
+          "$ref": "#/definitions/StandardImageCaptionBlock"
+        },
+        "descriptionTextBlock": {
+          "$ref": "#/definitions/StandardTextBlock"
+        },
+        "descriptionListBlock": {
+          "$ref": "#/definitions/StandardTextListBlock"
+        },
+        "sidebarImageTextBlock": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        },
+        "sidebarListBlock": {
+          "$ref": "#/definitions/StandardTextListBlock"
+        }
+      },
+      "description": "两个图像、两个段落和两个项目符号列表。一个图像较小并显示在边栏中。"
+    },
+    "StandardImageTextOverlayModule": {
+      "type": "object",
+      "required": [
+        "overlayColorType"
+      ],
+      "properties": {
+        "overlayColorType": {
+          "$ref": "#/definitions/ColorType"
+        },
+        "block": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        }
+      },
+      "description": "带有浮动文本框的标准背景图像。"
+    },
+    "StandardMultipleImageTextModule": {
+      "type": "object",
+      "properties": {
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StandardImageTextCaptionBlock"
+          }
+        }
+      },
+      "description": "带文本的标准图像，一次呈现一个。用户点击缩略图以查看每个块。"
+    },
+    "StandardProductDescriptionModule": {
+      "type": "object",
+      "required": [
+        "body"
+      ],
+      "properties": {
+        "body": {
+          "$ref": "#/definitions/ParagraphComponent"
+        }
+      },
+      "description": "标准产品描述文本。"
+    },
+    "StandardSingleImageHighlightsModule": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "$ref": "#/definitions/ImageComponent"
+        },
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "textBlock1": {
+          "$ref": "#/definitions/StandardTextBlock"
+        },
+        "textBlock2": {
+          "$ref": "#/definitions/StandardTextBlock"
+        },
+        "textBlock3": {
+          "$ref": "#/definitions/StandardTextBlock"
+        },
+        "bulletedListBlock": {
+          "$ref": "#/definitions/StandardHeaderTextListBlock"
+        }
+      },
+      "description": "带有多个段落和项目符号列表的标准图像。"
+    },
+    "StandardSingleImageSpecsDetailModule": {
+      "type": "object",
+      "properties": {
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "image": {
+          "$ref": "#/definitions/ImageComponent"
+        },
+        "descriptionHeadline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "descriptionBlock1": {
+          "$ref": "#/definitions/StandardTextBlock"
+        },
+        "descriptionBlock2": {
+          "$ref": "#/definitions/StandardTextBlock"
+        },
+        "specificationHeadline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "specificationListBlock": {
+          "$ref": "#/definitions/StandardHeaderTextListBlock"
+        },
+        "specificationTextBlock": {
+          "$ref": "#/definitions/StandardTextBlock"
+        }
+      },
+      "description": "带有段落和项目符号列表的标准图像，以及用于技术细节的额外空间。"
+    },
+    "StandardSingleSideImageModule": {
+      "type": "object",
+      "required": [
+        "imagePositionType"
+      ],
+      "properties": {
+        "imagePositionType": {
+          "$ref": "#/definitions/PositionType"
+        },
+        "block": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        }
+      },
+      "description": "侧面带有图像的标准标题和正文文本。"
+    },
+    "StandardTechSpecsModule": {
+      "type": "object",
+      "required": [
+        "specificationList"
+      ],
+      "properties": {
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "specificationList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StandardTextPairBlock"
+          },
+          "description": "规格列表。",
+          "maxItems": 16,
+          "minItems": 4
+        },
+        "tableCount": {
+          "type": "integer",
+          "description": "要显示的表的数量。特征在表之间均匀划分。",
+          "minimum": 1,
+          "maximum": 2
+        }
+      },
+      "description": "技术特征名称和定义的标准表。"
+    },
+    "StandardTextModule": {
+      "type": "object",
+      "required": [
+        "body"
+      ],
+      "properties": {
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "body": {
+          "$ref": "#/definitions/ParagraphComponent"
+        }
+      },
+      "description": "标准标题和正文文本。"
+    },
+    "StandardThreeImageTextModule": {
+      "type": "object",
+      "properties": {
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "block1": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        },
+        "block2": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        },
+        "block3": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        }
+      },
+      "description": "三个带有文本的标准图像，显示在一行上。"
+    },
+    "StandardComparisonProductBlock": {
+      "type": "object",
+      "required": [
+        "position"
+      ],
+      "properties": {
+        "position": {
+          "type": "integer",
+          "description": "此比较产品块在模块内的等级或索引。不同的块不能占据单个模块内的相同位置。",
+          "minimum": 1,
+          "maximum": 6
+        },
+        "image": {
+          "$ref": "#/definitions/ImageComponent"
+        },
+        "title": {
+          "type": "string",
+          "description": "比较产品标题。",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "asin": {
+          "$ref": "#/definitions/Asin"
+        },
+        "highlight": {
+          "type": "boolean",
+          "description": "确定此内容块是否在视觉上突出显示。"
+        },
+        "metrics": {
+          "type": "array",
+          "description": "产品的比较指标。",
+          "items": {
+            "$ref": "#/definitions/PlainTextItem"
+          },
+          "maxItems": 10,
+          "minItems": 0
+        }
+      },
+      "description": "内容标准比较产品块。"
+    },
+    "StandardHeaderTextListBlock": {
+      "type": "object",
+      "properties": {
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "block": {
+          "$ref": "#/definitions/StandardTextListBlock"
+        }
+      },
+      "description": "标准固定长度的文本列表，带有相关的标题。"
+    },
+    "StandardTextListBlock": {
+      "type": "object",
+      "required": [
+        "textList"
+      ],
+      "properties": {
+        "textList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TextItem"
+          },
+          "maxItems": 8,
+          "minItems": 0
+        }
+      },
+      "description": "内容标准固定长度的文本列表，通常以项目符号表示。"
+    },
+    "StandardImageTextCaptionBlock": {
+      "type": "object",
+      "properties": {
+        "block": {
+          "$ref": "#/definitions/StandardImageTextBlock"
+        },
+        "caption": {
+          "$ref": "#/definitions/TextComponent"
+        }
+      },
+      "description": "内容标准图像和文本块，带有相关的标题。标题可能不会在所有设备上显示。"
+    },
+    "StandardImageCaptionBlock": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "$ref": "#/definitions/ImageComponent"
+        },
+        "caption": {
+          "$ref": "#/definitions/TextComponent"
+        }
+      },
+      "description": "内容标准图像和标题块。"
+    },
+    "StandardImageTextBlock": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "$ref": "#/definitions/ImageComponent"
+        },
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "body": {
+          "$ref": "#/definitions/ParagraphComponent"
+        }
+      },
+      "description": "内容标准图像和文本框块。"
+    },
+    "StandardTextBlock": {
+      "type": "object",
+      "properties": {
+        "headline": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "body": {
+          "$ref": "#/definitions/ParagraphComponent"
+        }
+      },
+      "description": "内容标准文本框块，由带标题的段落组成。"
+    },
+    "StandardTextPairBlock": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "$ref": "#/definitions/TextComponent"
+        },
+        "description": {
+          "$ref": "#/definitions/TextComponent"
+        }
+      },
+      "description": "内容标准标签和描述块，由一对文本组件组成。"
+    },
+    "TextItem": {
+      "type": "object",
+      "required": [
+        "position",
+        "text"
+      ],
+      "properties": {
+        "position": {
+          "type": "integer",
+          "description": "此文本项在集合中的排名或索引。不同的项不能在单个集合中占据相同的位置。",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "text": {
+          "$ref": "#/definitions/TextComponent"
+        }
+      },
+      "description": "丰富的位置文本，通常显示为项目符号点的集合。"
+    },
+    "PlainTextItem": {
+      "type": "object",
+      "required": [
+        "position",
+        "value"
+      ],
+      "properties": {
+        "position": {
+          "type": "integer",
+          "description": "此文本项在集合中的排名或索引。不同的项不能在单个集合中占据相同的位置。",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "value": {
+          "type": "string",
+          "description": "实际的纯文本。",
+          "minLength": 1,
+          "maxLength": 250
+        }
+      },
+      "description": "纯位置文本，用于简短标签和描述符的集合。"
+    },
+    "ImageComponent": {
+      "type": "object",
+      "required": [
+        "altText",
+        "imageCropSpecification",
+        "uploadDestinationId"
+      ],
+      "properties": {
+        "uploadDestinationId": {
+          "type": "string",
+          "description": "此标识符由销售合作伙伴API提供，用于上传。",
+          "minLength": 1
+        },
+        "imageCropSpecification": {
+          "$ref": "#/definitions/ImageCropSpecification"
+        },
+        "altText": {
+          "type": "string",
+          "description": "图像的替代文本。",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      },
+      "description": "对内容媒体库中托管的图像的引用。"
+    },
+    "ParagraphComponent": {
+      "type": "object",
+      "required": [
+        "textList"
+      ],
+      "properties": {
+        "textList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TextComponent"
+          },
+          "maxItems": 100,
+          "minItems": 1
+        }
+      },
+      "description": "富文本内容的列表，通常显示在文本框中。"
+    },
+    "TextComponent": {
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "实际的纯文本。",
+          "minLength": 1,
+          "maxLength": 10000
+        },
+        "decoratorSet": {
+          "$ref": "#/definitions/DecoratorSet"
+        }
+      },
+      "description": "富文本内容。"
+    },
+    "ColorType": {
+      "type": "string",
+      "description": "内容的相对配色方案。",
+      "enum": [
+        "DARK",
+        "LIGHT"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "DARK",
+          "description": "浅色文本覆盖框的深灰色半透明阴影背景。"
+        },
+        {
+          "value": "LIGHT",
+          "description": "黑色文本覆盖框的白色半透明阴影背景。"
+        }
+      ]
+    },
+    "PositionType": {
+      "type": "string",
+      "description": "内容的相对定位。",
+      "enum": [
+        "LEFT",
+        "RIGHT"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "LEFT",
+          "description": "指示内容将定位在模块的左侧。"
+        },
+        {
+          "value": "RIGHT",
+          "description": "指示内容将定位在模块的右侧。"
+        }
+      ]
+    },
+    "DecoratorSet": {
+      "type": "array",
+      "description": "一组内容装饰器。",
+      "items": {
+        "$ref": "#/definitions/Decorator"
+      },
+      "uniqueItems": true
+    },
+    "Decorator": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/DecoratorType"
+        },
+        "offset": {
+          "type": "integer",
+          "description": "内容字符串中此装饰器的起始字符。使用零作为第一个字符。",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "length": {
+          "type": "integer",
+          "description": "要使用此装饰器更改的内容字符数。诸如换行符之类的装饰器可以具有零长度，并且在字符之间适合。",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "depth": {
+          "type": "integer",
+          "description": "此装饰器的相对强度或变化。例如，诸如子弹点之类的装饰器可以具有多个压痕深度。",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "description": "应用于内容字符串值以创建富文本的装饰器。"
+    },
+    "DecoratorType": {
+      "type": "string",
+      "description": "富文本装饰器的类型。",
+      "enum": [
+        "LIST_ITEM",
+        "LIST_ORDERED",
+        "LIST_UNORDERED",
+        "STYLE_BOLD",
+        "STYLE_ITALIC",
+        "STYLE_LINEBREAK",
+        "STYLE_PARAGRAPH",
+        "STYLE_UNDERLINE"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "LIST_ITEM",
+          "description": "格式化列表项，用于列表附件中的编号列表或项目符号列表。"
+        },
+        {
+          "value": "LIST_ORDERED",
+          "description": "编号列表附件。"
+        },
+        {
+          "value": "LIST_UNORDERED",
+          "description": "项目符号列表附件。"
+        },
+        {
+          "value": "STYLE_BOLD",
+          "description": "粗体文本格式。"
+        },
+        {
+          "value": "STYLE_ITALIC",
+          "description": "斜体文本格式。"
+        },
+        {
+          "value": "STYLE_LINEBREAK",
+          "description": "新行文本。"
+        },
+        {
+          "value": "STYLE_PARAGRAPH",
+          "description": "段落文本格式。"
+        },
+        {
+          "value": "STYLE_UNDERLINE",
+          "description": "为文本格式添加下划线。"
+        }
+      ]
+    },
+    "SearchContentDocumentsResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AplusPaginatedResponse"
+        },
+        {
+          "type": "object",
+          "required": [
+            "contentMetadataRecords"
+          ],
+          "properties": {
+            "contentMetadataRecords": {
+              "$ref": "#/definitions/ContentMetadataRecordList",
+              "description": "内容元数据记录。"
+            }
+          }
+        }
+      ]
+    },
+    "GetContentDocumentResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AplusResponse"
+        },
+        {
+          "type": "object",
+          "required": [
+            "contentRecord"
+          ],
+          "properties": {
+            "contentRecord": {
+              "$ref": "#/definitions/ContentRecord"
+            }
+          }
+        }
+      ]
+    },
+    "PostContentDocumentRequest": {
+      "type": "object",
+      "required": [
+        "contentDocument"
+      ],
+      "properties": {
+        "contentDocument": {
+          "$ref": "#/definitions/ContentDocument"
+        }
+      }
+    },
+    "PostContentDocumentResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AplusResponse"
+        },
+        {
+          "type": "object",
+          "required": [
+            "contentReferenceKey"
+          ],
+          "properties": {
+            "contentReferenceKey": {
+              "$ref": "#/definitions/ContentReferenceKey"
+            }
+          }
+        }
+      ]
+    },
+    "ListContentDocumentAsinRelationsResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AplusPaginatedResponse"
+        },
+        {
+          "type": "object",
+          "required": [
+            "asinMetadataSet"
+          ],
+          "properties": {
+            "asinMetadataSet": {
+              "$ref": "#/definitions/AsinMetadataSet"
+            }
+          }
+        }
+      ]
+    },
+    "PostContentDocumentAsinRelationsRequest": {
+      "type": "object",
+      "required": [
+        "asinSet"
+      ],
+      "properties": {
+        "asinSet": {
+          "$ref": "#/definitions/AsinSet"
+        }
+      }
+    },
+    "PostContentDocumentAsinRelationsResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AplusResponse"
+        }
+      ]
+    },
+    "ValidateContentDocumentAsinRelationsResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AplusResponse"
+        },
+        {
+          "$ref": "#/definitions/ErrorList"
+        }
+      ]
+    },
+    "SearchContentPublishRecordsResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AplusPaginatedResponse"
+        },
+        {
+          "type": "object",
+          "required": [
+            "publishRecordList"
+          ],
+          "properties": {
+            "publishRecordList": {
+              "$ref": "#/definitions/PublishRecordList"
+            }
+          }
+        }
+      ]
+    },
+    "PostContentDocumentApprovalSubmissionResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AplusResponse"
+        }
+      ]
+    },
+    "PostContentDocumentSuspendSubmissionResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AplusResponse"
+        }
+      ]
+    }
+  },
+  "parameters": {
+    "contentReferenceKey": {
+      "name": "contentReferenceKey",
+      "in": "path",
+      "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ content identifier.",
+      "required": true,
+      "type": "string",
+      "minLength": 1
+    },
+    "marketplaceId": {
+      "name": "marketplaceId",
+      "in": "query",
+      "description": "发布内容的市场的标识符。",
+      "required": true,
+      "type": "string",
+      "minLength": 1
+    },
+    "pageToken": {
+      "name": "pageToken",
+      "in": "query",
+      "description": "您以前对此操作的调用返回的nextPageToken响应元素中的页面令牌。当调用的结果超过页面大小时，返回nextPageToken。要获取下一页结果，请调用该操作并包含pageToken作为唯一参数。使用任何其他参数指定pageToken将导致请求失败。当没有返回nextPageToken值时，没有更多的页面返回。pageToken值不可用于不同的操作。",
+      "required": false,
+      "type": "string",
+      "minLength": 1
+    },
+    "asinSet": {
+      "name": "asinSet",
+      "in": "query",
+      "description": "一套asin。",
+      "required": false,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 10
+      },
+      "collectionFormat": "csv",
+      "uniqueItems": true
+    },
+    "asin": {
+      "name": "asin",
+      "in": "query",
+      "description": "Amazon标准标识号 (ASIN)。",
+      "required": true,
+      "type": "string",
+      "minLength": 10
+    },
+    "getContentDocumentIncludedDataSet": {
+      "name": "includedDataSet",
+      "in": "query",
+      "description": "要包含在响应中的数据类型集。",
+      "required": true,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "CONTENTS",
+          "METADATA"
+        ]
+      },
+      "collectionFormat": "csv",
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "listContentDocumentAsinRelationsIncludedDataSet": {
+      "name": "includedDataSet",
+      "in": "query",
+      "description": "要包含在响应中的数据类型集。",
+      "required": false,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "METADATA"
+        ]
+      },
+      "collectionFormat": "csv",
+      "minItems": 0,
+      "uniqueItems": true
+    }
+  }
+}

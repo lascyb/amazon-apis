@@ -1,0 +1,2245 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "用于报告的销售合作伙伴API允许您检索和管理各种报告，这些报告可以帮助销售合作伙伴管理其业务。",
+    "version": "2021-06-30",
+    "title": "Report v2021-06-30",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/reports/2021-06-30/reports": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "getReports",
+        "description": "返回与您指定的筛选器匹配的报表详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0222 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "parameters": [
+          {
+            "name": "reportTypes",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 10,
+            "description": "用于筛选报告的报告类型列表。有关详细信息，请参阅 [报表类型值](https:// developer-docs.amazon.com/sp-api/docs/Report-Type-Values)。当提供reportTypes时，还可以提供其他过滤器参数 (processingStatuses、marketplaceIds、createdsinary、createduntime) 和pageSize。reportTypes或nextToken是必需的。",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "processingStatuses",
+            "in": "query",
+            "description": "用于筛选报告的处理状态列表。",
+            "required": false,
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": [
+                "CANCELLED",
+                "DONE",
+                "FATAL",
+                "IN_PROGRESS",
+                "IN_QUEUE"
+              ],
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "CANCELLED",
+                  "description": "报告已取消。有两种方法可以取消报表: 在报表开始处理之前明确取消请求，或者在没有数据要返回的情况下自动取消。"
+                },
+                {
+                  "value": "DONE",
+                  "description": "报表已完成处理。"
+                },
+                {
+                  "value": "FATAL",
+                  "description": "由于一个致命错误，报告被中止。"
+                },
+                {
+                  "value": "IN_PROGRESS",
+                  "description": "正在处理报告。"
+                },
+                {
+                  "value": "IN_QUEUE",
+                  "description": "报表尚未开始处理。它可能正在等待另一个 “IN_PROGRESS” 报告。"
+                }
+              ]
+            }
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "用于筛选报表的市场标识符列表。返回的报告将至少与您指定的一个市场匹配。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 10,
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "在单个调用中返回的最大报告数。",
+            "required": false,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          {
+            "name": "createdSince",
+            "in": "query",
+            "description": "要包含在响应中的报告的最早报告创建日期和时间，采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 日期时间格式。默认值为90天前。报告最多保留90天。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "createdUntil",
+            "in": "query",
+            "description": "要包含在响应中的报告的最新报告创建日期和时间，采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 日期时间格式。默认值为now。",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "nextToken",
+            "in": "query",
+            "description": "在对上一个请求的响应中返回的字符串令牌。当结果数超过指定的 “pagesize” 值时，返回 “nexttoken”。要获取下一页结果，请调用 “getreports” 操作并将此令牌作为唯一参数。使用任何其他参数指定 “nexttoken” 将导致请求失败。",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetReportsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportTypes": {
+                        "value": [
+                          "FEE_DISCOUNTS_REPORT",
+                          "GET_AFN_INVENTORY_DATA"
+                        ]
+                      },
+                      "processingStatuses": {
+                        "value": [
+                          "IN_QUEUE",
+                          "IN_PROGRESS"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "nextToken": "VGhpcyB0b2tlbiBpcyBvcGFxdWUgYW5kIGludGVudGlvbmFsbHkgb2JmdXNjYXRlZA==",
+                    "reports": [
+                      {
+                        "reportId": "ReportId1",
+                        "reportType": "FEE_DISCOUNTS_REPORT",
+                        "dataStartTime": "2024-03-11T13:47:20.677Z",
+                        "dataEndTime": "2024-03-12T13:47:20.677Z",
+                        "createdTime": "2024-03-10T13:47:20.677Z",
+                        "processingStatus": "IN_PROGRESS",
+                        "processingStartTime": "2024-03-10T13:47:20.677Z",
+                        "processingEndTime": "2024-03-12T13:47:20.677Z"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportTypes": {
+                        "value": [
+                          "FEE_DISCOUNTS_REPORT",
+                          "GET_AFN_INVENTORY_DATA"
+                        ]
+                      },
+                      "processingStatuses": {
+                        "value": [
+                          "BAD_VALUE",
+                          "IN_PROGRESS"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input in processing status"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "getReports"
+      },
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "createReport",
+        "description": "创建报告。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0167 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateReportSpecification"
+            },
+            "description": "创建报告所需的信息。"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CreateReportResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "reportType": "GET_MERCHANT_LISTINGS_ALL_DATA",
+                          "dataStartTime": "2024-03-10T20:11:24.000Z",
+                          "marketplaceIds": [
+                            "A1PA6795UKMFR9",
+                            "ATVPDKIKX0DER"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "reportId": "ID323"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "reportType": "BAD_FEE_DISCOUNTS_REPORT",
+                          "dataStartTime": "2024-03-10T20:11:24.000Z",
+                          "marketplaceIds": [
+                            "A1PA6795UKMFR9",
+                            "ATVPDKIKX0DER"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "createReport"
+      },
+      "parameters": []
+    },
+    "/reports/2021-06-30/reports/{reportId}": {
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "cancelReport",
+        "description": "取消指定的报表。只能取消具有 “processingstatus = IN_QUEUE” 的报告。在对 “getreport” 和 “getreports” 操作的后续调用中返回已取消的报告。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0222 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "parameters": [
+          {
+            "name": "reportId",
+            "in": "path",
+            "description": "报表的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportId": {
+                        "value": "ID"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "cancelReport"
+      },
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "getReport",
+        "description": "返回指定报表的报表详细信息 (包括 “reportdocumentid' (如果可用))。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 2 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "parameters": [
+          {
+            "name": "reportId",
+            "in": "path",
+            "required": true,
+            "description": "报表的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/Report"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportId": {
+                        "value": "ID323"
+                      }
+                    }
+                  },
+                  "response": {
+                    "reportId": "ReportId1",
+                    "reportType": "FEE_DISCOUNTS_REPORT",
+                    "dataStartTime": "2024-03-11T13:47:20.677Z",
+                    "dataEndTime": "2024-03-12T13:47:20.677Z",
+                    "createdTime": "2024-03-10T13:47:20.677Z",
+                    "processingStatus": "IN_PROGRESS",
+                    "processingStartTime": "2024-03-10T13:47:20.677Z",
+                    "processingEndTime": "2024-03-12T13:47:20.677Z"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportId": {
+                        "value": "badReportId1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "getReport"
+      },
+      "parameters": []
+    },
+    "/reports/2021-06-30/schedules": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "getReportSchedules",
+        "description": "返回与您指定的筛选器匹配的报表计划详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0222 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "parameters": [
+          {
+            "name": "reportTypes",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 10,
+            "description": "用于筛选报表计划的报表类型列表。有关详细信息，请参阅 [报表类型值](https:// developer-docs.amazon.com/sp-api/docs/Report-Type-Values)。",
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ReportScheduleList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportTypes": {
+                        "value": [
+                          "FEE_DISCOUNTS_REPORT",
+                          "GET_FBA_FULFILLMENT_CUSTOMER_TAXES_DATA"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "reportSchedules": [
+                      {
+                        "reportType": "FEE_DISCOUNTS_REPORT",
+                        "marketplaceIds": [
+                          "ATVPDKIKX0DER"
+                        ],
+                        "reportScheduleId": "ID1",
+                        "period": "PT5M",
+                        "nextReportCreationTime": "2024-03-11T15:03:44.973Z"
+                      },
+                      {
+                        "reportType": "GET_FBA_FULFILLMENT_CUSTOMER_TAXES_DATA",
+                        "reportScheduleId": "ID2",
+                        "period": "PT5M",
+                        "nextReportCreationTime": "2024-03-11T15:03:44.973Z"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportTypes": {
+                        "value": [
+                          "BAD_FEE_DISCOUNTS_REPORT",
+                          "BAD_GET_FBA_FULFILLMENT_CUSTOMER_TAXES_DATA"
+                        ]
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "getReportSchedules"
+      },
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "createReportSchedule",
+        "description": "创建报告计划。如果已存在具有相同报告类型和市场id的报告计划，则将取消该计划并将其替换为此计划。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0222 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateReportScheduleSpecification"
+            },
+            "description": "创建报告计划所需的信息。"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/CreateReportScheduleResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "reportType": "FEE_DISCOUNTS_REPORT",
+                          "period": "PT5M",
+                          "nextReportCreationTime": "2024-03-10T20:11:24.000Z",
+                          "marketplaceIds": [
+                            "A1PA6795UKMFR9",
+                            "ATVPDKIKX0DER"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "reportScheduleId": "ID323"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "reportType": "BAD_FEE_DISCOUNTS_REPORT",
+                          "period": "PT5M",
+                          "nextReportCreationTime": "2024-03-10T20:11:24.000Z"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "createReportSchedule"
+      },
+      "parameters": []
+    },
+    "/reports/2021-06-30/schedules/{reportScheduleId}": {
+      "delete": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "cancelReportSchedule",
+        "description": "取消指定的报告计划。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0222 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "parameters": [
+          {
+            "name": "reportScheduleId",
+            "in": "path",
+            "description": "报表计划的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportScheduleId": {
+                        "value": "ID"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "cancelReportSchedule"
+      },
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "getReportSchedule",
+        "description": "返回您指定的报表计划详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0222 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "parameters": [
+          {
+            "name": "reportScheduleId",
+            "in": "path",
+            "required": true,
+            "description": "报表计划的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ReportSchedule"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportScheduleId": {
+                        "value": "ID323"
+                      }
+                    }
+                  },
+                  "response": {
+                    "reportScheduleId": "ReportScheduleId1",
+                    "reportType": "FEE_DISCOUNTS_REPORT",
+                    "period": "PT5M",
+                    "nextReportCreationTime": "2024-03-12T13:47:20.677Z"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportScheduleId": {
+                        "value": "badReportId1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "getReportSchedule"
+      },
+      "parameters": []
+    },
+    "/reports/2021-06-30/documents/{reportDocumentId}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "description": "返回检索报表文档内容所需的信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.0167 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getReportDocument",
+        "parameters": [
+          {
+            "name": "reportDocumentId",
+            "in": "path",
+            "description": "报表文档的标识符。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ReportDocument"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportDocumentId": {
+                        "value": "0356cf79-b8b0-4226-b4b9-0ee058ea5760"
+                      }
+                    }
+                  },
+                  "response": {
+                    "reportDocumentId": "0356cf79-b8b0-4226-b4b9-0ee058ea5760",
+                    "url": "https://d34o8swod1owfl.cloudfront.net/Report_47700__GET_MERCHANT_LISTINGS_ALL_DATA_.txt"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "reportDocumentId": {
+                        "value": "badDocumentId1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "400",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "表示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求的Content-Type标头无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        },
+        "summary": "getReportDocument"
+      }
+    }
+  },
+  "definitions": {
+    "ErrorList": {
+      "type": "object",
+      "description": "请求不成功时返回的错误响应列表。",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          },
+          "description": "请求不成功时返回的错误响应。"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "Report": {
+      "type": "object",
+      "description": "关于报告的详细信息。",
+      "required": [
+        "processingStatus",
+        "reportId",
+        "reportType",
+        "createdTime"
+      ],
+      "properties": {
+        "marketplaceIds": {
+          "description": "报表的市场标识符列表。",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reportId": {
+          "description": "报表的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+          "type": "string"
+        },
+        "reportType": {
+          "description": "报告类型。有关详细信息，请参阅 [报表类型值](https:// developer-docs.amazon.com/sp-api/docs/Report-Type-Values)。",
+          "type": "string"
+        },
+        "dataStartTime": {
+          "description": "用于选择要报告的数据的日期和时间范围的开始。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataEndTime": {
+          "description": "用于选择要报告的数据的日期和时间范围的结束时间。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "reportScheduleId": {
+          "description": "创建此报表的报表计划的标识符 (如果有)。该标识符仅在与卖方ID组合时是唯一的。",
+          "type": "string"
+        },
+        "createdTime": {
+          "description": "创建报表的日期和时间。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "processingStatus": {
+          "description": "报表的处理状态。",
+          "type": "string",
+          "enum": [
+            "CANCELLED",
+            "DONE",
+            "FATAL",
+            "IN_PROGRESS",
+            "IN_QUEUE"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "CANCELLED",
+              "description": "报告已取消。有两种方法可以取消报表: 在报表开始处理之前明确取消请求，或者在没有数据要返回的情况下自动取消。"
+            },
+            {
+              "value": "DONE",
+              "description": "报表已完成处理。"
+            },
+            {
+              "value": "FATAL",
+              "description": "由于一个致命错误，报告被中止。"
+            },
+            {
+              "value": "IN_PROGRESS",
+              "description": "正在处理报告。"
+            },
+            {
+              "value": "IN_QUEUE",
+              "description": "报表尚未开始处理。它可能正在等待另一个 “IN_PROGRESS” 报告。"
+            }
+          ]
+        },
+        "processingStartTime": {
+          "description": "报表处理开始的日期和时间，格式为 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 日期时间。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "processingEndTime": {
+          "description": "报表处理完成的日期和时间，格式为 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 日期时间。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "reportDocumentId": {
+          "description": "报表文档的标识符。将其传递到 “getreportdocument” 操作中，以获取检索报告文档内容所需的信息。",
+          "type": "string"
+        }
+      }
+    },
+    "ReportList": {
+      "type": "array",
+      "description": "报告列表。",
+      "items": {
+        "$ref": "#/definitions/Report"
+      }
+    },
+    "CreateReportScheduleSpecification": {
+      "type": "object",
+      "description": "创建报告计划所需的信息。",
+      "required": [
+        "marketplaceIds",
+        "period",
+        "reportType"
+      ],
+      "properties": {
+        "reportType": {
+          "description": "报告类型。有关详细信息，请参阅 [报表类型值](https:// developer-docs.amazon.com/sp-api/docs/Report-Type-Values)。",
+          "type": "string"
+        },
+        "marketplaceIds": {
+          "description": "报表计划的市场标识符列表。",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 25,
+          "items": {
+            "type": "string"
+          }
+        },
+        "reportOptions": {
+          "$ref": "#/definitions/ReportOptions"
+        },
+        "period": {
+          "description": "一组预定义的 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601 '>ISO 8601</a> 期间之一，指定应多久创建一次报告。",
+          "type": "string",
+          "enum": [
+            "PT5M",
+            "PT15M",
+            "PT30M",
+            "PT1H",
+            "PT2H",
+            "PT4H",
+            "PT8H",
+            "PT12H",
+            "P1D",
+            "P2D",
+            "P3D",
+            "PT84H",
+            "P7D",
+            "P14D",
+            "P15D",
+            "P18D",
+            "P30D",
+            "P1M"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "PT5M",
+              "description": "5分钟"
+            },
+            {
+              "value": "PT15M",
+              "description": "15分钟"
+            },
+            {
+              "value": "PT30M",
+              "description": "30分钟"
+            },
+            {
+              "value": "PT1H",
+              "description": "1小时"
+            },
+            {
+              "value": "PT2H",
+              "description": "2小时"
+            },
+            {
+              "value": "PT4H",
+              "description": "4小时"
+            },
+            {
+              "value": "PT8H",
+              "description": "8小时"
+            },
+            {
+              "value": "PT12H",
+              "description": "12小时"
+            },
+            {
+              "value": "P1D",
+              "description": "1天"
+            },
+            {
+              "value": "P2D",
+              "description": "2天"
+            },
+            {
+              "value": "P3D",
+              "description": "3天"
+            },
+            {
+              "value": "PT84H",
+              "description": "84小时"
+            },
+            {
+              "value": "P7D",
+              "description": "7天"
+            },
+            {
+              "value": "P14D",
+              "description": "14天"
+            },
+            {
+              "value": "P15D",
+              "description": "15天"
+            },
+            {
+              "value": "P18D",
+              "description": "18天"
+            },
+            {
+              "value": "P30D",
+              "description": "30天"
+            },
+            {
+              "value": "P1M",
+              "description": "1个月"
+            }
+          ]
+        },
+        "nextReportCreationTime": {
+          "description": "计划创建下一个报告的日期和时间，采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 日期时间格式。",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CreateReportSpecification": {
+      "type": "object",
+      "description": "创建报告所需的信息。",
+      "required": [
+        "marketplaceIds",
+        "reportType"
+      ],
+      "properties": {
+        "reportOptions": {
+          "$ref": "#/definitions/ReportOptions"
+        },
+        "reportType": {
+          "description": "报告类型。有关详细信息，请参阅 [报表类型值](https:// developer-docs.amazon.com/sp-api/docs/Report-Type-Values)。",
+          "type": "string"
+        },
+        "dataStartTime": {
+          "description": "日期和时间范围的开始，采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 日期时间格式，用于选择要报告的数据。默认值为now。该值必须早于或等于当前日期和时间。并非所有报告类型都使用此功能。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataEndTime": {
+          "description": "日期和时间范围的结束，采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 日期时间格式，用于选择要报告的数据。默认值为now。该值必须早于或等于当前日期和时间。并非所有报告类型都使用此功能。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "marketplaceIds": {
+          "description": "市场标识符的列表。除非报告类型另有说明，否则报告文档的内容将包含所有指定市场的数据。",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 25,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ReportOptions": {
+      "description": "传递给报告的其他信息。这因报告类型而异。",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "ReportSchedule": {
+      "description": "有关报告计划的详细信息。",
+      "type": "object",
+      "required": [
+        "period",
+        "reportScheduleId",
+        "reportType"
+      ],
+      "properties": {
+        "reportScheduleId": {
+          "description": "报表计划的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+          "type": "string"
+        },
+        "reportType": {
+          "description": "报告类型。有关详细信息，请参阅 [报表类型值](https:// developer-docs.amazon.com/sp-api/docs/Report-Type-Values)。",
+          "type": "string"
+        },
+        "marketplaceIds": {
+          "description": "市场标识符的列表。除非报告类型另有说明，否则报告文档的内容将包含所有指定市场的数据。",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reportOptions": {
+          "$ref": "#/definitions/ReportOptions"
+        },
+        "period": {
+          "description": "<a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 周期值，指示应多久创建一次报告。",
+          "type": "string"
+        },
+        "nextReportCreationTime": {
+          "description": "计划创建下一个报告的日期和时间，采用 <a href = 'https:// developer-docs.amazon.com/sp-api/docs/iso-8601> ISO 8601</a> 日期时间格式。",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ReportScheduleList": {
+      "type": "object",
+      "description": "报告计划的列表。",
+      "required": [
+        "reportSchedules"
+      ],
+      "properties": {
+        "reportSchedules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReportSchedule"
+          },
+          "description": "有关报告计划的详细信息。"
+        }
+      }
+    },
+    "CreateReportResponse": {
+      "type": "object",
+      "description": "响应架构。",
+      "required": [
+        "reportId"
+      ],
+      "properties": {
+        "reportId": {
+          "description": "报表的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+          "type": "string"
+        }
+      }
+    },
+    "GetReportsResponse": {
+      "type": "object",
+      "required": [
+        "reports"
+      ],
+      "properties": {
+        "reports": {
+          "description": "报告。",
+          "$ref": "#/definitions/ReportList"
+        },
+        "nextToken": {
+          "description": "当结果数超过 “pagesize” 时返回。要获取下一页的结果，请使用此令牌作为唯一参数调用 “getreports”。",
+          "type": "string"
+        }
+      },
+      "description": "“Getreports” 操作的响应。"
+    },
+    "CreateReportScheduleResponse": {
+      "type": "object",
+      "description": "响应架构。",
+      "required": [
+        "reportScheduleId"
+      ],
+      "properties": {
+        "reportScheduleId": {
+          "description": "报表计划的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+          "type": "string"
+        }
+      }
+    },
+    "ReportDocument": {
+      "type": "object",
+      "description": "报告文件所需的信息。",
+      "required": [
+        "reportDocumentId",
+        "url"
+      ],
+      "properties": {
+        "reportDocumentId": {
+          "description": "报表文档的标识符。该标识符仅在与卖方ID组合时是唯一的。",
+          "type": "string"
+        },
+        "url": {
+          "description": "报表文档的预签名URL。如果未返回 “compressionalgorithm”，则可以直接从此URL下载报告。此URL将在5分钟后过期。",
+          "type": "string"
+        },
+        "compressionAlgorithm": {
+          "description": "如果报表文档内容已被压缩，则在此属性中返回所使用的压缩算法，您必须在下载时解压缩报表。否则，您可以直接下载报告。请参阅用例指南中的 [步骤2.下载报告](https:// developer-docs.amazon.com/sp-api/docs/reports-api-v2021-06-30-retrieve-a-report # step-2-download-the-report)，其中提供了示例代码。",
+          "type": "string",
+          "enum": [
+            "GZIP"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "GZIP",
+              "description": "gzip压缩算法。"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "basePath": "/"
+}

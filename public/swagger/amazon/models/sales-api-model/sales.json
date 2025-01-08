@@ -1,0 +1,660 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Sales的销售合作伙伴API提供与销售业绩相关的API。",
+    "version": "v1",
+    "title": "Selling Partner API for Sales",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/sales/v1/orderMetrics": {
+      "get": {
+        "tags": [
+          "sales"
+        ],
+        "description": "返回给定时间间隔 (按粒度细分) 的给定买方类型的聚合订单度量。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| .5 | 15 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getOrderMetrics",
+        "parameters": [
+          {
+            "name": "marketplaceIds",
+            "in": "query",
+            "description": "市场标识符。这指定了下订单的市场。只能指定一个市场。\n\n例如，ATVPDKIKX0DER表示美国市场。",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "description": "用于选择订单度量的时间间隔。这采用由两个连字符分隔的两个日期的形式 (第一个日期包括在内; 第二个日期不包括在内)。日期采用ISO8601格式，并且必须表示绝对时间 (Z表示法或偏移表示法)。示例: 2018-09-01T00:00:00-07:00-2018-09-04 t00: 00:00-07:00请求-07:00区域中9月1日、2日和3日的订单指标。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "granularityTimeZone",
+            "in": "query",
+            "description": "与IANA兼容的时区，用于确定日期边界。指定大于小时的粒度值时是必需的。granularityTimeZone值必须与指定间隔值的偏移量对齐。例如，如果间隔值使用Z表示法，则granularityTimeZone必须为UTC。如果间隔值使用偏移量，则granularityTimeZone必须是与偏移量匹配的IANA兼容时区。示例: 美国/太平洋地区计算美国/太平洋地区的日边界，考虑夏令时节省。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "granularity",
+            "in": "query",
+            "description": "基于时间单位的订单度量分组的粒度。仅当指定的间隔小于或等于30天后，指定粒度 = 小时才会导致成功的请求。对于所有其他粒度，指定的间隔必须小于或等于2年。指定粒度 = 在您指定的整个时间间隔内聚合的订单度量中的总结果。如果间隔开始日期和结束日期与指定的粒度不一致，则响应间隔的头部和尾部将包含部分数据。示例: 日获取请求间隔的每日细分，其中日边界由granularityTimeZone定义。",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "Hour",
+              "Day",
+              "Week",
+              "Month",
+              "Year",
+              "Total"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "Hour",
+                "description": "小时"
+              },
+              {
+                "value": "Day",
+                "description": "日"
+              },
+              {
+                "value": "Week",
+                "description": "周"
+              },
+              {
+                "value": "Month",
+                "description": "月份"
+              },
+              {
+                "value": "Year",
+                "description": "年份"
+              },
+              {
+                "value": "Total",
+                "description": "合计"
+              }
+            ]
+          },
+          {
+            "name": "buyerType",
+            "in": "query",
+            "description": "按您指定的买方类型 (B2B (企业对企业) 或B2C (企业对客户)) 筛选结果。示例: B2B，如果您希望响应仅包括B2B买家的订单指标。",
+            "required": false,
+            "type": "string",
+            "default": "All",
+            "enum": [
+              "B2B",
+              "B2C",
+              "All"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "B2B",
+                "description": "企业对企业。"
+              },
+              {
+                "value": "B2C",
+                "description": "企业对客户。"
+              },
+              {
+                "value": "All",
+                "description": "企业对企业，企业对客户。"
+              }
+            ]
+          },
+          {
+            "name": "fulfillmentNetwork",
+            "in": "query",
+            "description": "按您指定的履行网络、MFN (商家履行网络) 或AFN (Amazon履行网络) 筛选结果。如果您希望响应包含所有履行网络的订单指标，请不要包含此过滤器。示例: AFN，如果您希望响应仅包含Amazon fulfilment network的订单指标。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "firstDayOfWeek",
+            "in": "query",
+            "description": "指定当粒度 = 星期 (星期一或星期日) 时，星期开始的日期。默认值: 星期一。例如: 星期日，如果您希望一周从星期日开始。",
+            "required": false,
+            "type": "string",
+            "default": "Monday",
+            "enum": [
+              "Monday",
+              "Sunday"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "Monday",
+                "description": "星期一"
+              },
+              {
+                "value": "Sunday",
+                "description": "周日"
+              }
+            ]
+          },
+          {
+            "name": "asin",
+            "in": "query",
+            "description": "按您指定的ASIN筛选结果。同时指定ASIN和SKU会返回错误。如果您希望响应包含所有asin的订单度量，请不要包含此筛选器。示例: B0792R1RSN，如果您希望响应仅包括ASIN B0792R1RSN的订单度量。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sku",
+            "in": "query",
+            "description": "按指定的SKU筛选结果。同时指定ASIN和SKU会返回错误。如果您希望响应包含所有sku的订单指标，请不要包含此筛选器。示例: TestSKU，如果您希望响应仅包含SKU TestSKU的订单指标。",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "对资源OrderMetrics采取的OrderMetrics操作。",
+            "schema": {
+              "$ref": "#/definitions/GetOrderMetricsResponse"
+            },
+            "examples": {
+              "payload": {
+                "dayGranularity": {
+                  "metrics": [
+                    {
+                      "interval": "2018-05-01T00:00-07:00--2018-05-02T00:00-07:00",
+                      "unitCount": 1,
+                      "orderItemCount": 1,
+                      "orderCount": 1,
+                      "averageUnitPrice": {
+                        "amount": "22.95",
+                        "currencyCode": "USD"
+                      },
+                      "totalSales": {
+                        "amount": "22.95",
+                        "currencyCode": "USD"
+                      }
+                    },
+                    {
+                      "interval": "2018-05-02T00:00-07:00--2018-05-03T00:00-07:00",
+                      "unitCount": 1,
+                      "orderItemCount": 1,
+                      "orderCount": 1,
+                      "averageUnitPrice": {
+                        "amount": "2.05",
+                        "currencyCode": "USD"
+                      },
+                      "totalSales": {
+                        "amount": "2.05",
+                        "currencyCode": "USD"
+                      }
+                    }
+                  ]
+                },
+                "totalGranularity": {
+                  "metrics": [
+                    {
+                      "interval": "2018-05-01T00:00-07:00--2018-05-03T00:00-07:00",
+                      "unitCount": 2,
+                      "orderItemCount": 2,
+                      "orderCount": 2,
+                      "averageUnitPrice": {
+                        "amount": "12.5",
+                        "currencyCode": "USD"
+                      },
+                      "totalSales": {
+                        "amount": "25",
+                        "currencyCode": "USD"
+                      }
+                    }
+                  ]
+                },
+                "asinFilter": {
+                  "metrics": [
+                    {
+                      "interval": "2018-05-01T00:00-07:00--2018-05-02T00:00-07:00",
+                      "unitCount": 1,
+                      "orderItemCount": 1,
+                      "orderCount": 1,
+                      "averageUnitPrice": {
+                        "amount": "22.95",
+                        "currencyCode": "USD"
+                      },
+                      "totalSales": {
+                        "amount": "22.95",
+                        "currencyCode": "USD"
+                      }
+                    },
+                    {
+                      "interval": "2018-05-02T00:00-07:00--2018-05-03T00:00-07:00",
+                      "unitCount": 0,
+                      "orderItemCount": 0,
+                      "orderCount": 0,
+                      "averageUnitPrice": {
+                        "amount": "0",
+                        "currencyCode": "USD"
+                      },
+                      "totalSales": {
+                        "amount": "0",
+                        "currencyCode": "USD"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "您的速率限制 (每秒请求数) 此操作。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "unique request reference id."
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "granularity": {
+                        "value": "Total"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": [
+                      {
+                        "interval": "2019-08-01T00:00-07:00--2018-08-03T00:00-07:00",
+                        "unitCount": 2,
+                        "orderItemCount": 2,
+                        "orderCount": 2,
+                        "averageUnitPrice": {
+                          "amount": "12.5",
+                          "currencyCode": "USD"
+                        },
+                        "totalSales": {
+                          "amount": "25",
+                          "currencyCode": "USD"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "granularity": {
+                        "value": "Day"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": [
+                      {
+                        "interval": "2019-08-01T00:00-07:00--2018-08-02T00:00-07:00",
+                        "unitCount": 1,
+                        "orderItemCount": 1,
+                        "orderCount": 1,
+                        "averageUnitPrice": {
+                          "amount": "22.95",
+                          "currencyCode": "USD"
+                        },
+                        "totalSales": {
+                          "amount": "22.95",
+                          "currencyCode": "USD"
+                        }
+                      },
+                      {
+                        "interval": "2019-08-02T00:00-07:00--2018-08-03T00:00-07:00",
+                        "unitCount": 1,
+                        "orderItemCount": 1,
+                        "orderCount": 1,
+                        "averageUnitPrice": {
+                          "amount": "2.05",
+                          "currencyCode": "USD"
+                        },
+                        "totalSales": {
+                          "amount": "2.05",
+                          "currencyCode": "USD"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "granularity": {
+                        "value": "Total"
+                      },
+                      "asin": {
+                        "value": "B008OLKVEW"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": [
+                      {
+                        "interval": "2018-05-01T00:00-07:00--2018-05-03T00:00-07:00",
+                        "unitCount": 1,
+                        "orderItemCount": 1,
+                        "orderCount": 1,
+                        "averageUnitPrice": {
+                          "amount": "22.95",
+                          "currencyCode": "USD"
+                        },
+                        "totalSales": {
+                          "amount": "22.95",
+                          "currencyCode": "USD"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "granularity": {
+                        "value": "Day"
+                      },
+                      "asin": {
+                        "value": "B008OLKVEW"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": [
+                      {
+                        "interval": "2018-05-01T00:00-07:00--2018-05-02T00:00-07:00",
+                        "unitCount": 1,
+                        "orderItemCount": 1,
+                        "orderCount": 1,
+                        "averageUnitPrice": {
+                          "amount": "22.95",
+                          "currencyCode": "USD"
+                        },
+                        "totalSales": {
+                          "amount": "22.95",
+                          "currencyCode": "USD"
+                        }
+                      },
+                      {
+                        "interval": "2018-05-02T00:00-07:00--2018-05-03T00:00-07:00",
+                        "unitCount": 0,
+                        "orderItemCount": 0,
+                        "orderCount": 0,
+                        "averageUnitPrice": {
+                          "amount": "0",
+                          "currencyCode": "USD"
+                        },
+                        "totalSales": {
+                          "amount": "0",
+                          "currencyCode": "USD"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetOrderMetricsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "403": {
+            "description": "403可能是由于访问被拒绝，未经授权，令牌过期，签名无效或找不到资源等原因引起的。",
+            "schema": {
+              "$ref": "#/definitions/GetOrderMetricsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetOrderMetricsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/GetOrderMetricsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "415": {
+            "description": "请求的实体的格式不受请求的资源支持。",
+            "schema": {
+              "$ref": "#/definitions/GetOrderMetricsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetOrderMetricsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "500": {
+            "description": "遇到阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetOrderMetricsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetOrderMetricsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference id."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GetOrderMetricsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "getOrderMetrics操作的负载。",
+          "$ref": "#/definitions/OrderMetricsList"
+        },
+        "errors": {
+          "description": "getOrderMetrics操作遇到错误。",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "getOrderMetrics操作的响应架构。"
+    },
+    "OrderMetricsList": {
+      "type": "array",
+      "description": "一组订单度量，每个度量的作用域为特定的时间间隔。",
+      "items": {
+        "$ref": "#/definitions/OrderMetricsInterval"
+      }
+    },
+    "OrderMetricsInterval": {
+      "type": "object",
+      "required": [
+        "averageUnitPrice",
+        "interval",
+        "orderCount",
+        "orderItemCount",
+        "totalSales",
+        "unitCount"
+      ],
+      "properties": {
+        "interval": {
+          "type": "string",
+          "description": "基于请求粒度的时间间隔 (例如，小时、日等)如果这是列表中的第一个或最后一个间隔，如果请求的间隔与请求的粒度不一致，则它可能包含不完整的数据 (例如请求间隔2018: 00: 00z -- 2018-09-04 t19: 00:00Z和粒度日将导致9月1日UTC日和9月4日UTC日具有部分数据)。"
+        },
+        "unitCount": {
+          "type": "integer",
+          "description": "基于指定过滤器的订单中的单位数。"
+        },
+        "orderItemCount": {
+          "type": "integer",
+          "description": "基于指定筛选器的订单项数。"
+        },
+        "orderCount": {
+          "type": "integer",
+          "description": "基于指定筛选器的订单数。"
+        },
+        "averageUnitPrice": {
+          "description": "基于指定筛选器的项目的平均价格。公式为totalSales/unitCount。",
+          "$ref": "#/definitions/Money"
+        },
+        "totalSales": {
+          "description": "基于指定筛选器的所有订单的已订购产品销售总额。",
+          "$ref": "#/definitions/Money"
+        }
+      },
+      "description": "包含订单度量。"
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "以人类可读的形式描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Money": {
+      "type": "object",
+      "required": [
+        "amount",
+        "currencyCode"
+      ],
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "三位数的货币代码。ISO 4217格式。"
+        },
+        "amount": {
+          "description": "货币金额。",
+          "$ref": "#/definitions/Decimal"
+        }
+      },
+      "description": "货币类型和金额。"
+    },
+    "Decimal": {
+      "type": "string",
+      "description": "无精度损失的十进制数。当精度损失不可预测时很有用，就像货币一样。遵循RFC7159的数字表示。"
+    }
+  }
+}

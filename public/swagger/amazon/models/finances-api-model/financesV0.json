@@ -1,0 +1,3118 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "财务销售合作伙伴API可帮助您获取与卖家业务相关的财务信息。您可以获取给定订单、财务事件组或日期范围的财务事件，而不必等到报表期间关闭。您还可以获取给定日期范围的财务事件组。",
+        "version": "v0",
+        "title": "销售合作伙伴财务API",
+        "contact": {
+            "name": "Selling Partner API Developer Support",
+            "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+        },
+        "license": {
+            "name": "Apache License 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "host": "sellingpartnerapi-na.amazon.com",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/finances/v0/financialEventGroups": {
+            "get": {
+                "description": "返回给定日期范围的财务事件组。订单可能需要长达48小时才能出现在您的财务活动中。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.5 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+                "operationId": "listFinancialEventGroups",
+                "parameters": [
+                    {
+                        "name": "MaxResultsPerPage",
+                        "in": "query",
+                        "description": "每页返回的最大结果数。如果响应超过最大事务数或10 MB，API将使用 “invalidinput” 进行响应。",
+                        "required": false,
+                        "type": "integer",
+                        "default": 10,
+                        "maximum": 100,
+                        "minimum": 1,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "FinancialEventGroupStartedBefore",
+                        "in": "query",
+                        "description": "用于选择在指定日期和时间之前 (但不是在指定日期和时间) 打开的财务事件组的日期，格式为 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601)。日期时间必须晚于financialeventgroupstartedafture，并且不晚于提交请求前两分钟。如果financialeventgroupstartedafer和FinancialEventGroupStartedBefore相隔超过180天，则不返回任何财务事件组。",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "FinancialEventGroupStartedAfter",
+                        "in": "query",
+                        "description": "用于选择在指定日期和时间之后 (或在指定日期和时间) 打开的财务事件组的日期，格式为 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601)。提交请求前的日期时间不得迟于两分钟。",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "NextToken",
+                        "in": "query",
+                        "description": "上一个请求的响应中返回的字符串令牌。",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功。",
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "description": "此操作的速率限制 (每秒请求数)。",
+                                "type": "string"
+                            },
+                            "x-amzn-RequestId": {
+                                "description": "唯一请求引用标识符。",
+                                "type": "string"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventGroupsResponse"
+                        },
+                        "x-amzn-api-sandbox": {
+                            "static": [
+                                {
+                                    "request": {
+                                        "parameters": {
+                                            "MaxResultsPerPage": {
+                                                "value": 1
+                                            },
+                                            "FinancialEventGroupStartedBefore": {
+                                                "value": "2019-10-31"
+                                            },
+                                            "FinancialEventGroupStartedAfter": {
+                                                "value": "2019-10-13"
+                                            }
+                                        }
+                                    },
+                                    "response": {
+                                        "payload": {
+                                            "NextToken": "3493805734095308457308475",
+                                            "FinancialEventGroupList": [
+                                                {
+                                                    "FinancialEventGroupId": "1",
+                                                    "ProcessingStatus": "PROCESSED",
+                                                    "FundTransferStatus": "TRANSFERED",
+                                                    "OriginalTotal": {
+                                                        "CurrencyCode": "USD",
+                                                        "CurrencyAmount": 10.34
+                                                    },
+                                                    "ConvertedTotal": {
+                                                        "CurrencyCode": "USD",
+                                                        "CurrencyAmount": 39.43
+                                                    },
+                                                    "FundTransferDate": "2020-02-07T14:38:42.128Z",
+                                                    "TraceId": "34550454504545",
+                                                    "AccountTail": "4854564857",
+                                                    "BeginningBalance": {
+                                                        "CurrencyCode": "USD",
+                                                        "CurrencyAmount": 55.33
+                                                    },
+                                                    "FinancialEventGroupStart": "2020-02-07T14:38:42.128Z",
+                                                    "FinancialEventGroupEnd": "2020-02-07T14:38:42.128Z"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "请求缺少参数或参数无效，无法对其进行分析。",
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "description": "此操作的速率限制 (每秒请求数)。",
+                                "type": "string"
+                            },
+                            "x-amzn-RequestId": {
+                                "description": "唯一请求引用标识符。",
+                                "type": "string"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventGroupsResponse"
+                        },
+                        "x-amzn-api-sandbox": {
+                            "static": [
+                                {
+                                    "request": {
+                                        "parameters": {
+                                            "MaxResultsPerPage": {
+                                                "value": 10
+                                            }
+                                        }
+                                    },
+                                    "response": {
+                                        "errors": [
+                                            {
+                                                "code": "InvalidInput",
+                                                "message": "Date range is invalid."
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventGroupsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "指定的资源不存在。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventGroupsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "type": "string",
+                                "description": "此操作的速率限制 (每秒请求数)。"
+                            },
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "请求的频率大于允许的频率。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventGroupsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "发生了阻止服务器完成请求的意外情况。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventGroupsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "服务器的临时过载或维护。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventGroupsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/finances/v0/financialEventGroups/{eventGroupId}/financialEvents": {
+            "get": {
+                "description": "返回指定财务事件组的所有财务事件。订单可能需要长达48小时才能出现在您的财务活动中。\n\n** 注意: ** 此操作将仅检索过去两年的集团数据。如果提交的请求的数据跨度超过两年，则返回空响应。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.5 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+                "operationId": "listFinancialEventsByGroupId",
+                "parameters": [
+                    {
+                        "name": "MaxResultsPerPage",
+                        "in": "query",
+                        "description": "每页返回的最大结果数。如果响应超过最大事务数或10 MB，API将使用 “invalidinput” 进行响应。",
+                        "required": false,
+                        "type": "integer",
+                        "default": 100,
+                        "maximum": 100,
+                        "minimum": 1,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "PostedAfter",
+                        "in": "query",
+                        "description": "用于选择在指定时间之后 (或在指定时间) 发布的财务事件的日期。日期时间 ** 必须 ** 在请求时间之前超过两分钟，格式为 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601)。",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "PostedBefore",
+                        "in": "query",
+                        "description": "用于选择在指定时间之前 (而不是在指定时间) 发布的财务事件的日期。日期-时间必须晚于 'PostedAfter'，且不得晚于提交请求前两分钟，采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。如果 'PostedAfter' 和 'PostedBefore' 相隔超过180天，则不会返回任何财务事件。如果指定 'PostedBefore' 参数，则必须指定 'PostedAfter' 参数。默认值: 现在减去两分钟。",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "eventGroupId",
+                        "in": "path",
+                        "description": "事件所属的财务事件组的标识符。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "NextToken",
+                        "in": "query",
+                        "description": "上一个请求的响应中返回的字符串令牌。",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功。",
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "description": "此操作的速率限制 (每秒请求数)。",
+                                "type": "string"
+                            },
+                            "x-amzn-RequestId": {
+                                "description": "唯一请求引用标识符。",
+                                "type": "string"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "x-amzn-api-sandbox": {
+                            "static": [
+                                {
+                                    "request": {
+                                        "parameters": {
+                                            "MaxResultsPerPage": {
+                                                "value": 10
+                                            },
+                                            "eventGroupId": {
+                                                "value": "485734534857"
+                                            }
+                                        }
+                                    },
+                                    "response": {
+                                        "payload": {
+                                            "NextToken": "Next token value",
+                                            "FinancialEvents": {
+                                                "ChargebackEventList": [
+                                                    {
+                                                        "AmazonOrderId": "444-555-3343433",
+                                                        "SellerOrderId": "454645645656456",
+                                                        "MarketplaceName": "1",
+                                                        "OrderChargeList": [
+                                                            {
+                                                                "ChargeType": "Tax",
+                                                                "ChargeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "OrderChargeAdjustmentList": [
+                                                            {
+                                                                "ChargeType": "Tax",
+                                                                "ChargeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "ShipmentFeeList": [
+                                                            {
+                                                                "FeeType": "FixedClosingFee",
+                                                                "FeeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "ShipmentFeeAdjustmentList": [
+                                                            {
+                                                                "FeeType": "FixedClosingFee",
+                                                                "FeeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "OrderFeeList": [
+                                                            {
+                                                                "FeeType": "FixedClosingFee",
+                                                                "FeeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "OrderFeeAdjustmentList": [
+                                                            {
+                                                                "FeeType": "FixedClosingFee",
+                                                                "FeeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "DirectPaymentList": [
+                                                            {
+                                                                "DirectPaymentType": "StoredValueCardRevenue",
+                                                                "DirectPaymentAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "PostedDate": "2020-02-05T13:56:00.363Z",
+                                                        "ShipmentItemList": [
+                                                            {
+                                                                "SellerSKU": "456454455464",
+                                                                "OrderItemId": "4565465645646",
+                                                                "OrderAdjustmentItemId": "456456465464",
+                                                                "QuantityShipped": 0,
+                                                                "ItemChargeList": [
+                                                                    {
+                                                                        "ChargeType": "Tax",
+                                                                        "ChargeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "ItemChargeAdjustmentList": [
+                                                                    {
+                                                                        "ChargeType": "Tax",
+                                                                        "ChargeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "ItemFeeList": [
+                                                                    {
+                                                                        "FeeType": "FixedClosingFee",
+                                                                        "FeeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "ItemFeeAdjustmentList": [
+                                                                    {
+                                                                        "FeeType": "FixedClosingFee",
+                                                                        "FeeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "ItemTaxWithheldList": [
+                                                                    {
+                                                                        "TaxCollectionModel": "Free",
+                                                                        "TaxesWithheld": [
+                                                                            {
+                                                                                "ChargeType": "Tax",
+                                                                                "ChargeAmount": {
+                                                                                    "CurrencyCode": "USD",
+                                                                                    "CurrencyAmount": 25.37
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "PromotionList": [
+                                                                    {
+                                                                        "PromotionType": "Free",
+                                                                        "PromotionId": "546564565",
+                                                                        "PromotionAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "PromotionAdjustmentList": [
+                                                                    {
+                                                                        "PromotionType": "Free",
+                                                                        "PromotionId": "546564565",
+                                                                        "PromotionAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "CostOfPointsGranted": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                },
+                                                                "CostOfPointsReturned": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "ShipmentItemAdjustmentList": [
+                                                            {
+                                                                "SellerSKU": "456454455464",
+                                                                "OrderItemId": "4565465645646",
+                                                                "OrderAdjustmentItemId": "456456465464",
+                                                                "QuantityShipped": 0,
+                                                                "ItemChargeList": [
+                                                                    {
+                                                                        "ChargeType": "Tax",
+                                                                        "ChargeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "ItemChargeAdjustmentList": [
+                                                                    {
+                                                                        "ChargeType": "Tax",
+                                                                        "ChargeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "ItemFeeList": [
+                                                                    {
+                                                                        "FeeType": "FixedClosingFee",
+                                                                        "FeeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "ItemFeeAdjustmentList": [
+                                                                    {
+                                                                        "FeeType": "FixedClosingFee",
+                                                                        "FeeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "ItemTaxWithheldList": [
+                                                                    {
+                                                                        "TaxCollectionModel": "Free",
+                                                                        "TaxesWithheld": [
+                                                                            {
+                                                                                "ChargeType": "Tax",
+                                                                                "ChargeAmount": {
+                                                                                    "CurrencyCode": "USD",
+                                                                                    "CurrencyAmount": 25.37
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "PromotionList": [
+                                                                    {
+                                                                        "PromotionType": "Free",
+                                                                        "PromotionId": "546564565",
+                                                                        "PromotionAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "PromotionAdjustmentList": [
+                                                                    {
+                                                                        "PromotionType": "Free",
+                                                                        "PromotionId": "546564565",
+                                                                        "PromotionAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "CostOfPointsGranted": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                },
+                                                                "CostOfPointsReturned": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "ImagingServicesFeeEventList": [
+                                                    {
+                                                        "ImagingRequestBillingItemID": "456456456",
+                                                        "ASIN": "4564565456456546456",
+                                                        "PostedDate": "2020-02-05T13:56:00.363Z",
+                                                        "FeeList": [
+                                                            {
+                                                                "FeeType": "FixedClosingFee",
+                                                                "FeeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "NetworkComminglingTransactionEventList": [
+                                                    {
+                                                        "TransactionType": "Free",
+                                                        "PostedDate": "2020-02-05T13:56:00.363Z",
+                                                        "NetCoTransactionID": "4565645",
+                                                        "SwapReason": "None",
+                                                        "ASIN": "464567656576",
+                                                        "MarketplaceId": "string",
+                                                        "TaxExclusiveAmount": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "TaxAmount": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        }
+                                                    }
+                                                ],
+                                                "AffordabilityExpenseReversalEventList": [
+                                                    {
+                                                        "AmazonOrderId": "444-555-3343433",
+                                                        "PostedDate": "2020-02-05T13:56:00.363Z",
+                                                        "MarketplaceId": "1",
+                                                        "TransactionType": "Free",
+                                                        "BaseExpense": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "TaxTypeCGST": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "TaxTypeSGST": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "TaxTypeIGST": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "TotalExpense": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        }
+                                                    }
+                                                ],
+                                                "TrialShipmentEventList": [
+                                                    {
+                                                        "AmazonOrderId": "444-555-3343433",
+                                                        "FinancialEventGroupId": "1",
+                                                        "PostedDate": "2020-02-05T13:56:00.363Z",
+                                                        "SKU": "456454455464",
+                                                        "FeeList": [
+                                                            {
+                                                                "FeeType": "FixedClosingFee",
+                                                                "FeeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "TaxWithholdingEventList": [
+                                                    {
+                                                        "PostedDate": "2020-02-05T13:56:00.363Z",
+                                                        "BaseAmount": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "WithheldAmount": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "TaxWithholdingPeriod": {
+                                                            "StartDate": "2020-02-05T13:56:00.363Z",
+                                                            "EndDate": "2020-02-05T13:56:00.363Z"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "请求缺少参数或参数无效，无法对其进行分析。",
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "description": "此操作的速率限制 (每秒请求数)。",
+                                "type": "string"
+                            },
+                            "x-amzn-RequestId": {
+                                "description": "唯一请求引用标识符。",
+                                "type": "string"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "x-amzn-api-sandbox": {
+                            "static": [
+                                {
+                                    "request": {
+                                        "parameters": {
+                                            "eventGroupId": {
+                                                "value": "BADID"
+                                            }
+                                        }
+                                    },
+                                    "response": {
+                                        "errors": [
+                                            {
+                                                "code": "InvalidInput",
+                                                "message": "Bad event group ID provided."
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "指定的资源不存在。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "type": "string",
+                                "description": "此操作的速率限制 (每秒请求数)。"
+                            },
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "请求的频率大于允许的频率。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "发生了阻止服务器完成请求的意外情况。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "服务器的临时过载或维护。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/finances/v0/orders/{orderId}/financialEvents": {
+            "get": {
+                "description": "返回指定订单的所有财务事件。订单可能需要长达48小时才能出现在您的财务活动中。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.5 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+                "operationId": "listFinancialEventsByOrderId",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "Amazon定义的订单标识符，格式为3-7-7。",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "MaxResultsPerPage",
+                        "in": "query",
+                        "description": "每页返回的最大结果数。如果响应超过最大事务数或10 MB，API将使用 “invalidinput” 进行响应。",
+                        "required": false,
+                        "type": "integer",
+                        "default": 100,
+                        "maximum": 100,
+                        "minimum": 1,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "NextToken",
+                        "in": "query",
+                        "description": "上一个请求的响应中返回的字符串令牌。",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "已成功检索财务事件。",
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "description": "此操作的速率限制 (每秒请求数)。",
+                                "type": "string"
+                            },
+                            "x-amzn-RequestId": {
+                                "description": "唯一请求引用标识符。",
+                                "type": "string"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "x-amzn-api-sandbox": {
+                            "static": [
+                                {
+                                    "request": {
+                                        "parameters": {
+                                            "MaxResultsPerPage": {
+                                                "value": 10
+                                            },
+                                            "orderId": {
+                                                "value": "485-734-5434857"
+                                            }
+                                        }
+                                    },
+                                    "response": {
+                                        "payload": {
+                                            "NextToken": "Next token value",
+                                            "FinancialEvents": {
+                                                "RetrochargeEventList": [
+                                                    {
+                                                        "RetrochargeEventType": "Retrocharge",
+                                                        "AmazonOrderId": "444-555-3343433",
+                                                        "PostedDate": "2020-02-05T13:56:00.363Z",
+                                                        "BaseTax": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "ShippingTax": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "MarketplaceName": "1",
+                                                        "RetrochargeTaxWithheldList": [
+                                                            {
+                                                                "TaxCollectionModel": "Free",
+                                                                "TaxesWithheld": [
+                                                                    {
+                                                                        "ChargeType": "Tax",
+                                                                        "ChargeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "RentalTransactionEventList": [
+                                                    {
+                                                        "AmazonOrderId": "444-555-3343433",
+                                                        "RentalEventType": "string",
+                                                        "ExtensionLength": 0,
+                                                        "PostedDate": "2020-02-05T13:56:00.363Z",
+                                                        "RentalChargeList": [
+                                                            {
+                                                                "ChargeType": "Tax",
+                                                                "ChargeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "RentalFeeList": [
+                                                            {
+                                                                "FeeType": "FixedClosingFee",
+                                                                "FeeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "MarketplaceName": "1",
+                                                        "RentalInitialValue": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "RentalReimbursement": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "RentalTaxWithheldList": [
+                                                            {
+                                                                "TaxCollectionModel": "Free",
+                                                                "TaxesWithheld": [
+                                                                    {
+                                                                        "ChargeType": "Tax",
+                                                                        "ChargeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "ProductAdsPaymentEventList": [
+                                                    {
+                                                        "postedDate": "2020-02-05T13:56:00.363Z",
+                                                        "transactionType": "Free",
+                                                        "invoiceId": "3454535453",
+                                                        "baseValue": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "taxValue": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "transactionValue": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        }
+                                                    }
+                                                ],
+                                                "ServiceFeeEventList": [
+                                                    {
+                                                        "AmazonOrderId": "444-555-3343433",
+                                                        "FeeReason": "Free",
+                                                        "FeeList": [
+                                                            {
+                                                                "FeeType": "FixedClosingFee",
+                                                                "FeeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "SellerSKU": "456454455464",
+                                                        "FnSKU": "Fn134",
+                                                        "FeeDescription": "FeeDescription",
+                                                        "ASIN": "KJHJ457648GHD"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "请求缺少参数或参数无效，无法对其进行分析。",
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "description": "此操作的速率限制 (每秒请求数)。",
+                                "type": "string"
+                            },
+                            "x-amzn-RequestId": {
+                                "description": "唯一请求引用标识符。",
+                                "type": "string"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "x-amzn-api-sandbox": {
+                            "static": [
+                                {
+                                    "request": {
+                                        "parameters": {
+                                            "orderId": {
+                                                "value": "BAD-ORDER"
+                                            }
+                                        }
+                                    },
+                                    "response": {
+                                        "errors": [
+                                            {
+                                                "code": "InvalidInput",
+                                                "message": "Bad order ID provided."
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "指定的资源不存在。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "type": "string",
+                                "description": "此操作的速率限制 (每秒请求数)。"
+                            },
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "请求的频率大于允许的频率。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "发生了阻止服务器完成请求的意外情况。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "服务器的临时过载或维护。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/finances/v0/financialEvents": {
+            "get": {
+                "description": "返回指定数据范围的财务事件。订单可能需要长达48小时才能出现在您的财务活动中。** 注意: ** 在 “listfinancialevents” 中，延迟事件在发布之前不会显示在响应中。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 0.5 | 30 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+                "operationId": "listFinancialEvents",
+                "parameters": [
+                    {
+                        "name": "MaxResultsPerPage",
+                        "in": "query",
+                        "description": "每页返回的最大结果数。如果响应超过最大事务数或10 MB，API将使用 “invalidinput” 进行响应。",
+                        "required": false,
+                        "type": "integer",
+                        "default": 100,
+                        "maximum": 100,
+                        "minimum": 1,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "PostedAfter",
+                        "in": "query",
+                        "description": "用于选择在指定时间之后 (或在指定时间) 发布的财务事件的日期。日期时间不得晚于提交请求之前的两分钟，采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "PostedBefore",
+                        "in": "query",
+                        "description": "用于选择在指定时间之前 (而不是在指定时间) 发布的财务事件的日期。日期时间必须晚于postedafture，且不超过提交请求前两分钟，采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。如果postedafture和PostedBefore相隔超过180天，则不会返回任何财务事件。如果指定PostedBefore参数，则必须指定postedafer参数。默认值: 现在减去两分钟。",
+                        "required": false,
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "name": "NextToken",
+                        "in": "query",
+                        "description": "上一个请求的响应中返回的字符串令牌。",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功。",
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "description": "此操作的速率限制 (每秒请求数)。",
+                                "type": "string"
+                            },
+                            "x-amzn-RequestId": {
+                                "description": "唯一请求引用标识符。",
+                                "type": "string"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "x-amzn-api-sandbox": {
+                            "static": [
+                                {
+                                    "request": {
+                                        "parameters": {
+                                            "MaxResultsPerPage": {
+                                                "value": 10
+                                            },
+                                            "NextToken": {
+                                                "value": "jehgri34yo7jr9e8f984tr9i4o"
+                                            }
+                                        }
+                                    },
+                                    "response": {
+                                        "payload": {
+                                            "NextToken": "Next token value",
+                                            "FinancialEvents": {
+                                                "PayWithAmazonEventList": [
+                                                    {
+                                                        "SellerOrderId": "454645645656456",
+                                                        "TransactionPostedDate": "2020-02-05T13:56:00.363Z",
+                                                        "BusinessObjectType": "Free",
+                                                        "SalesChannel": "None",
+                                                        "Charge": {
+                                                            "ChargeType": "Tax",
+                                                            "ChargeAmount": {
+                                                                "CurrencyCode": "USD",
+                                                                "CurrencyAmount": 25.37
+                                                            }
+                                                        },
+                                                        "FeeList": [
+                                                            {
+                                                                "FeeType": "FixedClosingFee",
+                                                                "FeeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "PaymentAmountType": "Tax",
+                                                        "AmountDescription": "Tax",
+                                                        "FulfillmentChannel": "FulfillmentChannel",
+                                                        "StoreName": "Etsy"
+                                                    }
+                                                ],
+                                                "ServiceProviderCreditEventList": [
+                                                    {
+                                                        "ProviderTransactionType": "Free",
+                                                        "SellerOrderId": "454645645656456",
+                                                        "MarketplaceId": "1",
+                                                        "MarketplaceCountryCode": "US",
+                                                        "SellerId": "4564565546",
+                                                        "SellerStoreName": "Etsy",
+                                                        "ProviderId": "1",
+                                                        "ProviderStoreName": "Etsy",
+                                                        "TransactionAmount": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "TransactionCreationDate": "2020-02-05T13:56:00.363Z"
+                                                    }
+                                                ],
+                                                "RentalTransactionEventList": [
+                                                    {
+                                                        "AmazonOrderId": "444-555-3343433",
+                                                        "RentalEventType": "string",
+                                                        "ExtensionLength": 0,
+                                                        "PostedDate": "2020-02-05T13:56:00.363Z",
+                                                        "RentalChargeList": [
+                                                            {
+                                                                "ChargeType": "Tax",
+                                                                "ChargeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "RentalFeeList": [
+                                                            {
+                                                                "FeeType": "FixedClosingFee",
+                                                                "FeeAmount": {
+                                                                    "CurrencyCode": "USD",
+                                                                    "CurrencyAmount": 25.37
+                                                                }
+                                                            }
+                                                        ],
+                                                        "MarketplaceName": "1",
+                                                        "RentalInitialValue": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "RentalReimbursement": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "RentalTaxWithheldList": [
+                                                            {
+                                                                "TaxCollectionModel": "Free",
+                                                                "TaxesWithheld": [
+                                                                    {
+                                                                        "ChargeType": "Tax",
+                                                                        "ChargeAmount": {
+                                                                            "CurrencyCode": "USD",
+                                                                            "CurrencyAmount": 25.37
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "ProductAdsPaymentEventList": [
+                                                    {
+                                                        "postedDate": "2020-02-05T13:56:00.363Z",
+                                                        "transactionType": "Free",
+                                                        "invoiceId": "3454535453",
+                                                        "baseValue": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "taxValue": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        },
+                                                        "transactionValue": {
+                                                            "CurrencyCode": "USD",
+                                                            "CurrencyAmount": 25.37
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "请求缺少参数或参数无效，无法对其进行分析。",
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "description": "此操作的速率限制 (每秒请求数)。",
+                                "type": "string"
+                            },
+                            "x-amzn-RequestId": {
+                                "description": "唯一请求引用标识符。",
+                                "type": "string"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "x-amzn-api-sandbox": {
+                            "static": [
+                                {
+                                    "request": {
+                                        "parameters": {
+                                            "MaxResultsPerPage": {
+                                                "value": 2
+                                            }
+                                        }
+                                    },
+                                    "response": {
+                                        "errors": [
+                                            {
+                                                "code": "InvalidInput",
+                                                "message": "Input not valid."
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "403": {
+                        "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "指定的资源不存在。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RateLimit-Limit": {
+                                "type": "string",
+                                "description": "此操作的速率限制 (每秒请求数)。"
+                            },
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "请求的频率大于允许的频率。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "发生了阻止服务器完成请求的意外情况。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "服务器的临时过载或维护。",
+                        "schema": {
+                            "$ref": "#/definitions/ListFinancialEventsResponse"
+                        },
+                        "headers": {
+                            "x-amzn-RequestId": {
+                                "type": "string",
+                                "description": "唯一请求引用标识符。"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AdhocDisbursementEvent": {
+            "type": "object",
+            "properties": {
+                "TransactionType": {
+                    "type": "string",
+                    "description": "指示事务的类型。\n\n示例: “已支付到亚马逊礼品卡余额”"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "TransactionId": {
+                    "type": "string",
+                    "description": "事务的标识符。"
+                },
+                "TransactionAmount": {
+                    "description": "交易的金额。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "与即席支付有关的事件。"
+        },
+        "AdhocDisbursementEventList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/AdhocDisbursementEvent"
+            },
+            "description": "“即席支出” 事件的列表。"
+        },
+        "AdjustmentEvent": {
+            "type": "object",
+            "properties": {
+                "AdjustmentType": {
+                    "type": "string",
+                    "description": "调整的类型。\n\nPossible values:\n\n* Fbainventoryinvensement-向卖方帐户偿还的FBA库存。如果卖方的库存损坏，就会发生这种情况。\n\n* ReserveEvent-在结算期结束时生成的储备事件。当卖家账户中的一些钱被扣留时，就会发生这种情况。\n\n* PostageBilling-卖方为运输标签支付的金额。\n\n* PostageRefund-为取消或退款的订单购买的运输标签的报销。\n\n* Lostordamagedorsement-Amazon Easy Ship向卖方帐户报销我们丢失或损坏的包裹。\n\n* Canceledbutpickepreumbursement-亚马逊轻松发货报销到卖家的帐户。这发生在包裹被拾取并且随后取消订单时。此值仅在印度市场中使用。\n\n* 报销-来自卖家账户的亚马逊Easy Ship报销回扣。当先前的报销被撤销时，就会发生这种情况。此值仅在印度市场中使用。\n\n* SellerRewards-因卖家参与卖家奖励计划中的优惠而记入卖家账户的奖励。仅适用于印度市场。"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "AdjustmentAmount": {
+                    "description": "作为此事件的一部分调整的金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "AdjustmentItemList": {
+                    "description": "有关帐户调整的信息列表。",
+                    "$ref": "#/definitions/AdjustmentItemList"
+                }
+            },
+            "description": "对卖方账户的调整。"
+        },
+        "AdjustmentEventList": {
+            "type": "array",
+            "description": "卖方账户的调整事件信息列表",
+            "items": {
+                "$ref": "#/definitions/AdjustmentEvent"
+            }
+        },
+        "AdjustmentItem": {
+            "type": "object",
+            "properties": {
+                "Quantity": {
+                    "type": "string",
+                    "description": "表示当AdustmentType为fbainventory偿付时卖方库存中的单位数。"
+                },
+                "PerUnitAmount": {
+                    "description": "项目的每单位值。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TotalAmount": {
+                    "description": "项目的总值。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "SellerSKU": {
+                    "type": "string",
+                    "description": "商品的卖家SKU。卖方SKU由卖方的卖方ID限定，卖方ID包含在对销售合作伙伴API的每次调用中。"
+                },
+                "FnSKU": {
+                    "type": "string",
+                    "description": "分配给存储在履行中心并从履行中心履行的产品的唯一标识符。"
+                },
+                "ProductDescription": {
+                    "type": "string",
+                    "description": "项目的简短说明。"
+                },
+                "ASIN": {
+                    "type": "string",
+                    "description": "商品的Amazon标准标识号 (ASIN)。"
+                },
+                "TransactionNumber": {
+                    "type": "string",
+                    "description": "与调整相关的事务处理编号。"
+                }
+            },
+            "description": "卖方帐户调整中的项目。"
+        },
+        "AdjustmentItemList": {
+            "type": "array",
+            "description": "有关卖方帐户调整中的项目的信息列表。",
+            "items": {
+                "$ref": "#/definitions/AdjustmentItem"
+            }
+        },
+        "AffordabilityExpenseEvent": {
+            "type": "object",
+            "required": [
+                "TaxTypeCGST",
+                "TaxTypeIGST",
+                "TaxTypeSGST"
+            ],
+            "properties": {
+                "AmazonOrderId": {
+                    "type": "string",
+                    "description": "Amazon定义的订单标识符。"
+                },
+                "PostedDate": {
+                    "description": "创建财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "MarketplaceId": {
+                    "type": "string",
+                    "description": "Amazon定义的加密市场标识符。"
+                },
+                "TransactionType": {
+                    "type": "string",
+                    "description": "Indicates the type of transaction. \n\nPossible values:\n\n* 收费-支付可负担性促销费用。\n\n* 退款-用于可负担性促销费用冲销。"
+                },
+                "BaseExpense": {
+                    "description": "赞助产品计划下产生的点击费用。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TaxTypeCGST": {
+                    "description": "中央商品和服务税，由中央政府收取和征收。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TaxTypeSGST": {
+                    "description": "国家商品和服务税，由州政府收取。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TaxTypeIGST": {
+                    "description": "综合商品和服务税，由中央政府收取。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TotalExpense": {
+                    "description": "向卖方收取的总金额。TotalExpense = BaseExpense TaxTypeIGST TaxTypeCGST TaxTypeSGST.",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "与可负担性促销有关的费用。"
+        },
+        "AffordabilityExpenseEventList": {
+            "type": "array",
+            "description": "与负担能力促销相关的费用信息列表。",
+            "items": {
+                "$ref": "#/definitions/AffordabilityExpenseEvent"
+            }
+        },
+        "BigDecimal": {
+            "type": "number",
+            "description": "架构类型为BigDecimal的字段是带符号的十进制数 (例如currency量值)。"
+        },
+        "ChargeComponent": {
+            "type": "object",
+            "properties": {
+                "ChargeType": {
+                    "type": "string",
+                    "description": "电荷的类型。"
+                },
+                "ChargeAmount": {
+                    "description": "费用的金额。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "卖方帐户上的费用。\n\nPossible values:\n\n* 本金-订单项目的售价，等于该项目的售价乘以订购的数量。\n\n* 税-卖方对委托人征收的税。\n\n* Marketplaceacilitatortax-本金-对本金预扣的税款。\n\n* Marketplaceacitatortax-Shipping-ShippingCharge的预扣税款。\n\n* Marketplaceacitatortax-Giftwrap-对Giftwrap费用预扣的税款。\n\n* Marketplaceacilitatortax-其他杂项费用的预扣税款。\n\n* 折扣-订单项目的促销折扣。\n\n* 税收折扣-为促销回扣扣除的税额。\n\n* CODItemCharge-订单项目的COD费用。\n\n* CODItemTaxCharge-卖方在CODItemCharge上收取的税款。\n\n* CODOrderCharge-订单的COD费用。\n\n* CODOrderTaxCharge-卖方在CODOrderCharge上收取的税款。\n\n* CODShippingCharge-COD订单的运费。\n\n* CODShippingTaxCharge-卖方在CODShippingCharge上收取的税款。\n\n* ShippingCharge-运费。\n\n* ShippingTax-卖方对ShippingCharge收取的税。\n\n* 商誉-作为善意的姿态或补偿购买体验中的痛苦和痛苦而给予买家的金额。\n\n* Giftwrap-礼品包装费。\n\n* GiftwrapTax-卖方对Giftwrap收取的税款。\n\n* RestockingFee-在返回某些类别的产品时向买方收取的费用。\n\n* ReturnShipping-给予买方的金额，以补偿在我们有过错的情况下将物品运回。\n\n* PointsFee-如果买家没有足够的亚马逊积分来支付扣除额，则从退款中扣除的亚马逊积分价值。\n\n* Genericduction-一般的坏账扣除额。\n\n* FreeReplacementReturnShipping-当买家收到错误的物品，要求免费更换，并返回不正确的物品时，退货运费的补偿。\n\n* PaymentMethodFee-在某些市场中为某些付款方式收取的费用。\n\n* ExportCharge-作为亚马逊全球计划的一部分，当物品运往国际目的地时收取的出口税。\n\n* SAFE-T报销-项目的SAFE-T索赔金额。\n\n* TCS-CGST-中央商品和服务税 (CGST) 的源头税 (TCS)。\n\n* TCS-SGST-在来源处收取的国家商品和服务税 (SGST) 税。\n\n* Tcs-igst-在源头征收的综合商品和服务税 (IGST) 税。\n\n* Tcs-utgst-在来源处为联合领土商品和服务税 (UTGST) 征收的税。"
+        },
+        "ChargeComponentList": {
+            "type": "array",
+            "description": "卖方帐户上的收费信息清单。",
+            "items": {
+                "$ref": "#/definitions/ChargeComponent"
+            }
+        },
+        "ChargeInstrument": {
+            "type": "object",
+            "properties": {
+                "Description": {
+                    "type": "string",
+                    "description": "充电仪器的简短说明。"
+                },
+                "Tail": {
+                    "type": "string",
+                    "description": "收费工具的帐户尾部 (尾随数字)。"
+                },
+                "Amount": {
+                    "description": "记入此收费表的金额。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "支付工具。"
+        },
+        "ChargeInstrumentList": {
+            "type": "array",
+            "description": "支付工具清单。",
+            "items": {
+                "$ref": "#/definitions/ChargeInstrument"
+            }
+        },
+        "ChargeRefundEvent": {
+            "type": "object",
+            "properties": {
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "ReasonCode": {
+                    "type": "string",
+                    "description": "退款的原因。\n\n示例: 'subscriptionfeecorretion'"
+                },
+                "ReasonCodeDescription": {
+                    "type": "string",
+                    "description": "原因代码的说明。\n\n示例: 'subscriptionfeecorretion'"
+                },
+                "ChargeRefundTransactions": {
+                    "description": "费用退款信用的金额。",
+                    "$ref": "#/definitions/ChargeRefundTransactions"
+                }
+            },
+            "description": "与退款相关的事件。"
+        },
+        "ChargeRefundEventList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ChargeRefundEvent"
+            },
+            "description": "费用退款事件列表。"
+        },
+        "ChargeRefundTransaction": {
+            "type": "object",
+            "properties": {
+                "ChargeAmount": {
+                    "description": "费用退款信用的金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "ChargeType": {
+                    "type": "string",
+                    "description": "电荷的类型。"
+                }
+            },
+            "description": "费用退款交易。"
+        },
+        "ChargeRefundTransactions": {
+            "type": "array",
+            "description": "“Chargerefund” 交易列表",
+            "items": {
+                "$ref": "#/definitions/ChargeRefundTransaction"
+            }
+        },
+        "CouponPaymentEvent": {
+            "type": "object",
+            "properties": {
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "CouponId": {
+                    "type": "string",
+                    "description": "优惠券标识符。"
+                },
+                "SellerCouponDescription": {
+                    "type": "string",
+                    "description": "卖家在创建优惠券时提供的描述。"
+                },
+                "ClipOrRedemptionCount": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "券回扣或赎回的数量。"
+                },
+                "PaymentEventId": {
+                    "type": "string",
+                    "description": "付款事件标识符。"
+                },
+                "FeeComponent": {
+                    "$ref": "#/definitions/FeeComponent"
+                },
+                "ChargeComponent": {
+                    "$ref": "#/definitions/ChargeComponent"
+                },
+                "TotalAmount": {
+                    "description": "FeeComponent值加上ChargeComponent值。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "与优惠券支付有关的事件。"
+        },
+        "CouponPaymentEventList": {
+            "type": "array",
+            "description": "优惠券支付事件信息的列表。",
+            "items": {
+                "$ref": "#/definitions/CouponPaymentEvent"
+            }
+        },
+        "Currency": {
+            "type": "object",
+            "properties": {
+                "CurrencyCode": {
+                    "type": "string",
+                    "description": "ISO 4217格式的三位数货币代码。"
+                },
+                "CurrencyAmount": {
+                    "description": "货币价值。",
+                    "$ref": "#/definitions/BigDecimal"
+                }
+            },
+            "description": "货币类型和金额。"
+        },
+        "Date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "架构类型为date的字段采用ISO 8601日期时间格式 (例如GroupBeginDate)。"
+        },
+        "DebtRecoveryEvent": {
+            "type": "object",
+            "properties": {
+                "DebtRecoveryType": {
+                    "type": "string",
+                    "description": "债务回收类型。\n\nPossible values:\n\n* 债务支付\n\n* DebtPaymentFailure\n\n* 债务调整"
+                },
+                "RecoveryAmount": {
+                    "description": "申请恢复的金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "OverPaymentCredit": {
+                    "description": "因多付而退回的金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "DebtRecoveryItemList": {
+                    "$ref": "#/definitions/DebtRecoveryItemList"
+                },
+                "ChargeInstrumentList": {
+                    "$ref": "#/definitions/ChargeInstrumentList"
+                }
+            },
+            "description": "债务偿还或债务调整。"
+        },
+        "DebtRecoveryEventList": {
+            "type": "array",
+            "description": "债务追偿事件信息列表。",
+            "items": {
+                "$ref": "#/definitions/DebtRecoveryEvent"
+            }
+        },
+        "DebtRecoveryItem": {
+            "type": "object",
+            "properties": {
+                "RecoveryAmount": {
+                    "description": "为恢复项目应用的金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "OriginalAmount": {
+                    "description": "原始债务金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "GroupBeginDate": {
+                    "description": "包含债务的财务事件组的开始日期和时间。采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+                    "$ref": "#/definitions/Date"
+                },
+                "GroupEndDate": {
+                    "description": "包含债务的财务事件组的结束日期和时间。采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+                    "$ref": "#/definitions/Date"
+                }
+            },
+            "description": "债务支付或债务调整的项目。"
+        },
+        "DebtRecoveryItemList": {
+            "type": "array",
+            "description": "债务追偿项目信息清单。",
+            "items": {
+                "$ref": "#/definitions/DebtRecoveryItem"
+            }
+        },
+        "DirectPayment": {
+            "type": "object",
+            "properties": {
+                "DirectPaymentType": {
+                    "type": "string",
+                    "description": "付款的类型。\n\nPossible values:\n\n* Storedvaluecardreceivenue-由于卖方通过储值卡收到款项而从卖方帐户中扣除的金额。\n\n* StoredValueCardRefund-如果使用储值卡购买的订单被退款，亚马逊将退还给卖家的金额。\n\n* Privatelabeelcreditcardrevenue-从卖方帐户中扣除的金额，因为卖方通过亚马逊提供的自有品牌信用卡收到了款项。\n\n* Privatelabeelcreditcardrefund-如果使用亚马逊提供的自有品牌信用卡购买的订单被退还，亚马逊将退还给卖家的金额。\n\n* Collectondeliveryrecays-卖方直接从买方收取的COD金额。\n\n* CollectOnDeliveryRefund-如果COD支付的订单被退款，亚马逊向买方退款的金额。"
+                },
+                "DirectPaymentAmount": {
+                    "description": "直接付款的金额。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "直接支付给卖方的款项。"
+        },
+        "DirectPaymentList": {
+            "type": "array",
+            "description": "直接付款信息列表。",
+            "items": {
+                "$ref": "#/definitions/DirectPayment"
+            }
+        },
+        "FailedAdhocDisbursementEventList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/FailedAdhocDisbursementEvent"
+            },
+            "description": "一份 'FailedAdhocDisbursementEvent's '的名单。"
+        },
+        "FailedAdhocDisbursementEvent": {
+            "type": "object",
+            "properties": {
+                "FundsTransfersType": {
+                    "type": "string",
+                    "description": "资金转移的类型。\n\n示例 “退款”"
+                },
+                "TransferId": {
+                    "type": "string",
+                    "description": "传输标识符。"
+                },
+                "DisbursementId": {
+                    "type": "string",
+                    "description": "支出标识符。"
+                },
+                "PaymentDisbursementType": {
+                    "type": "string",
+                    "description": "支付的类型。\n\n示例 “CREDIT_CARD”"
+                },
+                "Status": {
+                    "type": "string",
+                    "description": "失败的 “即席付款” 的状态。\n\n示例 “hard_drewed”"
+                },
+                "TransferAmount": {
+                    "description": "临时支付的金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                }
+            },
+            "description": "临时支付事件列表失败。"
+        },
+        "FBALiquidationEvent": {
+            "type": "object",
+            "properties": {
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "OriginalRemovalOrderId": {
+                    "type": "string",
+                    "description": "原始删除顺序的标识符。"
+                },
+                "LiquidationProceedsAmount": {
+                    "description": "清算人为卖方存货支付的金额。卖方收到此金额减去清算金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "LiquidationFeeAmount": {
+                    "description": "亚马逊因清算卖家的FBA库存而向卖家收取的费用。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "由亚马逊履行 (FBA) 库存清算的付款事件。此事件仅在美国市场中使用。"
+        },
+        "FBALiquidationEventList": {
+            "type": "array",
+            "description": "FBA存货清算付款事件列表",
+            "items": {
+                "$ref": "#/definitions/FBALiquidationEvent"
+            }
+        },
+        "FeeComponent": {
+            "type": "object",
+            "properties": {
+                "FeeType": {
+                    "type": "string",
+                    "description": "费用的类型。有关在亚马逊上销售费用的更多信息，请参阅卖家中心上的 [在亚马逊上销售费用表](https://sellercentral.amazon.com/gp/help/ 200336920)。有关Amazon费用履行的更多信息，请参阅卖方中心上的 [FBA功能、服务和费用](https://sellercentral.amazon.com/gp/help/ 201074400)。"
+                },
+                "FeeAmount": {
+                    "description": "费用的金额。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "与事件关联的费用。"
+        },
+        "FeeComponentList": {
+            "type": "array",
+            "description": "费用组成部分信息的列表。",
+            "items": {
+                "$ref": "#/definitions/FeeComponent"
+            }
+        },
+        "FinancialEventGroup": {
+            "type": "object",
+            "properties": {
+                "FinancialEventGroupId": {
+                    "type": "string",
+                    "description": "财务事件组的唯一标识符。"
+                },
+                "ProcessingStatus": {
+                    "type": "string",
+                    "description": "财务事件组的处理状态指示财务事件组的余额是否已结算。\n\nPossible values:\n\n* 打开\n\n* 已关闭"
+                },
+                "FundTransferStatus": {
+                    "type": "string",
+                    "description": "资金转移的状态。"
+                },
+                "OriginalTotal": {
+                    "description": "交易发生的市场货币总额。对于封闭的财务组，这是支出或费用的总金额。对于打开的财务事件组，这是当前余额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "ConvertedTotal": {
+                    "description": "支付资金的市场货币总额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "FundTransferDate": {
+                    "description": "开始支付或收费的日期和时间。仅适用于封闭式定居点。采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+                    "$ref": "#/definitions/Date"
+                },
+                "TraceId": {
+                    "type": "string",
+                    "description": "卖方用于从外部查找交易的跟踪标识符。"
+                },
+                "AccountTail": {
+                    "type": "string",
+                    "description": "支付工具的账户尾。"
+                },
+                "BeginningBalance": {
+                    "description": "结算期期初的余额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "FinancialEventGroupStart": {
+                    "description": "打开财务事件组的日期和时间。采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+                    "$ref": "#/definitions/Date"
+                },
+                "FinancialEventGroupEnd": {
+                    "description": "财务事件组关闭的日期和时间。采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+                    "$ref": "#/definitions/Date"
+                }
+            },
+            "description": "与财务事件组相关的信息。"
+        },
+        "FinancialEventGroupList": {
+            "type": "array",
+            "description": "财务事件组信息列表。",
+            "items": {
+                "$ref": "#/definitions/FinancialEventGroup"
+            }
+        },
+        "FinancialEvents": {
+            "type": "object",
+            "properties": {
+                "ShipmentEventList": {
+                    "description": "装运事件的列表。",
+                    "$ref": "#/definitions/ShipmentEventList"
+                },
+                "ShipmentSettleEventList": {
+                    "description": "装运结算事件列表。",
+                    "$ref": "#/definitions/ShipmentSettleEventList"
+                },
+                "RefundEventList": {
+                    "description": "退款事件列表。",
+                    "$ref": "#/definitions/ShipmentEventList"
+                },
+                "GuaranteeClaimEventList": {
+                    "description": "担保索赔事件列表。",
+                    "$ref": "#/definitions/ShipmentEventList"
+                },
+                "ChargebackEventList": {
+                    "description": "调配事件的列表。",
+                    "$ref": "#/definitions/ShipmentEventList"
+                },
+                "PayWithAmazonEventList": {
+                    "$ref": "#/definitions/PayWithAmazonEventList"
+                },
+                "ServiceProviderCreditEventList": {
+                    "$ref": "#/definitions/SolutionProviderCreditEventList"
+                },
+                "RetrochargeEventList": {
+                    "$ref": "#/definitions/RetrochargeEventList"
+                },
+                "RentalTransactionEventList": {
+                    "$ref": "#/definitions/RentalTransactionEventList"
+                },
+                "ProductAdsPaymentEventList": {
+                    "$ref": "#/definitions/ProductAdsPaymentEventList"
+                },
+                "ServiceFeeEventList": {
+                    "$ref": "#/definitions/ServiceFeeEventList"
+                },
+                "SellerDealPaymentEventList": {
+                    "$ref": "#/definitions/SellerDealPaymentEventList"
+                },
+                "DebtRecoveryEventList": {
+                    "$ref": "#/definitions/DebtRecoveryEventList"
+                },
+                "LoanServicingEventList": {
+                    "$ref": "#/definitions/LoanServicingEventList"
+                },
+                "AdjustmentEventList": {
+                    "$ref": "#/definitions/AdjustmentEventList"
+                },
+                "SAFETReimbursementEventList": {
+                    "$ref": "#/definitions/SAFETReimbursementEventList"
+                },
+                "SellerReviewEnrollmentPaymentEventList": {
+                    "$ref": "#/definitions/SellerReviewEnrollmentPaymentEventList"
+                },
+                "FBALiquidationEventList": {
+                    "$ref": "#/definitions/FBALiquidationEventList"
+                },
+                "CouponPaymentEventList": {
+                    "$ref": "#/definitions/CouponPaymentEventList"
+                },
+                "ImagingServicesFeeEventList": {
+                    "$ref": "#/definitions/ImagingServicesFeeEventList"
+                },
+                "NetworkComminglingTransactionEventList": {
+                    "$ref": "#/definitions/NetworkComminglingTransactionEventList"
+                },
+                "AffordabilityExpenseEventList": {
+                    "$ref": "#/definitions/AffordabilityExpenseEventList"
+                },
+                "AffordabilityExpenseReversalEventList": {
+                    "$ref": "#/definitions/AffordabilityExpenseEventList"
+                },
+                "RemovalShipmentEventList": {
+                    "$ref": "#/definitions/RemovalShipmentEventList"
+                },
+                "RemovalShipmentAdjustmentEventList": {
+                    "$ref": "#/definitions/RemovalShipmentAdjustmentEventList"
+                },
+                "TrialShipmentEventList": {
+                    "$ref": "#/definitions/TrialShipmentEventList"
+                },
+                "TDSReimbursementEventList": {
+                    "$ref": "#/definitions/TDSReimbursementEventList"
+                },
+                "AdhocDisbursementEventList": {
+                    "$ref": "#/definitions/AdhocDisbursementEventList"
+                },
+                "TaxWithholdingEventList": {
+                    "$ref": "#/definitions/TaxWithholdingEventList"
+                },
+                "ChargeRefundEventList": {
+                    "$ref": "#/definitions/ChargeRefundEventList"
+                },
+                "FailedAdhocDisbursementEventList": {
+                    "$ref": "#/definitions/FailedAdhocDisbursementEventList"
+                },
+                "ValueAddedServiceChargeEventList": {
+                    "$ref": "#/definitions/ValueAddedServiceChargeEventList"
+                },
+                "CapacityReservationBillingEventList": {
+                    "$ref": "#/definitions/CapacityReservationBillingEventList"
+                }
+            },
+            "description": "包含与财务事件相关的所有信息。"
+        },
+        "ImagingServicesFeeEvent": {
+            "type": "object",
+            "properties": {
+                "ImagingRequestBillingItemID": {
+                    "type": "string",
+                    "description": "映像服务请求的标识符。"
+                },
+                "ASIN": {
+                    "type": "string",
+                    "description": "为其请求映像服务的项目的Amazon标准标识号 (ASIN)。"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "FeeList": {
+                    "description": "与事件关联的费用列表。",
+                    "$ref": "#/definitions/FeeComponentList"
+                }
+            },
+            "description": "与Amazon Imaging services相关的费用事件。"
+        },
+        "ImagingServicesFeeEventList": {
+            "type": "array",
+            "description": "与Amazon Imaging services相关的费用事件列表。",
+            "items": {
+                "$ref": "#/definitions/ImagingServicesFeeEvent"
+            }
+        },
+        "ListFinancialEventGroupsPayload": {
+            "type": "object",
+            "properties": {
+                "NextToken": {
+                    "type": "string",
+                    "description": "当存在且不为空时，在下一个请求中传递此字符串令牌以返回下一个响应页面。"
+                },
+                "FinancialEventGroupList": {
+                    "$ref": "#/definitions/FinancialEventGroupList"
+                }
+            },
+            "description": "listFinancialEventGroups操作的负载。"
+        },
+        "ListFinancialEventGroupsResponse": {
+            "type": "object",
+            "properties": {
+                "payload": {
+                    "description": "listFinancialEventGroups操作的负载。",
+                    "$ref": "#/definitions/ListFinancialEventGroupsPayload"
+                },
+                "errors": {
+                    "description": "listFinancialEventGroups操作期间发生一个或多个意外错误。",
+                    "$ref": "#/definitions/ErrorList"
+                }
+            },
+            "description": "listFinancialEventGroups操作的响应架构。"
+        },
+        "ListFinancialEventsPayload": {
+            "type": "object",
+            "properties": {
+                "NextToken": {
+                    "type": "string",
+                    "description": "当存在且不为空时，在下一个请求中传递此字符串令牌以返回下一个响应页面。"
+                },
+                "FinancialEvents": {
+                    "$ref": "#/definitions/FinancialEvents"
+                }
+            },
+            "description": "listFinancialEvents操作的负载。"
+        },
+        "ListFinancialEventsResponse": {
+            "type": "object",
+            "properties": {
+                "payload": {
+                    "description": "listFinancialEvents操作的负载。",
+                    "$ref": "#/definitions/ListFinancialEventsPayload"
+                },
+                "errors": {
+                    "description": "listFinancialEvents操作期间发生一个或多个意外错误。",
+                    "$ref": "#/definitions/ErrorList"
+                }
+            },
+            "description": "listFinancialEvents操作的响应架构。"
+        },
+        "LoanServicingEvent": {
+            "type": "object",
+            "properties": {
+                "LoanAmount": {
+                    "description": "贷款的金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "SourceBusinessEventType": {
+                    "type": "string",
+                    "description": "事件的类型。\n\nPossible values:\n\n* 预付贷款\n\n* 贷款支付\n\n* 贷款退款"
+                }
+            },
+            "description": "贷款预付款、贷款付款或贷款退款。"
+        },
+        "LoanServicingEventList": {
+            "type": "array",
+            "description": "贷款服务事件的列表。",
+            "items": {
+                "$ref": "#/definitions/LoanServicingEvent"
+            }
+        },
+        "NetworkComminglingTransactionEvent": {
+            "type": "object",
+            "properties": {
+                "TransactionType": {
+                    "type": "string",
+                    "description": "网络项目交换的类型。\n\nPossible values:\n\n* NetCo-亚马逊库存池交易的实现。仅在印度市场可用。\n\n* 混合增值税-混合增值税交易。仅在英国、西班牙、法国、德国和意大利市场提供。"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "NetCoTransactionID": {
+                    "type": "string",
+                    "description": "网络项交换的标识符。"
+                },
+                "SwapReason": {
+                    "type": "string",
+                    "description": "网络项目交换的原因。"
+                },
+                "ASIN": {
+                    "type": "string",
+                    "description": "交换项目的Amazon标准标识号 (ASIN)。"
+                },
+                "MarketplaceId": {
+                    "type": "string",
+                    "description": "事件发生的市场。"
+                },
+                "TaxExclusiveAmount": {
+                    "description": "交换项目的价格减去税额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TaxAmount": {
+                    "description": "卖方支付的网络物品掉期税",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "网络混合事务事件。"
+        },
+        "NetworkComminglingTransactionEventList": {
+            "type": "array",
+            "description": "网络混合事务事件的列表。",
+            "items": {
+                "$ref": "#/definitions/NetworkComminglingTransactionEvent"
+            }
+        },
+        "PayWithAmazonEvent": {
+            "type": "object",
+            "properties": {
+                "SellerOrderId": {
+                    "type": "string",
+                    "description": "由卖方指定的订单标识符。"
+                },
+                "TransactionPostedDate": {
+                    "description": "过帐付款交易记录的日期和时间。采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+                    "$ref": "#/definitions/Date"
+                },
+                "BusinessObjectType": {
+                    "type": "string",
+                    "description": "业务对象的类型。"
+                },
+                "SalesChannel": {
+                    "type": "string",
+                    "description": "交易记录的销售渠道。"
+                },
+                "Charge": {
+                    "description": "与事件关联的费用。",
+                    "$ref": "#/definitions/ChargeComponent"
+                },
+                "FeeList": {
+                    "description": "与事件关联的费用列表。",
+                    "$ref": "#/definitions/FeeComponentList"
+                },
+                "PaymentAmountType": {
+                    "type": "string",
+                    "description": "付款的类型。\n\nPossible values:\n\n* 销售"
+                },
+                "AmountDescription": {
+                    "type": "string",
+                    "description": "此付款事件的简短说明。"
+                },
+                "FulfillmentChannel": {
+                    "type": "string",
+                    "description": "履行渠道。\n\nPossible values:\n\n* AFN-亚马逊履行网络 (由亚马逊履行)\n\n* MFN-商户履行网络 (自我履行)"
+                },
+                "StoreName": {
+                    "type": "string",
+                    "description": "发生事件的存储名称。"
+                }
+            },
+            "description": "与卖家使用亚马逊帐户付款相关的事件。"
+        },
+        "PayWithAmazonEventList": {
+            "type": "array",
+            "description": "与卖家使用亚马逊支付账户相关的事件列表。",
+            "items": {
+                "$ref": "#/definitions/PayWithAmazonEvent"
+            }
+        },
+        "ProductAdsPaymentEvent": {
+            "type": "object",
+            "properties": {
+                "postedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "transactionType": {
+                    "type": "string",
+                    "description": "指示交易是收费还是退款。\n\nPossible values:\n\n* 充电-充电\n\n* 退款-退款"
+                },
+                "invoiceId": {
+                    "type": "string",
+                    "description": "显示交易记录的发票的标识符。"
+                },
+                "baseValue": {
+                    "description": "税前交易记录的基本金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "taxValue": {
+                    "description": "交易记录的税额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "transactionValue": {
+                    "description": "交易的总金额。等于基值taxValue。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "赞助产品付款活动。"
+        },
+        "ProductAdsPaymentEventList": {
+            "type": "array",
+            "description": "赞助产品支付活动列表。",
+            "items": {
+                "$ref": "#/definitions/ProductAdsPaymentEvent"
+            }
+        },
+        "Promotion": {
+            "type": "object",
+            "properties": {
+                "PromotionType": {
+                    "type": "string",
+                    "description": "促销的类型。"
+                },
+                "PromotionId": {
+                    "type": "string",
+                    "description": "促销活动的卖家指定标识符。"
+                },
+                "PromotionAmount": {
+                    "description": "应用于项目的促销折扣金额。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "应用于项目的促销。"
+        },
+        "PromotionList": {
+            "type": "array",
+            "description": "晋升名单。",
+            "items": {
+                "$ref": "#/definitions/Promotion"
+            }
+        },
+        "RemovalShipmentEvent": {
+            "type": "object",
+            "properties": {
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "MerchantOrderId": {
+                    "type": "string",
+                    "description": "商家移除orderId。"
+                },
+                "OrderId": {
+                    "type": "string",
+                    "description": "移除发运订单的标识符。"
+                },
+                "TransactionType": {
+                    "type": "string",
+                    "description": "删除顺序的类型。\n\nPossible values:\n\n* 批发_清算"
+                },
+                "StoreName": {
+                    "type": "string",
+                    "description": "发生事件的存储的名称。"
+                },
+                "RemovalShipmentItemList": {
+                    "description": "移除装运项目的列表。",
+                    "$ref": "#/definitions/RemovalShipmentItemList"
+                }
+            },
+            "description": "移除订单的移除发运事件。"
+        },
+        "RemovalShipmentEventList": {
+            "type": "array",
+            "description": "移除发运事件信息的列表。",
+            "items": {
+                "$ref": "#/definitions/RemovalShipmentEvent"
+            }
+        },
+        "RemovalShipmentItem": {
+            "type": "object",
+            "properties": {
+                "RemovalShipmentItemId": {
+                    "type": "string",
+                    "description": "移除装运中的项目的标识符。"
+                },
+                "TaxCollectionModel": {
+                    "type": "string",
+                    "description": "应用于该物料的收税模型。\n\nPossible values:\n\n* Marketplaceacitorator-税款由亚马逊代表卖家代扣代缴并汇给税务机关。\n\n* 标准税支付给卖家，而不是由亚马逊汇给税务机关。"
+                },
+                "FulfillmentNetworkSKU": {
+                    "type": "string",
+                    "description": "商品的亚马逊履行网络SKU。"
+                },
+                "Quantity": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "项目的数量。"
+                },
+                "Revenue": {
+                    "description": "为移除的项目支付给卖方的总金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "FeeAmount": {
+                    "description": "亚马逊向卖家收取的移除商品的费用。金额为负数。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TaxAmount": {
+                    "description": "对收入征收的税。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TaxWithheld": {
+                    "description": "由亚马逊代卖家代扣代缴给税务机关的税款。如果TaxCollectionModel = MarketplaceFacilitator，则扣税 = 税额 (扣税金额为负数除外)。否则扣税 = 0。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "移除发运的项目级信息。"
+        },
+        "RemovalShipmentItemList": {
+            "type": "array",
+            "description": "有关移除发运项目的信息列表。",
+            "items": {
+                "$ref": "#/definitions/RemovalShipmentItem"
+            }
+        },
+        "RemovalShipmentAdjustmentEvent": {
+            "type": "object",
+            "properties": {
+                "PostedDate": {
+                    "description": "发布财务事件的日期。",
+                    "$ref": "#/definitions/Date"
+                },
+                "AdjustmentEventId": {
+                    "type": "string",
+                    "description": "调整事件的唯一标识符。"
+                },
+                "MerchantOrderId": {
+                    "type": "string",
+                    "description": "商家移除orderId。"
+                },
+                "OrderId": {
+                    "type": "string",
+                    "description": "发运库存的orderId。"
+                },
+                "TransactionType": {
+                    "type": "string",
+                    "description": "删除顺序的类型。\n\nPossible values:\n\n* 批发清算。"
+                },
+                "RemovalShipmentItemAdjustmentList": {
+                    "type": "array",
+                    "description": "FBA库存的删除shipmentItemAdjustment详细信息的逗号分隔列表。",
+                    "items": {
+                        "$ref": "#/definitions/RemovalShipmentItemAdjustment"
+                    }
+                }
+            },
+            "description": "FBA清算库存的财务调整事件。正值表示买方欠亚马逊的钱 (例如，当费用被错误地计算为低于应有的费用时)。负值表示欠买方的全部或部分退款 (例如，当买方收到损坏的物品或少于订购的物品时)。"
+        },
+        "RemovalShipmentAdjustmentEventList": {
+            "type": "array",
+            "description": "FBA库存的删除发货调整详细信息的逗号分隔列表。",
+            "items": {
+                "$ref": "#/definitions/RemovalShipmentAdjustmentEvent"
+            }
+        },
+        "RemovalShipmentItemAdjustment": {
+            "type": "object",
+            "properties": {
+                "RemovalShipmentItemId": {
+                    "type": "string",
+                    "description": "移除装运中的项目的标识符。"
+                },
+                "TaxCollectionModel": {
+                    "type": "string",
+                    "description": "应用于该物料的收税模型。\n\nPossible values:\n\n* Marketplaceacitorator-税款由亚马逊代表卖家代扣代缴并汇给税务机关。\n\n* 标准税支付给卖家，而不是由亚马逊汇给税务机关。"
+                },
+                "FulfillmentNetworkSKU": {
+                    "type": "string",
+                    "description": "商品的亚马逊履行网络SKU。"
+                },
+                "AdjustedQuantity": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "调整后的拆船数量调整项。"
+                },
+                "RevenueAdjustment": {
+                    "description": "为有争议的项目调整的总金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TaxAmountAdjustment": {
+                    "description": "调整调整后收入的税额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TaxWithheldAdjustment": {
+                    "description": "调整亚马逊代表卖家代扣代缴给税务机关的税款。如果TaxCollectionModel = MarketplaceFacilitator，则扣税 = 税额 (扣税金额为负数除外)。否则扣税 = 0。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "移除发运项目调整的项目级别信息。"
+        },
+        "RentalTransactionEvent": {
+            "type": "object",
+            "properties": {
+                "AmazonOrderId": {
+                    "type": "string",
+                    "description": "Amazon定义的订单标识符。"
+                },
+                "RentalEventType": {
+                    "type": "string",
+                    "description": "租赁事件的类型。\n\nPossible values:\n\n* RentalCustomerPayment-买断-交易类型，表示客户何时想要买断租用的物品。\n\n* Rentalcustomer付款-扩展-表示客户何时希望延长租期的交易类型。\n\n* RentalCustomerRefund-买断-交易类型，表示客户何时请求对租用项目的买断退款。\n\n* RentalCustomerRefund-Extension-交易类型，表示客户何时通过租用项目的扩展请求退款。\n\n* RentalHandlingFee-交易类型，表示亚马逊向通过亚马逊租赁的卖家收取的费用。\n\n* RentalChargeFailureReimbursement-表示亚马逊何时向卖家汇款以补偿失败的费用的交易类型。\n\n* Rentallostitem报销-交易类型，表示亚马逊何时向卖家汇款以补偿丢失的物品。"
+                },
+                "ExtensionLength": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "买方延长已租用项目的天数。仅针对rentalcustomerday-extension和RentalCustomerRefund-Extension事件返回此值。"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "RentalChargeList": {
+                    "description": "与租赁事件关联的费用列表。",
+                    "$ref": "#/definitions/ChargeComponentList"
+                },
+                "RentalFeeList": {
+                    "description": "与租赁事件相关联的费用列表。",
+                    "$ref": "#/definitions/FeeComponentList"
+                },
+                "MarketplaceName": {
+                    "type": "string",
+                    "description": "市场的名称。"
+                },
+                "RentalInitialValue": {
+                    "description": "客户最初为租用该物品而支付的金额。此值仅针对RentalChargeFailureReimbursement和rentalloostitemretilsement事件返回。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "RentalReimbursement": {
+                    "description": "亚马逊向卖家发送的金额，以补偿丢失的物品或失败的费用。此值仅针对RentalChargeFailureReimbursement和rentalloostitemretilsement事件返回。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "RentalTaxWithheldList": {
+                    "description": "租赁项目的预扣税款信息清单。",
+                    "$ref": "#/definitions/TaxWithheldComponentList"
+                }
+            },
+            "description": "与租赁交易相关的事件。"
+        },
+        "RentalTransactionEventList": {
+            "type": "array",
+            "description": "租赁交易事件信息列表",
+            "items": {
+                "$ref": "#/definitions/RentalTransactionEvent"
+            }
+        },
+        "RetrochargeEvent": {
+            "type": "object",
+            "properties": {
+                "RetrochargeEventType": {
+                    "type": "string",
+                    "description": "事件的类型。\n\nPossible values:\n\n* 回充\n\n* 逆行"
+                },
+                "AmazonOrderId": {
+                    "type": "string",
+                    "description": "Amazon定义的订单标识符。"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "BaseTax": {
+                    "description": "与retrocharge事件关联的基本税。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "ShippingTax": {
+                    "description": "与retrocharge事件关联的发运税。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "MarketplaceName": {
+                    "type": "string",
+                    "description": "发生retrocharge事件的市场的名称。"
+                },
+                "RetrochargeTaxWithheldList": {
+                    "description": "有关预扣税款的信息列表。",
+                    "$ref": "#/definitions/TaxWithheldComponentList"
+                }
+            },
+            "description": "逆向充电或逆向充电。"
+        },
+        "RetrochargeEventList": {
+            "type": "array",
+            "description": "有关Retrocharge或retrochargereval事件的信息的列表。",
+            "items": {
+                "$ref": "#/definitions/RetrochargeEvent"
+            }
+        },
+        "SAFETReimbursementEvent": {
+            "type": "object",
+            "properties": {
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "SAFETClaimId": {
+                    "type": "string",
+                    "description": "SAFE-T声明标识符。"
+                },
+                "ReimbursedAmount": {
+                    "description": "报销金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "ReasonCode": {
+                    "type": "string",
+                    "description": "说明卖方被偿还的原因。"
+                },
+                "SAFETReimbursementItemList": {
+                    "$ref": "#/definitions/SAFETReimbursementItemList"
+                }
+            },
+            "description": "卖方账户上的安全T索赔。"
+        },
+        "SAFETReimbursementEventList": {
+            "type": "array",
+            "description": "Safetrelationsementevents的列表。",
+            "items": {
+                "$ref": "#/definitions/SAFETReimbursementEvent"
+            }
+        },
+        "SAFETReimbursementItem": {
+            "type": "object",
+            "properties": {
+                "itemChargeList": {
+                    "description": "与项目关联的费用列表。",
+                    "$ref": "#/definitions/ChargeComponentList"
+                },
+                "productDescription": {
+                    "type": "string",
+                    "description": "零售网站上的产品详细信息页面上显示的项目说明。"
+                },
+                "quantity": {
+                    "type": "string",
+                    "description": "报销项目的单位数。"
+                }
+            },
+            "description": "来自SAFE-T索赔报销的项目。"
+        },
+        "SAFETReimbursementItemList": {
+            "type": "array",
+            "description": "Safetreportsementitems的列表。",
+            "items": {
+                "$ref": "#/definitions/SAFETReimbursementItem"
+            }
+        },
+        "SellerDealPaymentEvent": {
+            "type": "object",
+            "properties": {
+                "postedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "dealId": {
+                    "type": "string",
+                    "description": "交易的唯一标识符。"
+                },
+                "dealDescription": {
+                    "type": "string",
+                    "description": "交易的内部描述。"
+                },
+                "eventType": {
+                    "type": "string",
+                    "description": "事件的类型: SellerDealComplete。"
+                },
+                "feeType": {
+                    "type": "string",
+                    "description": "费用类型: RunLightningDealFee。"
+                },
+                "feeAmount": {
+                    "description": "费用的货币金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "taxAmount": {
+                    "description": "应用的税的货币金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "totalAmount": {
+                    "description": "支付的货币总额。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "与支付与指定交易相关的费用有关的事件。"
+        },
+        "SellerDealPaymentEventList": {
+            "type": "array",
+            "description": "交易相关费用的付款事件列表。",
+            "items": {
+                "$ref": "#/definitions/SellerDealPaymentEvent"
+            }
+        },
+        "SellerReviewEnrollmentPaymentEvent": {
+            "type": "object",
+            "properties": {
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "EnrollmentId": {
+                    "type": "string",
+                    "description": "注册标识符。"
+                },
+                "ParentASIN": {
+                    "type": "string",
+                    "description": "在早期审阅者计划中注册的项目的Amazon标准标识号 (ASIN)。"
+                },
+                "FeeComponent": {
+                    "$ref": "#/definitions/FeeComponent"
+                },
+                "ChargeComponent": {
+                    "$ref": "#/definitions/ChargeComponent"
+                },
+                "TotalAmount": {
+                    "description": "FeeComponent值加上ChargeComponent值。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "Early Reviewer计划的费用支付事件。"
+        },
+        "SellerReviewEnrollmentPaymentEventList": {
+            "type": "array",
+            "description": "有关Early Reviewer计划的费用事件的信息列表。",
+            "items": {
+                "$ref": "#/definitions/SellerReviewEnrollmentPaymentEvent"
+            }
+        },
+        "ServiceFeeEvent": {
+            "type": "object",
+            "properties": {
+                "AmazonOrderId": {
+                    "type": "string",
+                    "description": "Amazon定义的订单标识符。"
+                },
+                "FeeReason": {
+                    "type": "string",
+                    "description": "服务费原因的简短说明。"
+                },
+                "FeeList": {
+                    "description": "与服务费用关联的费用组成部分的列表。",
+                    "$ref": "#/definitions/FeeComponentList"
+                },
+                "SellerSKU": {
+                    "type": "string",
+                    "description": "商品的卖家SKU。卖方SKU由卖方的卖方ID限定，卖方ID包含在对销售合作伙伴API的每次调用中。"
+                },
+                "FnSKU": {
+                    "type": "string",
+                    "description": "由Amazon分配给存储在Amazon履行中心中并从中履行的产品的唯一标识符。"
+                },
+                "FeeDescription": {
+                    "type": "string",
+                    "description": "服务费事件的简短描述。"
+                },
+                "ASIN": {
+                    "type": "string",
+                    "description": "商品的Amazon标准标识号 (ASIN)。"
+                },
+                "StoreName": {
+                    "type": "string",
+                    "description": "发生事件的存储的名称。"
+                }
+            },
+            "description": "卖方帐户上的服务费。"
+        },
+        "ServiceFeeEventList": {
+            "type": "array",
+            "description": "有关服务费事件的信息列表。",
+            "items": {
+                "$ref": "#/definitions/ServiceFeeEvent"
+            }
+        },
+        "ShipmentEvent": {
+            "type": "object",
+            "properties": {
+                "AmazonOrderId": {
+                    "type": "string",
+                    "description": "Amazon定义的订单标识符。"
+                },
+                "SellerOrderId": {
+                    "type": "string",
+                    "description": "卖方定义的订单标识符。"
+                },
+                "MarketplaceName": {
+                    "type": "string",
+                    "description": "发生事件的市场的名称。"
+                },
+                "StoreName": {
+                    "type": "string",
+                    "description": "发生事件的存储的名称。"
+                },
+                "OrderChargeList": {
+                    "description": "订单级别费用清单。这些费用适用于多渠道履行COD订单。",
+                    "$ref": "#/definitions/ChargeComponentList"
+                },
+                "OrderChargeAdjustmentList": {
+                    "description": "订单级别费用调整列表。这些调整适用于多渠道履行COD订单。",
+                    "$ref": "#/definitions/ChargeComponentList"
+                },
+                "ShipmentFeeList": {
+                    "description": "装运级费用清单。",
+                    "$ref": "#/definitions/FeeComponentList"
+                },
+                "ShipmentFeeAdjustmentList": {
+                    "description": "装运级费用调整列表。",
+                    "$ref": "#/definitions/FeeComponentList"
+                },
+                "OrderFeeList": {
+                    "description": "订单级别费用清单。这些费用适用于多渠道履行订单。",
+                    "$ref": "#/definitions/FeeComponentList"
+                },
+                "OrderFeeAdjustmentList": {
+                    "description": "订单级别费用调整列表。这些调整适用于多渠道履行订单。",
+                    "$ref": "#/definitions/FeeComponentList"
+                },
+                "DirectPaymentList": {
+                    "description": "买家通过亚马逊提供的信用卡之一向亚马逊付款或买家直接通过COD向卖家付款的交易列表。",
+                    "$ref": "#/definitions/DirectPaymentList"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "ShipmentItemList": {
+                    "$ref": "#/definitions/ShipmentItemList"
+                },
+                "ShipmentItemAdjustmentList": {
+                    "description": "装运项目调整列表。",
+                    "$ref": "#/definitions/ShipmentItemList"
+                }
+            },
+            "description": "装运、退款、担保索赔或退款。"
+        },
+        "ShipmentEventList": {
+            "type": "array",
+            "description": "装运事件信息的列表。",
+            "items": {
+                "$ref": "#/definitions/ShipmentEvent"
+            }
+        },
+        "ShipmentSettleEventList": {
+            "type": "array",
+            "description": "“Shipmentevent” 项目的列表。",
+            "items": {
+                "$ref": "#/definitions/ShipmentEvent"
+            }
+        },
+        "ShipmentItem": {
+            "type": "object",
+            "properties": {
+                "SellerSKU": {
+                    "type": "string",
+                    "description": "商品的卖家SKU。卖方SKU由卖方的卖方ID限定，卖方ID包含在对销售合作伙伴API的每次调用中。"
+                },
+                "OrderItemId": {
+                    "type": "string",
+                    "description": "一个Amazon定义的订单项目标识符。"
+                },
+                "OrderAdjustmentItemId": {
+                    "type": "string",
+                    "description": "为退款、担保索赔和调配事件定义的Amazon定义的订单调整标识符。"
+                },
+                "QuantityShipped": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "已发货的项目数量。"
+                },
+                "ItemChargeList": {
+                    "description": "与发运项目关联的费用列表。",
+                    "$ref": "#/definitions/ChargeComponentList"
+                },
+                "ItemChargeAdjustmentList": {
+                    "description": "与发运项目关联的费用调整列表。此值仅针对退款、担保索赔和退款事件返回。",
+                    "$ref": "#/definitions/ChargeComponentList"
+                },
+                "ItemFeeList": {
+                    "description": "与装运项目关联的费用列表。",
+                    "$ref": "#/definitions/FeeComponentList"
+                },
+                "ItemFeeAdjustmentList": {
+                    "description": "与发运项目关联的费用调整列表。此值仅针对退款、担保索赔和退款事件返回。",
+                    "$ref": "#/definitions/FeeComponentList"
+                },
+                "ItemTaxWithheldList": {
+                    "description": "装运项目的预扣税信息列表。",
+                    "$ref": "#/definitions/TaxWithheldComponentList"
+                },
+                "PromotionList": {
+                    "$ref": "#/definitions/PromotionList"
+                },
+                "PromotionAdjustmentList": {
+                    "description": "与发运项目关联的促销调整列表。此值仅针对退款、担保索赔和退款事件返回。",
+                    "$ref": "#/definitions/PromotionList"
+                },
+                "CostOfPointsGranted": {
+                    "description": "为装运物品授予的亚马逊积分的成本。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "CostOfPointsReturned": {
+                    "description": "亚马逊积分为装运项目返回的成本。此值仅针对退款、担保索赔和退款事件返回。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "装运、退款、担保索赔或退款的项目。"
+        },
+        "ShipmentItemList": {
+            "type": "array",
+            "description": "装运项目列表。",
+            "items": {
+                "$ref": "#/definitions/ShipmentItem"
+            }
+        },
+        "SolutionProviderCreditEvent": {
+            "type": "object",
+            "properties": {
+                "ProviderTransactionType": {
+                    "type": "string",
+                    "description": "交易记录类型。"
+                },
+                "SellerOrderId": {
+                    "type": "string",
+                    "description": "卖方定义的订单标识符。"
+                },
+                "MarketplaceId": {
+                    "type": "string",
+                    "description": "下订单的市场的标识符。"
+                },
+                "MarketplaceCountryCode": {
+                    "type": "string",
+                    "description": "与下订单的市场关联的国家/地区的两个字母的国家/地区代码。"
+                },
+                "SellerId": {
+                    "type": "string",
+                    "description": "卖家的Amazon定义的标识符。"
+                },
+                "SellerStoreName": {
+                    "type": "string",
+                    "description": "发生付款事件的商店名称。"
+                },
+                "ProviderId": {
+                    "type": "string",
+                    "description": "解决方案提供商的Amazon定义的标识符。"
+                },
+                "ProviderStoreName": {
+                    "type": "string",
+                    "description": "发生付款事件的商店名称。"
+                },
+                "TransactionAmount": {
+                    "description": "贷方的金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TransactionCreationDate": {
+                    "description": "创建信用交易记录的日期和时间，采用 [ISO 8601](https:// developer-docs.amazon.com/sp-api/docs/iso-8601) 日期时间格式。",
+                    "$ref": "#/definitions/Date"
+                }
+            },
+            "description": "给解决方案提供商的信用。"
+        },
+        "SolutionProviderCreditEventList": {
+            "type": "array",
+            "description": "有关解决方案提供商信用的信息列表。",
+            "items": {
+                "$ref": "#/definitions/SolutionProviderCreditEvent"
+            }
+        },
+        "TaxWithholdingPeriod": {
+            "type": "object",
+            "properties": {
+                "StartDate": {
+                    "description": "时间范围的开始。",
+                    "$ref": "#/definitions/Date"
+                },
+                "EndDate": {
+                    "description": "时间范围的结束。",
+                    "$ref": "#/definitions/Date"
+                }
+            },
+            "description": "计算卖方账户扣缴税款的期限。"
+        },
+        "TaxWithholdingEvent": {
+            "type": "object",
+            "properties": {
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "BaseAmount": {
+                    "description": "扣缴税款的金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "WithheldAmount": {
+                    "description": "从卖方帐户中扣除的预扣税金额。",
+                    "$ref": "#/definitions/Currency"
+                },
+                "TaxWithholdingPeriod": {
+                    "description": "预扣税款的时间段。",
+                    "$ref": "#/definitions/TaxWithholdingPeriod"
+                }
+            },
+            "description": "卖方账户上的扣税事件。"
+        },
+        "TaxWithholdingEventList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/TaxWithholdingEvent"
+            },
+            "description": "“扣税” 事件的列表。"
+        },
+        "TaxWithheldComponent": {
+            "type": "object",
+            "properties": {
+                "TaxCollectionModel": {
+                    "type": "string",
+                    "description": "应用于该物料的收税模型。\n\nPossible values:\n\n* Marketplaceacitorator-税款由亚马逊代表卖家代扣代缴并汇给税务机关。\n\n* 标准税支付给卖家，而不是由亚马逊汇给税务机关。"
+                },
+                "TaxesWithheld": {
+                    "description": "代表预扣税款类型和金额的费用清单。",
+                    "$ref": "#/definitions/ChargeComponentList"
+                }
+            },
+            "description": "有关预扣税款的信息。"
+        },
+        "TaxWithheldComponentList": {
+            "type": "array",
+            "description": "有关预扣税款的信息列表。",
+            "items": {
+                "$ref": "#/definitions/TaxWithheldComponent"
+            }
+        },
+        "TDSReimbursementEvent": {
+            "type": "object",
+            "properties": {
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "TDSOrderId": {
+                    "type": "string",
+                    "description": "源处扣税 (TDS) 标识符。"
+                },
+                "ReimbursedAmount": {
+                    "description": "偿还的金额。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "与税源抵扣 (TDS) 报销相关的事件。"
+        },
+        "TDSReimbursementEventList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/TDSReimbursementEvent"
+            },
+            "description": "“Tds偿还sementeven” 项目的列表。"
+        },
+        "TrialShipmentEvent": {
+            "type": "object",
+            "properties": {
+                "AmazonOrderId": {
+                    "type": "string",
+                    "description": "Amazon定义的订单标识符。"
+                },
+                "FinancialEventGroupId": {
+                    "type": "string",
+                    "description": "财务事件组的标识符。"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "SKU": {
+                    "type": "string",
+                    "description": "商品的卖家SKU。卖方SKU由卖方的卖方ID限定，卖方ID包含在对销售合作伙伴API的每次调用中。"
+                },
+                "FeeList": {
+                    "description": "亚马逊对试发货收取的费用清单",
+                    "$ref": "#/definitions/FeeComponentList"
+                }
+            },
+            "description": "与试运相关的事件。"
+        },
+        "TrialShipmentEventList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/TrialShipmentEvent"
+            },
+            "description": "有关试运财务事件的信息列表。"
+        },
+        "ValueAddedServiceChargeEventList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ValueAddedServiceChargeEvent"
+            },
+            "description": "“Valueaddedservicechargee” 事件的列表。"
+        },
+        "ValueAddedServiceChargeEvent": {
+            "type": "object",
+            "properties": {
+                "TransactionType": {
+                    "type": "string",
+                    "description": "指示事务的类型。\n\n示例: “其他支持服务费用”"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "Description": {
+                    "type": "string",
+                    "description": "服务收费事件的简短描述。"
+                },
+                "TransactionAmount": {
+                    "description": "服务费事件的金额。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "与增值服务费相关的事件。"
+        },
+        "CapacityReservationBillingEvent": {
+            "type": "object",
+            "properties": {
+                "TransactionType": {
+                    "type": "string",
+                    "description": "指示事务的类型。例如，FBA库存费"
+                },
+                "PostedDate": {
+                    "description": "发布财务事件的日期和时间。",
+                    "$ref": "#/definitions/Date"
+                },
+                "Description": {
+                    "type": "string",
+                    "description": "容量预留计费事件的简短说明。"
+                },
+                "TransactionAmount": {
+                    "description": "容量预留计费事件的金额。",
+                    "$ref": "#/definitions/Currency"
+                }
+            },
+            "description": "与容量预留计费费用相关的事件。"
+        },
+        "CapacityReservationBillingEventList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/CapacityReservationBillingEvent"
+            },
+            "description": "“Capacityreservationbillingevent” 事件的列表。"
+        },
+        "ErrorList": {
+            "type": "array",
+            "description": "请求不成功时返回的错误响应列表。",
+            "items": {
+                "$ref": "#/definitions/Error"
+            }
+        },
+        "Error": {
+            "type": "object",
+            "required": [
+                "code",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "标识发生的错误类型的错误代码。"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "以人类可读的形式描述错误情况的消息。"
+                },
+                "details": {
+                    "type": "string",
+                    "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+                }
+            },
+            "description": "请求不成功时返回的错误响应。"
+        }
+    }
+}

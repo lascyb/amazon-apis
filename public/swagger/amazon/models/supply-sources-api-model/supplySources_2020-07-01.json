@@ -1,0 +1,2311 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "销售供应来源的合作伙伴API",
+    "description": "管理卖方供应来源的配置和功能。",
+    "version": "2020-07-01",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "definitions": {
+    "Error": {
+      "description": "请求不成功时返回的错误响应。",
+      "properties": {
+        "code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "message": {
+          "description": "以人类可读的形式描述错误情况的消息。",
+          "type": "string"
+        },
+        "details": {
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "ErrorList": {
+      "description": "请求不成功时返回的错误响应列表。",
+      "properties": {
+        "errors": {
+          "description": "请求不成功时返回的错误响应列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "type": "object"
+    },
+    "GetSupplySourcesResponse": {
+      "description": "供应源的分页列表。",
+      "type": "object",
+      "properties": {
+        "supplySources": {
+          "$ref": "#/definitions/SupplySourceList"
+        },
+        "nextPageToken": {
+          "description": "如果存在，请使用此分页标记检索下一页供应源。",
+          "type": "string"
+        }
+      }
+    },
+    "UpdateSupplySourceStatusRequest": {
+      "description": "更新供应源状态的请求。",
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/SupplySourceStatus"
+        }
+      }
+    },
+    "CreateSupplySourceRequest": {
+      "description": "创建供应源的请求。",
+      "type": "object",
+      "properties": {
+        "supplySourceCode": {
+          "$ref": "#/definitions/SupplySourceCode"
+        },
+        "alias": {
+          "$ref": "#/definitions/SupplySourceAlias"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        }
+      },
+      "required": [
+        "address",
+        "supplySourceCode",
+        "alias"
+      ]
+    },
+    "CreateSupplySourceResponse": {
+      "description": "创建新供应源的结果。",
+      "properties": {
+        "supplySourceId": {
+          "$ref": "#/definitions/SupplySourceId"
+        },
+        "supplySourceCode": {
+          "$ref": "#/definitions/SupplySourceCode"
+        }
+      },
+      "required": [
+        "supplySourceId",
+        "supplySourceCode"
+      ],
+      "type": "object"
+    },
+    "UpdateSupplySourceRequest": {
+      "description": "更新供应源的配置和功能的请求。",
+      "type": "object",
+      "properties": {
+        "alias": {
+          "$ref": "#/definitions/SupplySourceAlias"
+        },
+        "configuration": {
+          "$ref": "#/definitions/SupplySourceConfiguration"
+        },
+        "capabilities": {
+          "$ref": "#/definitions/SupplySourceCapabilities"
+        }
+      }
+    },
+    "SupplySource": {
+      "description": "供应源详细信息，包括配置和功能。",
+      "type": "object",
+      "properties": {
+        "supplySourceId": {
+          "$ref": "#/definitions/SupplySourceId"
+        },
+        "supplySourceCode": {
+          "$ref": "#/definitions/SupplySourceCode"
+        },
+        "alias": {
+          "$ref": "#/definitions/SupplySourceAlias"
+        },
+        "status": {
+          "$ref": "#/definitions/SupplySourceStatusReadOnly"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "configuration": {
+          "$ref": "#/definitions/SupplySourceConfiguration"
+        },
+        "capabilities": {
+          "$ref": "#/definitions/SupplySourceCapabilities"
+        },
+        "createdAt": {
+          "$ref": "#/definitions/DateTime"
+        },
+        "updatedAt": {
+          "$ref": "#/definitions/DateTime"
+        }
+      }
+    },
+    "SupplySourceConfiguration": {
+      "description": "包括供应源的配置和时区。",
+      "type": "object",
+      "properties": {
+        "operationalConfiguration": {
+          "$ref": "#/definitions/OperationalConfiguration"
+        },
+        "timezone": {
+          "description": "请参阅RFC 6557，应该是此处列出的规范时区ID: https://www.joda.org/joda时间/timezones.html。",
+          "type": "string"
+        }
+      }
+    },
+    "SupplySourceCapabilities": {
+      "description": "供应源的能力。",
+      "type": "object",
+      "properties": {
+        "outbound": {
+          "$ref": "#/definitions/OutboundCapability"
+        },
+        "services": {
+          "$ref": "#/definitions/ServicesCapability"
+        }
+      }
+    },
+    "SupplySourceList": {
+      "description": "“Supplysource” 的列表。",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "alias": {
+            "$ref": "#/definitions/SupplySourceAlias"
+          },
+          "supplySourceId": {
+            "$ref": "#/definitions/SupplySourceId"
+          },
+          "supplySourceCode": {
+            "$ref": "#/definitions/SupplySourceCode"
+          },
+          "address": {
+            "$ref": "#/definitions/Address"
+          }
+        }
+      }
+    },
+    "SupplySourceId": {
+      "description": "Amazon生成的唯一供应源ID。",
+      "type": "string"
+    },
+    "SupplySourceCode": {
+      "description": "卖方提供的唯一供应源代码。",
+      "type": "string"
+    },
+    "SupplySourceAlias": {
+      "description": "此供应源的自定义别名",
+      "type": "string"
+    },
+    "SupplySourceStatusReadOnly": {
+      "description": "“Supplysource” 状态。",
+      "type": "string",
+      "enum": [
+        "Active",
+        "Inactive",
+        "Archived"
+      ]
+    },
+    "SupplySourceStatus": {
+      "description": "“Supplysource” 状态",
+      "type": "string",
+      "enum": [
+        "Active",
+        "Inactive"
+      ]
+    },
+    "OutboundCapability": {
+      "description": "供应源的出站能力。",
+      "type": "object",
+      "properties": {
+        "isSupported": {
+          "type": "boolean"
+        },
+        "operationalConfiguration": {
+          "$ref": "#/definitions/OperationalConfiguration"
+        },
+        "returnLocation": {
+          "$ref": "#/definitions/ReturnLocation"
+        },
+        "deliveryChannel": {
+          "$ref": "#/definitions/DeliveryChannel"
+        },
+        "pickupChannel": {
+          "$ref": "#/definitions/PickupChannel"
+        }
+      }
+    },
+    "ServicesCapability": {
+      "description": "供应源的服务能力。",
+      "type": "object",
+      "properties": {
+        "isSupported": {
+          "description": "当为true时，“supplysource” 支持服务功能。",
+          "type": "boolean"
+        },
+        "operationalConfiguration": {
+          "$ref": "#/definitions/OperationalConfiguration"
+        }
+      }
+    },
+    "PickupChannel": {
+      "description": "供应源的拾取通道。",
+      "type": "object",
+      "properties": {
+        "inventoryHoldPeriod": {
+          "$ref": "#/definitions/Duration"
+        },
+        "isSupported": {
+          "type": "boolean"
+        },
+        "operationalConfiguration": {
+          "$ref": "#/definitions/OperationalConfiguration"
+        },
+        "inStorePickupConfiguration": {
+          "description": "支持店内提货的配置。",
+          "$ref": "#/definitions/InStorePickupConfiguration"
+        },
+        "curbsidePickupConfiguration": {
+          "description": "用于支持路边拾音器的配置。",
+          "$ref": "#/definitions/CurbsidePickupConfiguration"
+        }
+      }
+    },
+    "ParkingConfiguration": {
+      "description": "停车配置。",
+      "type": "object",
+      "properties": {
+        "parkingCostType": {
+          "description": "停车位置的成本类型。",
+          "$ref": "#/definitions/ParkingCostType"
+        },
+        "parkingSpotIdentificationType": {
+          "description": "在停车位置使用的停车位标识的类型。",
+          "$ref": "#/definitions/ParkingSpotIdentificationType"
+        },
+        "numberOfParkingSpots": {
+          "description": "停车位的数量。",
+          "$ref": "#/definitions/NonNegativeInteger"
+        }
+      }
+    },
+    "ParkingCostType": {
+      "description": "停车费用类型。",
+      "type": "string",
+      "enum": [
+        "Free",
+        "Other"
+      ]
+    },
+    "ParkingSpotIdentificationType": {
+      "description": "停车位识别的类型。",
+      "type": "string",
+      "enum": [
+        "Numbered",
+        "Other"
+      ]
+    },
+    "InStorePickupConfiguration": {
+      "description": "供应源的店内取货配置。",
+      "type": "object",
+      "properties": {
+        "isSupported": {
+          "description": "如果为true，则供应源 (默认值: 'PickupChannel' 中的 'isSupported' 值) 支持店内拾取。",
+          "type": "boolean"
+        },
+        "parkingConfiguration": {
+          "description": "店内取货的停车配置。",
+          "$ref": "#/definitions/ParkingConfiguration"
+        }
+      }
+    },
+    "CurbsidePickupConfiguration": {
+      "description": "供应源的路边取货配置。",
+      "type": "object",
+      "properties": {
+        "isSupported": {
+          "description": "如果为true，则供应源支持路边取货。",
+          "type": "boolean"
+        },
+        "operationalConfiguration": {
+          "description": "路边拾取配置的操作配置。",
+          "$ref": "#/definitions/OperationalConfiguration"
+        },
+        "parkingWithAddressConfiguration": {
+          "description": "路边取货的停车配置，带地址供客户使用。",
+          "$ref": "#/definitions/ParkingWithAddressConfiguration"
+        }
+      }
+    },
+    "ParkingWithAddressConfiguration": {
+      "description": "带有地址的停车配置。",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ParkingConfiguration"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "description": "停车位置的地址。",
+              "$ref": "#/definitions/Address"
+            }
+          }
+        }
+      ]
+    },
+    "DeliveryChannel": {
+      "description": "供应源的交付通道。",
+      "type": "object",
+      "properties": {
+        "isSupported": {
+          "type": "boolean"
+        },
+        "operationalConfiguration": {
+          "$ref": "#/definitions/OperationalConfiguration"
+        }
+      }
+    },
+    "OperationalConfiguration": {
+      "description": "“供应” 的操作配置。",
+      "type": "object",
+      "properties": {
+        "contactDetails": {
+          "$ref": "#/definitions/ContactDetails"
+        },
+        "throughputConfig": {
+          "$ref": "#/definitions/ThroughputConfig"
+        },
+        "operatingHoursByDay": {
+          "$ref": "#/definitions/OperatingHoursByDay"
+        },
+        "handlingTime": {
+          "$ref": "#/definitions/Duration"
+        }
+      }
+    },
+    "Duration": {
+      "description": "持续时间。",
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/NonNegativeInteger"
+        },
+        "timeUnit": {
+          "$ref": "#/definitions/TimeUnit"
+        }
+      }
+    },
+    "ThroughputConfig": {
+      "description": "吞吐量配置。",
+      "type": "object",
+      "properties": {
+        "throughputCap": {
+          "$ref": "#/definitions/ThroughputCap"
+        },
+        "throughputUnit": {
+          "$ref": "#/definitions/ThroughputUnit"
+        }
+      },
+      "required": [
+        "throughputUnit"
+      ]
+    },
+    "ReturnLocation": {
+      "description": "要作为返回位置的另一个 “supplysourceid” 的地址或引用。",
+      "type": "object",
+      "properties": {
+        "supplySourceId": {
+          "description": "亚马逊提供了 “supplysourceid”，可以将订单退回到其中。",
+          "type": "string"
+        },
+        "addressWithContact": {
+          "$ref": "#/definitions/AddressWithContact"
+        }
+      }
+    },
+    "AddressWithContact": {
+      "description": "地址和联系方式。",
+      "type": "object",
+      "properties": {
+        "contactDetails": {
+          "$ref": "#/definitions/ContactDetails"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        }
+      }
+    },
+    "ContactDetails": {
+      "description": "联系人详细信息",
+      "type": "object",
+      "properties": {
+        "primary": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "$ref": "#/definitions/EmailAddress"
+            },
+            "phone": {
+              "description": "个人、企业或机构的电话号码。",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ThroughputCap": {
+      "description": "吞吐能力",
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/NonNegativeInteger"
+        },
+        "timeUnit": {
+          "$ref": "#/definitions/TimeUnit"
+        }
+      }
+    },
+    "OperatingHour": {
+      "description": "运行小时架构",
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "description": "开放时间，ISO 8601格式的时间戳，不带日期，HH:mm。",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "关闭时间，ISO 8601格式的时间戳，不带日期，HH:mm。",
+          "type": "string"
+        }
+      }
+    },
+    "OperatingHours": {
+      "description": "营业时间列表。",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/OperatingHour"
+      }
+    },
+    "ThroughputUnit": {
+      "description": "吞吐量单位",
+      "type": "string",
+      "enum": [
+        "Order"
+      ]
+    },
+    "OperatingHoursByDay": {
+      "description": "每天的工作时间",
+      "type": "object",
+      "properties": {
+        "monday": {
+          "$ref": "#/definitions/OperatingHours"
+        },
+        "tuesday": {
+          "$ref": "#/definitions/OperatingHours"
+        },
+        "wednesday": {
+          "$ref": "#/definitions/OperatingHours"
+        },
+        "thursday": {
+          "$ref": "#/definitions/OperatingHours"
+        },
+        "friday": {
+          "$ref": "#/definitions/OperatingHours"
+        },
+        "saturday": {
+          "$ref": "#/definitions/OperatingHours"
+        },
+        "sunday": {
+          "$ref": "#/definitions/OperatingHours"
+        }
+      }
+    },
+    "TimeUnit": {
+      "description": "时间单位",
+      "type": "string",
+      "enum": [
+        "Hours",
+        "Minutes",
+        "Days"
+      ]
+    },
+    "NonNegativeInteger": {
+      "description": "只能为正数或零的无符号整数。",
+      "type": "integer",
+      "minimum": 0
+    },
+    "EmailAddress": {
+      "description": "将电子邮件传递到的电子邮件地址。",
+      "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
+      "type": "string"
+    },
+    "Address": {
+      "description": "物理地址。",
+      "properties": {
+        "name": {
+          "description": "该地址的个人、企业或机构的名称。",
+          "type": "string"
+        },
+        "addressLine1": {
+          "description": "地址的第一行。",
+          "type": "string"
+        },
+        "addressLine2": {
+          "description": "附加地址信息 (如果需要)。",
+          "type": "string"
+        },
+        "addressLine3": {
+          "description": "附加地址信息 (如果需要)。",
+          "type": "string"
+        },
+        "city": {
+          "description": "个人、企业或机构所在的城市。",
+          "type": "string"
+        },
+        "county": {
+          "description": "个人、企业或机构所在的县。",
+          "type": "string"
+        },
+        "district": {
+          "description": "个人、企业或机构所在的地区。",
+          "type": "string"
+        },
+        "stateOrRegion": {
+          "description": "个人、企业或机构所在的州或地区。",
+          "type": "string"
+        },
+        "postalCode": {
+          "description": "该地址的邮政编码。它包含一系列字母或数字或两者兼而有之，有时包括空格或标点符号。",
+          "type": "string"
+        },
+        "countryCode": {
+          "description": "两位数的国家代码。ISO 3166-1 alpha-2格式。",
+          "type": "string"
+        },
+        "phone": {
+          "description": "位于该地址的个人、企业或机构的电话号码。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "addressLine1",
+        "countryCode",
+        "stateOrRegion"
+      ],
+      "type": "object"
+    },
+    "DateTime": {
+      "description": "rfc3339格式的日期和时间。",
+      "type": "string"
+    }
+  },
+  "paths": {
+    "/supplySources/2020-07-01/supplySources": {
+      "get": {
+        "tags": [
+          "supplySources"
+        ],
+        "description": "检索分页供应源的路径。",
+        "operationId": "getSupplySources",
+        "parameters": [
+          {
+            "name": "nextPageToken",
+            "in": "query",
+            "description": "用于检索特定结果页的分页标记。",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每个分页请求返回的供应源的数量。",
+            "required": false,
+            "default": 10,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "supplySources": [
+                      {
+                        "supplySourceId": "ed85fcf9-798c-4b63-a47e-8d4f0d273ddb",
+                        "supplySourceCode": "owner_s2cs_test_010101_aaaas",
+                        "alias": "alias_jksjdkf_aaaas",
+                        "address": {
+                          "addressLine1": "addresline 1234 010101 asaaab",
+                          "city": "Red",
+                          "stateOrRegion": "string",
+                          "postalCode": "99999",
+                          "countryCode": "US"
+                        }
+                      }
+                    ],
+                    "nextPageToken": "eyJzMl9zb3J0X2tleSI6eyJzIjoic3VwcGx5U291cmNlQ29kZSNvd25lcl9zMmNzX3Rlc3RfMDEwMTAxX2FhYWFzIiwibiI6bnVsbCwiYiI6bnVsbCwibSI6bnVsbCwibCI6bnVsbCwiYnMiOm51bGwsIm5zIjpudWxsLCJzcyI6bnVsbCwibnVsbCI6bnVsbCwiYm9vbCI6bnVsbH0sInMyX3ByaW1hcnlfa2V5Ijp7InMiOiJvd25lciNNZXJjaGFudDpBMU1QWVFRSjVUVThRVSIsIm4iOm51bGwsImIiOm51bGwsIm0iOm51bGwsImwiOm51bGwsImJzIjpudWxsLCJucyI6bnVsbCwic3MiOm51bGwsIm51bGwiOm51bGwsImJvb2wiOm51bGx9LCJsc2lTS0xpdmVDcmVhdGVkVGltZSI6eyJzIjpudWxsLCJuIjoiMTU5NzEyNjU2MSIsImIiOm51bGwsIm0iOm51bGwsImwiOm51bGwsImJzIjpudWxsLCJucyI6bnVsbCwic3MiOm51bGwsIm51bGwiOm51bGwsImJvb2wiOm51bGx9fQ=="
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/GetSupplySourcesResponse"
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "pageSize": {
+                        "value": 3
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid or malformed address Id.",
+                        "details": "1012"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源的错误。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "supplySources"
+        ],
+        "description": "创建新的供应源。",
+        "operationId": "createSupplySource",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "description": "创建供应源的请求。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSupplySourceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "supplySourceId": "ed85fcf9-798c-4b63-a47e-8d4f0d273ddb",
+                    "supplySourceCode": "owner_s2cs_test_010101_aaaas"
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/CreateSupplySourceResponse"
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "supplySourceCode": "owner_s2cs_test_010101_aaaab",
+                          "alias": "alias_jksjdkf_aaaab",
+                          "address": {
+                            "name": "name",
+                            "addressLine1": "addresline 1234 010101 asaaab",
+                            "city": "Red",
+                            "county": "King",
+                            "stateOrRegion": "string",
+                            "postalCode": "99999",
+                            "countryCode": "US",
+                            "phone": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Supply Source with given Code already exists",
+                        "details": "1004"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源的错误。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    },
+    "/supplySources/2020-07-01/supplySources/{supplySourceId}": {
+      "get": {
+        "tags": [
+          "supplySources"
+        ],
+        "description": "检索供应源。",
+        "operationId": "getSupplySource",
+        "parameters": [
+          {
+            "name": "supplySourceId",
+            "in": "path",
+            "description": "供应源的唯一标识符。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "supplySourceId": "cbc976e5-1e55-4d33-855b-35e6254f5a58",
+                    "supplySourceCode": "test-gw-435dgh2o39",
+                    "alias": "test-gw-ssss",
+                    "status": "Inactive",
+                    "address": {
+                      "addressLine1": "tst-addressLine1-423",
+                      "addressLine2": "tes-addressLine2-gew",
+                      "addressLine3": "Rufus",
+                      "city": "Gekl",
+                      "county": "",
+                      "district": "",
+                      "stateOrRegion": "WA",
+                      "postalCode": "59202",
+                      "countryCode": "US"
+                    },
+                    "configuration": {
+                      "operationalConfiguration": {
+                        "contactDetails": {
+                          "primary": {
+                            "email": "test324@gmail.com",
+                            "phone": "4813924781"
+                          }
+                        },
+                        "throughputConfig": {
+                          "throughputCap": {
+                            "value": 1,
+                            "timeUnit": "Days"
+                          },
+                          "throughputUnit": "ORDER"
+                        },
+                        "handlingTime": {
+                          "value": 1,
+                          "timeUnit": "Hours"
+                        },
+                        "operatingHoursByDay": {
+                          "monday": [
+                            {
+                              "startTime": "00:59",
+                              "endTime": "06:01"
+                            }
+                          ],
+                          "tuesday": [
+                            {
+                              "startTime": "19:03",
+                              "endTime": "23:25"
+                            }
+                          ],
+                          "wednesday": [
+                            {
+                              "startTime": "00:00",
+                              "endTime": "00:00"
+                            }
+                          ],
+                          "thursday": [
+                            {
+                              "startTime": "00:00",
+                              "endTime": "00:00"
+                            }
+                          ],
+                          "friday": [
+                            {
+                              "startTime": "00:00",
+                              "endTime": "00:00"
+                            }
+                          ],
+                          "saturday": [
+                            {
+                              "startTime": "00:00",
+                              "endTime": "00:00"
+                            }
+                          ],
+                          "sunday": [
+                            {
+                              "startTime": "00:00",
+                              "endTime": "00:00"
+                            }
+                          ]
+                        }
+                      },
+                      "timezone": "Africa/Accra"
+                    },
+                    "capabilities": {
+                      "outbound": {
+                        "isSupported": true,
+                        "operationalConfiguration": {
+                          "contactDetails": {
+                            "primary": {
+                              "email": "tet@gmail.com",
+                              "phone": "4281937491"
+                            }
+                          },
+                          "throughputConfig": {
+                            "throughputCap": {
+                              "value": 1,
+                              "timeUnit": "Days"
+                            },
+                            "throughputUnit": "ORDER"
+                          },
+                          "handlingTime": {
+                            "value": 1,
+                            "timeUnit": "Hours"
+                          },
+                          "operatingHoursByDay": {
+                            "monday": [
+                              {
+                                "startTime": "00:43",
+                                "endTime": "04:05"
+                              }
+                            ],
+                            "tuesday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ],
+                            "wednesday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ],
+                            "thursday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ],
+                            "friday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ],
+                            "saturday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ],
+                            "sunday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ]
+                          }
+                        },
+                        "deliveryChannel": {
+                          "isSupported": false,
+                          "operationalConfiguration": {
+                            "contactDetails": {
+                              "primary": {
+                                "email": "",
+                                "phone": ""
+                              }
+                            },
+                            "throughputConfig": {
+                              "throughputCap": {
+                                "value": 1,
+                                "timeUnit": "Days"
+                              },
+                              "throughputUnit": "ORDER"
+                            },
+                            "handlingTime": {
+                              "value": 1,
+                              "timeUnit": "Hours"
+                            }
+                          }
+                        },
+                        "pickupChannel": {
+                          "isSupported": true,
+                          "inventoryHoldPeriod": {
+                            "value": 452,
+                            "timeUnit": "Minutes"
+                          },
+                          "operationalConfiguration": {
+                            "contactDetails": {
+                              "primary": {
+                                "email": "yre4@gmail.com",
+                                "phone": "4381232840"
+                              }
+                            },
+                            "throughputConfig": {
+                              "throughputCap": {
+                                "value": 1,
+                                "timeUnit": "Days"
+                              },
+                              "throughputUnit": "ORDER"
+                            },
+                            "handlingTime": {
+                              "value": 1,
+                              "timeUnit": "Hours"
+                            }
+                          }
+                        }
+                      },
+                      "services": {
+                        "isSupported": true,
+                        "operationalConfiguration": {
+                          "contactDetails": {
+                            "primary": {
+                              "email": "testservices@gmail.com",
+                              "phone": "4281937491"
+                            }
+                          },
+                          "operatingHoursByDay": {
+                            "monday": [
+                              {
+                                "startTime": "00:43",
+                                "endTime": "04:05"
+                              }
+                            ],
+                            "tuesday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ],
+                            "wednesday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ],
+                            "thursday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ],
+                            "friday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ],
+                            "saturday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ],
+                            "sunday": [
+                              {
+                                "startTime": "00:00",
+                                "endTime": "00:00"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "createdAt": "1.596578152E9",
+                    "updatedAt": "1.596842808E9"
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/SupplySource"
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "supplySourceId": {
+                        "value": "cbc976e5-1e55-4d33-855b-35e6254f5a5"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Input",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源的错误。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "supplySources"
+        ],
+        "description": "更新供应源的配置和功能。",
+        "operationId": "updateSupplySource",
+        "parameters": [
+          {
+            "name": "supplySourceId",
+            "in": "path",
+            "description": "供应源的唯一标识。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateSupplySourceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "成功。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {}
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "supplySourceId": {
+                        "value": "cf146560-392a-43e6-bf99-2ca3b5d42b5c"
+                      },
+                      "body": {
+                        "value": {
+                          "alias": "test-config",
+                          "configuration": {
+                            "operationalConfiguration": {
+                              "contactDetails": {
+                                "primary": {
+                                  "email": "111@gmail.com",
+                                  "phone": "111"
+                                }
+                              },
+                              "operatingHoursByDay": {
+                                "monday": [
+                                  {
+                                    "startTime": "01:30",
+                                    "endTime": "02:40"
+                                  }
+                                ],
+                                "tuesday": [
+                                  {
+                                    "startTime": "2:00",
+                                    "endTime": "2:00"
+                                  }
+                                ]
+                              },
+                              "throughputConfig": {
+                                "throughputCap": {
+                                  "value": 17,
+                                  "timeUnit": "Hours"
+                                }
+                              },
+                              "handlingTime": {
+                                "value": 1,
+                                "timeUnit": "Hours"
+                              }
+                            },
+                            "timezone": "Africa/Accra"
+                          },
+                          "capabilities": {
+                            "outbound": {
+                              "isSupported": true,
+                              "operationalConfiguration": {
+                                "contactDetails": {
+                                  "primary": {
+                                    "email": "outbound@gmail.com",
+                                    "phone": "222"
+                                  }
+                                },
+                                "operatingHoursByDay": {
+                                  "wednesday": [
+                                    {
+                                      "startTime": "03:30",
+                                      "endTime": "03:40"
+                                    }
+                                  ],
+                                  "thursday": [
+                                    {
+                                      "startTime": "4:00",
+                                      "endTime": "4:00"
+                                    }
+                                  ]
+                                },
+                                "throughputConfig": {
+                                  "throughputCap": {
+                                    "value": 10,
+                                    "timeUnit": "Hours"
+                                  }
+                                },
+                                "handlingTime": {
+                                  "value": 1,
+                                  "timeUnit": "Hours"
+                                }
+                              },
+                              "returnLocation": {
+                                "addressWithContact": {
+                                  "address": {
+                                    "addressLine1": "returnLocation",
+                                    "countryCode": "na"
+                                  },
+                                  "contactDetails": {
+                                    "primary": {
+                                      "email": "returnLocation@gmail.com",
+                                      "phone": "333"
+                                    }
+                                  }
+                                },
+                                "supplySourceId": "cbb1658a-949e-4c42-9d29-6c38ac1c4746"
+                              },
+                              "deliveryChannel": {
+                                "isSupported": true,
+                                "operationalConfiguration": {
+                                  "contactDetails": {
+                                    "primary": {
+                                      "email": "deliveryChannel@gmail.com",
+                                      "phone": "444"
+                                    }
+                                  },
+                                  "operatingHoursByDay": {
+                                    "friday": [
+                                      {
+                                        "startTime": "03:30",
+                                        "endTime": "03:40"
+                                      }
+                                    ],
+                                    "thursday": [
+                                      {
+                                        "startTime": "4:00",
+                                        "endTime": "4:00"
+                                      }
+                                    ]
+                                  },
+                                  "throughputConfig": {
+                                    "throughputCap": {
+                                      "value": 4,
+                                      "timeUnit": "Hours"
+                                    }
+                                  },
+                                  "handlingTime": {
+                                    "value": 1,
+                                    "timeUnit": "Hours"
+                                  }
+                                }
+                              },
+                              "pickupChannel": {
+                                "isSupported": true,
+                                "inventoryHoldPeriod": {
+                                  "value": 4,
+                                  "timeUnit": "Minutes"
+                                },
+                                "operationalConfiguration": {
+                                  "contactDetails": {
+                                    "primary": {
+                                      "email": "pickupChannel@gmail.com",
+                                      "phone": "555"
+                                    }
+                                  },
+                                  "operatingHoursByDay": {
+                                    "saturday": [
+                                      {
+                                        "startTime": "12:30",
+                                        "endTime": "03:40"
+                                      }
+                                    ],
+                                    "sunday": [
+                                      {
+                                        "startTime": "5:00",
+                                        "endTime": "23:30"
+                                      }
+                                    ]
+                                  },
+                                  "throughputConfig": {
+                                    "throughputCap": {
+                                      "value": 3,
+                                      "timeUnit": "Hours"
+                                    }
+                                  },
+                                  "handlingTime": {
+                                    "value": 1,
+                                    "timeUnit": "Hours"
+                                  }
+                                }
+                              }
+                            },
+                            "services": {
+                              "isSupported": true,
+                              "operationalConfiguration": {
+                                "contactDetails": {
+                                  "primary": {
+                                    "email": "services@gmail.com",
+                                    "phone": "222"
+                                  }
+                                },
+                                "operatingHoursByDay": {
+                                  "wednesday": [
+                                    {
+                                      "startTime": "03:30",
+                                      "endTime": "03:40"
+                                    }
+                                  ],
+                                  "thursday": [
+                                    {
+                                      "startTime": "4:00",
+                                      "endTime": "4:00"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Supply Source has been archived and cannot be modified.",
+                        "details": "1005"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源的错误。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "supplySources"
+        ],
+        "description": "存档供应源，使其处于非活动状态。无法撤消。",
+        "operationId": "archiveSupplySource",
+        "parameters": [
+          {
+            "name": "supplySourceId",
+            "in": "path",
+            "description": "供应源的唯一标识符。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "成功。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {}
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "supplySourceId": {
+                        "value": "cf146560-392a-43e6-bf99-2ca3b5d42b5c"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Supply Source has been archived and cannot be modified.",
+                        "details": "1005"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    },
+    "/supplySources/2020-07-01/supplySources/{supplySourceId}/status": {
+      "put": {
+        "tags": [
+          "supplySources"
+        ],
+        "description": "更新供应源的状态。",
+        "operationId": "updateSupplySourceStatus",
+        "parameters": [
+          {
+            "name": "supplySourceId",
+            "in": "path",
+            "description": "供应源的唯一标识符。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateSupplySourceStatusRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "成功。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {}
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "supplySourceId": {
+                        "value": "cf146560-392a-43e6-bf99-2ca3b5d42b5c"
+                      },
+                      "body": {
+                        "value": {
+                          "status": "Inactive"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Supply Source has been archived and cannot be modified.",
+                        "details": "1005"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "supplySourceId": {
+                        "value": "cf146560-392a-43e6-bf99-2ca3b5d42b5c"
+                      },
+                      "body": {
+                        "value": {
+                          "status": "Active"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Supply Source has been archived and cannot be modified.",
+                        "details": "1005"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一的请求引用ID。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        }
+      }
+    }
+  }
+}

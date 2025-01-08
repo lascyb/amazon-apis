@@ -1,0 +1,1135 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "用于货件开票的销售合作伙伴API可帮助您以编程方式在巴西市场中检索销售合作伙伴通过亚马逊 (FBA) 订单履行的货件发票信息。",
+    "version": "v0",
+    "title": "Selling Partner API for Shipment Invoicing",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/fba/outbound/brazil/v0/shipments/{shipmentId}": {
+      "get": {
+        "tags": [
+          "shipmentInvoice"
+        ],
+        "description": "返回为指定的发运开具发票所需的发运详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1.133 | 25 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getShipmentDetails",
+        "parameters": [
+          {
+            "name": "shipmentId",
+            "in": "path",
+            "description": "装运的标识符。从FBAOutboundShipmentStatus通知中获取此值。有关订阅通知的信息，请参阅 [通知API使用案例指南](doc:notifications-api-v1-use-case-guide)。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "shipmentId1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "WarehouseId": "wID1234",
+                      "AmazonOrderId": "222-333-4444333",
+                      "AmazonShipmentId": "F4385943758",
+                      "PurchaseDate": "2020-10-07T17:36:47.470Z",
+                      "ShippingAddress": {
+                        "Name": "User Address1",
+                        "AddressLine1": "123 any st",
+                        "City": "Ann Arbor",
+                        "County": "Washtenaw",
+                        "StateOrRegion": "MI",
+                        "PostalCode": "48104",
+                        "CountryCode": "US",
+                        "Phone": "333-444-5555",
+                        "AddressType": "Residential"
+                      },
+                      "PaymentMethodDetails": [
+                        "GiftCertificate"
+                      ],
+                      "MarketplaceId": "ATV943520DER",
+                      "SellerId": "TEST34509GOGM",
+                      "BuyerName": "1",
+                      "BuyerCounty": "Washtenaw",
+                      "BuyerTaxInfo": {
+                        "CompanyLegalName": "Buyer Company",
+                        "TaxingRegion": "MI",
+                        "TaxClassifications": [
+                          {
+                            "Name": "Millage",
+                            "Value": "10"
+                          }
+                        ]
+                      },
+                      "MarketplaceTaxInfo": {
+                        "CompanyLegalName": "Seller Legal Company Name",
+                        "TaxingRegion": "SP",
+                        "TaxClassifications": [
+                          {
+                            "Name": "CNPJ",
+                            "Value": "15436940000103"
+                          }
+                        ]
+                      },
+                      "SellerDisplayName": "Seller Display Name in the marketplace",
+                      "ShipmentItems": [
+                        {
+                          "ASIN": "BKUO9348543",
+                          "SellerSKU": "BKUO9348543SKU",
+                          "OrderItemId": "23423424",
+                          "Title": "Pencil",
+                          "QuantityOrdered": 1,
+                          "ItemPrice": {
+                            "CurrencyCode": "USD",
+                            "Amount": "100"
+                          },
+                          "ShippingPrice": {
+                            "CurrencyCode": "USD",
+                            "Amount": "20"
+                          },
+                          "GiftWrapPrice": {
+                            "CurrencyCode": "USD",
+                            "Amount": "1"
+                          },
+                          "ShippingDiscount": {
+                            "CurrencyCode": "USD",
+                            "Amount": "10"
+                          },
+                          "PromotionDiscount": {
+                            "CurrencyCode": "USD",
+                            "Amount": "10"
+                          },
+                          "SerialNumbers": [
+                            "23424",
+                            "23423"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "BadShipId"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Shipment ID",
+                        "details": "'BadShipId' is an invalid ShipmentID"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetShipmentDetailsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fba/outbound/brazil/v0/shipments/{shipmentId}/invoice": {
+      "post": {
+        "tags": [
+          "shipmentInvoice"
+        ],
+        "description": "提交给定发运的发运发票单据。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1.133 | 25 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "submitInvoice",
+        "parameters": [
+          {
+            "name": "shipmentId",
+            "in": "path",
+            "description": "装运的标识符。",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoiceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoiceResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "shipmentId1"
+                      },
+                      "body": {
+                        "value": {
+                          "InvoiceContent": "SGF2ZSB0byBkZWFsIHdpdGggQmFzZTY0IGZvcm1hdD8=",
+                          "ContentMD5Value": "9906bd8f227f6a43f1e27db4b9258ad4"
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoiceResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "BadIDForShipment"
+                      },
+                      "body": {
+                        "value": {
+                          "InvoiceContent": "NonBase64EncodedValue",
+                          "ContentMD5Value": "8f6df519a2125946820bc34a561164c2"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Shipment ID is invalid",
+                        "details": "InvoiceContent fails encoding. Shipment 'BadIDForShipment' does not exist"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoiceResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoiceResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoiceResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoiceResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoiceResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoiceResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInvoiceResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/fba/outbound/brazil/v0/shipments/{shipmentId}/invoice/status": {
+      "get": {
+        "tags": [
+          "shipmentInvoice"
+        ],
+        "description": "返回您指定的发运的发票状态。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1.133 | 25 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制] (文档: Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getInvoiceStatus",
+        "parameters": [
+          {
+            "name": "shipmentId",
+            "in": "path",
+            "description": "装运的装运标识符。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetInvoiceStatusResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "shipmentId1"
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "Shipments": {
+                        "AmazonShipmentId": "shipmentId1",
+                        "InvoiceStatus": "Accepted"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/GetInvoiceStatusResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "shipmentId": {
+                        "value": "BadShipId"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Shipment ID",
+                        "details": "'BadShipId' is an invalid ShipmentID"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/GetInvoiceStatusResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/GetInvoiceStatusResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/GetInvoiceStatusResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/GetInvoiceStatusResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/GetInvoiceStatusResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/GetInvoiceStatusResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/GetInvoiceStatusResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。\n_注意:_对于此状态代码，速率限制标头已弃用，不再返回。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    }
+  },
+  "definitions": {
+    "GetShipmentDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "getShipmentDetails操作的负载",
+          "$ref": "#/definitions/ShipmentDetail"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "The response schema for the getShipmentDetails operation."
+    },
+    "ShipmentDetail": {
+      "description": "销售伙伴开具装运发票所需的信息。",
+      "type": "object",
+      "properties": {
+        "WarehouseId": {
+          "description": "仓库的Amazon定义的标识符。",
+          "type": "string"
+        },
+        "AmazonOrderId": {
+          "description": "订单的Amazon定义的标识符。",
+          "type": "string"
+        },
+        "AmazonShipmentId": {
+          "description": "Amazon定义的货件标识符。",
+          "type": "string"
+        },
+        "PurchaseDate": {
+          "description": "创建订单的日期和时间。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "ShippingAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "PaymentMethodDetails": {
+          "$ref": "#/definitions/PaymentMethodDetailItemList"
+        },
+        "MarketplaceId": {
+          "description": "下订单的市场的标识符。",
+          "type": "string"
+        },
+        "SellerId": {
+          "description": "卖方标识符。",
+          "type": "string"
+        },
+        "BuyerName": {
+          "description": "买方的名称。",
+          "type": "string"
+        },
+        "BuyerCounty": {
+          "description": "买方所在的县。",
+          "type": "string"
+        },
+        "BuyerTaxInfo": {
+          "$ref": "#/definitions/BuyerTaxInfo"
+        },
+        "MarketplaceTaxInfo": {
+          "$ref": "#/definitions/MarketplaceTaxInfo"
+        },
+        "SellerDisplayName": {
+          "description": "在marketplace中注册的卖方的友好名称。",
+          "type": "string"
+        },
+        "ShipmentItems": {
+          "$ref": "#/definitions/ShipmentItems"
+        }
+      }
+    },
+    "Address": {
+      "description": "货件的送货地址详细信息。",
+      "type": "object",
+      "properties": {
+        "Name": {
+          "description": "名字。",
+          "type": "string"
+        },
+        "AddressLine1": {
+          "description": "街道地址。",
+          "type": "string"
+        },
+        "AddressLine2": {
+          "description": "其他街道地址信息 (如果需要)。",
+          "type": "string"
+        },
+        "AddressLine3": {
+          "description": "其他街道地址信息 (如果需要)。",
+          "type": "string"
+        },
+        "City": {
+          "description": "城市。",
+          "type": "string"
+        },
+        "County": {
+          "description": "县。",
+          "type": "string"
+        },
+        "District": {
+          "description": "区。",
+          "type": "string"
+        },
+        "StateOrRegion": {
+          "description": "州或地区。",
+          "type": "string"
+        },
+        "PostalCode": {
+          "description": "邮政编码。",
+          "type": "string"
+        },
+        "CountryCode": {
+          "description": "国家代码。",
+          "type": "string"
+        },
+        "Phone": {
+          "description": "电话号码。",
+          "type": "string"
+        },
+        "AddressType": {
+          "$ref": "#/definitions/AddressTypeEnum"
+        }
+      }
+    },
+    "AddressTypeEnum": {
+      "description": "送货地址类型。",
+      "type": "string",
+      "enum": [
+        "Residential",
+        "Commercial"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "Residential",
+          "description": "地址类型是住宅。"
+        },
+        {
+          "value": "Commercial",
+          "description": "地址类型为商业。"
+        }
+      ]
+    },
+    "PaymentMethodDetailItemList": {
+      "description": "付款方式详细信息的列表。",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "BuyerTaxInfo": {
+      "description": "有关买方的税务信息。",
+      "type": "object",
+      "properties": {
+        "CompanyLegalName": {
+          "description": "公司的法定名称。",
+          "type": "string"
+        },
+        "TaxingRegion": {
+          "description": "征税的国家或地区。",
+          "type": "string"
+        },
+        "TaxClassifications": {
+          "$ref": "#/definitions/TaxClassificationList"
+        }
+      }
+    },
+    "MarketplaceTaxInfo": {
+      "description": "关于市场的税务信息。",
+      "type": "object",
+      "properties": {
+        "CompanyLegalName": {
+          "description": "公司的法定名称。",
+          "type": "string"
+        },
+        "TaxingRegion": {
+          "description": "征税的国家或地区。",
+          "type": "string"
+        },
+        "TaxClassifications": {
+          "$ref": "#/definitions/TaxClassificationList"
+        }
+      }
+    },
+    "TaxClassificationList": {
+      "description": "税分类列表。",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TaxClassification"
+      }
+    },
+    "TaxClassification": {
+      "description": "实体的税分类。",
+      "type": "object",
+      "properties": {
+        "Name": {
+          "description": "税的类型。",
+          "type": "string"
+        },
+        "Value": {
+          "description": "实体的税标识符。",
+          "type": "string"
+        }
+      }
+    },
+    "ShipmentItems": {
+      "description": "装运项目列表。",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ShipmentItem"
+      }
+    },
+    "ShipmentItem": {
+      "description": "卖方开具装运发票所需的装运项目信息。",
+      "type": "object",
+      "properties": {
+        "ASIN": {
+          "description": "商品的Amazon标准标识号 (ASIN)。",
+          "type": "string"
+        },
+        "SellerSKU": {
+          "description": "商品的卖家SKU。",
+          "type": "string"
+        },
+        "OrderItemId": {
+          "description": "订单项的Amazon定义的标识符。",
+          "type": "string"
+        },
+        "Title": {
+          "description": "项目的名称。",
+          "type": "string"
+        },
+        "QuantityOrdered": {
+          "description": "订购的项目数。",
+          "type": "number"
+        },
+        "ItemPrice": {
+          "description": "物料的售价乘以订购数量。请注意，ItemPrice不包括ShippingPrice和GiftWrapPrice。",
+          "$ref": "#/definitions/Money"
+        },
+        "ShippingPrice": {
+          "description": "物料的运输价格。",
+          "$ref": "#/definitions/Money"
+        },
+        "GiftWrapPrice": {
+          "description": "物品的礼品包装价格。",
+          "$ref": "#/definitions/Money"
+        },
+        "ShippingDiscount": {
+          "description": "运费的折扣。",
+          "$ref": "#/definitions/Money"
+        },
+        "PromotionDiscount": {
+          "description": "优惠中所有促销折扣的总和。",
+          "$ref": "#/definitions/Money"
+        },
+        "SerialNumbers": {
+          "description": "序列号列表。",
+          "$ref": "#/definitions/SerialNumbersList"
+        }
+      }
+    },
+    "Money": {
+      "description": "货币类型和金额。",
+      "type": "object",
+      "properties": {
+        "CurrencyCode": {
+          "description": "ISO 4217格式的三位数货币代码。",
+          "type": "string"
+        },
+        "Amount": {
+          "description": "货币金额。",
+          "type": "string"
+        }
+      }
+    },
+    "SerialNumbersList": {
+      "description": "序列号列表。",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    },
+    "SubmitInvoiceRequest": {
+      "description": "submitInvoice操作的请求架构。",
+      "type": "object",
+      "required": [
+        "ContentMD5Value",
+        "InvoiceContent"
+      ],
+      "properties": {
+        "InvoiceContent": {
+          "$ref": "#/definitions/Blob"
+        },
+        "MarketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "ContentMD5Value": {
+          "description": "用于验证发票数据的MD5 sum。有关计算此值的详细信息，请参阅 [使用Content-MD5校验和](https://docs.developer.amazonservices.com/en_US/dev_guide/DG_MD5.html)。",
+          "type": "string"
+        }
+      }
+    },
+    "Blob": {
+      "description": "装运发票单据内容。",
+      "type": "string",
+      "format": "byte"
+    },
+    "SubmitInvoiceResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "submitInvoice操作的响应架构。"
+    },
+    "ShipmentInvoiceStatusInfo": {
+      "description": "发运发票状态信息。",
+      "type": "object",
+      "properties": {
+        "AmazonShipmentId": {
+          "description": "Amazon定义的发货标识符。",
+          "type": "string"
+        },
+        "InvoiceStatus": {
+          "$ref": "#/definitions/ShipmentInvoiceStatus"
+        }
+      }
+    },
+    "ShipmentInvoiceStatus": {
+      "description": "发运发票状态。",
+      "type": "string",
+      "enum": [
+        "Processing",
+        "Accepted",
+        "Errored",
+        "NotFound"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "Processing",
+          "description": "发票验证流程正在进行中。"
+        },
+        {
+          "value": "Accepted",
+          "description": "发票验证过程成功，发票已成功接收。"
+        },
+        {
+          "value": "Errored",
+          "description": "发票验证过程失败。"
+        },
+        {
+          "value": "NotFound",
+          "description": "找不到请求的发票。"
+        }
+      ]
+    },
+    "ShipmentInvoiceStatusResponse": {
+      "description": "发运发票状态响应。",
+      "type": "object",
+      "properties": {
+        "Shipments": {
+          "$ref": "#/definitions/ShipmentInvoiceStatusInfo"
+        }
+      }
+    },
+    "GetInvoiceStatusResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "getInvoiceStatus操作的负载。",
+          "$ref": "#/definitions/ShipmentInvoiceStatusResponse"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "getInvoiceStatus操作的响应架构。"
+    }
+  }
+}

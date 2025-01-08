@@ -1,0 +1,411 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "用于直接履行库存更新的销售合作伙伴API提供了对直接履行供应商的库存更新的编程访问。",
+    "version": "v1",
+    "title": "销售用于直接履行库存更新的合作伙伴API",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/vendor/directFulfillment/inventory/v1/warehouses/{warehouseId}/items": {
+      "post": {
+        "tags": [
+          "updateInventory"
+        ],
+        "description": "为库存物料的部分或全部feed提交指定仓库的库存更新。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "submitInventoryUpdate",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubmitInventoryUpdateRequest"
+            },
+            "description": "包含要提交的库存更新数据的请求正文。"
+          },
+          {
+            "name": "warehouseId",
+            "in": "path",
+            "description": "要为其更新库存的仓库的标识符。",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInventoryUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "inventory": {
+                            "sellingParty": {
+                              "partyId": "VENDORID"
+                            },
+                            "isFullUpdate": false,
+                            "items": [
+                              {
+                                "buyerProductIdentifier": "ABCD4562",
+                                "vendorProductIdentifier": "7Q89K11",
+                                "availableQuantity": {
+                                  "amount": 10,
+                                  "unitOfMeasure": "Each"
+                                },
+                                "isObsolete": false
+                              },
+                              {
+                                "buyerProductIdentifier": "ABCD4563",
+                                "vendorProductIdentifier": "7Q89K12",
+                                "availableQuantity": {
+                                  "amount": 15,
+                                  "unitOfMeasure": "Each"
+                                },
+                                "isObsolete": false
+                              },
+                              {
+                                "buyerProductIdentifier": "ABCD4564",
+                                "vendorProductIdentifier": "7Q89K13",
+                                "availableQuantity": {
+                                  "amount": 20,
+                                  "unitOfMeasure": "Each"
+                                },
+                                "isObsolete": false
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "transactionId": "20190905010908-8a3b6901-ef20-412f-9270-21c021796605"
+                    }
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {}
+                    }
+                  },
+                  "response": {
+                    "payload": {
+                      "transactionId": "mock-TransactionId-20190905010908-8a3b6901-ef20-412f-9270-21c021796605"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInventoryUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "warehouseId": {
+                        "value": "DUMMYCODE"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid transmission ID.",
+                        "details": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInventoryUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInventoryUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInventoryUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInventoryUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInventoryUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInventoryUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/SubmitInventoryUpdateResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    }
+  },
+  "definitions": {
+    "SubmitInventoryUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "inventory": {
+          "description": "更新请求仓库的部分或所有物料所需的库存详细信息。",
+          "$ref": "#/definitions/InventoryUpdate"
+        }
+      },
+      "description": "submitInventoryUpdate操作的请求正文。"
+    },
+    "InventoryUpdate": {
+      "description": "更新请求仓库的部分或所有物料所需的库存详细信息。",
+      "type": "object",
+      "required": [
+        "isFullUpdate",
+        "items",
+        "sellingParty"
+      ],
+      "properties": {
+        "sellingParty": {
+          "description": "卖方或卖方的ID。",
+          "$ref": "#/definitions/PartyIdentification"
+        },
+        "isFullUpdate": {
+          "type": "boolean",
+          "description": "如果为true，则此请求包含完整的提要。否则，此请求包含部分提要。发送完整的feed时，您必须发送有关仓库中所有物品的信息。不在完整feed中的任何项目都将更新为不可用。发送部分feed时，仅包括需要更新库存的项目。其他项目的状态将保持不变。"
+        },
+        "items": {
+          "type": "array",
+          "description": "具有更新详细信息的库存项目列表，包括可用数量。",
+          "items": {
+            "$ref": "#/definitions/ItemDetails"
+          }
+        }
+      }
+    },
+    "ItemDetails": {
+      "type": "object",
+      "required": [
+        "availableQuantity"
+      ],
+      "properties": {
+        "buyerProductIdentifier": {
+          "type": "string",
+          "description": "买方选择了项目的产品标识。应提交buyerProductIdentifier或vendorProductIdentifier。"
+        },
+        "vendorProductIdentifier": {
+          "type": "string",
+          "description": "供应商选择了项目的产品标识。应提交buyerProductIdentifier或vendorProductIdentifier。"
+        },
+        "availableQuantity": {
+          "description": "仓库中可用的物料总数量。",
+          "$ref": "#/definitions/ItemQuantity"
+        },
+        "isObsolete": {
+          "type": "boolean",
+          "description": "如果为true，则该项永久不可用。"
+        }
+      },
+      "description": "已更新物料的库存详细信息。"
+    },
+    "PartyIdentification": {
+      "description": "一方的名称、地址和税务细节。",
+      "type": "object",
+      "required": [
+        "partyId"
+      ],
+      "properties": {
+        "partyId": {
+          "type": "string",
+          "description": "为该方指定的标识。"
+        }
+      }
+    },
+    "ItemQuantity": {
+      "type": "object",
+      "required": [
+        "unitOfMeasure"
+      ],
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "description": "可用于特定物料的单位数量。"
+        },
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "可用数量的度量单位。"
+        }
+      },
+      "description": "物料数量明细。"
+    },
+    "SubmitInventoryUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "submitInventoryUpdate操作的响应负载。",
+          "$ref": "#/definitions/TransactionReference"
+        },
+        "errors": {
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "submitInventoryUpdate操作的响应架构。"
+    },
+    "TransactionReference": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "description": "用于标识此事务的GUID。此值可与事务状态API一起使用，以返回此事务的状态。"
+        }
+      },
+      "description": "包含事务ID的响应。"
+    },
+    "ErrorList": {
+      "type": "array",
+      "description": "请求不成功时返回的错误响应列表。",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "标识发生的错误类型的错误代码。"
+        },
+        "message": {
+          "type": "string",
+          "description": "描述错误情况的消息。"
+        },
+        "details": {
+          "type": "string",
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。"
+        }
+      },
+      "description": "请求不成功时返回的错误响应。"
+    }
+  }
+}

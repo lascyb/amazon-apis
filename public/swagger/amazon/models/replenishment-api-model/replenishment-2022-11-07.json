@@ -1,0 +1,1947 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2022-11-07",
+    "title": "Selling Partner API for Replenishment",
+    "description": "用于补货的销售合作伙伴API (补货API) 提供了对补货计划指标和优惠的程序化访问。这些程序以客户选择的频率提供任何可补充物品的重复递送。\n\n无论Amazon Subscribe & Save是否可用或受支持，补货API均可在全球范围内使用。该API可供供应商和FBA销售合作伙伴使用。",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "definitions": {
+    "GetSellingPartnerMetricsRequest": {
+      "description": "“Getsellingpartnermetrics” 操作的请求正文。",
+      "type": "object",
+      "required": [
+        "timeInterval",
+        "timePeriodType",
+        "programTypes",
+        "marketplaceId"
+      ],
+      "properties": {
+        "aggregationFrequency": {
+          "$ref": "#/definitions/AggregationFrequency"
+        },
+        "timeInterval": {
+          "description": "用于计算指标的时间间隔。",
+          "$ref": "#/definitions/TimeInterval"
+        },
+        "metrics": {
+          "description": "请求的度量列表。如果未提供度量值，则将返回所有度量的数据。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Metric"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "timePeriodType": {
+          "$ref": "#/definitions/TimePeriodType"
+        },
+        "marketplaceId": {
+          "description": "市场标识符。卖家和供应商支持的市场是US，CA，ES，UK，FR，IT，IN，DE和JP。仅受供应商支持的市场是BR、AU、MX、AE和NL。请参阅 [市场id](https:// developer-docs.amazon.com/sp-api/docs/Marketplace-IDs) 以查找市场的标识符。",
+          "$ref": "#/definitions/MarketplaceId"
+        },
+        "programTypes": {
+          "description": "要为其返回度量的补充计划类型的列表。",
+          "$ref": "#/definitions/ProgramTypes"
+        }
+      }
+    },
+    "ListOfferMetricsRequest": {
+      "description": "“Listoffermetrics” 操作的请求正文。",
+      "type": "object",
+      "required": [
+        "pagination",
+        "filters"
+      ],
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/ListOfferMetricsRequestPagination",
+          "description": "使用这些参数通过响应进行分页。"
+        },
+        "sort": {
+          "description": "使用这些参数对响应进行排序。",
+          "$ref": "#/definitions/ListOfferMetricsRequestSort"
+        },
+        "filters": {
+          "description": "使用这些参数过滤结果。任何结果都必须与所有提供的参数匹配。对于作为数组的任何参数，结果必须与提供的数组中的至少一个元素匹配。",
+          "$ref": "#/definitions/ListOfferMetricsRequestFilters"
+        }
+      }
+    },
+    "ListOffersRequest": {
+      "description": "“Listoffers” 操作的请求正文。",
+      "type": "object",
+      "required": [
+        "pagination",
+        "filters"
+      ],
+      "properties": {
+        "pagination": {
+          "description": "使用这些参数通过响应进行分页。",
+          "$ref": "#/definitions/ListOffersRequestPagination"
+        },
+        "filters": {
+          "description": "使用这些参数过滤结果。任何结果都必须与所有提供的参数匹配。对于作为数组的任何参数，结果必须与提供的数组中的至少一个元素匹配。",
+          "$ref": "#/definitions/ListOffersRequestFilters"
+        },
+        "sort": {
+          "description": "使用这些参数对响应进行排序。",
+          "$ref": "#/definitions/ListOffersRequestSort"
+        }
+      }
+    },
+    "EligibilityStatus": {
+      "type": "string",
+      "description": "优惠的当前资格状态。",
+      "enum": [
+        "ELIGIBLE",
+        "INELIGIBLE",
+        "SUSPENDED",
+        "REPLENISHMENT_ONLY_ORDERING"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "ELIGIBLE",
+          "description": "该优惠能够满足当前订阅并添加新订阅。"
+        },
+        {
+          "value": "INELIGIBLE",
+          "description": "优惠将无法添加新订阅，现有订阅将被取消。"
+        },
+        {
+          "value": "SUSPENDED",
+          "description": "优惠将无法添加新订阅，但现有订阅将被履行。"
+        },
+        {
+          "value": "REPLENISHMENT_ONLY_ORDERING",
+          "description": "优惠将无法添加新订阅，但现有订阅将被履行。此资格状态还会阻止一次性购买，以保留现有订阅的库存。"
+        }
+      ]
+    },
+    "Preference": {
+      "description": "提供可包含在结果筛选条件中的首选项。",
+      "type": "object",
+      "properties": {
+        "autoEnrollment": {
+          "type": "array",
+          "description": "筛选结果以仅包括具有指定的自动注册首选项的选件。",
+          "items": {
+            "$ref": "#/definitions/AutoEnrollmentPreference"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      }
+    },
+    "Promotion": {
+      "description": "提供要包括在结果筛选条件中的促销。",
+      "type": "object",
+      "properties": {
+        "sellingPartnerFundedBaseDiscount": {
+          "description": "销售伙伴在报价上设定的基本折扣。",
+          "$ref": "#/definitions/DiscountFunding"
+        },
+        "sellingPartnerFundedTieredDiscount": {
+          "description": "由销售伙伴在报价上设定的分层折扣。",
+          "$ref": "#/definitions/DiscountFunding"
+        },
+        "amazonFundedBaseDiscount": {
+          "$ref": "#/definitions/DiscountFunding",
+          "description": "亚马逊在优惠上设定的基本折扣。"
+        },
+        "amazonFundedTieredDiscount": {
+          "description": "亚马逊在优惠上设定的分层折扣。",
+          "$ref": "#/definitions/DiscountFunding"
+        }
+      }
+    },
+    "DiscountFunding": {
+      "description": "报价上的折扣资金。",
+      "type": "object",
+      "properties": {
+        "percentage": {
+          "description": "筛选结果以仅包括具有指定百分比的选件。",
+          "type": "array",
+          "items": {
+            "type": "number",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 10
+        }
+      }
+    },
+    "OfferProgramConfiguration": {
+      "description": "优惠计划配置包含一组优惠的计划属性。",
+      "type": "object",
+      "properties": {
+        "preferences": {
+          "description": "包含应用于优惠的首选项的对象。",
+          "$ref": "#/definitions/OfferProgramConfigurationPreferences"
+        },
+        "promotions": {
+          "description": "包含应用到优惠的促销的对象。",
+          "$ref": "#/definitions/OfferProgramConfigurationPromotions"
+        },
+        "enrollmentMethod": {
+          "description": "确定选件是在计划中自动注册还是手动注册。此属性仅支持卖家而不是供应商。",
+          "$ref": "#/definitions/EnrollmentMethod"
+        }
+      }
+    },
+    "OfferProgramConfigurationPreferences": {
+      "type": "object",
+      "description": "包含应用于优惠的首选项的对象。",
+      "properties": {
+        "autoEnrollment": {
+          "description": "自动注册首选项指示优惠是选择加入还是退出Amazon的自动注册功能。",
+          "$ref": "#/definitions/AutoEnrollmentPreference"
+        }
+      }
+    },
+    "OfferProgramConfigurationPromotions": {
+      "description": "表示应用于优惠的所有促销的对象。",
+      "type": "object",
+      "properties": {
+        "sellingPartnerFundedBaseDiscount": {
+          "description": "销售伙伴在报价上设定的基本折扣。",
+          "$ref": "#/definitions/OfferProgramConfigurationPromotionsDiscountFunding"
+        },
+        "sellingPartnerFundedTieredDiscount": {
+          "$ref": "#/definitions/OfferProgramConfigurationPromotionsDiscountFunding",
+          "description": "由销售伙伴在报价上设定的分层折扣。"
+        },
+        "amazonFundedBaseDiscount": {
+          "description": "亚马逊在优惠上设定的基本折扣。",
+          "$ref": "#/definitions/OfferProgramConfigurationPromotionsDiscountFunding"
+        },
+        "amazonFundedTieredDiscount": {
+          "description": "亚马逊在优惠上设定的分层折扣。",
+          "$ref": "#/definitions/OfferProgramConfigurationPromotionsDiscountFunding"
+        }
+      }
+    },
+    "OfferProgramConfigurationPromotionsDiscountFunding": {
+      "description": "适用于优惠的促销百分比折扣。",
+      "type": "object",
+      "properties": {
+        "percentage": {
+          "description": "优惠的百分比折扣。",
+          "type": "number",
+          "format": "int64",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "ListOfferMetricsRequestPagination": {
+      "description": "使用这些参数通过响应进行分页。",
+      "type": "object",
+      "required": [
+        "limit",
+        "offset"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int64",
+          "description": "要在响应中返回的最大结果数。",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int64",
+          "description": "要从中检索由 “limit” 值指定的结果数的偏移量。第一个结果在偏移量0处。",
+          "minimum": 0,
+          "maximum": 9000
+        }
+      }
+    },
+    "AutoEnrollmentPreference": {
+      "type": "string",
+      "description": "自动注册首选项指示优惠是选择加入还是退出Amazon的自动注册功能。",
+      "enum": [
+        "OPTED_IN",
+        "OPTED_OUT"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "OPTED_IN",
+          "description": "该优惠已选择加入自动注册计划。"
+        },
+        {
+          "value": "OPTED_OUT",
+          "description": "该优惠选择退出自动注册计划。"
+        }
+      ]
+    },
+    "ProgramTypes": {
+      "type": "array",
+      "description": "补货计划类型列表。",
+      "items": {
+        "$ref": "#/definitions/ProgramType"
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "ProgramType": {
+      "type": "string",
+      "description": "补货计划类型。",
+      "enum": [
+        "SUBSCRIBE_AND_SAVE"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "SUBSCRIBE_AND_SAVE",
+          "description": "订阅并保存程序。"
+        }
+      ]
+    },
+    "EnrollmentMethod": {
+      "type": "string",
+      "description": "用于将选件注册到计划的注册方法。",
+      "enum": [
+        "MANUAL",
+        "AUTOMATIC"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "MANUAL",
+          "description": "优惠已在计划中手动注册。"
+        },
+        {
+          "value": "AUTOMATIC",
+          "description": "优惠已自动在计划中注册。"
+        }
+      ]
+    },
+    "ListOfferMetricsRequestFilters": {
+      "type": "object",
+      "description": "使用这些参数过滤结果。任何结果都必须与所有提供的参数匹配。对于作为数组的任何参数，结果必须与提供的数组中的至少一个元素匹配。",
+      "required": [
+        "timeInterval",
+        "timePeriodType",
+        "programTypes",
+        "marketplaceId"
+      ],
+      "properties": {
+        "aggregationFrequency": {
+          "$ref": "#/definitions/AggregationFrequency"
+        },
+        "timeInterval": {
+          "description": "用于计算指标的时间间隔。",
+          "$ref": "#/definitions/TimeInterval"
+        },
+        "timePeriodType": {
+          "$ref": "#/definitions/TimePeriodType"
+        },
+        "marketplaceId": {
+          "description": "市场标识符。卖家和供应商支持的市场是US，CA，ES，UK，FR，IT，IN，DE和JP。仅受供应商支持的市场是BR、AU、MX、AE和NL。请参阅 [市场id](https:// developer-docs.amazon.com/sp-api/docs/Marketplace-IDs) 以查找市场的标识符。",
+          "$ref": "#/definitions/MarketplaceId"
+        },
+        "programTypes": {
+          "$ref": "#/definitions/ProgramTypes"
+        },
+        "asins": {
+          "type": "array",
+          "description": "Amazon标准标识号 (asin) 的列表。",
+          "items": {
+            "type": "string",
+            "description": "亚马逊标准标识号。"
+          },
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 20
+        }
+      }
+    },
+    "ListOfferMetricsRequestSort": {
+      "type": "object",
+      "description": "使用这些参数对响应进行排序。",
+      "required": [
+        "order",
+        "key"
+      ],
+      "properties": {
+        "order": {
+          "description": "排序顺序。",
+          "$ref": "#/definitions/SortOrder"
+        },
+        "key": {
+          "$ref": "#/definitions/ListOfferMetricsSortKey"
+        }
+      }
+    },
+    "ListOfferMetricsSortKey": {
+      "type": "string",
+      "description": "用于对结果进行排序的属性。",
+      "enum": [
+        "SHIPPED_SUBSCRIPTION_UNITS",
+        "TOTAL_SUBSCRIPTIONS_REVENUE",
+        "ACTIVE_SUBSCRIPTIONS",
+        "NEXT_90DAYS_SHIPPED_SUBSCRIPTION_UNITS",
+        "NEXT_60DAYS_SHIPPED_SUBSCRIPTION_UNITS",
+        "NEXT_30DAYS_SHIPPED_SUBSCRIPTION_UNITS",
+        "NEXT_90DAYS_TOTAL_SUBSCRIPTIONS_REVENUE",
+        "NEXT_60DAYS_TOTAL_SUBSCRIPTIONS_REVENUE",
+        "NEXT_30DAYS_TOTAL_SUBSCRIPTIONS_REVENUE"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "SHIPPED_SUBSCRIPTION_UNITS",
+          "description": "在一段时间内发运给订户的单位数。仅适用于 “性能” “timepiodype”。"
+        },
+        {
+          "value": "TOTAL_SUBSCRIPTIONS_REVENUE",
+          "description": "在一段时间内从订阅中产生的收入。仅适用于 “性能” “timepiodype”。"
+        },
+        {
+          "value": "ACTIVE_SUBSCRIPTIONS",
+          "description": "期末存在的活动订阅数量。仅适用于 “性能” “timepiodype”。"
+        },
+        {
+          "value": "NEXT_90DAYS_SHIPPED_SUBSCRIPTION_UNITS",
+          "description": "未来90天的预测发运订阅单位。仅适用于 “预测” “timeperiod类型”。"
+        },
+        {
+          "value": "NEXT_60DAYS_SHIPPED_SUBSCRIPTION_UNITS",
+          "description": "未来60天的预测发运订阅单位。仅适用于 “forecast'” “timeperiod类型”。"
+        },
+        {
+          "value": "NEXT_30DAYS_SHIPPED_SUBSCRIPTION_UNITS",
+          "description": "未来30天的预测发运订阅单位。仅适用于 “预测” “timeperiod类型”。"
+        },
+        {
+          "value": "NEXT_90DAYS_TOTAL_SUBSCRIPTIONS_REVENUE",
+          "description": "未来90天的预测总订阅收入。仅适用于 “预测” “timeperiod类型”。"
+        },
+        {
+          "value": "NEXT_60DAYS_TOTAL_SUBSCRIPTIONS_REVENUE",
+          "description": "未来60天的预测总订阅收入。仅适用于 “预测” “timeperiod类型”。"
+        },
+        {
+          "value": "NEXT_30DAYS_TOTAL_SUBSCRIPTIONS_REVENUE",
+          "description": "未来30天的预测总订阅收入。仅适用于 “预测” “timeperiod类型”。"
+        }
+      ]
+    },
+    "ListOffersRequestPagination": {
+      "type": "object",
+      "description": "使用这些参数通过响应进行分页。",
+      "required": [
+        "limit",
+        "offset"
+      ],
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "format": "int64",
+          "description": "要在响应中返回的最大结果数。",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int64",
+          "description": "要从中检索由 “limit” 值指定的结果数的偏移量。第一个结果在偏移量0处。",
+          "minimum": 0,
+          "maximum": 9000
+        }
+      }
+    },
+    "ListOffersRequestFilters": {
+      "type": "object",
+      "description": "使用这些参数过滤结果。任何结果都必须与提供的所有参数匹配。对于作为数组的任何参数，结果必须与提供的数组中的至少一个元素匹配。",
+      "required": [
+        "marketplaceId",
+        "programTypes"
+      ],
+      "properties": {
+        "marketplaceId": {
+          "description": "市场标识符。卖家和供应商支持的市场是US，CA，ES，UK，FR，IT，IN，DE和JP。仅受供应商支持的市场是BR、AU、MX、AE和NL。请参阅 [市场id](https:// developer-docs.amazon.com/sp-api/docs/Marketplace-IDs) 以查找市场的标识符。",
+          "$ref": "#/definitions/MarketplaceId"
+        },
+        "skus": {
+          "description": "要筛选的sku列表。此过滤器仅支持卖家，而不支持供应商。",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Sku。"
+          },
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 20
+        },
+        "asins": {
+          "description": "Amazon标准标识号 (asin) 的列表。",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "亚马逊标准识别号 (ASIN)。"
+          },
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 20
+        },
+        "eligibilities": {
+          "description": "与优惠相关的资格列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EligibilityStatus"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "preferences": {
+          "description": "提供要包含在结果筛选条件中的首选项。",
+          "$ref": "#/definitions/Preference"
+        },
+        "promotions": {
+          "description": "提供要包括在结果筛选条件中的促销。",
+          "$ref": "#/definitions/Promotion"
+        },
+        "programTypes": {
+          "$ref": "#/definitions/ProgramTypes"
+        }
+      }
+    },
+    "ListOffersRequestSort": {
+      "description": "使用这些参数对响应进行排序。",
+      "type": "object",
+      "required": [
+        "order",
+        "key"
+      ],
+      "properties": {
+        "order": {
+          "description": "排序顺序。",
+          "$ref": "#/definitions/SortOrder"
+        },
+        "key": {
+          "$ref": "#/definitions/ListOffersSortKey",
+          "description": "用于对结果进行排序的属性。"
+        }
+      }
+    },
+    "ListOffersSortKey": {
+      "type": "string",
+      "description": "用于对结果进行排序的属性。",
+      "enum": [
+        "ASIN",
+        "SELLING_PARTNER_FUNDED_BASE_DISCOUNT_PERCENTAGE",
+        "SELLING_PARTNER_FUNDED_TIERED_DISCOUNT_PERCENTAGE",
+        "AMAZON_FUNDED_BASE_DISCOUNT_PERCENTAGE",
+        "AMAZON_FUNDED_TIERED_DISCOUNT_PERCENTAGE"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "ASIN",
+          "description": "根据Amazon标准标识号 (ASIN) 对优惠进行排序。"
+        },
+        {
+          "value": "SELLING_PARTNER_FUNDED_BASE_DISCOUNT_PERCENTAGE",
+          "description": "根据销售合作伙伴在优惠上设置的基本折扣百分比对优惠进行排序。"
+        },
+        {
+          "value": "SELLING_PARTNER_FUNDED_TIERED_DISCOUNT_PERCENTAGE",
+          "description": "根据销售合作伙伴在优惠上设置的分层折扣百分比对优惠进行排序。"
+        },
+        {
+          "value": "AMAZON_FUNDED_BASE_DISCOUNT_PERCENTAGE",
+          "description": "根据亚马逊在优惠上设置的基本折扣百分比对优惠进行排序。"
+        },
+        {
+          "value": "AMAZON_FUNDED_TIERED_DISCOUNT_PERCENTAGE",
+          "description": "按照亚马逊在优惠上设置的分层折扣百分比对优惠进行排序。"
+        }
+      ]
+    },
+    "MarketplaceId": {
+      "type": "string",
+      "description": "市场标识符。卖家和供应商支持的市场是US，CA，ES，UK，FR，IT，IN，DE和JP。仅受供应商支持的市场是BR、AU、MX、AE和NL。请参阅 [市场id](https:// developer-docs.amazon.com/sp-api/docs/Marketplace-IDs) 以查找市场的标识符。"
+    },
+    "AggregationFrequency": {
+      "description": "用于对响应中的数据进行分组的时间段。请注意，这仅对 “性能” 时间段类型有效。",
+      "type": "string",
+      "enum": [
+        "WEEK",
+        "MONTH",
+        "QUARTER",
+        "YEAR"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "WEEK",
+          "description": "ISO日历周。"
+        },
+        {
+          "value": "MONTH",
+          "description": "ISO日历月。"
+        },
+        {
+          "value": "QUARTER",
+          "description": "ISO日历季度。"
+        },
+        {
+          "value": "YEAR",
+          "description": "ISO日历年。"
+        }
+      ]
+    },
+    "TimeInterval": {
+      "type": "object",
+      "description": "ISO 8601格式的日期时间间隔，用于计算度量。只有日期是必需的，但您必须传递完整的日期和时间值。例如，2022年11月11日应作为 “2022-11-07 t00: 00:00Z” 传递。请注意，仅支持过去2年的数据。\n\n** 注意 **: “listoffermetrics” 操作仅支持覆盖单个聚合频率单位的时间间隔。例如，对于月份聚合频率，startDate和endDate之间的间隔时间不能超过1个月。",
+      "required": [
+        "startDate",
+        "endDate"
+      ],
+      "properties": {
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "当该对象作为请求参数时，会根据聚合频率调整指定的 'startDate'。\n\n* 对于 “week”，度量从包含 “startdate” 的一周的第一天 (星期日，基于ISO 8601) 开始计算。\n* 对于 “month”，度量从包含 “startdate” 的月份的第一天开始计算。\n* 对于 “季度”，从包含 “起始日期” 的季度的第一天开始计算度量。\n* 对于 “year”，度量从包含 “startdate” 的年份的第一天开始计算。"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "当该object作为请求参数时，会根据聚合频率调整指定的enddate。\n\n* 对于 “week”，该指标将计算到包含 “enddate” 的一周的最后一天 (星期日，基于ISO 8601)。\n* 对于 “month'”，度量值将计算到包含 “enddate” 的最后一天。\n* 对于 'QUARTER'，度量计算到包含 'endDate' 的季度的最后一天。\n* 对于 “year”，该指标将计算到包含 “enddate” 的年份的最后一天。\n注意: 结束日期可能会根据我们系统中可用的数据调整为较低的值。"
+        }
+      }
+    },
+    "Metric": {
+      "type": "string",
+      "description": "度量名称和说明。",
+      "enum": [
+        "SHIPPED_SUBSCRIPTION_UNITS",
+        "TOTAL_SUBSCRIPTIONS_REVENUE",
+        "ACTIVE_SUBSCRIPTIONS",
+        "NOT_DELIVERED_DUE_TO_OOS",
+        "SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REVENUE",
+        "LOST_REVENUE_DUE_TO_OOS",
+        "SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REORDERS",
+        "COUPONS_REVENUE_PENETRATION"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "SHIPPED_SUBSCRIPTION_UNITS",
+          "description": "在一段时间内发运给订户的单位数。"
+        },
+        {
+          "value": "TOTAL_SUBSCRIPTIONS_REVENUE",
+          "description": "在一段时间内从订阅中产生的收入。"
+        },
+        {
+          "value": "ACTIVE_SUBSCRIPTIONS",
+          "description": "期末存在的活动订阅数量。"
+        },
+        {
+          "value": "NOT_DELIVERED_DUE_TO_OOS",
+          "description": "在一段时间内由于缺货而未出货的项目占已出货总量的百分比。"
+        },
+        {
+          "value": "SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REVENUE",
+          "description": "卖家过去12个月、供应商过去6个月的每个订户和非订户的平均收入。"
+        },
+        {
+          "value": "LOST_REVENUE_DUE_TO_OOS",
+          "description": "如果没有缺货，本可以产生的收入。"
+        },
+        {
+          "value": "SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REORDERS",
+          "description": "过去12个月每个订户和非订户的平均重新订购。"
+        },
+        {
+          "value": "COUPONS_REVENUE_PENETRATION",
+          "description": "有优惠券的asin收入占所有asin总收入的百分比。"
+        }
+      ]
+    },
+    "SortOrder": {
+      "type": "string",
+      "description": "排序顺序。",
+      "enum": [
+        "ASC",
+        "DESC"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "ASC",
+          "description": "按升序对结果进行排序。"
+        },
+        {
+          "value": "DESC",
+          "description": "按降序对结果进行排序。"
+        }
+      ]
+    },
+    "TimePeriodType": {
+      "type": "string",
+      "description": "确定请求的度量是向后查看 (性能) 还是向前查看 (预测) 的时间段类型。",
+      "enum": [
+        "PERFORMANCE",
+        "FORECAST"
+      ],
+      "x-docgen-enum-table-extension": [
+        {
+          "value": "PERFORMANCE",
+          "description": "表示过去的性能指标。"
+        },
+        {
+          "value": "FORECAST",
+          "description": "指示预测指标。仅支持 “TOTAL_SUBSCRIPTIONS_REVENUE” 和 “SHIPPED_SUBSCRIPTION_UNITS”。卖家支持预测数据，但供应商不支持预测数据。"
+        }
+      ]
+    },
+    "GetSellingPartnerMetricsResponse": {
+      "description": "“Getsellingpartnermetrics” 操作的响应架构。",
+      "type": "object",
+      "properties": {
+        "metrics": {
+          "type": "array",
+          "description": "销售合作伙伴的度量数据列表。",
+          "items": {
+            "$ref": "#/definitions/GetSellingPartnerMetricsResponseMetric"
+          }
+        }
+      }
+    },
+    "GetSellingPartnerMetricsResponseMetric": {
+      "type": "object",
+      "description": "包含销售合作伙伴的指标数据的对象。",
+      "properties": {
+        "notDeliveredDueToOOS": {
+          "description": "在一段时间内由于缺货而未出货的项目占已出货总量的百分比。仅适用于 “性能” “timepiodype”。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "totalSubscriptionsRevenue": {
+          "description": "在一段时间内从订阅中产生的收入。适用于 “性能” 和 “预测” “时间周期类型”。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "shippedSubscriptionUnits": {
+          "description": "在一段时间内发运给订户的单位数。适用于 “性能” 和 “预测” “时间周期类型”。",
+          "type": "number",
+          "format": "int64",
+          "minimum": 0
+        },
+        "activeSubscriptions": {
+          "description": "期末存在的活动订阅数量。仅适用于 “性能” “timepiodype”。",
+          "type": "number",
+          "format": "int64",
+          "minimum": 0
+        },
+        "subscriberAverageRevenue": {
+          "description": "卖家过去12个月内该计划的每个订户的平均收入，供应商过去6个月的平均收入。仅适用于 “性能” “timepiodype”。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "nonSubscriberAverageRevenue": {
+          "description": "在过去12个月内，卖家和供应商的6个月内，该计划的每个非订户的平均收入。仅适用于 “性能” “timepiodype”。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "lostRevenueDueToOOS": {
+          "description": "如果没有缺货，本可以产生的收入。仅适用于PERFORMANCE timePeriodType。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "subscriberAverageReorders": {
+          "description": "在12个月内，该计划的每个订户的平均重新订购。仅适用于PERFORMANCE timePeriodType。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "nonSubscriberAverageReorders": {
+          "description": "在过去12个月内，该计划的每个非订户的平均重新订购。仅适用于PERFORMANCE timePeriodType。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "couponsRevenuePenetration": {
+          "description": "有优惠券的asin收入占所有asin总收入的百分比。仅适用于PERFORMANCE timePeriodType。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "timeInterval": {
+          "description": "用于计算指标的时间间隔。",
+          "$ref": "#/definitions/TimeInterval"
+        },
+        "currencyCode": {
+          "type": "string",
+          "description": "ISO 4217格式的货币代码。"
+        }
+      }
+    },
+    "ListOfferMetricsResponse": {
+      "description": "“Listoffermetrics” 操作的响应架构。",
+      "type": "object",
+      "properties": {
+        "offers": {
+          "type": "array",
+          "description": "优惠和关联度量的列表。",
+          "items": {
+            "$ref": "#/definitions/ListOfferMetricsResponseOffer"
+          }
+        },
+        "pagination": {
+          "description": "使用这些参数通过响应进行分页。",
+          "$ref": "#/definitions/PaginationResponse"
+        }
+      }
+    },
+    "ListOffersResponse": {
+      "description": "“Listoffers” 操作的响应架构。",
+      "type": "object",
+      "properties": {
+        "offers": {
+          "type": "array",
+          "description": "报价列表。",
+          "items": {
+            "$ref": "#/definitions/ListOffersResponseOffer"
+          }
+        },
+        "pagination": {
+          "description": "使用这些参数通过响应进行分页。",
+          "$ref": "#/definitions/PaginationResponse"
+        }
+      }
+    },
+    "ListOffersResponseOffer": {
+      "description": "包含有关优惠的详细信息的对象。",
+      "type": "object",
+      "properties": {
+        "sku": {
+          "description": "SKU。此属性仅支持卖家，而不是供应商。",
+          "type": "string"
+        },
+        "asin": {
+          "description": "Amazon标准标识号 (ASIN)。",
+          "type": "string"
+        },
+        "marketplaceId": {
+          "description": "市场标识符。卖家和供应商支持的市场是US，CA，ES，UK，FR，IT，IN，DE和JP。仅受供应商支持的市场是BR、AU、MX、AE和NL。请参阅 [市场id](https:// developer-docs.amazon.com/sp-api/docs/Marketplace-IDs) 以查找市场的标识符。",
+          "$ref": "#/definitions/MarketplaceId"
+        },
+        "eligibility": {
+          "description": "优惠资格状态。",
+          "$ref": "#/definitions/EligibilityStatus"
+        },
+        "offerProgramConfiguration": {
+          "$ref": "#/definitions/OfferProgramConfiguration"
+        },
+        "programType": {
+          "description": "优惠的补货计划。",
+          "$ref": "#/definitions/ProgramType"
+        },
+        "vendorCodes": {
+          "description": "与优惠关联的供应商代码列表。",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "表示Amazon与供应商之间关系的字母数字代码。"
+          }
+        }
+      }
+    },
+    "PaginationResponse": {
+      "description": "使用这些参数通过响应进行分页。",
+      "type": "object",
+      "properties": {
+        "totalResults": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0,
+          "description": "与给定筛选条件匹配的结果总数。"
+        }
+      }
+    },
+    "ListOfferMetricsResponseOffer": {
+      "type": "object",
+      "description": "包含优惠指标的对象。",
+      "properties": {
+        "asin": {
+          "type": "string",
+          "description": "Amazon标准标识号 (ASIN)。"
+        },
+        "notDeliveredDueToOOS": {
+          "description": "在一段时间内由于缺货而未出货的项目占已出货总量的百分比。仅适用于 “性能” “timepiodype”。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "totalSubscriptionsRevenue": {
+          "description": "在一段时间内从订阅中产生的收入。仅适用于 “性能” “timepiodype”。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "shippedSubscriptionUnits": {
+          "description": "在一段时间内发运给订户的单位数。仅适用于 “性能” “timepiodype”。",
+          "type": "number",
+          "format": "int64",
+          "minimum": 0
+        },
+        "activeSubscriptions": {
+          "description": "期末存在的活动订阅数量。仅适用于 “性能” “timepiodype”。",
+          "type": "number",
+          "format": "int64",
+          "minimum": 0
+        },
+        "revenuePenetration": {
+          "description": "项目总收入占产品总收入的百分比。仅适用于 “性能” “timepiodype”。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "lostRevenueDueToOOS": {
+          "description": "如果没有缺货，本可以产生的收入。仅适用于PERFORMANCE timePeriodType。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "couponsRevenuePenetration": {
+          "description": "有优惠券的asin收入占所有asin总收入的百分比。仅适用于PERFORMANCE timePeriodType。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "next30DayTotalSubscriptionsRevenue": {
+          "description": "未来30天的预测总订阅收入。仅适用于 “预测” “timeperiod类型”。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "next60DayTotalSubscriptionsRevenue": {
+          "description": "未来60天的预测总订阅收入。仅适用于 “预测” “timeperiod类型”。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "next90DayTotalSubscriptionsRevenue": {
+          "description": "未来90天的预测总订阅收入。仅适用于 “预测” “timeperiod类型”。",
+          "type": "number",
+          "format": "double",
+          "minimum": 0
+        },
+        "next30DayShippedSubscriptionUnits": {
+          "description": "未来30天的预测发运订阅单位。仅适用于 “预测” “timeperiod类型”。",
+          "type": "number",
+          "format": "int64",
+          "minimum": 0
+        },
+        "next60DayShippedSubscriptionUnits": {
+          "description": "未来60天的预测发运订阅单位。仅适用于 “forecast'” “timeperiod类型”。",
+          "type": "number",
+          "format": "int64",
+          "minimum": 0
+        },
+        "next90DayShippedSubscriptionUnits": {
+          "description": "未来90天的预测发运订阅单位。仅适用于 “预测” “timeperiod类型”。",
+          "type": "number",
+          "format": "int64",
+          "minimum": 0
+        },
+        "timeInterval": {
+          "description": "用于计算指标的时间间隔。",
+          "$ref": "#/definitions/TimeInterval"
+        },
+        "currencyCode": {
+          "type": "string",
+          "description": "ISO 4217格式的货币代码。"
+        }
+      }
+    },
+    "ErrorList": {
+      "type": "object",
+      "description": "请求不成功时返回的错误响应列表。",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array",
+          "description": "请求不成功时返回的错误响应列表。",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      }
+    },
+    "Error": {
+      "description": "请求不成功时返回的错误响应。",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述错误情况的消息。",
+          "type": "string"
+        },
+        "details": {
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ]
+    }
+  },
+  "paths": {
+    "/replenishment/2022-11-07/sellingPartners/metrics/search": {
+      "post": {
+        "tags": [
+          "sellingpartners"
+        ],
+        "description": "返回销售合作伙伴的汇总补货计划指标。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getSellingPartnerMetrics",
+        "parameters": [
+          {
+            "name": "body",
+            "description": "“Getsellingpartnermetrics” 操作的请求正文。",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/GetSellingPartnerMetricsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/GetSellingPartnerMetricsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "metrics": [
+                  {
+                    "subscriberAverageRevenue": 125.93,
+                    "nonSubscriberAverageRevenue": 73.62,
+                    "shippedSubscriptionUnits": 5290,
+                    "notDeliveredDueToOOS": 5.54,
+                    "totalSubscriptionsRevenue": 131340.24,
+                    "activeSubscriptions": 0,
+                    "lostRevenueDueToOOS": 38493.29,
+                    "subscriberAverageReorders": 3.25,
+                    "nonSubscriberAverageReorders": 1.11,
+                    "couponsRevenuePenetration": 0,
+                    "currencyCode": "USD",
+                    "timeInterval": {
+                      "endDate": "2023-05-09T22:36:56Z",
+                      "startDate": "2022-05-09T22:36:56Z"
+                    }
+                  }
+                ]
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "aggregationFrequency": "YEAR",
+                          "timeInterval": {
+                            "startDate": "2022-01-01T00:00:00Z",
+                            "endDate": "2022-12-31T00:00:00Z"
+                          },
+                          "metrics": [
+                            "TOTAL_SUBSCRIPTIONS_REVENUE"
+                          ],
+                          "timePeriodType": "PERFORMANCE",
+                          "marketplaceId": "ATVPDKIKX0DER",
+                          "programTypes": [
+                            "SUBSCRIBE_AND_SAVE"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "metrics": [
+                      {
+                        "subscriberAverageRevenue": 125.93,
+                        "nonSubscriberAverageRevenue": 73.62,
+                        "shippedSubscriptionUnits": 5290,
+                        "notDeliveredDueToOOS": 5.54,
+                        "totalSubscriptionsRevenue": 131340.24,
+                        "activeSubscriptions": 0,
+                        "lostRevenueDueToOOS": 38493.29,
+                        "subscriberAverageReorders": 3.25,
+                        "nonSubscriberAverageReorders": 1.11,
+                        "couponsRevenuePenetration": 0,
+                        "currencyCode": "USD",
+                        "timeInterval": {
+                          "endDate": "2023-05-09T22:36:56Z",
+                          "startDate": "2022-05-09T22:36:56Z"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "aggregationFrequency": "DAY",
+                          "timeInterval": {
+                            "startDate": "2022-01-01T00:00:00Z",
+                            "endDate": "2023-01-01T00:00:00Z"
+                          },
+                          "metrics": [
+                            "SHIPPED_SUBSCRIPTION_UNITS",
+                            "TOTAL_SUBSCRIPTIONS_REVENUE",
+                            "NOT_DELIVERED_DUE_TO_OOS",
+                            "ACTIVE_SUBSCRIPTIONS",
+                            "SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REVENUE",
+                            "LOST_REVENUE_DUE_TO_OOS",
+                            "SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REORDERS",
+                            "COUPONS_REVENUE_PENETRATION"
+                          ],
+                          "timePeriodType": "PERFORMANCE",
+                          "marketplaceId": "ATVPDKIKX0DER",
+                          "programTypes": [
+                            "SUBSCRIBE_AND_SAVE"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Unsupported aggregationFrequency is provided. Only WEEK, MONTH, QUARTER and YEAR are supported"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/replenishment/2022-11-07/offers/metrics/search": {
+      "post": {
+        "tags": [
+          "offers"
+        ],
+        "description": "返回销售合作伙伴优惠的汇总补货计划指标。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "listOfferMetrics",
+        "parameters": [
+          {
+            "name": "body",
+            "description": "“Listoffermetrics” 操作的请求正文。",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ListOfferMetricsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ListOfferMetricsResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "offers": [
+                  {
+                    "notDeliveredDueToOOS": 30.78,
+                    "shippedSubscriptionUnits": 20,
+                    "totalSubscriptionsRevenue": 12.89,
+                    "asin": "B000TMUDOW",
+                    "revenuePenetration": 10.34,
+                    "lostRevenueDueToOOS": 12.32,
+                    "couponsRevenuePenetration": 10,
+                    "timeInterval": {
+                      "endDate": "2023-03-11T00:00:00Z",
+                      "startDate": "2023-03-05T00:00:00Z"
+                    },
+                    "currencyCode": "USD"
+                  },
+                  {
+                    "notDeliveredDueToOOS": 40.78,
+                    "shippedSubscriptionUnits": 40,
+                    "totalSubscriptionsRevenue": 34.03,
+                    "asin": "B004CLH5CY",
+                    "revenuePenetration": 9.87,
+                    "lostRevenueDueToOOS": 17.82,
+                    "couponsRevenuePenetration": 17,
+                    "timeInterval": {
+                      "endDate": "2023-03-11T00:00:00Z",
+                      "startDate": "2023-03-05T00:00:00Z"
+                    },
+                    "currencyCode": "USD"
+                  }
+                ],
+                "pagination": {
+                  "totalResults": 17
+                }
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "filters": {
+                            "aggregationFrequency": "YEAR",
+                            "timeInterval": {
+                              "startDate": "2022-01-01T00:00:00Z",
+                              "endDate": "2022-12-31T00:00:00Z"
+                            },
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "programTypes": [
+                              "SUBSCRIBE_AND_SAVE"
+                            ],
+                            "timePeriodType": "PERFORMANCE",
+                            "asins": [
+                              "B07CYBR5GZ",
+                              "B07CYJJW8H"
+                            ]
+                          },
+                          "pagination": {
+                            "limit": 2,
+                            "offset": 0
+                          },
+                          "sort": {
+                            "order": "ASC",
+                            "key": "TOTAL_SUBSCRIPTIONS_REVENUE"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "offers": [
+                      {
+                        "asin": "B07CYBR5GZ",
+                        "notDeliveredDueToOOS": 10.2,
+                        "totalSubscriptionsRevenue": 100.45,
+                        "revenuePenetration": 23.6,
+                        "shippedSubscriptionUnits": 100,
+                        "activeSubscriptions": 100,
+                        "lostRevenueDueToOOS": 12.32,
+                        "couponsRevenuePenetration": 10,
+                        "timeInterval": {
+                          "startDate": "2022-01-01T00:00:00Z",
+                          "endDate": "2022-12-31T00:00:00Z"
+                        },
+                        "currencyCode": "USD"
+                      },
+                      {
+                        "asin": "B07CYJJW8H",
+                        "notDeliveredDueToOOS": 12.78,
+                        "totalSubscriptionsRevenue": 80.11,
+                        "revenuePenetration": 35.9,
+                        "shippedSubscriptionUnits": 100,
+                        "activeSubscriptions": 100,
+                        "lostRevenueDueToOOS": 17.82,
+                        "couponsRevenuePenetration": 17,
+                        "timeInterval": {
+                          "startDate": "2022-01-01T00:00:00Z",
+                          "endDate": "2022-12-31T00:00:00Z"
+                        },
+                        "currencyCode": "USD"
+                      }
+                    ],
+                    "pagination": {
+                      "totalResults": 17
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "filters": {
+                            "aggregationFrequency": "DAY",
+                            "timeInterval": {
+                              "startDate": "2022-01-01T00:00:00Z",
+                              "endDate": "2022-12-31T00:00:00Z"
+                            },
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "programTypes": [
+                              "SUBSCRIBE_AND_SAVE"
+                            ],
+                            "timePeriodType": "PERFORMANCE",
+                            "asins": [
+                              "B07CYBR5GZ"
+                            ]
+                          },
+                          "pagination": {
+                            "limit": 1,
+                            "offset": 0
+                          },
+                          "sort": {
+                            "order": "ASC",
+                            "key": "TOTAL_SUBSCRIPTIONS_REVENUE"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Unsupported aggregationFrequency is provided. Only WEEK, MONTH, QUARTER and YEAR are supported"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/replenishment/2022-11-07/offers/search": {
+      "post": {
+        "tags": [
+          "offers"
+        ],
+        "description": "返回销售合作伙伴的补货计划提供的详细信息。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 1 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "listOffers",
+        "parameters": [
+          {
+            "name": "body",
+            "description": "“Listoffers” 操作的请求正文。",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ListOffersRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/ListOffersResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "offers": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "offerProgramConfiguration": {
+                      "preferences": {
+                        "autoEnrollment": "OPTED_IN"
+                      },
+                      "promotions": {
+                        "sellingPartnerFundedBaseDiscount": {
+                          "percentage": 5
+                        },
+                        "sellingPartnerFundedTieredDiscount": {
+                          "percentage": 0
+                        },
+                        "amazonFundedBaseDiscount": {
+                          "percentage": 5
+                        },
+                        "amazonFundedTieredDiscount": {
+                          "percentage": 10
+                        }
+                      },
+                      "enrollmentMethod": "AUTOMATIC"
+                    },
+                    "programType": "SUBSCRIBE_AND_SAVE",
+                    "eligibility": "ELIGIBLE",
+                    "asin": "B09KR5B7FH",
+                    "sku": "SKU_OPTED_IN"
+                  }
+                ],
+                "pagination": {
+                  "totalResults": 1
+                }
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "filters": {
+                            "eligibilities": [
+                              "ELIGIBLE"
+                            ],
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "programTypes": [
+                              "SUBSCRIBE_AND_SAVE"
+                            ],
+                            "preferences": {
+                              "autoEnrollment": [
+                                "OPTED_IN",
+                                "OPTED_OUT"
+                              ]
+                            },
+                            "promotions": {
+                              "sellingPartnerFundedTieredDiscount": {
+                                "percentage": [
+                                  0,
+                                  5,
+                                  10
+                                ]
+                              }
+                            }
+                          },
+                          "pagination": {
+                            "limit": 25,
+                            "offset": 0
+                          },
+                          "sort": {
+                            "order": "ASC",
+                            "key": "ASIN"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "offers": [
+                      {
+                        "asin": "B07CYBR5GZ",
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "sku": "TEST_SKU_A",
+                        "eligibility": "ELIGIBLE",
+                        "vendorCodes": [
+                          "ABCDE",
+                          "PQRST"
+                        ],
+                        "offerProgramConfiguration": {
+                          "preferences": {
+                            "autoEnrollment": "OPTED_IN"
+                          },
+                          "promotions": {
+                            "sellingPartnerFundedBaseDiscount": {
+                              "percentage": 0
+                            },
+                            "sellingPartnerFundedTieredDiscount": {
+                              "percentage": 5
+                            },
+                            "amazonFundedBaseDiscount": {
+                              "percentage": 10
+                            },
+                            "amazonFundedTieredDiscount": {
+                              "percentage": 15
+                            }
+                          },
+                          "enrollmentMethod": "AUTOMATIC"
+                        },
+                        "programType": "SUBSCRIBE_AND_SAVE"
+                      },
+                      {
+                        "asin": "B07CYCR5GZ",
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "sku": "TEST_SKU_A",
+                        "eligibility": "ELIGIBLE",
+                        "vendorCodes": [
+                          "ABCDE",
+                          "PQRST"
+                        ],
+                        "offerProgramConfiguration": {
+                          "preferences": {
+                            "autoEnrollment": "OPTED_IN"
+                          },
+                          "promotions": {
+                            "sellingPartnerFundedBaseDiscount": {
+                              "percentage": 5
+                            },
+                            "sellingPartnerFundedTieredDiscount": {
+                              "percentage": 0
+                            },
+                            "amazonFundedBaseDiscount": {
+                              "percentage": 5
+                            },
+                            "amazonFundedTieredDiscount": {
+                              "percentage": 10
+                            }
+                          },
+                          "enrollmentMethod": "AUTOMATIC"
+                        },
+                        "programType": "SUBSCRIBE_AND_SAVE"
+                      }
+                    ],
+                    "pagination": {
+                      "totalResults": 2
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "filters": {
+                            "eligibilities": [
+                              "BAD_VALUE"
+                            ],
+                            "marketplaceId": "ATVPDKIKX0DER",
+                            "programTypes": [
+                              "SUBSCRIBE_AND_SAVE"
+                            ]
+                          },
+                          "pagination": {
+                            "limit": 25,
+                            "offset": 0
+                          },
+                          "sort": {
+                            "order": "ASC",
+                            "key": "ASIN"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Unsupported eligibility is provided. Only ELIGIBLE, INELIGIBLE, SUSPENDED and REPLENISHMENT_ONLY_ORDERING are supported"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "此操作的速率限制 (每秒请求数)。"
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

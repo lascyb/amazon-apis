@@ -1,0 +1,2191 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "列表项的销售合作伙伴API (列表项API) 提供了对Amazon上销售合作伙伴列表的编程访问。将此API与产品类型定义的销售合作伙伴API一起使用，您可以使用该API检索有关使用Listings Items API所需的Amazon产品类型的信息。\n\n有关详细信息，请参阅 [列表项API用例指南](https:// developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-use-case-guide)。",
+    "version": "2021-08-01",
+    "title": "Listings Items v2021-08-01",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/listings/2021-08-01/items/{sellerId}/{sku}": {
+      "delete": {
+        "tags": [
+          "Listings Items"
+        ],
+        "description": "删除销售合作伙伴的列表项。\n\n** 注意: ** 该操作的参数可能包含特殊字符，必须对这些特殊字符进行编码才能成功调用API。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "deleteListingsItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sellerId",
+            "description": "销售合作伙伴标识符，例如商家帐户或供应商代码。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sku",
+            "description": "销售合作伙伴提供了亚马逊列表的标识符。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "maxItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "issueLocale",
+            "description": "用于本地化问题的区域设置。如果未提供，则使用第一市场的默认语言代码。示例: 'en_US' 、 'fr_CA' 、 'fr_FR'。当本地化在指定的区域设置中不可用时，本地化消息默认为 “en_US”。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功理解列表项删除请求。查看响应以确定提交是否已被接受。",
+            "schema": {
+              "$ref": "#/definitions/ListingsItemSubmissionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "sku": "GM-ZDPI-9B4E",
+                "status": "ACCEPTED",
+                "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                "issues": []
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {}
+                  },
+                  "response": {
+                    "sku": "GM-ZDPI-9B4E",
+                    "status": "ACCEPTED",
+                    "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                    "issues": []
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "BadSKU"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        },
+        "summary": "deleteListingsItem"
+      },
+      "get": {
+        "tags": [
+          "Listings Items"
+        ],
+        "description": "返回有关销售合作伙伴的列表项的详细信息。\n\n** 注意: ** 该操作的参数可能包含特殊字符，必须对这些特殊字符进行编码才能成功调用API。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "getListingsItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sellerId",
+            "description": "销售合作伙伴标识符，例如商家帐户或供应商代码。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sku",
+            "description": "销售合作伙伴提供了亚马逊列表的标识符。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "maxItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "issueLocale",
+            "description": "用于本地化问题的区域设置。如果未提供，则使用第一市场的默认语言代码。示例: 'en_US' 、 'fr_CA' 、 'fr_FR'。当本地化在指定的区域设置中不可用时，本地化消息默认为 “en_US”。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          },
+          {
+            "name": "includedData",
+            "description": "要包含在响应中的数据集的逗号分隔列表。默认值: “summaries”。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "enum": [
+                "summaries",
+                "attributes",
+                "issues",
+                "offers",
+                "fulfillmentAvailability",
+                "procurement"
+              ],
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "summaries",
+                  "description": "列表项的摘要详细信息。"
+                },
+                {
+                  "value": "attributes",
+                  "description": "包含由属性名称键入的结构化列表项属性数据的JSON对象。"
+                },
+                {
+                  "value": "issues",
+                  "description": "与列表项关联的问题。"
+                },
+                {
+                  "value": "offers",
+                  "description": "列表项的当前报价。"
+                },
+                {
+                  "value": "fulfillmentAvailability",
+                  "description": "列表项的履行可用性详细信息。"
+                },
+                {
+                  "value": "procurement",
+                  "description": "列表项的供应商采购详细信息。"
+                }
+              ],
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "summaries",
+            "default": [
+              "summaries"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功。",
+            "schema": {
+              "$ref": "#/definitions/Item"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "sku": "GM-ZDPI-9B4E",
+                "summaries": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "asin": "B071VG5N9D",
+                    "productType": "LUGGAGE",
+                    "conditionType": "new_new",
+                    "status": [
+                      "BUYABLE"
+                    ],
+                    "itemName": "Hardside Carry-On Spinner Suitcase Luggage",
+                    "createdDate": "2021-02-01T00:00:00Z",
+                    "lastUpdatedDate": "2021-03-01T00:00:00Z",
+                    "mainImage": {
+                      "link": "https://www.example.com/luggage.png",
+                      "height": 500,
+                      "width": 500
+                    }
+                  }
+                ],
+                "offers": [
+                  {
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "offerType": "B2C",
+                    "price": {
+                      "currencyCode": "USD",
+                      "amount": "100.00"
+                    },
+                    "audience": {
+                      "value": "ALL",
+                      "displayName": "Sell on Amazon"
+                    }
+                  }
+                ],
+                "fulfillmentAvailability": [
+                  {
+                    "fulfillmentChannelCode": "DEFAULT",
+                    "quantity": 100
+                  }
+                ],
+                "issues": [
+                  {
+                    "code": "90220",
+                    "message": "'size' is required but not supplied.",
+                    "severity": "ERROR",
+                    "attributeNames": [
+                      "size"
+                    ],
+                    "categories": [
+                      "MISSING_ATTRIBUTE"
+                    ]
+                  },
+                  {
+                    "code": "18027",
+                    "message": "We believe the main image has text, logo, graphic or watermark which is not permitted for this product type. Please submit a compliant image to lift the suppression. Also refer to Product image requirements.",
+                    "severity": "ERROR",
+                    "categories": [
+                      "INVALID_IMAGE"
+                    ],
+                    "enforcements": {
+                      "actions": [
+                        {
+                          "action": "SEARCH_SUPPRESSED"
+                        }
+                      ],
+                      "exemption": {
+                        "status": "EXEMPT_UNTIL_EXPIRY_DATE",
+                        "expiryDate": "2025-05-28T00:36:48.914Z"
+                      }
+                    }
+                  },
+                  {
+                    "code": "99300",
+                    "message": "Product Detail Page Rules Violation (Inaccurate information on product detail page)",
+                    "severity": "ERROR",
+                    "categories": [],
+                    "enforcements": {
+                      "actions": [
+                        {
+                          "action": "ATTRIBUTE_SUPPRESSED"
+                        }
+                      ],
+                      "exemption": {
+                        "status": "EXEMPT"
+                      }
+                    }
+                  },
+                  {
+                    "code": "18155",
+                    "message": "The 'minimum price' is greater than the selling price (excluding shipping) for the listing. Please review and update your price and/or minimum price.",
+                    "severity": "ERROR",
+                    "categories": [
+                      "INVALID_PRICE"
+                    ],
+                    "enforcements": {
+                      "actions": [
+                        {
+                          "action": "LISTING_SUPPRESSED"
+                        }
+                      ],
+                      "exemption": {
+                        "status": "NOT_EXEMPT"
+                      }
+                    }
+                  },
+                  {
+                    "code": "18742",
+                    "message": "Restricted Products Policy Violation",
+                    "severity": "ERROR",
+                    "categories": [],
+                    "enforcements": {
+                      "actions": [
+                        {
+                          "action": "CATALOG_ITEM_REMOVED"
+                        }
+                      ],
+                      "exemption": {
+                        "status": "NOT_EXEMPT"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {}
+                    }
+                  },
+                  "response": {
+                    "sku": "GM-ZDPI-9B4E",
+                    "summaries": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "asin": "B071VG5N9D",
+                        "productType": "LUGGAGE",
+                        "conditionType": "new_new",
+                        "status": [
+                          "BUYABLE"
+                        ],
+                        "itemName": "Hardside Carry-On Spinner Suitcase Luggage",
+                        "createdDate": "2021-02-01T00:00:00Z",
+                        "lastUpdatedDate": "2021-03-01T00:00:00Z",
+                        "mainImage": {
+                          "link": "https://www.example.com/luggage.png",
+                          "height": 500,
+                          "width": 500
+                        }
+                      }
+                    ],
+                    "offers": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "offerType": "B2C",
+                        "price": {
+                          "currencyCode": "USD",
+                          "amount": "100.00"
+                        },
+                        "audience": {
+                          "value": "ALL",
+                          "displayName": "Sell on Amazon"
+                        }
+                      }
+                    ],
+                    "fulfillmentAvailability": [
+                      {
+                        "fulfillmentChannelCode": "DEFAULT",
+                        "quantity": 100
+                      }
+                    ],
+                    "issues": [
+                      {
+                        "code": "90220",
+                        "message": "'size' is required but not supplied.",
+                        "severity": "ERROR",
+                        "attributeNames": [
+                          "size"
+                        ],
+                        "categories": [
+                          "MISSING_ATTRIBUTE"
+                        ]
+                      },
+                      {
+                        "code": "18027",
+                        "message": "We believe the main image has text, logo, graphic or watermark which is not permitted for this product type. Please submit a compliant image to lift the suppression. Also refer to Product image requirements.",
+                        "severity": "ERROR",
+                        "categories": [
+                          "INVALID_IMAGE"
+                        ],
+                        "enforcements": {
+                          "actions": [
+                            {
+                              "action": "SEARCH_SUPPRESSED"
+                            }
+                          ],
+                          "exemption": {
+                            "status": "EXEMPT_UNTIL_EXPIRY_DATE",
+                            "expiryDate": "2025-05-28T00:36:48.914Z"
+                          }
+                        }
+                      },
+                      {
+                        "code": "99300",
+                        "message": "Product Detail Page Rules Violation (Inaccurate information on product detail page)",
+                        "severity": "ERROR",
+                        "categories": [],
+                        "enforcements": {
+                          "actions": [
+                            {
+                              "action": "ATTRIBUTE_SUPPRESSED"
+                            }
+                          ],
+                          "exemption": {
+                            "status": "EXEMPT"
+                          }
+                        }
+                      },
+                      {
+                        "code": "18155",
+                        "message": "The 'minimum price' is greater than the selling price (excluding shipping) for the listing. Please review and update your price and/or minimum price.",
+                        "severity": "ERROR",
+                        "categories": [
+                          "INVALID_PRICE"
+                        ],
+                        "enforcements": {
+                          "actions": [
+                            {
+                              "action": "LISTING_SUPPRESSED"
+                            }
+                          ],
+                          "exemption": {
+                            "status": "NOT_EXEMPT"
+                          }
+                        }
+                      },
+                      {
+                        "code": "18742",
+                        "message": "Restricted Products Policy Violation",
+                        "severity": "ERROR",
+                        "categories": [],
+                        "enforcements": {
+                          "actions": [
+                            {
+                              "action": "CATALOG_ITEM_REMOVED"
+                            }
+                          ],
+                          "exemption": {
+                            "status": "NOT_EXEMPT"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "BadSKU"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        },
+        "summary": "getListingsItem"
+      },
+      "patch": {
+        "tags": [
+          "Listings Items"
+        ],
+        "description": "部分更新 (修补) 销售合作伙伴的列表项。只能修补顶级列表项属性。不支持修补嵌套属性。\n\n** 注意: ** 当 “mode'” 为 “VALIDATION_PREVIEW” 时，此操作的限制速率为每秒一个请求。\n\n** 注意: ** 该操作的参数可能包含特殊字符，必须对这些特殊字符进行编码才能成功调用API。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "patchListingsItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sellerId",
+            "description": "销售合作伙伴标识符，例如商家帐户或供应商代码。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sku",
+            "description": "销售合作伙伴提供了亚马逊列表的标识符。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "maxItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "includedData",
+            "description": "要包含在响应中的数据集的逗号分隔列表。默认值: “问题”。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "enum": [
+                "identifiers",
+                "issues"
+              ],
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "identifiers",
+                  "description": "与Amazon目录中的项目关联的标识符，例如Amazon标准标识号 (ASIN)。仅当 “mod” 为 “VALIDATION_PREVIEW” 时才能请求。"
+                },
+                {
+                  "value": "issues",
+                  "description": "与列表项关联的问题。"
+                }
+              ],
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "issues",
+            "default": [
+              "issues"
+            ]
+          },
+          {
+            "name": "mode",
+            "description": "请求的操作模式。",
+            "in": "query",
+            "enum": [
+              "VALIDATION_PREVIEW"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "VALIDATION_PREVIEW",
+                "description": "表示应使用有效负载中提供的值验证提交的数据，以及销售合作伙伴帐户可能面临的验证错误。这将同步执行与接受处理后提交内容相同的检查，但不会保留到销售合作伙伴的目录中。"
+              }
+            ],
+            "required": false,
+            "type": "string",
+            "x-example": "VALIDATION_PREVIEW"
+          },
+          {
+            "name": "issueLocale",
+            "description": "用于本地化问题的区域设置。如果未提供，则使用第一市场的默认语言代码。示例: 'en_US' 、 'fr_CA' 、 'fr_FR'。当本地化在指定的区域设置中不可用时，本地化消息默认为 “en_US”。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          },
+          {
+            "name": "body",
+            "description": "“Patchlistingsitem” 操作的请求正文架构。",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListingsItemPatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功理解列表项修补请求。请参阅响应以确定提交是否被接受。",
+            "schema": {
+              "$ref": "#/definitions/ListingsItemSubmissionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "sku": "GM-ZDPI-9B4E",
+                "status": "ACCEPTED",
+                "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                "issues": []
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {}
+                    }
+                  },
+                  "response": {
+                    "sku": "GM-ZDPI-9B4E",
+                    "status": "ACCEPTED",
+                    "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                    "issues": []
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "VALIDATION_VALID"
+                      },
+                      "marketplaceIds": {
+                        "value": [
+                          "ATVPDKIKX0DER"
+                        ]
+                      },
+                      "includedData": {
+                        "value": [
+                          "identifiers",
+                          "issues"
+                        ]
+                      },
+                      "mode": {
+                        "value": "VALIDATION_PREVIEW"
+                      }
+                    }
+                  },
+                  "response": {
+                    "sku": "VALIDATION_VALID",
+                    "status": "VALID",
+                    "submissionId": "1edc94ea-a3d7-210b-42bc-0ec72c1384762",
+                    "identifiers": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "asin": "B07N4M94X4"
+                      }
+                    ],
+                    "issues": []
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "VALIDATION_INVALID"
+                      },
+                      "marketplaceIds": {
+                        "value": [
+                          "ATVPDKIKX0DER"
+                        ]
+                      },
+                      "includedData": {
+                        "value": [
+                          "identifiers",
+                          "issues"
+                        ]
+                      },
+                      "mode": {
+                        "value": "VALIDATION_PREVIEW"
+                      }
+                    }
+                  },
+                  "response": {
+                    "sku": "VALIDATION_INVALID",
+                    "status": "INVALID",
+                    "submissionId": "a1c562c2-1695-11ee-be56-0242ac120002",
+                    "identifiers": [],
+                    "issues": [
+                      {
+                        "code": "90000900",
+                        "message": "The attributes are invalid.",
+                        "severity": "ERROR",
+                        "attributeNames": [
+                          "fake_attribute"
+                        ],
+                        "categories": [
+                          "INVALID_ATTRIBUTE"
+                        ],
+                        "enforcements": {
+                          "actions": [
+                            {
+                              "action": "ATTRIBUTE_SUPPRESSED"
+                            }
+                          ],
+                          "exemption": {
+                            "status": "NOT_EXEMPT"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "BadSKU"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        },
+        "summary": "patchListingsItem"
+      },
+      "put": {
+        "tags": [
+          "Listings Items"
+        ],
+        "description": "为销售合作伙伴创建或完全更新现有列表项。\n\n** 注意: ** 当 “mode'” 为 “VALIDATION_PREVIEW” 时，此操作的限制速率为每秒一个请求。\n\n** 注意: ** 该操作的参数可能包含特殊字符，必须对这些特殊字符进行编码才能成功调用API。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表显示了此操作的默认速率和突发值。业务需求需要更高吞吐量的销售合作伙伴可能会看到比此处显示的更高的速率和突发值。有关更多信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "putListingsItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sellerId",
+            "description": "销售合作伙伴标识符，例如商家帐户或供应商代码。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sku",
+            "description": "销售合作伙伴提供了亚马逊列表的标识符。",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "marketplaceIds",
+            "description": "请求的Amazon marketplace标识符的逗号分隔列表。",
+            "in": "query",
+            "required": true,
+            "type": "array",
+            "maxItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "includedData",
+            "description": "要包含在响应中的数据集的逗号分隔列表。默认值: “问题”。",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "enum": [
+                "identifiers",
+                "issues"
+              ],
+              "x-docgen-enum-table-extension": [
+                {
+                  "value": "identifiers",
+                  "description": "与Amazon目录中的项目关联的标识符，例如Amazon标准标识号 (ASIN)。仅当 “mod” 为 “VALIDATION_PREVIEW” 时才能请求。"
+                },
+                {
+                  "value": "issues",
+                  "description": "与列表项关联的问题。"
+                }
+              ],
+              "type": "string"
+            },
+            "collectionFormat": "csv",
+            "x-example": "issues",
+            "default": [
+              "issues"
+            ]
+          },
+          {
+            "name": "mode",
+            "description": "请求的操作模式。",
+            "in": "query",
+            "enum": [
+              "VALIDATION_PREVIEW"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "VALIDATION_PREVIEW",
+                "description": "表示应使用有效负载中提供的值验证提交的数据，以及销售合作伙伴帐户可能面临的验证错误。这将同步执行与接受处理后提交内容相同的检查，但不会保留到销售合作伙伴的目录中。"
+              }
+            ],
+            "required": false,
+            "type": "string",
+            "x-example": "VALIDATION_PREVIEW"
+          },
+          {
+            "name": "issueLocale",
+            "description": "用于本地化问题的区域设置。如果未提供，则使用第一市场的默认语言代码。示例: 'en_US' 、 'fr_CA' 、 'fr_FR'。当本地化在指定的区域设置中不可用时，本地化消息默认为 “en_US”。",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "en_US"
+          },
+          {
+            "name": "body",
+            "description": "“Putlistingsitem” 操作的请求正文架构。",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListingsItemPutRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功理解创建或完全更新列表项的请求。查看响应以确定提交是否已被接受。",
+            "schema": {
+              "$ref": "#/definitions/ListingsItemSubmissionResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "sku": "GM-ZDPI-9B4E",
+                "status": "ACCEPTED",
+                "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                "issues": []
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {}
+                    }
+                  },
+                  "response": {
+                    "sku": "GM-ZDPI-9B4E",
+                    "status": "ACCEPTED",
+                    "submissionId": "f1dc2914-75dd-11ea-bc55-0242ac130003",
+                    "issues": []
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "VALIDATION_VALID"
+                      },
+                      "marketplaceIds": {
+                        "value": [
+                          "ATVPDKIKX0DER"
+                        ]
+                      },
+                      "includedData": {
+                        "value": [
+                          "identifiers",
+                          "issues"
+                        ]
+                      },
+                      "mode": {
+                        "value": "VALIDATION_PREVIEW"
+                      }
+                    }
+                  },
+                  "response": {
+                    "sku": "VALIDATION_VALID",
+                    "status": "VALID",
+                    "submissionId": "1edc94ea-a3d7-210b-42bc-0ec72c1384762",
+                    "identifiers": [
+                      {
+                        "marketplaceId": "ATVPDKIKX0DER",
+                        "asin": "B07N4M94X4"
+                      }
+                    ],
+                    "issues": []
+                  }
+                },
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "VALIDATION_INVALID"
+                      },
+                      "marketplaceIds": {
+                        "value": [
+                          "ATVPDKIKX0DER"
+                        ]
+                      },
+                      "includedData": {
+                        "value": [
+                          "identifiers",
+                          "issues"
+                        ]
+                      },
+                      "mode": {
+                        "value": "VALIDATION_PREVIEW"
+                      }
+                    }
+                  },
+                  "response": {
+                    "sku": "VALIDATION_INVALID",
+                    "status": "INVALID",
+                    "submissionId": "a1c562c2-1695-11ee-be56-0242ac120002",
+                    "identifiers": [],
+                    "issues": [
+                      {
+                        "code": "90220",
+                        "message": "'condition_type' is required but not supplied.",
+                        "severity": "ERROR",
+                        "attributeNames": [
+                          "condition_type"
+                        ],
+                        "categories": [
+                          "MISSING_ATTRIBUTE"
+                        ],
+                        "enforcements": {
+                          "actions": [
+                            {
+                              "action": "LISTING_SUPPRESSED"
+                            }
+                          ],
+                          "exemption": {
+                            "status": "NOT_EXEMPT"
+                          }
+                        }
+                      },
+                      {
+                        "code": "90000900",
+                        "message": "The attributes are invalid.",
+                        "severity": "ERROR",
+                        "attributeNames": [
+                          "fake_attribute"
+                        ],
+                        "categories": []
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "sku": {
+                        "value": "BadSKU"
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "BAD_REQUEST",
+                        "message": "Invalid input",
+                        "details": "Invalid input"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            }
+          }
+        },
+        "summary": "putListingsItem"
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "description": "请求不成功时返回的错误响应。",
+      "properties": {
+        "code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述错误情况的消息。",
+          "type": "string"
+        },
+        "details": {
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "ErrorList": {
+      "description": "请求不成功时返回的错误响应列表。",
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ]
+    },
+    "ItemSearchResults": {
+      "description": "销售合作伙伴列表项和搜索相关元数据。",
+      "properties": {
+        "numberOfResults": {
+          "description": "为搜索条件找到的销售合作伙伴列表项的总数 (无论找到的数量多少，每个请求仅返回达到页数限制的结果)。\n\n注意: 可以返回和分页的最大项目数 (sku) 为1000。",
+          "type": "integer"
+        },
+        "pagination": {
+          "description": "如果可用，则返回分页结果所需的 “nexttoken” 和/或 “previoustoken” 值。",
+          "$ref": "#/definitions/Pagination"
+        },
+        "items": {
+          "description": "列表项的列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Item"
+          }
+        }
+      },
+      "required": [
+        "numberOfResults",
+        "items"
+      ],
+      "type": "object"
+    },
+    "Item": {
+      "description": "一个列表项。",
+      "properties": {
+        "sku": {
+          "description": "销售合作伙伴提供了亚马逊列表的标识符。",
+          "type": "string"
+        },
+        "summaries": {
+          "$ref": "#/definitions/ItemSummaries"
+        },
+        "attributes": {
+          "$ref": "#/definitions/ItemAttributes"
+        },
+        "issues": {
+          "$ref": "#/definitions/ItemIssues"
+        },
+        "offers": {
+          "$ref": "#/definitions/ItemOffers"
+        },
+        "fulfillmentAvailability": {
+          "description": "列表项的履行可用性。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FulfillmentAvailability"
+          }
+        },
+        "procurement": {
+          "description": "列表项的供应商采购信息。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ItemProcurement"
+          }
+        }
+      },
+      "required": [
+        "sku"
+      ],
+      "type": "object"
+    },
+    "ItemSummaries": {
+      "description": "列表项的摘要详细信息。",
+      "items": {
+        "$ref": "#/definitions/ItemSummaryByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemSummaryByMarketplace": {
+      "description": "Amazon marketplace的列表项的摘要详细信息。",
+      "properties": {
+        "marketplaceId": {
+          "description": "市场标识符。标识列表项的Amazon marketplace。",
+          "type": "string"
+        },
+        "asin": {
+          "description": "列表项的Amazon标准标识号 (ASIN)。",
+          "type": "string"
+        },
+        "productType": {
+          "description": "列表项的Amazon产品类型。",
+          "type": "string"
+        },
+        "conditionType": {
+          "description": "标识列表项的条件。",
+          "enum": [
+            "new_new",
+            "new_open_box",
+            "new_oem",
+            "refurbished_refurbished",
+            "used_like_new",
+            "used_very_good",
+            "used_good",
+            "used_acceptable",
+            "collectible_like_new",
+            "collectible_very_good",
+            "collectible_good",
+            "collectible_acceptable",
+            "club_club"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "new_new",
+              "description": "新的。"
+            },
+            {
+              "value": "new_open_box",
+              "description": "新建-打开盒子。"
+            },
+            {
+              "value": "new_oem",
+              "description": "新的OEM。"
+            },
+            {
+              "value": "refurbished_refurbished",
+              "description": "翻新。"
+            },
+            {
+              "value": "used_like_new",
+              "description": "二手-像新的一样。"
+            },
+            {
+              "value": "used_very_good",
+              "description": "使用-非常好。"
+            },
+            {
+              "value": "used_good",
+              "description": "用过的-很好。"
+            },
+            {
+              "value": "used_acceptable",
+              "description": "已使用-可接受。"
+            },
+            {
+              "value": "collectible_like_new",
+              "description": "收藏品-像新的一样。"
+            },
+            {
+              "value": "collectible_very_good",
+              "description": "收藏-非常好。"
+            },
+            {
+              "value": "collectible_good",
+              "description": "收藏-很好。"
+            },
+            {
+              "value": "collectible_acceptable",
+              "description": "收藏品-可接受。"
+            },
+            {
+              "value": "club_club",
+              "description": "俱乐部。"
+            }
+          ],
+          "type": "string"
+        },
+        "status": {
+          "description": "应用于列表项的状态。",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "BUYABLE",
+              "DISCOVERABLE"
+            ],
+            "x-docgen-enum-table-extension": [
+              {
+                "value": "BUYABLE",
+                "description": "列表项可以由购物者购买。此状态不适用于供应商列表。"
+              },
+              {
+                "value": "DISCOVERABLE",
+                "description": "列表项对购物者可见。"
+              }
+            ]
+          }
+        },
+        "fnSku": {
+          "description": "履行网络库存单位是亚马逊履行中心用来识别每个独特商品的标识符。",
+          "type": "string"
+        },
+        "itemName": {
+          "description": "与Amazon目录项关联的名称或标题。",
+          "type": "string"
+        },
+        "createdDate": {
+          "description": "以ISO 8601格式创建列表项的日期。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdatedDate": {
+          "description": "上次更新列表项的日期，采用ISO 8601格式。",
+          "type": "string",
+          "format": "date-time"
+        },
+        "mainImage": {
+          "description": "列表项的主图像。",
+          "$ref": "#/definitions/ItemImage"
+        }
+      },
+      "required": [
+        "marketplaceId",
+        "asin",
+        "productType",
+        "status",
+        "itemName",
+        "createdDate",
+        "lastUpdatedDate"
+      ],
+      "type": "object"
+    },
+    "ItemImage": {
+      "description": "列表项的图像。",
+      "properties": {
+        "link": {
+          "description": "指向图像的链接或URL。",
+          "type": "string"
+        },
+        "height": {
+          "description": "图像的高度 (以像素为单位)。",
+          "type": "integer"
+        },
+        "width": {
+          "description": "图像的宽度 (以像素为单位)。",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "link",
+        "height",
+        "width"
+      ],
+      "type": "object"
+    },
+    "ItemAttributes": {
+      "description": "包含由属性名称键入的结构化列表项属性数据的JSON对象。",
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ItemIssues": {
+      "description": "与列表项相关的问题。",
+      "items": {
+        "$ref": "#/definitions/Issue"
+      },
+      "type": "array"
+    },
+    "Issue": {
+      "description": "列表项的问题。",
+      "properties": {
+        "code": {
+          "description": "标识问题类型的问题代码。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述问题的消息。",
+          "type": "string"
+        },
+        "severity": {
+          "description": "问题的严重性。",
+          "enum": [
+            "ERROR",
+            "WARNING",
+            "INFO"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ERROR",
+              "description": "指示发生了阻止处理提交的问题，如验证错误。"
+            },
+            {
+              "value": "WARNING",
+              "description": "表示发生了应审核的问题，但未阻止处理提交。"
+            },
+            {
+              "value": "INFO",
+              "description": "表示已提供应审查的其他信息。"
+            }
+          ],
+          "type": "string"
+        },
+        "attributeNames": {
+          "description": "与问题关联的属性的名称 (如果适用)。",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "categories": {
+          "description": "问题类别列表。\n\n可能的值:\n\n* 'INVALID_ATTRIBUTE'-表示列表中的属性无效。\n\n* 'MISSING_ATTRIBUTE'-突出显示列表中缺少的属性。\n\n* 'INVALID_IMAGE'-表示列表中的图像无效。\n\n* 'MISSING_IMAGE'-注意列表中没有图像。\n\n* 'INVALID_PRICE'-与列表的价格相关属性的问题有关。\n\n* 'MISSING_PRICE'-指出列表中没有价格属性。\n\n* “重复”-识别具有潜在重复问题的列表，例如此ASIN可能是另一个ASIN的重复。\n\n* “QUALIFICATION_REQUIRED”-表示列表需要与资格相关的批准。",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "INVALID_ATTRIBUTE"
+          ]
+        },
+        "enforcements": {
+          "description": "此字段提供有关Amazon采取的影响列表发布或状态的强制操作的信息。它还包括有关任何相关豁免的详细信息。",
+          "$ref": "#/definitions/IssueEnforcements"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "severity",
+        "categories"
+      ],
+      "type": "object"
+    },
+    "IssueEnforcements": {
+      "description": "此字段提供有关Amazon采取的影响列表发布或状态的强制操作的信息。它还包括有关任何相关豁免的详细信息。",
+      "type": "object",
+      "properties": {
+        "actions": {
+          "description": "Amazon采取的影响列表发布或状态的强制措施列表。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IssueEnforcementAction"
+          }
+        },
+        "exemption": {
+          "description": "“豁免” 字段用于传达亚马逊执法行动的状态。",
+          "$ref": "#/definitions/IssueExemption"
+        }
+      },
+      "required": [
+        "actions",
+        "exemption"
+      ]
+    },
+    "IssueEnforcementAction": {
+      "description": "Amazon采取的影响列表发布或状态的强制措施",
+      "type": "object",
+      "properties": {
+        "action": {
+          "description": "强制执行操作名称。\n\n可能的值:\n\n* 'Listing_inhabited'-此强制措施降低了当前列表项的可购买性。\n\n* 'Attribute_amplifed'-列表项上的属性值无效，这会导致它被Amazon拒绝。\n\n* 'Catalog_item_reved'-此目录项在亚马逊上处于非活动状态，并且在适用的市场中针对它的所有优惠都是不可购买的。\n\n* 'Search_conpiated'-此值指示目录项在搜索结果中隐藏。",
+          "type": "string",
+          "example": "LISTING_SUPPRESSED"
+        }
+      },
+      "required": [
+        "action"
+      ]
+    },
+    "IssueExemption": {
+      "description": "传达所列执法行动的状态，并在适用的情况下提供有关豁免到期日的信息。",
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "此字段指示列出的强制执行操作的当前豁免状态。它可以采用诸如 “豁免”，表示永久豁免，“EXEMPT_UNTIL_EXPIRY_DATE” 表示临时豁免直到指定日期，或 “NOT_EXEMPT” 表示没有豁免，并且已经采取了强制措施。",
+          "enum": [
+            "EXEMPT",
+            "EXEMPT_UNTIL_EXPIRY_DATE",
+            "NOT_EXEMPT"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "EXEMPT",
+              "description": "当产品列表已从所列的强制措施中免除时，此状态将分配给产品列表。在 “豁免” 的情况下，亚马逊承认存在强制措施，但向用户确保这些措施不会应用于列表。建议用户考虑解决这个问题，尽管不会采取执法行动。"
+            },
+            {
+              "value": "EXEMPT_UNTIL_EXPIRY_DATE",
+              "description": "此状态表示产品列表已被授予对所列执法行动的临时豁免。豁免将持续有效，直至指定的到期日。在此日期之后，亚马逊将强制执行列出的操作。“Expirydate” 字段提供时间戳，指示临时豁免何时结束，符合ISO 8601格式"
+            },
+            {
+              "value": "NOT_EXEMPT",
+              "description": "当产品列表没有所列强制措施的豁免时，会将此状态分配给该产品列表。当状态为 “NOT_EXEMPT” 时，表示Amazon已采取指定的强制措施。没有豁免，列出的行动是积极执行的"
+            }
+          ],
+          "type": "string"
+        },
+        "expiryDate": {
+          "description": "此字段表示时间戳，采用ISO 8601格式，指定临时豁免 (如果适用) 到期的日期，Amazon将开始强制执行列出的操作。",
+          "type": "string",
+          "format": "date-time",
+          "example": "2023-10-28T00:36:48.914Z"
+        }
+      },
+      "required": [
+        "status"
+      ]
+    },
+    "ItemOffers": {
+      "description": "提供列表项的详细信息。",
+      "items": {
+        "$ref": "#/definitions/ItemOfferByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemOfferByMarketplace": {
+      "description": "为Amazon marketplace提供列表项的详细信息。",
+      "properties": {
+        "marketplaceId": {
+          "description": "Amazon marketplace标识符。",
+          "type": "string"
+        },
+        "offerType": {
+          "description": "列表项的报价类型。",
+          "enum": [
+            "B2C",
+            "B2B"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "B2C",
+              "description": "此商品的优惠可供企业对消费者购买，这意味着它可供亚马逊零售网站上的购物者使用。"
+            },
+            {
+              "value": "B2B",
+              "description": "此列表项目的优惠可供企业对企业购买。"
+            }
+          ],
+          "type": "string"
+        },
+        "price": {
+          "description": "列表项的购买价格",
+          "$ref": "#/definitions/Money"
+        },
+        "points": {
+          "$ref": "#/definitions/Points"
+        },
+        "audience": {
+          "description": "此优惠适用于买方细分或计划。",
+          "$ref": "#/definitions/Audience"
+        }
+      },
+      "required": [
+        "marketplaceId",
+        "offerType",
+        "price"
+      ],
+      "type": "object"
+    },
+    "ItemProcurement": {
+      "description": "列表项的供应商采购信息。",
+      "properties": {
+        "costPrice": {
+          "description": "您希望亚马逊为此产品向您支付的价格 (数字值)。",
+          "$ref": "#/definitions/Money"
+        }
+      },
+      "required": [
+        "costPrice"
+      ],
+      "type": "object"
+    },
+    "FulfillmentAvailability": {
+      "description": "列表项的履行可用性详细信息。",
+      "properties": {
+        "fulfillmentChannelCode": {
+          "description": "将使用的履行网络的代码。",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "您要出售的商品的数量。",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "fulfillmentChannelCode"
+      ],
+      "type": "object"
+    },
+    "Money": {
+      "description": "货币类型和金额。",
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "ISO 4217格式的三位数货币代码。"
+        },
+        "amount": {
+          "description": "货币金额。",
+          "$ref": "#/definitions/Decimal"
+        }
+      },
+      "required": [
+        "amount",
+        "currencyCode"
+      ],
+      "type": "object"
+    },
+    "Decimal": {
+      "type": "string",
+      "description": "无精度损失的十进制数。当精度损失不可预测时很有用，就像货币一样。遵循RFC7159的数字表示。"
+    },
+    "Points": {
+      "description": "购买商品时提供的亚马逊积分数量及其货币价值。请注意，“points” 元素仅在日本 (JP) 中返回。",
+      "type": "object",
+      "properties": {
+        "pointsNumber": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "pointsNumber"
+      ]
+    },
+    "Audience": {
+      "description": "此优惠适用于买方细分或计划。",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "报价适用的受众的姓名。\n\n常见值:\n\n* 'ALL'-亚马逊零售网站上买家的标准优惠受众。\n\n* “B2B”-为亚马逊商业网站买家提供受众。",
+          "type": "string",
+          "example": "ALL"
+        },
+        "displayName": {
+          "description": "受众的本地化显示名称。",
+          "type": "string"
+        }
+      }
+    },
+    "PatchOperation": {
+      "description": "HTTP补丁请求的单个JSON补丁操作。",
+      "properties": {
+        "op": {
+          "description": "JSON Patch操作的类型。支持的JSON补丁操作包括add、replace和delete。有关详细信息，请参阅 [JavaScript对象表示法 (JSON) 修补程序](https://tools.ietf.org/html/ rfc6902)。",
+          "enum": [
+            "add",
+            "replace",
+            "delete"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "add",
+              "description": "“添加” 操作添加或替换目标属性。"
+            },
+            {
+              "value": "replace",
+              "description": "“替换” 操作添加或替换目标属性。"
+            },
+            {
+              "value": "delete",
+              "description": "“Delete” 操作删除目标属性。供应商不支持 (供应商将收到HTTP状态代码400响应)。"
+            }
+          ],
+          "type": "string"
+        },
+        "path": {
+          "description": "要修补的元素的JSON指针路径。有关详细信息，请参阅 [JavaScript对象表示法 (JSON) 修补程序](https://tools.ietf.org/html/ rfc6902)。",
+          "type": "string"
+        },
+        "value": {
+          "description": "要添加、替换或删除的JSON值。",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": [
+        "op",
+        "path"
+      ],
+      "type": "object"
+    },
+    "ListingsItemPatchRequest": {
+      "description": "“Patchlistingsitem” 操作的请求正文架构。",
+      "properties": {
+        "productType": {
+          "description": "列表项的Amazon产品类型。",
+          "type": "string"
+        },
+        "patches": {
+          "description": "要对列表项执行的一个或多个JSON修补操作。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PatchOperation"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "productType",
+        "patches"
+      ],
+      "type": "object"
+    },
+    "ListingsItemPutRequest": {
+      "description": "“Putlistingsitem” 操作的请求正文架构。",
+      "properties": {
+        "productType": {
+          "description": "列表项的Amazon产品类型。",
+          "type": "string"
+        },
+        "requirements": {
+          "description": "为提供的数据设置的要求的名称。",
+          "enum": [
+            "LISTING",
+            "LISTING_PRODUCT_ONLY",
+            "LISTING_OFFER_ONLY"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "LISTING",
+              "description": "表示提交的数据包含产品事实和销售条款。"
+            },
+            {
+              "value": "LISTING_PRODUCT_ONLY",
+              "description": "表示提交的数据仅包含产品事实。"
+            },
+            {
+              "value": "LISTING_OFFER_ONLY",
+              "description": "表示提交的数据仅包含销售术语。供应商不支持 (供应商将收到HTTP状态代码400响应)。"
+            }
+          ],
+          "type": "string"
+        },
+        "attributes": {
+          "description": "包含由属性名称键入的结构化列表项属性数据的JSON对象。",
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "productType",
+        "attributes"
+      ],
+      "type": "object"
+    },
+    "ListingsItemSubmissionResponse": {
+      "description": "包含向销售合作伙伴API提交列表项的结果的响应。",
+      "properties": {
+        "sku": {
+          "description": "销售合作伙伴提供了亚马逊列表的标识符。",
+          "type": "string"
+        },
+        "status": {
+          "description": "列表项提交的状态。",
+          "enum": [
+            "ACCEPTED",
+            "INVALID",
+            "VALID"
+          ],
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "ACCEPTED",
+              "description": "列表提交被接受处理。"
+            },
+            {
+              "value": "INVALID",
+              "description": "列表提交无效，不接受处理。"
+            },
+            {
+              "value": "VALID",
+              "description": "提交的清单有效。仅当 “模式” 为 “VALIDATION_PREVIEW” 时才返回。"
+            }
+          ],
+          "type": "string"
+        },
+        "submissionId": {
+          "description": "列表项提交的唯一标识符。",
+          "type": "string"
+        },
+        "issues": {
+          "description": "与列表项提交相关的列表项问题。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        },
+        "identifiers": {
+          "description": "与Amazon目录中的项目关联的身份属性，例如ASIN。",
+          "$ref": "#/definitions/ItemIdentifiers"
+        }
+      },
+      "required": [
+        "sku",
+        "status",
+        "submissionId"
+      ],
+      "type": "object"
+    },
+    "ItemIdentifiers": {
+      "description": "与Amazon目录中的项目关联的身份属性，例如ASIN。",
+      "items": {
+        "$ref": "#/definitions/ItemIdentifiersByMarketplace"
+      },
+      "type": "array"
+    },
+    "ItemIdentifiersByMarketplace": {
+      "description": "与Amazon catalog中指示的Amazon marketplace。",
+      "properties": {
+        "marketplaceId": {
+          "description": "市场标识符。标识列表项的Amazon marketplace。",
+          "type": "string"
+        },
+        "asin": {
+          "description": "列表项的Amazon标准标识号 (ASIN)。",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Pagination": {
+      "description": "当请求产生超过 “pagesize” 的响应时，会发生分页。这意味着响应被分成单独的页面。要检索下一页或上一页，必须在下一个请求中传递 “nexttoken” 值或 “previoustoken” 值作为 “pagetoken” 参数。当您收到最后一页时，分页对象中将没有 “nexttoken” 键。",
+      "properties": {
+        "nextToken": {
+          "description": "可用于获取下一页的令牌。",
+          "type": "string"
+        },
+        "previousToken": {
+          "description": "可用于获取上一页的令牌。",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

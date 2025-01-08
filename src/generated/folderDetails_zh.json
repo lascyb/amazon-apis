@@ -1,0 +1,590 @@
+[
+    {
+        "name": "亚马逊-仓储-配送-模型",
+        "path": "swagger/amazon/models/amazon-warehousing-and-distribution-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "awd_2024-05-09.json",
+                "path": "swagger/amazon/models/amazon-warehousing-and-distribution-model/awd_2024-05-09.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "aplus-content-api-model",
+        "path": "swagger/amazon/models/aplus-content-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "aplusContent_2020-11-01.json",
+                "path": "swagger/amazon/models/aplus-content-api-model/aplusContent_2020-11-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "应用程序-集成-api-模型",
+        "path": "swagger/amazon/models/application-integrations-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "appIntegrations-2024-04-01.json",
+                "path": "swagger/amazon/models/application-integrations-api-model/appIntegrations-2024-04-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "应用程序-管理-api-模型",
+        "path": "swagger/amazon/models/application-management-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "application_2023-11-30.json",
+                "path": "swagger/amazon/models/application-management-api-model/application_2023-11-30.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "目录-项目-api-模型",
+        "path": "swagger/amazon/models/catalog-items-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "catalogItemsV0.json",
+                "path": "swagger/amazon/models/catalog-items-api-model/catalogItemsV0.json",
+                "isDirectory": false
+            },
+            {
+                "name": "catalogItems_2020-12-01.json",
+                "path": "swagger/amazon/models/catalog-items-api-model/catalogItems_2020-12-01.json",
+                "isDirectory": false
+            },
+            {
+                "name": "catalogItems_2022-04-01.json",
+                "path": "swagger/amazon/models/catalog-items-api-model/catalogItems_2022-04-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "数据-信息亭-api-模型",
+        "path": "swagger/amazon/models/data-kiosk-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "dataKiosk_2023-11-15.json",
+                "path": "swagger/amazon/models/data-kiosk-api-model/dataKiosk_2023-11-15.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "easy-ship-model",
+        "path": "swagger/amazon/models/easy-ship-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "easyShip_2022-03-23.json",
+                "path": "swagger/amazon/models/easy-ship-model/easyShip_2022-03-23.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "fba-入站-资格-api-模型",
+        "path": "swagger/amazon/models/fba-inbound-eligibility-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "fbaInbound.json",
+                "path": "swagger/amazon/models/fba-inbound-eligibility-api-model/fbaInbound.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "fba-库存-api-模型",
+        "path": "swagger/amazon/models/fba-inventory-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "fbaInventory.json",
+                "path": "swagger/amazon/models/fba-inventory-api-model/fbaInventory.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "feeds-api-model",
+        "path": "swagger/amazon/models/feeds-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "feeds_2020-09-04.json",
+                "path": "swagger/amazon/models/feeds-api-model/feeds_2020-09-04.json",
+                "isDirectory": false
+            },
+            {
+                "name": "feeds_2021-06-30.json",
+                "path": "swagger/amazon/models/feeds-api-model/feeds_2021-06-30.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "财务-api-模型",
+        "path": "swagger/amazon/models/finances-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "financesV0.json",
+                "path": "swagger/amazon/models/finances-api-model/financesV0.json",
+                "isDirectory": false
+            },
+            {
+                "name": "finances_2024-06-19.json",
+                "path": "swagger/amazon/models/finances-api-model/finances_2024-06-19.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "履行-入站-api-模型",
+        "path": "swagger/amazon/models/fulfillment-inbound-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "实现inboundv0.json",
+                "path": "swagger/amazon/models/fulfillment-inbound-api-model/fulfillmentInboundV0.json",
+                "isDirectory": false
+            },
+            {
+                "name": "fulfillmentInbound_2024-03-20.json",
+                "path": "swagger/amazon/models/fulfillment-inbound-api-model/fulfillmentInbound_2024-03-20.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "履行-出站-api-模型",
+        "path": "swagger/amazon/models/fulfillment-outbound-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "fulfillmentOutbound_2020-07-01.json",
+                "path": "swagger/amazon/models/fulfillment-outbound-api-model/fulfillmentOutbound_2020-07-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "发票-api-模型",
+        "path": "swagger/amazon/models/invoices-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "InvoicesApiModel_2024-06-19.json",
+                "path": "swagger/amazon/models/invoices-api-model/InvoicesApiModel_2024-06-19.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "清单-项目-api-模型",
+        "path": "swagger/amazon/models/listings-items-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "listingsItems_2020-09-01.json",
+                "path": "swagger/amazon/models/listings-items-api-model/listingsItems_2020-09-01.json",
+                "isDirectory": false
+            },
+            {
+                "name": "listingsItems_2021-08-01.json",
+                "path": "swagger/amazon/models/listings-items-api-model/listingsItems_2021-08-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "清单-限制-api-模型",
+        "path": "swagger/amazon/models/listings-restrictions-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "listingsRestrictions_2021-08-01.json",
+                "path": "swagger/amazon/models/listings-restrictions-api-model/listingsRestrictions_2021-08-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "商户-履行-api-模型",
+        "path": "swagger/amazon/models/merchant-fulfillment-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "Merchant履行v0.json",
+                "path": "swagger/amazon/models/merchant-fulfillment-api-model/merchantFulfillmentV0.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "消息传递-api-模型",
+        "path": "swagger/amazon/models/messaging-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "消息传递.json",
+                "path": "swagger/amazon/models/messaging-api-model/messaging.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "通知-api-模型",
+        "path": "swagger/amazon/models/notifications-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "通知.json",
+                "path": "swagger/amazon/models/notifications-api-model/notifications.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "订单-api-模型",
+        "path": "swagger/amazon/models/orders-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "ordersV0.json",
+                "path": "swagger/amazon/models/orders-api-model/ordersV0.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "产品-费用-api-模型",
+        "path": "swagger/amazon/models/product-fees-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "productFeesV0.json",
+                "path": "swagger/amazon/models/product-fees-api-model/productFeesV0.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "产品-定价-api-模型",
+        "path": "swagger/amazon/models/product-pricing-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "productPricingV0.json",
+                "path": "swagger/amazon/models/product-pricing-api-model/productPricingV0.json",
+                "isDirectory": false
+            },
+            {
+                "name": "productPricing_2022-05-01.json",
+                "path": "swagger/amazon/models/product-pricing-api-model/productPricing_2022-05-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "产品-类型-定义-api-模型",
+        "path": "swagger/amazon/models/product-type-definitions-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "definitionsProductTypes_2020-09-01.json",
+                "path": "swagger/amazon/models/product-type-definitions-api-model/definitionsProductTypes_2020-09-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "补货-api-模型",
+        "path": "swagger/amazon/models/replenishment-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "replenishment-2022-11-07.json",
+                "path": "swagger/amazon/models/replenishment-api-model/replenishment-2022-11-07.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "报告-api-模型",
+        "path": "swagger/amazon/models/reports-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "reports_2020-09-04.json",
+                "path": "swagger/amazon/models/reports-api-model/reports_2020-09-04.json",
+                "isDirectory": false
+            },
+            {
+                "name": "reports_2021-06-30.json",
+                "path": "swagger/amazon/models/reports-api-model/reports_2021-06-30.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "销售-api-模型",
+        "path": "swagger/amazon/models/sales-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "销售.json",
+                "path": "swagger/amazon/models/sales-api-model/sales.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "卖家-api-模型",
+        "path": "swagger/amazon/models/sellers-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "卖家.json",
+                "path": "swagger/amazon/models/sellers-api-model/sellers.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "服务-api-模型",
+        "path": "swagger/amazon/models/services-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "服务.json",
+                "path": "swagger/amazon/models/services-api-model/services.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "发货-开票-api-模型",
+        "path": "swagger/amazon/models/shipment-invoicing-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "shipmentInvoicingV0.json",
+                "path": "swagger/amazon/models/shipment-invoicing-api-model/shipmentInvoicingV0.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "运输-api-模型",
+        "path": "swagger/amazon/models/shipping-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "航运.json",
+                "path": "swagger/amazon/models/shipping-api-model/shipping.json",
+                "isDirectory": false
+            },
+            {
+                "name": "shippingV2.json",
+                "path": "swagger/amazon/models/shipping-api-model/shippingV2.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "征集-api-模型",
+        "path": "swagger/amazon/models/solicitations-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "征集.json",
+                "path": "swagger/amazon/models/solicitations-api-model/solicitations.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应-来源-api-模型",
+        "path": "swagger/amazon/models/supply-sources-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "supplySources_2020-07-01.json",
+                "path": "swagger/amazon/models/supply-sources-api-model/supplySources_2020-07-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "令牌-api-模型",
+        "path": "swagger/amazon/models/tokens-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "tokens_2021-03-01.json",
+                "path": "swagger/amazon/models/tokens-api-model/tokens_2021-03-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "上传-api-模型",
+        "path": "swagger/amazon/models/uploads-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "uploads_2020-11-01.json",
+                "path": "swagger/amazon/models/uploads-api-model/uploads_2020-11-01.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应商-直接-履行-库存-api-模型",
+        "path": "swagger/amazon/models/vendor-direct-fulfillment-inventory-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "vendorDirectFulfillmentInventoryV1.json",
+                "path": "swagger/amazon/models/vendor-direct-fulfillment-inventory-api-model/vendorDirectFulfillmentInventoryV1.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应商-直接-履行-订单-api-模型",
+        "path": "swagger/amazon/models/vendor-direct-fulfillment-orders-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "vendorDirectFulfillmentOrdersV1.json",
+                "path": "swagger/amazon/models/vendor-direct-fulfillment-orders-api-model/vendorDirectFulfillmentOrdersV1.json",
+                "isDirectory": false
+            },
+            {
+                "name": "vendorDirectFulfillmentOrders_2021-12-28.json",
+                "path": "swagger/amazon/models/vendor-direct-fulfillment-orders-api-model/vendorDirectFulfillmentOrders_2021-12-28.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应商-直接-履行-付款-api-模型",
+        "path": "swagger/amazon/models/vendor-direct-fulfillment-payments-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "vendorDirectFulfillmentPaymentsV1.json",
+                "path": "swagger/amazon/models/vendor-direct-fulfillment-payments-api-model/vendorDirectFulfillmentPaymentsV1.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应商-直接-履行-沙盒-测试-数据-api-模型",
+        "path": "swagger/amazon/models/vendor-direct-fulfillment-sandbox-test-data-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "vendorDirectFulfillmentSandboxData_2021-10-28.json",
+                "path": "swagger/amazon/models/vendor-direct-fulfillment-sandbox-test-data-api-model/vendorDirectFulfillmentSandboxData_2021-10-28.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应商-直接-履行-发货-api-模型",
+        "path": "swagger/amazon/models/vendor-direct-fulfillment-shipping-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "vendorDirectFulfillmentShippingV1.json",
+                "path": "swagger/amazon/models/vendor-direct-fulfillment-shipping-api-model/vendorDirectFulfillmentShippingV1.json",
+                "isDirectory": false
+            },
+            {
+                "name": "vendorDirectFulfillmentShipping_2021-12-28.json",
+                "path": "swagger/amazon/models/vendor-direct-fulfillment-shipping-api-model/vendorDirectFulfillmentShipping_2021-12-28.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应商-直接-履行-交易-api-模型",
+        "path": "swagger/amazon/models/vendor-direct-fulfillment-transactions-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "vendorDirectFulfillmentTransactionsV1.json",
+                "path": "swagger/amazon/models/vendor-direct-fulfillment-transactions-api-model/vendorDirectFulfillmentTransactionsV1.json",
+                "isDirectory": false
+            },
+            {
+                "name": "vendorDirectFulfillmentTransactions_2021-12-28.json",
+                "path": "swagger/amazon/models/vendor-direct-fulfillment-transactions-api-model/vendorDirectFulfillmentTransactions_2021-12-28.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应商-发票-api-模型",
+        "path": "swagger/amazon/models/vendor-invoices-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "vendorInvoices.json",
+                "path": "swagger/amazon/models/vendor-invoices-api-model/vendorInvoices.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应商-订单-api-模型",
+        "path": "swagger/amazon/models/vendor-orders-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "vendorOrders.json",
+                "path": "swagger/amazon/models/vendor-orders-api-model/vendorOrders.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应商-出货-api-模型",
+        "path": "swagger/amazon/models/vendor-shipments-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "供应商发货.json",
+                "path": "swagger/amazon/models/vendor-shipments-api-model/vendorShipments.json",
+                "isDirectory": false
+            }
+        ]
+    },
+    {
+        "name": "供应商-交易-状态-api-模型",
+        "path": "swagger/amazon/models/vendor-transaction-status-api-model",
+        "isDirectory": true,
+        "children": [
+            {
+                "name": "vendorTransactionStatus.json",
+                "path": "swagger/amazon/models/vendor-transaction-status-api-model/vendorTransactionStatus.json",
+                "isDirectory": false
+            }
+        ]
+    }
+]

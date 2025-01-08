@@ -1,0 +1,776 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "The Selling Partner API for third party application integrations.",
+    "description": "使用AppIntegrations API v2024-04-01，您可以向Amazon销售合作伙伴发送通知，并在Seller Central中显示通知。",
+    "version": "2024-04-01",
+    "contact": {
+      "name": "Selling Partner API Developer Support",
+      "url": "https://sellercentral.amazon.com/gp/mws/contactus.html"
+    },
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "sellingpartnerapi-na.amazon.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "definitions": {
+    "Error": {
+      "description": "请求不成功时返回的错误响应。",
+      "properties": {
+        "code": {
+          "description": "标识发生的错误类型的错误代码。",
+          "type": "string"
+        },
+        "message": {
+          "description": "描述错误情况的消息。",
+          "type": "string"
+        },
+        "details": {
+          "description": "可以帮助呼叫者了解或解决问题的其他详细信息。",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "type": "object"
+    },
+    "ErrorList": {
+      "type": "object",
+      "description": "请求不成功时返回的错误响应列表。",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "description": "请求不成功时返回的错误响应。",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Error"
+          }
+        }
+      }
+    },
+    "CreateNotificationRequest": {
+      "type": "object",
+      "description": "“Createnotification” 操作的请求。",
+      "required": [
+        "templateId",
+        "notificationParameters"
+      ],
+      "properties": {
+        "templateId": {
+          "type": "string",
+          "description": "用于载入应用程序的通知模板的唯一标识符。"
+        },
+        "notificationParameters": {
+          "description": "在用于载入应用程序的模板中指定的参数。",
+          "$ref": "#/definitions/NotificationParameters"
+        },
+        "marketplaceId": {
+          "type": "string",
+          "description": "已发布通知的加密市场标识符。"
+        }
+      },
+      "example": {
+        "templateId": "PRICE_CHANGE",
+        "marketplaceId": "ATVPDKIKX0DER",
+        "notificationParameters": {
+          "priceValue": "200"
+        }
+      }
+    },
+    "NotificationParameters": {
+      "type": "object",
+      "additionalProperties": {},
+      "description": "由 “templateid” 指定的通知模板化所需的动态参数。",
+      "example": {
+        "priceValue": "200"
+      }
+    },
+    "CreateNotificationResponse": {
+      "type": "object",
+      "properties": {
+        "notificationId": {
+          "type": "string",
+          "description": "分配给每个通知的唯一标识符。"
+        }
+      },
+      "description": "“Createnotification” 操作的响应。"
+    },
+    "DeleteNotificationsRequest": {
+      "type": "object",
+      "description": "“Deletenotifications” 操作的请求。",
+      "required": [
+        "templateId",
+        "deletionReason"
+      ],
+      "properties": {
+        "templateId": {
+          "type": "string",
+          "description": "用于载入应用程序的通知模板的唯一标识符。"
+        },
+        "deletionReason": {
+          "type": "string",
+          "enum": [
+            "INCORRECT_CONTENT",
+            "INCORRECT_RECIPIENT"
+          ],
+          "description": "将每个通知状态映射到原因代码的唯一标识符。",
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "INCORRECT_CONTENT",
+              "description": "通知的内容被识别为不正确。"
+            },
+            {
+              "value": "INCORRECT_RECIPIENT",
+              "description": "通知发送给了不正确的卖家。"
+            }
+          ]
+        }
+      },
+      "example": {
+        "templateId": "PRICE_CHANGE",
+        "deletionReason": "INCORRECT_CONTENT"
+      }
+    },
+    "RecordActionFeedbackRequest": {
+      "type": "object",
+      "description": "“Recordactionfeedback” 操作的请求。",
+      "required": [
+        "feedbackActionCode"
+      ],
+      "properties": {
+        "feedbackActionCode": {
+          "type": "string",
+          "enum": [
+            "SELLER_ACTION_COMPLETED"
+          ],
+          "description": "每个通知状态的唯一标识符。",
+          "x-docgen-enum-table-extension": [
+            {
+              "value": "SELLER_ACTION_COMPLETED",
+              "description": "卖方完成了附加到已发布通知的操作。"
+            }
+          ]
+        }
+      },
+      "example": {
+        "feedbackActionCode": "SELLER_ACTION_COMPLETED"
+      }
+    }
+  },
+  "paths": {
+    "/appIntegrations/2024-04-01/notifications": {
+      "post": {
+        "tags": [
+          "appIntegrations"
+        ],
+        "description": "在Seller Central中为卖家创建通知。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的卖家可能具有比此处所示更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "createNotification",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "“Createnotification” 操作的请求正文。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateNotificationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "已成功创建具有在响应中捕获的标识符的通知。",
+            "schema": {
+              "$ref": "#/definitions/CreateNotificationResponse"
+            },
+            "examples": {
+              "application/json": {
+                "notificationId": "0cf25616-f68c-4eba-a5d3-6823b61506c0"
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "templateId": "PRICE_CHANGE",
+                          "marketplaceId": "ATVPDKIKX0DER",
+                          "notificationParameters": {}
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "notificationId": "0cf25616-f68c-4eba-a5d3-6823b61506c0"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "templateId": "BAD_TEMPLATE_ID",
+                          "marketplaceId": "ATVPDKIKX0DER",
+                          "notificationParameters": {}
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Template Identifier(templateId)",
+                        "details": "'BAD_TEMPLATE_ID' is an invalid templateId"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/appIntegrations/2024-04-01/notifications/deletion": {
+      "post": {
+        "tags": [
+          "appIntegrations"
+        ],
+        "description": "从Appstore通知仪表板中删除应用程序的通知。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的卖家可能具有比此处所示更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "deleteNotifications",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "“Deletenotifications” 操作的请求正文。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteNotificationsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "已成功处理deleteNotifications请求。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "templateId": "PRICE_CHANGE",
+                "deletionReason": "INCORRECT_RECIPIENT"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "templateId": "PRICE_CHANGE",
+                          "deletionReason": "INCORRECT_RECIPIENT"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "body": {
+                        "value": {
+                          "templateId": "PRICE_CHANGE_INVALID",
+                          "deletionReason": "INCORRECT_RECIPIENT"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid Template Id(templateId)",
+                        "details": "'PRICE_CHANGE_INVALID' is an invalid templateId"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/appIntegrations/2024-04-01/notifications/{notificationId}/feedback": {
+      "post": {
+        "tags": [
+          "appIntegrations"
+        ],
+        "description": "记录卖方对通知的响应。\n\n** 使用计划: **\n\n| Rate (每秒请求数) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\n“X-amzn-ratelimit-limit” 响应标头返回应用于请求的操作的使用计划费率限制 (如果可用)。上表指示此操作的默认速率和突发值。业务需求需要更高吞吐量的卖家可能具有比此处所示更高的速率和突发值。有关详细信息，请参阅 [销售合作伙伴API中的使用计划和费率限制](https:// developer-docs.amazon.com/sp-api/docs/Usage-Plans-and-Rate-Limits-in-the-sp-api)。",
+        "operationId": "recordActionFeedback",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "“Notificationid” 唯一标识通知。"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "“Recordactionfeedback” 操作的请求正文。",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RecordActionFeedbackRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "已成功处理recordActionFeedback请求。",
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "examples": {
+              "application/json": {
+                "feedbackActionCode": "SELLER_ACTION_COMPLETED"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "notificationId": {
+                        "value": "0cf25616-f68c-1234-a5d3-6823b61506c0"
+                      },
+                      "body": {
+                        "value": {
+                          "feedbackActionCode": "SELLER_ACTION_COMPLETED"
+                        }
+                      }
+                    }
+                  },
+                  "response": {}
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "请求缺少参数或参数无效，无法对其进行分析。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            },
+            "x-amzn-api-sandbox": {
+              "static": [
+                {
+                  "request": {
+                    "parameters": {
+                      "notificationId": {
+                        "value": "0cf25616-f68c-a5d3-6823b61506c0"
+                      },
+                      "body": {
+                        "value": {
+                          "feedbackActionCode": "SELLER_ACTION_COMPLETED"
+                        }
+                      }
+                    }
+                  },
+                  "response": {
+                    "errors": [
+                      {
+                        "code": "InvalidInput",
+                        "message": "Invalid notificationId",
+                        "details": "'0cf25616-f68c-a5d3-6823b61506c0' is an invalid notificationId"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "请求的授权标头格式不正确或不包含有效的令牌。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "唯一请求引用标识符。"
+              }
+            }
+          },
+          "403": {
+            "description": "指示禁止访问资源。可能的原因包括访问被拒绝、未经授权、令牌过期或签名无效。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "指定的资源不存在。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "description": "此操作的速率限制 (每秒请求数)。",
+                "type": "string"
+              },
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "413": {
+            "description": "请求大小超过了可接受的最大大小。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "415": {
+            "description": "请求负载的格式不受支持。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "429": {
+            "description": "请求的频率大于允许的频率。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "发生了阻止服务器完成请求的意外情况。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          },
+          "503": {
+            "description": "服务器的临时过载或维护。",
+            "schema": {
+              "$ref": "#/definitions/ErrorList"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "description": "唯一请求引用标识符。",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
