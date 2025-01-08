@@ -44,6 +44,7 @@ function traverseDirectoryWithDetails(dirPath: string, basePath: string) {
 
 
 export default defineConfig({
+    base: process.env.NODE_ENV === 'production' ? '/amazon-apis/' : '/',
     build: {
         target: 'esnext',
         // 或者你也可以改用 'terser' 压缩器，这会提供更安全的压缩效果

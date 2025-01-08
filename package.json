@@ -3,10 +3,15 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://lascyb.github.io/amazon-apis",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist",
+    "predeploy": "npm run build",
+    "github": "gh-pages -d dist"
+
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
