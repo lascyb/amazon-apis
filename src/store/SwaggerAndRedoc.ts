@@ -11,7 +11,7 @@ export const useSwaggerAndRedocStore = defineStore('SwaggerAndRedoc', () => {
     const redoc = reactive({
         rightPanel: 60
     })
-    const route = ref("index")
+    const route = ref("home")
     return {url, engine, menu,redoc,route}
 }, {
     persist: true
