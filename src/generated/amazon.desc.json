@@ -1,0 +1,2520 @@
+[
+    {
+        "id": 1,
+        "name": "亚马逊仓储配送模式",
+        "path": "amazon-warehousing-and-distribution-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 2,
+                "name": "亚马逊仓储和配送的销售合作伙伴API",
+                "path": "awd_2024-05-09.json",
+                "desc": "Amazon仓储和配送 (AWD) 的销售合作伙伴API提供了对AWD发货和库存信息的编程访问。",
+                "children": [
+                    {
+                        "id": 3,
+                        "name": "/awd/2024-05-09/inboundShipments/{shipmentId}",
+                        "path": "get",
+                        "desc": "检索AWD入站发运。"
+                    },
+                    {
+                        "id": 4,
+                        "name": "/awd/2024-05-09/inboundShipments",
+                        "path": "get",
+                        "desc": "检索与商家关联的所有入站AWD货件的摘要，并能够应用可选筛选器。"
+                    },
+                    {
+                        "id": 5,
+                        "name": "/awd/2024-05-09/inventory",
+                        "path": "get",
+                        "desc": "列出与能够应用可选过滤器的商家关联的AWD库存。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "aplus内容api模型",
+        "path": "aplus-content-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 7,
+                "name": "销售用于内容管理的合作伙伴API",
+                "path": "aplusContent_2020-11-01.json",
+                "desc": "使用内容API，您可以构建应用程序，帮助销售合作伙伴将丰富的营销内容添加到其亚马逊产品详细信息页面。内容帮助销售合作伙伴分享他们的品牌和产品故事，这有助于买家做出明智的购买决策。销售合作伙伴通过从内容模块中进行选择并添加图像和文本来组装内容。",
+                "children": [
+                    {
+                        "id": 8,
+                        "name": "/aplus/2020-11-01/contentDocuments",
+                        "path": "get",
+                        "desc": "返回分配给销售合作伙伴的所有内容文档的列表。此操作仅返回内容文档的元数据。调用getContentDocument操作以获取内容文档的实际内容。"
+                    },
+                    {
+                        "id": 9,
+                        "name": "/aplus/2020-11-01/contentDocuments",
+                        "path": "post",
+                        "desc": "创建新的内容文档。"
+                    },
+                    {
+                        "id": 10,
+                        "name": "/aplus/2020-11-01/contentDocuments/{contentReferenceKey}",
+                        "path": "get",
+                        "desc": "返回一个内容文档 (如果可用)。"
+                    },
+                    {
+                        "id": 11,
+                        "name": "/aplus/2020-11-01/contentDocuments/{contentReferenceKey}",
+                        "path": "post",
+                        "desc": "更新现有的内容文档。"
+                    },
+                    {
+                        "id": 12,
+                        "name": "/aplus/2020-11-01/contentDocuments/{contentReferenceKey}/asins",
+                        "path": "get",
+                        "desc": "返回与指定内容文档相关的asin列表 (如果可用)。如果不包括asinSet参数，该操作将返回与内容文档相关的所有asin。"
+                    },
+                    {
+                        "id": 13,
+                        "name": "/aplus/2020-11-01/contentDocuments/{contentReferenceKey}/asins",
+                        "path": "post",
+                        "desc": "替换与指定内容文档相关的所有asin (如果可用)。这可能会添加或删除asin，具体取决于当前的相关asin集。删除ASIN具有从该ASIN暂停内容文档的副作用。"
+                    },
+                    {
+                        "id": 14,
+                        "name": "/aplus/2020-11-01/contentAsinValidations",
+                        "path": "post",
+                        "desc": "检查内容文档对于在一组asin上使用是否有效。"
+                    },
+                    {
+                        "id": 15,
+                        "name": "/aplus/2020-11-01/contentPublishRecords",
+                        "path": "get",
+                        "desc": "搜索内容发布记录 (如果可用)。"
+                    },
+                    {
+                        "id": 16,
+                        "name": "/aplus/2020-11-01/contentDocuments/{contentReferenceKey}/approvalSubmissions",
+                        "path": "post",
+                        "desc": "提交内容文档以供审阅、批准和发布。"
+                    },
+                    {
+                        "id": 17,
+                        "name": "/aplus/2020-11-01/contentDocuments/{contentReferenceKey}/suspendSubmissions",
+                        "path": "post",
+                        "desc": "提交暂停可见内容的请求。这既不会删除内容文档，也不会删除ASIN关系。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "name": "应用程序集成api模型",
+        "path": "application-integrations-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 19,
+                "name": "用于第三方应用程序集成的销售合作伙伴API。",
+                "path": "appIntegrations-2024-04-01.json",
+                "desc": "使用AppIntegrations API v2024-04-01，您可以向Amazon销售合作伙伴发送通知，并在Seller Central中显示通知。",
+                "children": [
+                    {
+                        "id": 20,
+                        "name": "/appIntegrations/2024-04-01/notifications",
+                        "path": "post",
+                        "desc": "在Seller Central中为卖家创建通知。"
+                    },
+                    {
+                        "id": 21,
+                        "name": "/appIntegrations/2024-04-01/notifications/deletion",
+                        "path": "post",
+                        "desc": "从Appstore通知仪表板中删除应用程序的通知。"
+                    },
+                    {
+                        "id": 22,
+                        "name": "/appIntegrations/2024-04-01/notifications/{notificationId}/feedback",
+                        "path": "post",
+                        "desc": "记录卖方对通知的响应。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 23,
+        "name": "应用管理api模型",
+        "path": "application-management-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 24,
+                "name": "销售用于应用程序管理的合作伙伴API",
+                "path": "application_2023-11-30.json",
+                "desc": "应用程序管理的销售合作伙伴API允许您以编程方式更新已注册应用程序上的客户端密钥。",
+                "children": [
+                    {
+                        "id": 25,
+                        "name": "/applications/2023-11-30/clientSecret",
+                        "path": "post",
+                        "desc": "轮换开发人员应用程序的应用程序客户端机密。在调用此操作之前，开发人员必须在开发人员控制台中注册目标队列。调用此操作时，将生成新的客户端密钥并将其发送到开发人员注册的队列。有关详细信息，请参阅 [旋转应用程序客户端密钥](https:// developer-docs.amazon.com/sp-api/v0/docs/application-management-api-v2023-11-30-use-case-guide # 教程-旋转应用程序-客户端密钥)。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 26,
+        "name": "目录项api模型",
+        "path": "catalog-items-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 27,
+                "name": "销售目录项的合作伙伴API",
+                "path": "catalogItemsV0.json",
+                "desc": "目录项的销售合作伙伴API可帮助您以编程方式检索目录中项目的项目详细信息。",
+                "children": [
+                    {
+                        "id": 28,
+                        "name": "/catalog/v0/items",
+                        "path": "get",
+                        "desc": "2022年9月30日生效，“listcatalogitems” 操作在目录项v0的销售合作伙伴API中将不再可用。作为替代方案，“searchcatalogitems” 在最新版本的 [目录项销售合作伙伴API v2022-04-01](doc:catalog-items-api-v2022-04-01-reference) 中可用。依赖于 “listcatalogitems” 操作的集成应迁移到 “searchcatalogitems” 操作，以避免服务中断。"
+                    },
+                    {
+                        "id": 29,
+                        "name": "/catalog/v0/items/{asin}",
+                        "path": "get",
+                        "desc": "从2022年9月30日起，“getcatalogitem” 操作将不再在目录项v0的销售合作伙伴API中可用。此操作在最新版本的 [目录项销售合作伙伴API v2022-04-01](doc:catalog-items-api-v2022-04-01-reference) 中可用。依赖此操作的集成应迁移到最新版本，以避免服务中断。"
+                    },
+                    {
+                        "id": 30,
+                        "name": "/catalog/v0/categories",
+                        "path": "get",
+                        "desc": "根据指定的ASIN或SellerSKU返回项所属的父类别。"
+                    }
+                ]
+            },
+            {
+                "id": 31,
+                "name": "销售目录项的合作伙伴API",
+                "path": "catalogItems_2020-12-01.json",
+                "desc": "目录项的销售合作伙伴API提供了对Amazon目录中项目的相关信息的编程访问。\n\n有关详细信息，请参阅 [目录项API用例指南] (文档: catalog-items-api-v2020-12-01-use-case-guide)。",
+                "children": [
+                    {
+                        "id": 32,
+                        "name": "/catalog/2020-12-01/items",
+                        "path": "get",
+                        "desc": "搜索并返回Amazon目录项和相关信息的列表。"
+                    },
+                    {
+                        "id": 33,
+                        "name": "/catalog/2020-12-01/items/{asin}",
+                        "path": "get",
+                        "desc": "检索Amazon目录中的项目的详细信息。"
+                    }
+                ]
+            },
+            {
+                "id": 34,
+                "name": "目录项v2022-04-01",
+                "path": "catalogItems_2022-04-01.json",
+                "desc": "目录项的销售合作伙伴API提供了对Amazon目录中项目的相关信息的编程访问。\n\n有关详细信息，请参阅 [目录项API用例指南] (文档: catalog-items-api-v2022-04-01-use-case-guide)。",
+                "children": [
+                    {
+                        "id": 35,
+                        "name": "/catalog/2022-04-01/items",
+                        "path": "get",
+                        "desc": "按标识符或关键字搜索并返回Amazon目录项和关联信息的列表。"
+                    },
+                    {
+                        "id": 36,
+                        "name": "/catalog/2022-04-01/items/{asin}",
+                        "path": "get",
+                        "desc": "检索Amazon目录中的项目的详细信息。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 37,
+        "name": "data kiosk api模型",
+        "path": "data-kiosk-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 38,
+                "name": "为数据亭销售合作伙伴API",
+                "path": "dataKiosk_2023-11-15.json",
+                "desc": "Data Kiosk的销售合作伙伴API允许您从各种模式提交GraphQL查询，以帮助销售合作伙伴管理其业务。",
+                "children": [
+                    {
+                        "id": 39,
+                        "name": "/dataKiosk/2023-11-15/queries",
+                        "path": "get",
+                        "desc": "返回与指定筛选器匹配的数据亭查询的详细信息。有关查询保留的详细信息，请参阅 “createquery” 操作。"
+                    },
+                    {
+                        "id": 40,
+                        "name": "/dataKiosk/2023-11-15/queries",
+                        "path": "post",
+                        "desc": "创建数据Kiosk查询请求。"
+                    },
+                    {
+                        "id": 41,
+                        "name": "/dataKiosk/2023-11-15/queries/{queryId}",
+                        "path": "delete",
+                        "desc": "取消由 “queryid” 参数指定的查询。只能取消具有非终端 “processingstatus” (“IN_QUEUE” 、 “IN_PROGRESS”) 的查询。取消已经具有 “processingstatus” 为 “cancelled” 的查询将无操作。在对 “getquery” 和 “getqueries” 操作的后续调用中返回取消的查询。"
+                    },
+                    {
+                        "id": 42,
+                        "name": "/dataKiosk/2023-11-15/queries/{queryId}",
+                        "path": "get",
+                        "desc": "返回由 “queryid” 参数指定的查询详细信息。有关查询保留的详细信息，请参阅 “createquery” 操作。"
+                    },
+                    {
+                        "id": 43,
+                        "name": "/dataKiosk/2023-11-15/documents/{documentId}",
+                        "path": "get",
+                        "desc": "返回检索Data Kiosk文档内容所需的信息。有关文档保留的详细信息，请参阅 “createquery” 操作。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 44,
+        "name": "简易船舶模型",
+        "path": "easy-ship-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 45,
+                "name": "销售合作伙伴API以实现轻松发货",
+                "path": "easyShip_2022-03-23.json",
+                "desc": "适用于Easy Ship的销售合作伙伴API可帮助您构建应用程序，帮助卖家管理和运送Amazon Easy ship订单。\n\n您的Easy Ship应用程序可以:\n\n* 获取可用的时间槽包被安排交付。\n\n* 安排，重新安排，并取消轻松发货订单。\n\n* 打印标签、发票和保修。\n\n请参阅 [Marketplace支持表](doc:easyship-api-v2022-03-23-use-case-guide # marketplace-Support-Table)，了解不同marketplace在轻松发货操作方面的差异。",
+                "children": [
+                    {
+                        "id": 46,
+                        "name": "/easyShip/2022-03-23/timeSlot",
+                        "path": "post",
+                        "desc": "根据卖方指定的包装重量和尺寸，返回可用于安排轻松发货订单的时间段。"
+                    },
+                    {
+                        "id": 47,
+                        "name": "/easyShip/2022-03-23/package",
+                        "path": "get",
+                        "desc": "返回有关包裹的信息，包括尺寸、重量、用于移交的时隙信息、发票和项目信息以及状态。"
+                    },
+                    {
+                        "id": 48,
+                        "name": "/easyShip/2022-03-23/package",
+                        "path": "post",
+                        "desc": "计划一个简单的发运订单并返回计划的包裹信息。"
+                    },
+                    {
+                        "id": 49,
+                        "name": "/easyShip/2022-03-23/package",
+                        "path": "patch",
+                        "desc": "更新用于移交由指定的 “scheduledpackageid” 指示的包的时隙。您可以通过在进行另一个 'patch' 调用之前调用 'listHandoverSlots' 操作来获取时隙的新 'slotId' 值。"
+                    },
+                    {
+                        "id": 50,
+                        "name": "/easyShip/2022-03-23/packages/bulk",
+                        "path": "post",
+                        "desc": "此操作会自动为所有指定的 “amazonorderid” 值安排一个时间段，并根据市场生成关联的运输标签和合规性文档。有关详细信息，请参阅 [市场支持表](https:// developer-docs.amazon.com/sp-api/docs/easyship-api-v2022-03-23-use-case-guide # marketplace-support-table)。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 51,
+        "name": "fba入站资格api模型",
+        "path": "fba-inbound-eligibility-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 52,
+                "name": "销售FBA入站资格的合作伙伴API",
+                "path": "fbaInbound.json",
+                "desc": "使用FBA入站资格API，您可以构建应用程序，让卖家在将商品运送到亚马逊的履行中心之前获得商品的资格预览。使用此API，您可以了解商品是否符合向特定市场中的亚马逊配送中心发货的条件。您还可以了解某个项目是否符合使用制造商条形码进行FBA库存跟踪的条件。卖家可以使用这些信息来决定向亚马逊的配送中心运送哪些商品。",
+                "children": [
+                    {
+                        "id": 53,
+                        "name": "/fba/inbound/v1/eligibility/itemPreview",
+                        "path": "get",
+                        "desc": "此操作获取您指定的项目的资格预览。您可以指定所需的资格预览类型 (入站或混合)。对于入站预览，您可以指定要在其中确定项目资格的市场。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 54,
+        "name": "fba库存api模型",
+        "path": "fba-inventory-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 55,
+                "name": "销售FBA库存的合作伙伴API",
+                "path": "fbaInventory.json",
+                "desc": "FBA库存的销售合作伙伴API允许您以编程方式检索有关Amazon履行网络中库存的信息。",
+                "children": [
+                    {
+                        "id": 56,
+                        "name": "/fba/inventory/v1/summaries",
+                        "path": "get",
+                        "desc": "返回清单摘要的列表。返回的摘要取决于是否存在startDateTime、sellerSkus和sellerSku参数:"
+                    },
+                    {
+                        "id": 57,
+                        "name": "/fba/inventory/v1/items",
+                        "path": "post",
+                        "desc": "请求Amazon在沙盒环境中的沙盒清单中创建产品详细信息。这是仅沙盒操作，必须定向到沙盒终结点。有关详细信息，请参阅 [销售合作伙伴API沙箱](https:// developer-docs.amazon.com/sp-api/docs/the-sell-partner-api-sandbox)。"
+                    },
+                    {
+                        "id": 58,
+                        "name": "/fba/inventory/v1/items/{sellerSku}",
+                        "path": "delete",
+                        "desc": "请求Amazon从沙盒环境中的沙盒清单中删除项目。这是仅沙盒操作，必须定向到沙盒终结点。有关详细信息，请参阅 [销售合作伙伴API沙箱](https:// developer-docs.amazon.com/sp-api/docs/the-Selling-partner-api-sandbox)。"
+                    },
+                    {
+                        "id": 59,
+                        "name": "/fba/inventory/v1/items/inventory",
+                        "path": "post",
+                        "desc": "请求Amazon在沙盒环境中将具有所需数量的项目添加到沙盒清单。这是仅沙盒操作，必须定向到沙盒终结点。有关详细信息，请参阅 [销售合作伙伴API沙箱](https:// developer-docs.amazon.com/sp-api/docs/the-Selling-partner-api-sandbox)。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 60,
+        "name": "feeds api模型",
+        "path": "feeds-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 61,
+                "name": "销售feed的合作伙伴API",
+                "path": "feeds_2020-09-04.json",
+                "desc": "** 2024年6月27日 ** 生效，Feeds v2020-09-04的销售合作伙伴API将不再可用，对它的所有调用都将失败。依赖于Feeds API的集成必须迁移到 [Feeds v2021-06-30](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) 以避免服务中断。"
+            },
+            {
+                "id": 62,
+                "name": "饲料v2021-06-30",
+                "path": "feeds_2021-06-30.json",
+                "desc": "借助针对feed的销售合作伙伴API，您可以代表销售合作伙伴将数据上传到Amazon。",
+                "children": [
+                    {
+                        "id": 63,
+                        "name": "/feeds/2021-06-30/feeds",
+                        "path": "get",
+                        "desc": "返回与您指定的筛选器匹配的源详细信息。"
+                    },
+                    {
+                        "id": 64,
+                        "name": "/feeds/2021-06-30/feeds",
+                        "path": "post",
+                        "desc": "创建一个feed。在调用此操作之前，请上传feed文档的内容。"
+                    },
+                    {
+                        "id": 65,
+                        "name": "/feeds/2021-06-30/feeds/{feedId}",
+                        "path": "delete",
+                        "desc": "取消指定的源。只能取消具有 “processingstatus = IN_QUEUE” 的订阅源。在对 ['getFeed'](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference # getfeed) 和 ['getFeeds'](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference # getfeeds) 操作的后续调用中返回取消的feed。"
+                    },
+                    {
+                        "id": 66,
+                        "name": "/feeds/2021-06-30/feeds/{feedId}",
+                        "path": "get",
+                        "desc": "返回您指定的源详细信息 (包括 “resultdocumentid' (如果可用))。"
+                    },
+                    {
+                        "id": 67,
+                        "name": "/feeds/2021-06-30/documents",
+                        "path": "post",
+                        "desc": "为指定的feed类型创建feed文档。此操作返回用于上载feed文档内容的预签名URL。它还返回一个 “feeddocumentid' 值，您可以在随后调用 ['createFeed'](https:// developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference # createfeed) 操作时传入该值。"
+                    },
+                    {
+                        "id": 68,
+                        "name": "/feeds/2021-06-30/documents/{feedDocumentId}",
+                        "path": "get",
+                        "desc": "返回检索feed文档内容所需的信息。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 69,
+        "name": "财务api模型",
+        "path": "finances-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 70,
+                "name": "销售合作伙伴财务API",
+                "path": "financesV0.json",
+                "desc": "财务销售合作伙伴API可帮助您获取与卖家业务相关的财务信息。您可以获取给定订单、财务事件组或日期范围的财务事件，而不必等到报表期间关闭。您还可以获取给定日期范围的财务事件组。",
+                "children": [
+                    {
+                        "id": 71,
+                        "name": "/finances/v0/financialEventGroups",
+                        "path": "get",
+                        "desc": "返回给定日期范围的财务事件组。订单可能需要长达48小时才能出现在您的财务活动中。"
+                    },
+                    {
+                        "id": 72,
+                        "name": "/finances/v0/financialEventGroups/{eventGroupId}/financialEvents",
+                        "path": "get",
+                        "desc": "返回指定财务事件组的所有财务事件。订单可能需要长达48小时才能出现在您的财务活动中。"
+                    },
+                    {
+                        "id": 73,
+                        "name": "/finances/v0/orders/{orderId}/financialEvents",
+                        "path": "get",
+                        "desc": "返回指定订单的所有财务事件。订单可能需要长达48小时才能出现在您的财务活动中。"
+                    },
+                    {
+                        "id": 74,
+                        "name": "/finances/v0/financialEvents",
+                        "path": "get",
+                        "desc": "返回指定数据范围的财务事件。订单可能需要长达48小时才能出现在您的财务活动中。** 注意: ** 在 “listfinancialevents” 中，延迟事件在发布之前不会显示在响应中。"
+                    }
+                ]
+            },
+            {
+                "id": 75,
+                "name": "面向财务的销售合作伙伴API",
+                "path": "finances_2024-06-19.json",
+                "desc": "用于财务的销售伙伴API提供与卖方的业务相关的财务信息。您可以获取给定订单或日期范围的财务事件，而不必等到报表期间关闭。",
+                "children": [
+                    {
+                        "id": 76,
+                        "name": "/finances/2024-06-19/transactions",
+                        "path": "get",
+                        "desc": "返回给定参数的事务。过去48小时的订单可能不包括在财务事件中。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 77,
+        "name": "实现入站api模型",
+        "path": "fulfillment-inbound-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 78,
+                "name": "销售合作伙伴API以实现入站",
+                "path": "fulfillmentInboundV0.json",
+                "desc": "通过销售合作伙伴进货API，您可以创建应用程序，这些应用程序可以创建库存的进货并将其更新到Amazon的执行网络。",
+                "children": [
+                    {
+                        "id": 79,
+                        "name": "/fba/inbound/v0/prepInstructions",
+                        "path": "get",
+                        "desc": "返回标签要求和物品准备说明，以帮助准备将物品运送到亚马逊的履行网络。"
+                    },
+                    {
+                        "id": 80,
+                        "name": "/fba/inbound/v0/shipments/{shipmentId}/labels",
+                        "path": "get",
+                        "desc": "返回包裹/托盘标签，以便在亚马逊履行中心更快、更准确地处理货件。"
+                    },
+                    {
+                        "id": 81,
+                        "name": "/fba/inbound/v0/shipments/{shipmentId}/billOfLading",
+                        "path": "get",
+                        "desc": "返回少于卡车/满载 (LTL/FTL) 装运的提单。getBillOfLading操作返回PDF文档数据，用于打印亚马逊合作的少于卡车/满载 (LTL/FTL) 入站货物的提单。"
+                    },
+                    {
+                        "id": 82,
+                        "name": "/fba/inbound/v0/shipments",
+                        "path": "get",
+                        "desc": "根据您指定的标准返回入站发运的列表。"
+                    },
+                    {
+                        "id": 83,
+                        "name": "/fba/inbound/v0/shipments/{shipmentId}/items",
+                        "path": "get",
+                        "desc": "返回指定的入站发运中的项目列表。"
+                    },
+                    {
+                        "id": 84,
+                        "name": "/fba/inbound/v0/shipmentItems",
+                        "path": "get",
+                        "desc": "返回指定的入站发运中的项目列表，或在指定时间范围内更新的项目列表。"
+                    }
+                ]
+            },
+            {
+                "id": 85,
+                "name": "发货入站v2024-03-20",
+                "path": "fulfillmentInbound_2024-03-20.json",
+                "desc": "由亚马逊 (FBA) 入站履行的销售合作伙伴API。FBA入站API支持构建入站工作流，以创建、管理货物并将其发送到亚马逊的履行网络。该API与Send-to-Amazon用户界面具有互操作性。",
+                "children": [
+                    {
+                        "id": 86,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans",
+                        "path": "get",
+                        "desc": "提供包含最少信息的入站计划列表。"
+                    },
+                    {
+                        "id": 87,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans",
+                        "path": "post",
+                        "desc": "创建入站计划。入站计划包含将货件发送到亚马逊的fufil件网络的所有必要信息。"
+                    },
+                    {
+                        "id": 88,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}",
+                        "path": "get",
+                        "desc": "获取有关入站计划的顶级信息。"
+                    },
+                    {
+                        "id": 89,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/boxes",
+                        "path": "get",
+                        "desc": "提供入站计划中的box包的分页列表。"
+                    },
+                    {
+                        "id": 90,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/cancellation",
+                        "path": "put",
+                        "desc": "取消入站计划。如果在无效窗口之外执行取消，则可能会收取费用。亚马逊合作承运人的窗口是24小时小包裹递送 (SPD) 和一小时零担 (LTL) 承运人装运。"
+                    },
+                    {
+                        "id": 91,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/items",
+                        "path": "get",
+                        "desc": "提供入站计划中项件包的分页列表。"
+                    },
+                    {
+                        "id": 92,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/name",
+                        "path": "put",
+                        "desc": "更新现有入站计划的名称。"
+                    },
+                    {
+                        "id": 93,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/packingGroups/{packingGroupId}/boxes",
+                        "path": "get",
+                        "desc": "从给定包装组中检索一页包装盒。这些框以前是通过 “setpackinginformation” 操作提供的。此API用于在Amazon确定装运拆分之前打包箱子的工作流程。"
+                    },
+                    {
+                        "id": 94,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/packingGroups/{packingGroupId}/items",
+                        "path": "get",
+                        "desc": "检索给定包装组中的项目页。必须先通过相应的操作生成包装选项，然后才能列出包装组项目。"
+                    },
+                    {
+                        "id": 95,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/packingInformation",
+                        "path": "post",
+                        "desc": "设置入站计划的包装信息。应在创建入站计划后调用此命令，以填充计划和运输估算所需的框级信息。"
+                    },
+                    {
+                        "id": 96,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/packingOptions",
+                        "path": "get",
+                        "desc": "检索入站计划的所有包装选项的列表。包装选项必须首先由相应的操作生成，然后才能可用。"
+                    },
+                    {
+                        "id": 97,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/packingOptions",
+                        "path": "post",
+                        "desc": "生成入站计划的可用包装选项。"
+                    },
+                    {
+                        "id": 98,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/packingOptions/{packingOptionId}/confirmation",
+                        "path": "post",
+                        "desc": "确认入站计划的包装选项。"
+                    },
+                    {
+                        "id": 99,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/pallets",
+                        "path": "get",
+                        "desc": "提供入站计划中的托盘包的分页列表。在生成零担 (LTL) 承运人装运后，提供相关详细信息时，入站计划将包含托盘。"
+                    },
+                    {
+                        "id": 100,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/placementOptions",
+                        "path": "get",
+                        "desc": "提供入站计划的所有放置选项的列表。放置选项必须首先由相应的操作生成，然后才能可用。"
+                    },
+                    {
+                        "id": 101,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/placementOptions",
+                        "path": "post",
+                        "desc": "生成入站计划的放置选项。"
+                    },
+                    {
+                        "id": 102,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/placementOptions/{placementOptionId}/confirmation",
+                        "path": "post",
+                        "desc": "确认入站计划的放置选项。入库计划一经确认就不能更改。"
+                    },
+                    {
+                        "id": 103,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}",
+                        "path": "get",
+                        "desc": "提供入站计划内特定发运的完整详细信息。“Acceptedtransportationselection” 中的 “transportationoptionid” 可用于检索装运的运输详细信息。"
+                    },
+                    {
+                        "id": 104,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/boxes",
+                        "path": "get",
+                        "desc": "提供货件中箱包的分页列表。"
+                    },
+                    {
+                        "id": 105,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/contentUpdatePreviews",
+                        "path": "get",
+                        "desc": "检索给定货件的货件内容更新预览的分页列表。装运内容更新预览是所请求的装运内容更改的摘要，以及只能在指定的到期日之前确认的更改的运输成本影响。"
+                    },
+                    {
+                        "id": 106,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/contentUpdatePreviews",
+                        "path": "post",
+                        "desc": "生成装运内容更新预览给定一组预期的箱子和/或物品的装运与确认承运人。在确认之前，可以查看货件内容更新预览以及更新的费用和内容。"
+                    },
+                    {
+                        "id": 107,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/contentUpdatePreviews/{contentUpdatePreviewId}",
+                        "path": "get",
+                        "desc": "检索货件内容更新预览，该预览提供了所请求的货件内容更改的摘要，以及仅在指定的到期日之前才能确认的更改的运输成本影响。"
+                    },
+                    {
+                        "id": 108,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/contentUpdatePreviews/{contentUpdatePreviewId}/confirmation",
+                        "path": "post",
+                        "desc": "确认货件内容更新预览并接受运输成本的更改。"
+                    },
+                    {
+                        "id": 109,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/deliveryChallanDocument",
+                        "path": "get",
+                        "desc": "为PCP在市场上的运输提供交付challan文件。"
+                    },
+                    {
+                        "id": 110,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/deliveryWindowOptions",
+                        "path": "get",
+                        "desc": "检索发运的所有交货窗口选项。传递窗口选项必须首先由 “generatedeliverywindowoptions” 操作生成，然后才能可用。"
+                    },
+                    {
+                        "id": 111,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/deliveryWindowOptions",
+                        "path": "post",
+                        "desc": "生成给定发运的可用交货窗口选项。"
+                    },
+                    {
+                        "id": 112,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/deliveryWindowOptions/{deliveryWindowOptionId}/confirmation",
+                        "path": "post",
+                        "desc": "确认入站计划内所选发运的交货窗口选项。在使用此API之前，必须确认放置选项。确认后，将无法生成新的交货窗口选项，但可以在关闭发运之前更新所选的交货窗口选项。该窗口用于提供货物到达仓库的预期时间。具有程序 “CONFIRMED_DELIVERY_WINDOW” 的所有运输选项都需要在运输选项确认之前确认交货窗口。"
+                    },
+                    {
+                        "id": 113,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/items",
+                        "path": "get",
+                        "desc": "提供装运中的项目包的分页列表。"
+                    },
+                    {
+                        "id": 114,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/name",
+                        "path": "put",
+                        "desc": "更新现有货件的名称。"
+                    },
+                    {
+                        "id": 115,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/pallets",
+                        "path": "get",
+                        "desc": "提供货件中托盘包的分页列表。在生成零担 (LTL) 承运人装运后，提供相关详细信息时，托盘装运将具有托盘。"
+                    },
+                    {
+                        "id": 116,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/selfShipAppointmentCancellation",
+                        "path": "put",
+                        "desc": "取消装运的自发货预约时段。"
+                    },
+                    {
+                        "id": 117,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/selfShipAppointmentSlots",
+                        "path": "get",
+                        "desc": "检索用于在仓库放下货件的可用自发货预约时段的列表。"
+                    },
+                    {
+                        "id": 118,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/selfShipAppointmentSlots",
+                        "path": "post",
+                        "desc": "启动生成约会槽列表的过程。"
+                    },
+                    {
+                        "id": 119,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/selfShipAppointmentSlots/{slotId}/schedule",
+                        "path": "post",
+                        "desc": "确认或重新计划针对装运的自发货预约时段。"
+                    },
+                    {
+                        "id": 120,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/sourceAddress",
+                        "path": "put",
+                        "desc": "更新现有货件的源地址。只能在发运承运人确认之前更新发运源地址。作为更新的源地址的结果，现有的运输选项将被无效，并且将需要被重新生成以捕获由于新的源地址而导致的运输选项和报价中的潜在差异。"
+                    },
+                    {
+                        "id": 121,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/shipments/{shipmentId}/trackingDetails",
+                        "path": "put",
+                        "desc": "更新货件的跟踪详细信息。"
+                    },
+                    {
+                        "id": 122,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/transportationOptions",
+                        "path": "get",
+                        "desc": "检索装运的所有运输选项。运输选项必须首先由 “generatetransportationoptions” 操作生成，然后才能可用。"
+                    },
+                    {
+                        "id": 123,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/transportationOptions",
+                        "path": "post",
+                        "desc": "为给定的放置选项生成可用的运输选项。"
+                    },
+                    {
+                        "id": 124,
+                        "name": "/inbound/fba/2024-03-20/inboundPlans/{inboundPlanId}/transportationOptions/confirmation",
+                        "path": "post",
+                        "desc": "确认入站计划的所有运输选项。在使用此API之前，必须确认放置选项。确认后，无法为进站计划生成或确认新的运输选项。"
+                    },
+                    {
+                        "id": 125,
+                        "name": "/inbound/fba/2024-03-20/items/compliance",
+                        "path": "get",
+                        "desc": "列出给定市场中msku的入站合规性详细信息。"
+                    },
+                    {
+                        "id": 126,
+                        "name": "/inbound/fba/2024-03-20/items/compliance",
+                        "path": "put",
+                        "desc": "更新msku列表的合规性详细信息。此处提供的详细信息仅用于印度 (IN - A21TJRUUN4KGV) 市场合规性验证。"
+                    },
+                    {
+                        "id": 127,
+                        "name": "/inbound/fba/2024-03-20/items/labels",
+                        "path": "post",
+                        "desc": "对于给定的市场-为msku列表创建标签。"
+                    },
+                    {
+                        "id": 128,
+                        "name": "/inbound/fba/2024-03-20/items/prepDetails",
+                        "path": "get",
+                        "desc": "获取指定市场中msku列表的准备详细信息。"
+                    },
+                    {
+                        "id": 129,
+                        "name": "/inbound/fba/2024-03-20/items/prepDetails",
+                        "path": "post",
+                        "desc": "为指定市场中的msku列表设置准备详细信息。"
+                    },
+                    {
+                        "id": 130,
+                        "name": "/inbound/fba/2024-03-20/operations/{operationId}",
+                        "path": "get",
+                        "desc": "获取异步API调用的处理状态。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 131,
+        "name": "发货出站api模型",
+        "path": "fulfillment-outbound-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 132,
+                "name": "销售合作伙伴api以实现Outbound",
+                "path": "fulfillmentOutbound_2020-07-01.json",
+                "desc": "用于出站履行的销售合作伙伴API允许您创建应用程序，帮助卖家使用亚马逊履行网络中的库存履行多渠道履行订单。您可以获取有关潜在和现有履行订单的信息。",
+                "children": [
+                    {
+                        "id": 133,
+                        "name": "/fba/outbound/2020-07-01/fulfillmentOrders/preview",
+                        "path": "post",
+                        "desc": "根据您指定的发运标准返回履行订单预览列表。"
+                    },
+                    {
+                        "id": 134,
+                        "name": "/fba/outbound/2020-07-01/deliveryOffers",
+                        "path": "post",
+                        "desc": "根据您指定的条件，返回包括估计交货日期和优惠到期日的交货选项。"
+                    },
+                    {
+                        "id": 135,
+                        "name": "/fba/outbound/2020-07-01/fulfillmentOrders",
+                        "path": "get",
+                        "desc": "返回在指定日期-时间之后 (或在指定日期-时间) 或由下一个令牌参数指示的履行订单的列表。"
+                    },
+                    {
+                        "id": 136,
+                        "name": "/fba/outbound/2020-07-01/fulfillmentOrders",
+                        "path": "post",
+                        "desc": "请求亚马逊将商品从亚马逊履行网络中的卖家库存运送到目标地址。"
+                    },
+                    {
+                        "id": 137,
+                        "name": "/fba/outbound/2020-07-01/tracking",
+                        "path": "get",
+                        "desc": "返回多渠道履行订单的出站发运中包裹的交货跟踪信息。"
+                    },
+                    {
+                        "id": 138,
+                        "name": "/fba/outbound/2020-07-01/returnReasonCodes",
+                        "path": "get",
+                        "desc": "返回给定市场中卖家SKU的退货原因代码列表。此操作的参数可能包含需要URL编码的特殊字符。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。"
+                    },
+                    {
+                        "id": 139,
+                        "name": "/fba/outbound/2020-07-01/fulfillmentOrders/{sellerFulfillmentOrderId}/return",
+                        "path": "put",
+                        "desc": "创建一个完成退货。"
+                    },
+                    {
+                        "id": 140,
+                        "name": "/fba/outbound/2020-07-01/fulfillmentOrders/{sellerFulfillmentOrderId}",
+                        "path": "get",
+                        "desc": "返回由指定的订单标识符指示的履行订单。"
+                    },
+                    {
+                        "id": 141,
+                        "name": "/fba/outbound/2020-07-01/fulfillmentOrders/{sellerFulfillmentOrderId}",
+                        "path": "put",
+                        "desc": "更新和/或请求装运带有订单保留的履行订单。"
+                    },
+                    {
+                        "id": 142,
+                        "name": "/fba/outbound/2020-07-01/fulfillmentOrders/{sellerFulfillmentOrderId}/cancel",
+                        "path": "put",
+                        "desc": "请求Amazon停止尝试履行由指定的订单标识符指示的履行订单。"
+                    },
+                    {
+                        "id": 143,
+                        "name": "/fba/outbound/2020-07-01/fulfillmentOrders/{sellerFulfillmentOrderId}/status",
+                        "path": "put",
+                        "desc": "请求Amazon在沙盒测试环境中更新订单的状态。这是仅沙盒操作，必须定向到沙盒终结点。请参阅 [Fulfillment Outbound动态沙盒指南](https:// developer-docs.amazon.com/sp-api/docs/fulfillment-outbound-Dynamic-sandbox-guide) 和 [Selling Partner api Sandbox](https:// developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox) 了解更多信息。"
+                    },
+                    {
+                        "id": 144,
+                        "name": "/fba/outbound/2020-07-01/features",
+                        "path": "get",
+                        "desc": "返回您指定的市场中可用于多渠道履行订单的功能列表，以及您为其拨打电话的卖家是否已注册每个功能。"
+                    },
+                    {
+                        "id": 145,
+                        "name": "/fba/outbound/2020-07-01/features/inventory/{featureName}",
+                        "path": "get",
+                        "desc": "返回符合您指定的履行功能的库存物料列表。"
+                    },
+                    {
+                        "id": 146,
+                        "name": "/fba/outbound/2020-07-01/features/inventory/{featureName}/{sellerSku}",
+                        "path": "get",
+                        "desc": "返回具有您指定的sellerSKU的可使用指定功能履行订单的项目数。请注意，如果sellerSKU不符合条件，则响应将包含空skuInfo对象。此操作的参数可能包含需要URL编码的特殊字符。为避免在编码URL时出现sku错误，请参阅 [url编码](https:// developer-docs.amazon.com/sp-api/docs/url-encoding)。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 147,
+        "name": "发票api模型",
+        "path": "invoices-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 148,
+                "name": "发票的销售合作伙伴API。",
+                "path": "InvoicesApiModel_2024-06-19.json",
+                "desc": "使用发票销售合作伙伴API检索和管理与发票相关的操作，这可以帮助销售合作伙伴管理其簿记流程。",
+                "children": [
+                    {
+                        "id": 149,
+                        "name": "/tax/invoices/2024-06-19/attributes",
+                        "path": "get",
+                        "desc": "返回依赖于市场的模式及其各自的可能值集。"
+                    },
+                    {
+                        "id": 150,
+                        "name": "/tax/invoices/2024-06-19/documents/{invoicesDocumentId}",
+                        "path": "get",
+                        "desc": "返回发票文档的ID和URL。使用URL下载ZIP文件，该文件包含来自相应的 “createinvoicesexport” 请求的发票。"
+                    },
+                    {
+                        "id": 151,
+                        "name": "/tax/invoices/2024-06-19/exports",
+                        "path": "post",
+                        "desc": "创建发票导出请求。"
+                    },
+                    {
+                        "id": 152,
+                        "name": "/tax/invoices/2024-06-19/exports",
+                        "path": "get",
+                        "desc": "返回与您指定的筛选器匹配的导出的发票导出详细信息。"
+                    },
+                    {
+                        "id": 153,
+                        "name": "/tax/invoices/2024-06-19/exports/{exportId}",
+                        "path": "get",
+                        "desc": "返回指定导出的发票导出详细信息 (包括 “exportdocumentid' (如果可用))。"
+                    },
+                    {
+                        "id": 154,
+                        "name": "/tax/invoices/2024-06-19/invoices",
+                        "path": "get",
+                        "desc": "返回与您指定的筛选器匹配的发票详细信息。"
+                    },
+                    {
+                        "id": 155,
+                        "name": "/tax/invoices/2024-06-19/invoices/{invoiceId}",
+                        "path": "get",
+                        "desc": "返回指定发票的发票数据。此操作仅返回发票数据的子集; 请参考响应定义以获取所有可能的属性。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 156,
+        "name": "listings",
+        "path": "listings-items-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 157,
+                "name": "销售列表项的合作伙伴API",
+                "path": "listingsItems_2020-09-01.json",
+                "desc": "列表项的销售合作伙伴API (列表项API) 提供了对Amazon上销售合作伙伴列表的编程访问。将此API与产品类型定义的销售合作伙伴API一起使用，您可以使用该API检索有关使用Listings Items API所需的Amazon产品类型的信息。\n\n有关更多信息，请参阅 [Listing Items API用例指南](doc:listings-items-api-v2020-09-01-use-case-guide)。",
+                "children": [
+                    {
+                        "id": 158,
+                        "name": "/listings/2020-09-01/items/{sellerId}/{sku}",
+                        "path": "delete",
+                        "desc": "删除销售合作伙伴的列表项。"
+                    },
+                    {
+                        "id": 159,
+                        "name": "/listings/2020-09-01/items/{sellerId}/{sku}",
+                        "path": "patch",
+                        "desc": "部分更新 (修补) 销售合作伙伴的列表项。只能修补顶级列表项属性。不支持修补嵌套属性。"
+                    },
+                    {
+                        "id": 160,
+                        "name": "/listings/2020-09-01/items/{sellerId}/{sku}",
+                        "path": "put",
+                        "desc": "为销售合作伙伴创建新的或完全更新现有列表项。"
+                    }
+                ]
+            },
+            {
+                "id": 161,
+                "name": "列表项目v2021-08-01",
+                "path": "listingsItems_2021-08-01.json",
+                "desc": "列表项的销售合作伙伴API (列表项API) 提供了对Amazon上销售合作伙伴列表的编程访问。将此API与产品类型定义的销售合作伙伴API一起使用，您可以使用该API检索有关使用Listings Items API所需的Amazon产品类型的信息。\n\n有关详细信息，请参阅 [列表项API用例指南](https:// developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-use-case-guide)。",
+                "children": [
+                    {
+                        "id": 162,
+                        "name": "/listings/2021-08-01/items/{sellerId}/{sku}",
+                        "path": "delete",
+                        "desc": "删除销售合作伙伴的列表项。"
+                    },
+                    {
+                        "id": 163,
+                        "name": "/listings/2021-08-01/items/{sellerId}/{sku}",
+                        "path": "get",
+                        "desc": "返回有关销售合作伙伴的列表项的详细信息。"
+                    },
+                    {
+                        "id": 164,
+                        "name": "/listings/2021-08-01/items/{sellerId}/{sku}",
+                        "path": "patch",
+                        "desc": "部分更新 (修补) 销售合作伙伴的列表项。只能修补顶级列表项属性。不支持修补嵌套属性。"
+                    },
+                    {
+                        "id": 165,
+                        "name": "/listings/2021-08-01/items/{sellerId}/{sku}",
+                        "path": "put",
+                        "desc": "为销售合作伙伴创建或完全更新现有列表项。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 166,
+        "name": "清单限制api模型",
+        "path": "listings-restrictions-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 167,
+                "name": "销售上市限制的合作伙伴API",
+                "path": "listingsRestrictions_2021-08-01.json",
+                "desc": "列表限制的销售合作伙伴API提供了对Amazon目录列表限制的编程访问。\n\n有关更多信息，请参阅 [清单限制API用例指南](doc:listings-restrictions-api-v2021-08-01-use-case-guide)。",
+                "children": [
+                    {
+                        "id": 168,
+                        "name": "/listings/2021-08-01/restrictions",
+                        "path": "get",
+                        "desc": "返回Amazon目录中的项目的列表限制。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 169,
+        "name": "商户履行api模型",
+        "path": "merchant-fulfillment-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 170,
+                "name": "销售用于商户履行的合作伙伴API",
+                "path": "merchantFulfillmentV0.json",
+                "desc": "借助用于商家履行的销售合作伙伴API，您可以构建应用程序，卖家可以使用Amazon的购买运输服务来购买非Prime和Prime订单的运输。",
+                "children": [
+                    {
+                        "id": 171,
+                        "name": "/mfn/v0/eligibleShippingServices",
+                        "path": "post",
+                        "desc": "返回满足指定装运请求详细信息的装运服务优惠列表。"
+                    },
+                    {
+                        "id": 172,
+                        "name": "/mfn/v0/shipments/{shipmentId}",
+                        "path": "get",
+                        "desc": "返回现有货件的货件信息。"
+                    },
+                    {
+                        "id": 173,
+                        "name": "/mfn/v0/shipments/{shipmentId}",
+                        "path": "delete",
+                        "desc": "取消由指定的发运标识符指示的发运。"
+                    },
+                    {
+                        "id": 174,
+                        "name": "/mfn/v0/shipments",
+                        "path": "post",
+                        "desc": "使用提供的信息创建装运。"
+                    },
+                    {
+                        "id": 175,
+                        "name": "/mfn/v0/additionalSellerInputs",
+                        "path": "post",
+                        "desc": "获取ship方法所需的其他卖方输入的列表。这通常用于国际航运。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 176,
+        "name": "消息传递api模型",
+        "path": "messaging-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 177,
+                "name": "销售用于消息传递的合作伙伴API",
+                "path": "messaging.json",
+                "desc": "使用消息传递API，您可以构建向买家发送消息的应用程序。您可以获取您指定的订单可用的消息类型列表，然后调用向该订单的买方发送消息的操作。消息传递API返回根据 <a href = https://tools.ietf.org/html/ draft-kelly-json-hal-08>JSON超文本应用程序语言 </a> (HAL) 标准形成的响应。",
+                "children": [
+                    {
+                        "id": 178,
+                        "name": "/messaging/v1/orders/{amazonOrderId}",
+                        "path": "get",
+                        "desc": "返回可用于指定订单的消息类型的列表。消息类型由actions对象表示，该对象包含路径和查询参数。您可以使用路径和参数来调用发送消息的操作。"
+                    },
+                    {
+                        "id": 179,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/confirmCustomizationDetails",
+                        "path": "post",
+                        "desc": "发送一条消息，要求买家提供或验证自定义详细信息，如姓名拼写、图像、首字母等。"
+                    },
+                    {
+                        "id": 180,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/confirmDeliveryDetails",
+                        "path": "post",
+                        "desc": "向买方发送消息以安排交货或确认联系信息以进行交货。"
+                    },
+                    {
+                        "id": 181,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/legalDisclosure",
+                        "path": "post",
+                        "desc": "发送重要消息，其中包含卖方在法律上有义务向买方提供的文档。此消息只能用于交付法律要求的文件。"
+                    },
+                    {
+                        "id": 182,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/negativeFeedbackRemoval",
+                        "path": "post",
+                        "desc": "发送一条非关键消息，要求买家删除他们的负面反馈。只有在卖方解决了买方的问题后，才能发送此消息。"
+                    },
+                    {
+                        "id": 183,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/confirmOrderDetails",
+                        "path": "post",
+                        "desc": "发送一条消息，在运送订单之前向买家询问与订单相关的问题。"
+                    },
+                    {
+                        "id": 184,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/confirmServiceDetails",
+                        "path": "post",
+                        "desc": "发送消息以联系家庭服务客户以安排服务呼叫或在服务呼叫之前收集信息。"
+                    },
+                    {
+                        "id": 185,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/amazonMotors",
+                        "path": "post",
+                        "desc": "向买家发送消息，以提供有关Amazon Motors订单的详细信息。此消息只能由亚马逊汽车卖家发送。"
+                    },
+                    {
+                        "id": 186,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/warranty",
+                        "path": "post",
+                        "desc": "向买方发送消息，以提供有关其订单中购买的保修信息的详细信息。"
+                    },
+                    {
+                        "id": 187,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/attributes",
+                        "path": "get",
+                        "desc": "返回包含与订单相关的属性的响应。这包括买家偏好。"
+                    },
+                    {
+                        "id": 188,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/digitalAccessKey",
+                        "path": "post",
+                        "desc": "向买方发送消息，以共享按订单使用数字内容所需的数字访问密钥。"
+                    },
+                    {
+                        "id": 189,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/unexpectedProblem",
+                        "path": "post",
+                        "desc": "向买方发送重要消息，指出遇到了影响订单完成的意外问题。"
+                    },
+                    {
+                        "id": 190,
+                        "name": "/messaging/v1/orders/{amazonOrderId}/messages/invoice",
+                        "path": "post",
+                        "desc": "发送消息，向买方提供发票"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 191,
+        "name": "通知api模型",
+        "path": "notifications-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 192,
+                "name": "销售用于通知的合作伙伴API",
+                "path": "notifications.json",
+                "desc": "用于通知的销售合作伙伴API允许您订阅与销售合作伙伴的业务相关的通知。使用此API，您可以创建目标以接收通知、订阅通知、删除通知订阅等。\n\n有关详细信息，请参阅 [通知用例指南](https:// developer-docs.amazon.com/sp-api/docs/notifications-api-v1-use-case-guide)。",
+                "children": [
+                    {
+                        "id": 193,
+                        "name": "/notifications/v1/subscriptions/{notificationType}",
+                        "path": "get",
+                        "desc": "返回有关指定通知类型和负载版本的订阅的信息。“Payloads” 是一个可选参数。当未提供 “payloads” 时，它将返回最新的有效载荷版本订阅的信息。当您没有订阅标识符时，您可以使用此API获取订阅信息。"
+                    },
+                    {
+                        "id": 194,
+                        "name": "/notifications/v1/subscriptions/{notificationType}",
+                        "path": "post",
+                        "desc": "为要传递到指定目标的指定通知类型创建订阅。在订阅之前，您必须首先通过调用 “createdestination” 操作创建目标。在指定的通知类型支持多个负载版本的情况下，如果您已经订阅了不同的负载版本，则可以利用此API订阅不同的负载版本。"
+                    },
+                    {
+                        "id": 195,
+                        "name": "/notifications/v1/subscriptions/{notificationType}/{subscriptionId}",
+                        "path": "get",
+                        "desc": "返回有关指定通知类型的订阅的信息。“Getsubscriptionbyid” 操作是无许可的。有关详细信息，请参阅 [无许可操作](https:// developer-docs.amazon.com/sp-api/docs/无许可操作)。"
+                    },
+                    {
+                        "id": 196,
+                        "name": "/notifications/v1/subscriptions/{notificationType}/{subscriptionId}",
+                        "path": "delete",
+                        "desc": "删除由您指定的订阅标识符和通知类型指示的订阅。订阅标识符可以用于与应用程序关联的任何订阅。成功调用此操作后，将停止为关联的订阅发送通知。“Deletesubscriptionbyid” 操作是无许可的。有关详细信息，请参阅 [无授予操作](https:// developer-docs.amazon.com/sp-api/docs/Grantless-operations)。"
+                    },
+                    {
+                        "id": 197,
+                        "name": "/notifications/v1/destinations",
+                        "path": "get",
+                        "desc": "返回有关所有目标的信息。“Getdestinations' 操作是无grantless的。有关详细信息，请参阅 [无授予操作](https:// developer-docs.amazon.com/sp-api/docs/Grantless-operations)。"
+                    },
+                    {
+                        "id": 198,
+                        "name": "/notifications/v1/destinations",
+                        "path": "post",
+                        "desc": "创建用于接收通知的目标资源。“Createdestination” 操作是无grantless的。有关详细信息，请参阅 [无授予操作](https:// developer-docs.amazon.com/sp-api/docs/Grantless-operations)。"
+                    },
+                    {
+                        "id": 199,
+                        "name": "/notifications/v1/destinations/{destinationId}",
+                        "path": "get",
+                        "desc": "返回有关您指定的目标的信息。“Getdestination” 操作是无grantless的。有关详细信息，请参阅 [无授予操作](https:// developer-docs.amazon.com/sp-api/docs/Grantless-operations)。"
+                    },
+                    {
+                        "id": 200,
+                        "name": "/notifications/v1/destinations/{destinationId}",
+                        "path": "delete",
+                        "desc": "删除指定的目标。“Deletedestination” 操作是无grantless的。有关详细信息，请参阅 [无授予操作](https:// developer-docs.amazon.com/sp-api/docs/Grantless-operations)。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 201,
+        "name": "orders api模型",
+        "path": "orders-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 202,
+                "name": "订单v0",
+                "path": "ordersV0.json",
+                "desc": "使用订单销售合作伙伴API以编程方式检索订单信息。使用此API，您可以开发快速、灵活和自定义的应用程序来管理订单同步、执行订单研究以及创建基于需求的决策支持工具。\n\n_注意:_对于JP、AU和SG市场，订单API支持订单2016年。对于所有其他市场，Orders API支持过去两年的订单 (响应中不会显示超过此时间的订单)。",
+                "children": [
+                    {
+                        "id": 203,
+                        "name": "/orders/v0/orders",
+                        "path": "get",
+                        "desc": "返回在指定时间段内创建或更新的订单。如果您想要返回特定类型的订单，您可以对您的请求应用过滤器。“Nexttoken” 不会影响您在请求中包含的任何过滤器; 它只会影响过滤订单响应的分页。"
+                    },
+                    {
+                        "id": 204,
+                        "name": "/orders/v0/orders/{orderId}",
+                        "path": "get",
+                        "desc": "返回您指定的顺序。"
+                    },
+                    {
+                        "id": 205,
+                        "name": "/orders/v0/orders/{orderId}/buyerInfo",
+                        "path": "get",
+                        "desc": "返回您指定的订单的买方信息。"
+                    },
+                    {
+                        "id": 206,
+                        "name": "/orders/v0/orders/{orderId}/address",
+                        "path": "get",
+                        "desc": "返回您指定的订单的送货地址。"
+                    },
+                    {
+                        "id": 207,
+                        "name": "/orders/v0/orders/{orderId}/orderItems",
+                        "path": "get",
+                        "desc": "返回您指定的订单的详细订单项信息。如果提供了 “nexttoken”，则它用于检索订单项的下一页。"
+                    },
+                    {
+                        "id": 208,
+                        "name": "/orders/v0/orders/{orderId}/orderItems/buyerInfo",
+                        "path": "get",
+                        "desc": "返回指定订单中的订单项的买方信息。"
+                    },
+                    {
+                        "id": 209,
+                        "name": "/orders/v0/orders/{orderId}/shipment",
+                        "path": "post",
+                        "desc": "更新您指定的订单的发运状态。"
+                    },
+                    {
+                        "id": 210,
+                        "name": "/orders/v0/orders/{orderId}/regulatedInfo",
+                        "path": "get",
+                        "desc": "返回您指定的订单的规定信息。"
+                    },
+                    {
+                        "id": 211,
+                        "name": "/orders/v0/orders/{orderId}/regulatedInfo",
+                        "path": "patch",
+                        "desc": "更新 (批准或拒绝) 包含受管制产品的订单的验证状态。"
+                    },
+                    {
+                        "id": 212,
+                        "name": "/orders/v0/orders/{orderId}/shipmentConfirmation",
+                        "path": "post",
+                        "desc": "更新指定订单的发运确认状态。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 213,
+        "name": "产品费用api模型",
+        "path": "product-fees-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 214,
+                "name": "销售合作伙伴API以获得产品费用",
+                "path": "productFeesV0.json",
+                "desc": "产品费用的销售合作伙伴API允许您以编程方式检索产品的估计费用。然后，您可以在定价中考虑这些费用。",
+                "children": [
+                    {
+                        "id": 215,
+                        "name": "/products/fees/v0/listings/{SellerSKU}/feesEstimate",
+                        "path": "post",
+                        "desc": "返回请求正文中指定的marketplace中指定的卖家SKU指示的项目的估计费用。"
+                    },
+                    {
+                        "id": 216,
+                        "name": "/products/fees/v0/items/{Asin}/feesEstimate",
+                        "path": "post",
+                        "desc": "返回请求正文中指定的市场中指定ASIN指示的项目的估计费用。"
+                    },
+                    {
+                        "id": 217,
+                        "name": "/products/fees/v0/feesEstimate",
+                        "path": "post",
+                        "desc": "返回产品列表的估计费用。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 218,
+        "name": "产品定价api模型",
+        "path": "product-pricing-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 219,
+                "name": "销售合作伙伴API进行定价",
+                "path": "productPricingV0.json",
+                "desc": "用于定价的销售合作伙伴API可帮助您以编程方式检索Amazon Marketplace产品的产品定价和报价信息。",
+                "children": [
+                    {
+                        "id": 220,
+                        "name": "/products/pricing/v0/price",
+                        "path": "get",
+                        "desc": "返回基于卖家SKU或ASIN的卖家报价列表的定价信息。"
+                    },
+                    {
+                        "id": 221,
+                        "name": "/products/pricing/v0/competitivePrice",
+                        "path": "get",
+                        "desc": "根据卖方SKU或ASIN返回卖方报价列表的竞争性定价信息。"
+                    },
+                    {
+                        "id": 222,
+                        "name": "/products/pricing/v0/listings/{SellerSKU}/offers",
+                        "path": "get",
+                        "desc": "返回单个SKU列表的最低价格优惠。"
+                    },
+                    {
+                        "id": 223,
+                        "name": "/products/pricing/v0/items/{Asin}/offers",
+                        "path": "get",
+                        "desc": "根据ASIN返回单个商品的最低价格优惠。"
+                    },
+                    {
+                        "id": 224,
+                        "name": "/batches/products/pricing/v0/itemOffers",
+                        "path": "post",
+                        "desc": "返回基于ASIN的一批商品的最低价报价。"
+                    },
+                    {
+                        "id": 225,
+                        "name": "/batches/products/pricing/v0/listingOffers",
+                        "path": "post",
+                        "desc": "按SKU返回一批清单的最低价报价。"
+                    }
+                ]
+            },
+            {
+                "id": 226,
+                "name": "销售合作伙伴API进行定价",
+                "path": "productPricing_2022-05-01.json",
+                "desc": "用于定价的销售合作伙伴API可帮助您以编程方式检索产品定价并提供Amazon Marketplace产品的定价信息。\n\n有关详细信息，请参阅 [产品定价v2022-05-01使用案例指南](https:// developer-docs.amazon.com/sp-api/docs/product-pricing-api-v2022-05-01-use-case-guide)。",
+                "children": [
+                    {
+                        "id": 227,
+                        "name": "/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice",
+                        "path": "post",
+                        "desc": "返回与请求正文中定义的最多40个请求的批处理列表对应的响应集。集合中的每个成功 (HTTP状态代码200) 请求的响应包括所计算的挂牌价格，在该价格或低于该价格时，卖家可以期望成为特色优惠 (在适用的促销之前)。这就是所谓的特色报价预期价格 (FOEP)。特色优惠不保证，因为竞争优惠可能会改变。其他优惠可能会根据特定客户的履行能力等因素进行展示。对不成功请求的响应包括可用的错误文本。"
+                    },
+                    {
+                        "id": 228,
+                        "name": "/batches/products/pricing/2022-05-01/items/competitiveSummary",
+                        "path": "post",
+                        "desc": "返回竞争性摘要响应，包括ASIN和 “marketplaceid” 组合的特色购买选项。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 229,
+        "name": "产品类型定义api模型",
+        "path": "product-type-definitions-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 230,
+                "name": "销售产品类型定义的合作伙伴API",
+                "path": "definitionsProductTypes_2020-09-01.json",
+                "desc": "产品类型定义的销售合作伙伴API提供了对Amazon catalog中产品类型的属性和数据要求的编程访问。使用此API返回产品类型的JSON架构，然后您可以将其与其他销售合作伙伴API一起使用，例如列表项的销售合作伙伴API、目录项的销售合作伙伴API和feed (基于JSON的列表源) 的销售合作伙伴API。\n\n有关更多信息，请参阅 [产品类型定义API用例指南] (文档: Product-type-api-use-Case-Guide)。",
+                "children": [
+                    {
+                        "id": 231,
+                        "name": "/definitions/2020-09-01/productTypes",
+                        "path": "get",
+                        "desc": "搜索并返回具有可用定义的Amazon产品类型的列表。"
+                    },
+                    {
+                        "id": 232,
+                        "name": "/definitions/2020-09-01/productTypes/{productType}",
+                        "path": "get",
+                        "desc": "检索Amazon产品类型定义。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 233,
+        "name": "补货api模型",
+        "path": "replenishment-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 234,
+                "name": "销售用于补货的合作伙伴API",
+                "path": "replenishment-2022-11-07.json",
+                "desc": "用于补货的销售合作伙伴API (补货API) 提供了对补货计划指标和优惠的程序化访问。这些程序以客户选择的频率提供任何可补充物品的重复递送。\n\n无论Amazon Subscribe & Save是否可用或受支持，补货API均可在全球范围内使用。该API可供供应商和FBA销售合作伙伴使用。",
+                "children": [
+                    {
+                        "id": 235,
+                        "name": "/replenishment/2022-11-07/sellingPartners/metrics/search",
+                        "path": "post",
+                        "desc": "返回销售合作伙伴的汇总补货计划指标。"
+                    },
+                    {
+                        "id": 236,
+                        "name": "/replenishment/2022-11-07/offers/metrics/search",
+                        "path": "post",
+                        "desc": "返回销售合作伙伴优惠的汇总补货计划指标。"
+                    },
+                    {
+                        "id": 237,
+                        "name": "/replenishment/2022-11-07/offers/search",
+                        "path": "post",
+                        "desc": "返回销售合作伙伴的补货计划提供的详细信息。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 238,
+        "name": "报表api模型",
+        "path": "reports-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 239,
+                "name": "销售报告的合作伙伴API",
+                "path": "reports_2020-09-04.json",
+                "desc": "** 2024年6月27日 ** 生效，用于报告v2020-09-04的销售合作伙伴API将不再可用，对它的所有调用都将失败。依赖报表API的集成必须迁移到 [报表v2021-06-30](https:// developer-docs.amazon.com/sp-api/docs/reports-api-v2021-06-30-reference) 以避免服务中断。"
+            },
+            {
+                "id": 240,
+                "name": "报告v2021-06-30",
+                "path": "reports_2021-06-30.json",
+                "desc": "用于报告的销售合作伙伴API允许您检索和管理各种报告，这些报告可以帮助销售合作伙伴管理其业务。",
+                "children": [
+                    {
+                        "id": 241,
+                        "name": "/reports/2021-06-30/reports",
+                        "path": "get",
+                        "desc": "返回与您指定的筛选器匹配的报表详细信息。"
+                    },
+                    {
+                        "id": 242,
+                        "name": "/reports/2021-06-30/reports",
+                        "path": "post",
+                        "desc": "创建报告。"
+                    },
+                    {
+                        "id": 243,
+                        "name": "/reports/2021-06-30/reports/{reportId}",
+                        "path": "delete",
+                        "desc": "取消指定的报表。只能取消具有 “processingstatus = IN_QUEUE” 的报告。在对 “getreport” 和 “getreports” 操作的后续调用中返回已取消的报告。"
+                    },
+                    {
+                        "id": 244,
+                        "name": "/reports/2021-06-30/reports/{reportId}",
+                        "path": "get",
+                        "desc": "返回指定报表的报表详细信息 (包括 “reportdocumentid' (如果可用))。"
+                    },
+                    {
+                        "id": 245,
+                        "name": "/reports/2021-06-30/schedules",
+                        "path": "get",
+                        "desc": "返回与您指定的筛选器匹配的报表计划详细信息。"
+                    },
+                    {
+                        "id": 246,
+                        "name": "/reports/2021-06-30/schedules",
+                        "path": "post",
+                        "desc": "创建报告计划。如果已存在具有相同报告类型和市场id的报告计划，则将取消该计划并将其替换为此计划。"
+                    },
+                    {
+                        "id": 247,
+                        "name": "/reports/2021-06-30/schedules/{reportScheduleId}",
+                        "path": "delete",
+                        "desc": "取消指定的报告计划。"
+                    },
+                    {
+                        "id": 248,
+                        "name": "/reports/2021-06-30/schedules/{reportScheduleId}",
+                        "path": "get",
+                        "desc": "返回您指定的报表计划详细信息。"
+                    },
+                    {
+                        "id": 249,
+                        "name": "/reports/2021-06-30/documents/{reportDocumentId}",
+                        "path": "get",
+                        "desc": "返回检索报表文档内容所需的信息。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 250,
+        "name": "销售api模型",
+        "path": "sales-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 251,
+                "name": "销售合作伙伴的销售API",
+                "path": "sales.json",
+                "desc": "Sales的销售合作伙伴API提供与销售业绩相关的API。",
+                "children": [
+                    {
+                        "id": 252,
+                        "name": "/sales/v1/orderMetrics",
+                        "path": "get",
+                        "desc": "返回给定时间间隔 (按粒度细分) 的给定买方类型的聚合订单度量。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 253,
+        "name": "卖家api模型",
+        "path": "sellers-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 254,
+                "name": "为卖家销售合作伙伴API",
+                "path": "sellers.json",
+                "desc": "[卖家销售伙伴API](https:// developer-docs.amazon.com/sp-api/docs/sellers-api-v1-reference) (卖家api) 提供卖家账号的基本信息，如:\n\n-卖家可以列出的市场\n-市场的默认语言和货币\n-卖方是否已暂停上市\n\n有关该API的操作、数据类型和架构的详细信息，请参考 [卖家api参考](https:// developer-docs.amazon.com/sp-api/docs/sellers-api-v1-reference)。",
+                "children": [
+                    {
+                        "id": 255,
+                        "name": "/sellers/v1/marketplaceParticipations",
+                        "path": "get",
+                        "desc": "返回一个市场列表，卖方可以在其中列出有关卖方参与这些市场的项目和信息。"
+                    },
+                    {
+                        "id": 256,
+                        "name": "/sellers/v1/account",
+                        "path": "get",
+                        "desc": "返回有关卖家帐户及其市场的信息。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 257,
+        "name": "服务api模型",
+        "path": "services-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 258,
+                "name": "销售合作伙伴服务API",
+                "path": "services.json",
+                "desc": "使用Services API，您可以构建应用程序，帮助服务提供商获取和修改其服务订单并管理其资源。",
+                "children": [
+                    {
+                        "id": 259,
+                        "name": "/service/v1/serviceJobs/{serviceJobId}",
+                        "path": "get",
+                        "desc": "获取由提供的 “servicejobid” 指示的服务作业的详细信息。"
+                    },
+                    {
+                        "id": 260,
+                        "name": "/service/v1/serviceJobs/{serviceJobId}/cancellations",
+                        "path": "put",
+                        "desc": "取消由指定的服务作业标识符指示的服务作业。"
+                    },
+                    {
+                        "id": 261,
+                        "name": "/service/v1/serviceJobs/{serviceJobId}/completions",
+                        "path": "put",
+                        "desc": "完成由指定的服务作业标识符指示的服务作业。"
+                    },
+                    {
+                        "id": 262,
+                        "name": "/service/v1/serviceJobs",
+                        "path": "get",
+                        "desc": "获取指定筛选器查询的服务作业详细信息。"
+                    },
+                    {
+                        "id": 263,
+                        "name": "/service/v1/serviceJobs/{serviceJobId}/appointments",
+                        "path": "post",
+                        "desc": "将约会添加到由指定的服务作业标识符指示的服务作业。"
+                    },
+                    {
+                        "id": 264,
+                        "name": "/service/v1/serviceJobs/{serviceJobId}/appointments/{appointmentId}",
+                        "path": "post",
+                        "desc": "为指定的服务作业标识符所指示的服务作业重新计划约会。"
+                    },
+                    {
+                        "id": 265,
+                        "name": "/service/v1/serviceJobs/{serviceJobId}/appointments/{appointmentId}/resources",
+                        "path": "put",
+                        "desc": "为服务作业约会分配新资源或覆盖/更新现有资源。"
+                    },
+                    {
+                        "id": 266,
+                        "name": "/service/v1/serviceJobs/{serviceJobId}/appointments/{appointmentId}/fulfillment",
+                        "path": "put",
+                        "desc": "更新与给定的 “工作” 和 “约会” 相关的约会履行数据。"
+                    },
+                    {
+                        "id": 267,
+                        "name": "/service/v1/serviceResources/{resourceId}/capacity/range",
+                        "path": "post",
+                        "desc": "以类似于可用性记录的格式提供容量槽。"
+                    },
+                    {
+                        "id": 268,
+                        "name": "/service/v1/serviceResources/{resourceId}/capacity/fixed",
+                        "path": "post",
+                        "desc": "在固定大小的插槽中提供容量。"
+                    },
+                    {
+                        "id": 269,
+                        "name": "/service/v1/serviceResources/{resourceId}/schedules",
+                        "path": "put",
+                        "desc": "更新给定资源的计划。"
+                    },
+                    {
+                        "id": 270,
+                        "name": "/service/v1/reservation",
+                        "path": "post",
+                        "desc": "创建预订。"
+                    },
+                    {
+                        "id": 271,
+                        "name": "/service/v1/reservation/{reservationId}",
+                        "path": "put",
+                        "desc": "更新预订。"
+                    },
+                    {
+                        "id": 272,
+                        "name": "/service/v1/reservation/{reservationId}",
+                        "path": "delete",
+                        "desc": "取消预订。"
+                    },
+                    {
+                        "id": 273,
+                        "name": "/service/v1/serviceJobs/{serviceJobId}/appointmentSlots",
+                        "path": "get",
+                        "desc": "获取与指定的服务作业id关联的服务的约会槽。"
+                    },
+                    {
+                        "id": 274,
+                        "name": "/service/v1/appointmentSlots",
+                        "path": "get",
+                        "desc": "根据指定的服务上下文获取约会槽。"
+                    },
+                    {
+                        "id": 275,
+                        "name": "/service/v1/documents",
+                        "path": "post",
+                        "desc": "创建上载目标。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 276,
+        "name": "发货开票api模型",
+        "path": "shipment-invoicing-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 277,
+                "name": "用于发货开票的销售合作伙伴API",
+                "path": "shipmentInvoicingV0.json",
+                "desc": "用于货件开票的销售合作伙伴API可帮助您以编程方式在巴西市场中检索销售合作伙伴通过亚马逊 (FBA) 订单履行的货件发票信息。",
+                "children": [
+                    {
+                        "id": 278,
+                        "name": "/fba/outbound/brazil/v0/shipments/{shipmentId}",
+                        "path": "get",
+                        "desc": "返回为指定的发运开具发票所需的发运详细信息。"
+                    },
+                    {
+                        "id": 279,
+                        "name": "/fba/outbound/brazil/v0/shipments/{shipmentId}/invoice",
+                        "path": "post",
+                        "desc": "提交给定发运的发运发票单据。"
+                    },
+                    {
+                        "id": 280,
+                        "name": "/fba/outbound/brazil/v0/shipments/{shipmentId}/invoice/status",
+                        "path": "get",
+                        "desc": "返回您指定的发运的发票状态。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 281,
+        "name": "运输api模型",
+        "path": "shipping-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 282,
+                "name": "销售用于运输的合作伙伴API",
+                "path": "shipping.json",
+                "desc": "提供对Amazon Shipping api的编程访问。\n\n** 注意: ** 如果您是Amazon Shipping API的新手，请参阅 <a href = \"https:// developer-docs.amazon.com/amazon shipping/docs/shipping-api-v2-reference\">Amazon Shipping API (v2)</a> 的最新版本 <a href = \"https:// developer-docs.amazon.com/amazon-shipping/\">Amazon Shipping开发人员文档 </a> 站点。",
+                "children": [
+                    {
+                        "id": 283,
+                        "name": "/shipping/v1/shipments",
+                        "path": "post",
+                        "desc": "创建新的货件。"
+                    },
+                    {
+                        "id": 284,
+                        "name": "/shipping/v1/shipments/{shipmentId}",
+                        "path": "get",
+                        "desc": "返回shipmentId的整个shipment对象。"
+                    },
+                    {
+                        "id": 285,
+                        "name": "/shipping/v1/shipments/{shipmentId}/cancel",
+                        "path": "post",
+                        "desc": "按给定的shipmentId取消装运。"
+                    },
+                    {
+                        "id": 286,
+                        "name": "/shipping/v1/shipments/{shipmentId}/purchaseLabels",
+                        "path": "post",
+                        "desc": "根据给定的费率购买运输标签。"
+                    },
+                    {
+                        "id": 287,
+                        "name": "/shipping/v1/shipments/{shipmentId}/containers/{trackingId}/label",
+                        "path": "post",
+                        "desc": "根据装运id和跟踪id检索装运标签。"
+                    },
+                    {
+                        "id": 288,
+                        "name": "/shipping/v1/purchaseShipment",
+                        "path": "post",
+                        "desc": "购买运输标签。"
+                    },
+                    {
+                        "id": 289,
+                        "name": "/shipping/v1/rates",
+                        "path": "post",
+                        "desc": "获取服务费率。"
+                    },
+                    {
+                        "id": 290,
+                        "name": "/shipping/v1/account",
+                        "path": "get",
+                        "desc": "验证当前帐户是否有效。"
+                    },
+                    {
+                        "id": 291,
+                        "name": "/shipping/v1/tracking/{trackingId}",
+                        "path": "get",
+                        "desc": "返回货件的跟踪信息。"
+                    }
+                ]
+            },
+            {
+                "id": 292,
+                "name": "亚马逊送货API",
+                "path": "shippingV2.json",
+                "desc": "Amazon Shipping API旨在支持来自Amazon拥有的市场以及外部渠道/市场的订单的出站运输使用案例。使用这些api，您可以请求运费、创建货件、取消货件和跟踪货件。",
+                "children": [
+                    {
+                        "id": 293,
+                        "name": "/shipping/v2/shipments/rates",
+                        "path": "post",
+                        "desc": "返回可用的运输服务产品。"
+                    },
+                    {
+                        "id": 294,
+                        "name": "/shipping/v2/shipments/directPurchase",
+                        "path": "post",
+                        "desc": "使用最适合的服务产品购买装运服务。返回与购买相关的详细信息和文档。"
+                    },
+                    {
+                        "id": 295,
+                        "name": "/shipping/v2/shipments",
+                        "path": "post",
+                        "desc": "购买运输服务并返回与购买相关的详细信息和文档。"
+                    },
+                    {
+                        "id": 296,
+                        "name": "/shipping/v2/oneClickShipment",
+                        "path": "post",
+                        "desc": "购买运输服务标识符并返回与购买相关的详细信息和文档。"
+                    },
+                    {
+                        "id": 297,
+                        "name": "/shipping/v2/tracking",
+                        "path": "get",
+                        "desc": "返回已购买货件的跟踪信息。"
+                    },
+                    {
+                        "id": 298,
+                        "name": "/shipping/v2/shipments/{shipmentId}/documents",
+                        "path": "get",
+                        "desc": "返回与发运中的包裹关联的发运单据。"
+                    },
+                    {
+                        "id": 299,
+                        "name": "/shipping/v2/shipments/{shipmentId}/cancel",
+                        "path": "put",
+                        "desc": "取消已购买的发运。如果成功取消发货，则返回空对象。"
+                    },
+                    {
+                        "id": 300,
+                        "name": "/shipping/v2/shipments/additionalInputs/schema",
+                        "path": "get",
+                        "desc": "返回JSON模式，用于在需要购买运输产品时提供其他输入。当对getRates操作的先前调用的响应指示您要购买的费率 (运输产品) 需要其他输入时，调用getAdditionalInputs操作。"
+                    },
+                    {
+                        "id": 301,
+                        "name": "/shipping/v2/carrierAccountFormInputs",
+                        "path": "get",
+                        "desc": "此API将返回向承运人注册托运人帐户所需的输入模式列表。"
+                    },
+                    {
+                        "id": 302,
+                        "name": "/shipping/v2/carrierAccounts",
+                        "path": "put",
+                        "desc": "此API将返回获取商家的所有运营商帐户。"
+                    },
+                    {
+                        "id": 303,
+                        "name": "/shipping/v2/carrierAccounts/{carrierId}",
+                        "path": "put",
+                        "desc": "该API将指定的运营商账户与商家关联/链接。"
+                    },
+                    {
+                        "id": 304,
+                        "name": "/shipping/v2/carrierAccounts/{carrierId}/unlink",
+                        "path": "put",
+                        "desc": "此API将指定的运营商帐户与商家取消链接。"
+                    },
+                    {
+                        "id": 305,
+                        "name": "/shipping/v2/collectionForms",
+                        "path": "post",
+                        "desc": "此API调用以生成收集表单。"
+                    },
+                    {
+                        "id": 306,
+                        "name": "/shipping/v2/collectionForms/history",
+                        "path": "put",
+                        "desc": "此API调用可获取先前生成的收集表单的历史记录。"
+                    },
+                    {
+                        "id": 307,
+                        "name": "/shipping/v2/unmanifestedShipments",
+                        "path": "put",
+                        "desc": "此API获取所有未报关的承运人与装运地点。任何有未列舱单货物的地点"
+                    },
+                    {
+                        "id": 308,
+                        "name": "/shipping/v2/collectionForms/{collectionFormId}",
+                        "path": "get",
+                        "desc": "此API重新打印收集表单。"
+                    },
+                    {
+                        "id": 309,
+                        "name": "/shipping/v2/accessPoints",
+                        "path": "get",
+                        "desc": "返回输入邮政编码附近的访问点列表。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 310,
+        "name": "招标api模型",
+        "path": "solicitations-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 311,
+                "name": "销售合作伙伴API以进行招标",
+                "path": "solicitations.json",
+                "desc": "借助征集API，您可以构建向买家发送非关键征集的应用程序。您可以获取您指定的订单可用的招标类型列表，然后调用向该订单的买方发送招标的操作。买方无法响应此API发送的请求，并且这些请求不会显示在Seller Central的消息部分或收件人的消息中心中。请求API返回根据 <a href = https://tools.ietf.org/html/ draft-kelly-json-hal-08>JSON超文本应用程序语言 </a> (HAL) 标准形成的响应。",
+                "children": [
+                    {
+                        "id": 312,
+                        "name": "/solicitations/v1/orders/{amazonOrderId}",
+                        "path": "get",
+                        "desc": "返回可用于您指定的订单的征求类型的列表。请求类型由actions对象表示，该对象包含路径和查询参数。您可以使用路径和参数来调用发送请求的操作。目前只有productreviewandsellerfeedbackretitation请求类型可用。"
+                    },
+                    {
+                        "id": 313,
+                        "name": "/solicitations/v1/orders/{amazonOrderId}/solicitations/productReviewAndSellerFeedback",
+                        "path": "post",
+                        "desc": "向买方发送请求，要求卖方反馈和指定订单的产品评论。每个订单仅发送一个productReviewAndSellerFeedback或免费形式的主动消息。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 314,
+        "name": "供应来源api模型",
+        "path": "supply-sources-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 315,
+                "name": "销售供应来源的合作伙伴API",
+                "path": "supplySources_2020-07-01.json",
+                "desc": "管理卖方供应来源的配置和功能。",
+                "children": [
+                    {
+                        "id": 316,
+                        "name": "/supplySources/2020-07-01/supplySources",
+                        "path": "get",
+                        "desc": "检索分页供应源的路径。"
+                    },
+                    {
+                        "id": 317,
+                        "name": "/supplySources/2020-07-01/supplySources",
+                        "path": "post",
+                        "desc": "创建新的供应源。"
+                    },
+                    {
+                        "id": 318,
+                        "name": "/supplySources/2020-07-01/supplySources/{supplySourceId}",
+                        "path": "get",
+                        "desc": "检索供应源。"
+                    },
+                    {
+                        "id": 319,
+                        "name": "/supplySources/2020-07-01/supplySources/{supplySourceId}",
+                        "path": "put",
+                        "desc": "更新供应源的配置和功能。"
+                    },
+                    {
+                        "id": 320,
+                        "name": "/supplySources/2020-07-01/supplySources/{supplySourceId}",
+                        "path": "delete",
+                        "desc": "存档供应源，使其处于非活动状态。无法撤消。"
+                    },
+                    {
+                        "id": 321,
+                        "name": "/supplySources/2020-07-01/supplySources/{supplySourceId}/status",
+                        "path": "put",
+                        "desc": "更新供应源的状态。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 322,
+        "name": "令牌api模型",
+        "path": "tokens-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 323,
+                "name": "销售代币的合作伙伴API",
+                "path": "tokens_2021-03-01.json",
+                "desc": "用于令牌的销售合作伙伴API提供了一种安全的方式来访问客户的PII (个人身份信息)。您可以调用Tokens API来获取您指定的一个或多个受限资源的受限数据令牌 (RDT)。RDT授权对与您指定的受限资源相对应的受限操作的后续调用。\n\n有关更多信息，请参阅 [Tokens API用例指南](doc:tokens-api-Use-Case-Guide)。",
+                "children": [
+                    {
+                        "id": 324,
+                        "name": "/tokens/2021-03-01/restrictedDataToken",
+                        "path": "post",
+                        "desc": "返回您指定的一个或多个受限资源的受限数据令牌 (RDT)。受限资源是来自受限操作的HTTP方法和路径，该受限操作返回个人身份信息 (PII) 以及指示所请求的PII类型的dataElements值。有关受限操作的列表，请参阅Tokens API用例指南。在对相应受限操作的后续调用中，使用此处返回的RDT作为访问令牌。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 325,
+        "name": "上传api模型",
+        "path": "uploads-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 326,
+                "name": "销售用于上传的合作伙伴API",
+                "path": "uploads_2020-11-01.json",
+                "desc": "上传API允许您上传文件，您可以使用其他销售合作伙伴API (如内容API和消息传递API) 以编程方式访问这些文件。",
+                "children": [
+                    {
+                        "id": 327,
+                        "name": "/uploads/2020-11-01/uploadDestinations/{resource}",
+                        "path": "post",
+                        "desc": "创建上载目标，返回将文件上载到目标以及以编程方式访问该文件所需的信息。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 328,
+        "name": "供应商直接履行库存api模型",
+        "path": "vendor-direct-fulfillment-inventory-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 329,
+                "name": "销售用于直接履行库存更新的合作伙伴API",
+                "path": "vendorDirectFulfillmentInventoryV1.json",
+                "desc": "用于直接履行库存更新的销售合作伙伴API提供了对直接履行供应商的库存更新的编程访问。",
+                "children": [
+                    {
+                        "id": 330,
+                        "name": "/vendor/directFulfillment/inventory/v1/warehouses/{warehouseId}/items",
+                        "path": "post",
+                        "desc": "为库存物料的部分或全部feed提交指定仓库的库存更新。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 331,
+        "name": "供应商直接履行订单api模型",
+        "path": "vendor-direct-fulfillment-orders-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 332,
+                "name": "销售直接履行订单的合作伙伴API",
+                "path": "vendorDirectFulfillmentOrdersV1.json",
+                "desc": "用于直接履行订单的销售合作伙伴API提供了对直接履行供应商的订单数据的编程访问。",
+                "children": [
+                    {
+                        "id": 333,
+                        "name": "/vendor/directFulfillment/orders/v1/purchaseOrders",
+                        "path": "get",
+                        "desc": "返回在您指定的时间范围内创建的采购订单列表。使用createdafer和createdBefore参数定义时间范围。您必须同时使用这两个参数。您可以通过将includeDetails参数设置为false来选择仅获取采购订单编号。在这种情况下，该操作返回采购订单号的列表。然后可以调用getOrder操作以返回特定订单的详细信息。"
+                    },
+                    {
+                        "id": 334,
+                        "name": "/vendor/directFulfillment/orders/v1/purchaseOrders/{purchaseOrderNumber}",
+                        "path": "get",
+                        "desc": "返回您指定的purchaseOrderNumber的采购订单信息。"
+                    },
+                    {
+                        "id": 335,
+                        "name": "/vendor/directFulfillment/orders/v1/acknowledgements",
+                        "path": "post",
+                        "desc": "提交一个或多个采购订单的确认。"
+                    }
+                ]
+            },
+            {
+                "id": 336,
+                "name": "销售直接履行订单的合作伙伴API",
+                "path": "vendorDirectFulfillmentOrders_2021-12-28.json",
+                "desc": "用于直接履行订单的销售合作伙伴API提供了对直接履行供应商的订单数据的编程访问。",
+                "children": [
+                    {
+                        "id": 337,
+                        "name": "/vendor/directFulfillment/orders/2021-12-28/purchaseOrders",
+                        "path": "get",
+                        "desc": "返回在您指定的时间范围内创建的采购订单列表。使用createdafer和createdBefore参数定义时间范围。您必须同时使用这两个参数。您可以通过将includeDetails参数设置为false来选择仅获取采购订单编号。在这种情况下，该操作返回采购订单号的列表。然后可以调用getOrder操作以返回特定订单的详细信息。"
+                    },
+                    {
+                        "id": 338,
+                        "name": "/vendor/directFulfillment/orders/2021-12-28/purchaseOrders/{purchaseOrderNumber}",
+                        "path": "get",
+                        "desc": "返回您指定的purchaseOrderNumber的采购订单信息。"
+                    },
+                    {
+                        "id": 339,
+                        "name": "/vendor/directFulfillment/orders/2021-12-28/acknowledgements",
+                        "path": "post",
+                        "desc": "提交一个或多个采购订单的确认。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 340,
+        "name": "供应商直接履行付款api模型",
+        "path": "vendor-direct-fulfillment-payments-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 341,
+                "name": "销售用于直接履行付款的合作伙伴API",
+                "path": "vendorDirectFulfillmentPaymentsV1.json",
+                "desc": "用于直接履行付款的销售合作伙伴API提供了对直接履行供应商的发票数据的编程访问。",
+                "children": [
+                    {
+                        "id": 342,
+                        "name": "/vendor/directFulfillment/payments/v1/invoices",
+                        "path": "post",
+                        "desc": "为供应商的直接履行订单提交一张或多张发票。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 343,
+        "name": "供应商直接履行沙箱测试数据api模型",
+        "path": "vendor-direct-fulfillment-sandbox-test-data-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 344,
+                "name": "针对供应商直接履行沙箱测试数据的销售合作伙伴API",
+                "path": "vendorDirectFulfillmentSandboxData_2021-10-28.json",
+                "desc": "供应商直接履行沙箱测试数据的销售合作伙伴API提供了对供应商直接履行沙箱测试数据的编程访问。",
+                "children": [
+                    {
+                        "id": 345,
+                        "name": "/vendor/directFulfillment/sandbox/2021-10-28/orders",
+                        "path": "post",
+                        "desc": "提交请求以生成供应商直接履行API实体的测试订单数据。"
+                    },
+                    {
+                        "id": 346,
+                        "name": "/vendor/directFulfillment/sandbox/2021-10-28/transactions/{transactionId}",
+                        "path": "get",
+                        "desc": "返回由指定的transactionId指示的事务的状态。如果交易成功，还会返回请求的测试订单数据。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 347,
+        "name": "供应商直接履行发货api模型",
+        "path": "vendor-direct-fulfillment-shipping-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 348,
+                "name": "销售合作伙伴API以实现直接配送",
+                "path": "vendorDirectFulfillmentShippingV1.json",
+                "desc": "用于直接履行运输的销售合作伙伴API提供了对直接履行供应商的运输数据的编程访问。",
+                "children": [
+                    {
+                        "id": 349,
+                        "name": "/vendor/directFulfillment/shipping/v1/shippingLabels",
+                        "path": "get",
+                        "desc": "返回在您指定的时间范围内创建的发货标签列表。使用createdafer和createdBefore参数定义该时间范围。您必须同时使用这两个参数。要搜索的日期范围不得超过7天。"
+                    },
+                    {
+                        "id": 350,
+                        "name": "/vendor/directFulfillment/shipping/v1/shippingLabels",
+                        "path": "post",
+                        "desc": "为采购订单创建发货标签，并返回transactionId以供参考。"
+                    },
+                    {
+                        "id": 351,
+                        "name": "/vendor/directFulfillment/shipping/v1/shippingLabels/{purchaseOrderNumber}",
+                        "path": "get",
+                        "desc": "返回指定的purchaseOrderNumber的发货标签。"
+                    },
+                    {
+                        "id": 352,
+                        "name": "/vendor/directFulfillment/shipping/v1/shipmentConfirmations",
+                        "path": "post",
+                        "desc": "为供应商订单提交一个或多个发货确认。"
+                    },
+                    {
+                        "id": 353,
+                        "name": "/vendor/directFulfillment/shipping/v1/shipmentStatusUpdates",
+                        "path": "post",
+                        "desc": "此API调用仅供供应商自有运营商 (VOC) 供应商使用。调用此API将提交供应商已发货的软件包的发货状态更新。当包裹在亚马逊网络可见性之外时，它将为亚马逊客户提供订单可见性。"
+                    },
+                    {
+                        "id": 354,
+                        "name": "/vendor/directFulfillment/shipping/v1/customerInvoices",
+                        "path": "get",
+                        "desc": "返回在您指定的时间范围内创建的客户发票的列表。使用createdafer和createdBefore参数定义时间范围。您必须同时使用这两个参数。要搜索的日期范围不得超过7天。"
+                    },
+                    {
+                        "id": 355,
+                        "name": "/vendor/directFulfillment/shipping/v1/customerInvoices/{purchaseOrderNumber}",
+                        "path": "get",
+                        "desc": "根据您指定的purchaseOrderNumber返回客户发票。"
+                    },
+                    {
+                        "id": 356,
+                        "name": "/vendor/directFulfillment/shipping/v1/packingSlips",
+                        "path": "get",
+                        "desc": "返回符合指定标准的采购订单的装箱单列表。要搜索的日期范围不得超过7天。"
+                    },
+                    {
+                        "id": 357,
+                        "name": "/vendor/directFulfillment/shipping/v1/packingSlips/{purchaseOrderNumber}",
+                        "path": "get",
+                        "desc": "根据您指定的purchaseOrderNumber返回装箱单。"
+                    }
+                ]
+            },
+            {
+                "id": 358,
+                "name": "销售合作伙伴API以实现直接配送",
+                "path": "vendorDirectFulfillmentShipping_2021-12-28.json",
+                "desc": "用于直接履行运输的销售合作伙伴API提供了对直接履行供应商的运输数据的编程访问。",
+                "children": [
+                    {
+                        "id": 359,
+                        "name": "/vendor/directFulfillment/shipping/2021-12-28/shippingLabels",
+                        "path": "get",
+                        "desc": "返回在您指定的时间范围内创建的发货标签列表。使用createdafer和createdBefore参数定义该时间范围。您必须同时使用这两个参数。要搜索的日期范围不得超过7天。"
+                    },
+                    {
+                        "id": 360,
+                        "name": "/vendor/directFulfillment/shipping/2021-12-28/shippingLabels",
+                        "path": "post",
+                        "desc": "为采购订单创建发货标签，并返回transactionId以供参考。"
+                    },
+                    {
+                        "id": 361,
+                        "name": "/vendor/directFulfillment/shipping/2021-12-28/shippingLabels/{purchaseOrderNumber}",
+                        "path": "get",
+                        "desc": "返回指定的purchaseOrderNumber的发货标签。"
+                    },
+                    {
+                        "id": 362,
+                        "name": "/vendor/directFulfillment/shipping/2021-12-28/shippingLabels/{purchaseOrderNumber}",
+                        "path": "post",
+                        "desc": "为采购订单创建发货标签并返回标签。"
+                    },
+                    {
+                        "id": 363,
+                        "name": "/vendor/directFulfillment/shipping/2021-12-28/shipmentConfirmations",
+                        "path": "post",
+                        "desc": "为供应商订单提交一个或多个发货确认。"
+                    },
+                    {
+                        "id": 364,
+                        "name": "/vendor/directFulfillment/shipping/2021-12-28/shipmentStatusUpdates",
+                        "path": "post",
+                        "desc": "此操作仅由供应商自有运营商 (VOC) 供应商使用。调用此API会提交供应商已发货的软件包的发货状态更新。当包裹在亚马逊网络可见性之外时，它将为亚马逊客户提供订单可见性。"
+                    },
+                    {
+                        "id": 365,
+                        "name": "/vendor/directFulfillment/shipping/2021-12-28/customerInvoices",
+                        "path": "get",
+                        "desc": "返回在您指定的时间范围内创建的客户发票的列表。使用createdafer和createdBefore参数定义时间范围。您必须同时使用这两个参数。要搜索的日期范围不得超过7天。"
+                    },
+                    {
+                        "id": 366,
+                        "name": "/vendor/directFulfillment/shipping/2021-12-28/customerInvoices/{purchaseOrderNumber}",
+                        "path": "get",
+                        "desc": "根据您指定的purchaseOrderNumber返回客户发票。"
+                    },
+                    {
+                        "id": 367,
+                        "name": "/vendor/directFulfillment/shipping/2021-12-28/packingSlips",
+                        "path": "get",
+                        "desc": "返回符合指定标准的采购订单的装箱单列表。要搜索的日期范围不得超过7天。"
+                    },
+                    {
+                        "id": 368,
+                        "name": "/vendor/directFulfillment/shipping/2021-12-28/packingSlips/{purchaseOrderNumber}",
+                        "path": "get",
+                        "desc": "根据您指定的purchaseOrderNumber返回装箱单。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 369,
+        "name": "供应商直接履行事务api模型",
+        "path": "vendor-direct-fulfillment-transactions-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 370,
+                "name": "用于直接履行交易状态的销售合作伙伴API",
+                "path": "vendorDirectFulfillmentTransactionsV1.json",
+                "desc": "用于直接履行交易状态的销售伙伴API提供对直接履行供应商的交易状态的编程访问。",
+                "children": [
+                    {
+                        "id": 371,
+                        "name": "/vendor/directFulfillment/transactions/v1/transactions/{transactionId}",
+                        "path": "get",
+                        "desc": "返回由指定的transactionId指示的事务的状态。"
+                    }
+                ]
+            },
+            {
+                "id": 372,
+                "name": "用于直接履行交易状态的销售合作伙伴API",
+                "path": "vendorDirectFulfillmentTransactions_2021-12-28.json",
+                "desc": "用于直接履行交易状态的销售伙伴API提供对直接履行供应商的交易状态的编程访问。",
+                "children": [
+                    {
+                        "id": 373,
+                        "name": "/vendor/directFulfillment/transactions/2021-12-28/transactions/{transactionId}",
+                        "path": "get",
+                        "desc": "返回由指定的transactionId指示的事务的状态。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 374,
+        "name": "供应商发票api模型",
+        "path": "vendor-invoices-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 375,
+                "name": "供应商发票v1",
+                "path": "vendorInvoices.json",
+                "desc": "用于零售采购付款的销售合作伙伴API提供了对供应商付款数据的编程访问。",
+                "children": [
+                    {
+                        "id": 376,
+                        "name": "/vendor/payments/v1/invoices",
+                        "path": "post",
+                        "desc": "向亚马逊提交新发票。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 377,
+        "name": "供应商订单api模型",
+        "path": "vendor-orders-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 378,
+                "name": "供应商发票v1",
+                "path": "vendorOrders.json",
+                "desc": "用于零售采购付款的销售合作伙伴API提供了对供应商付款数据的编程访问。",
+                "children": [
+                    {
+                        "id": 379,
+                        "name": "/vendor/payments/v1/invoices",
+                        "path": "post",
+                        "desc": "向亚马逊提交新发票。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 380,
+        "name": "供应商发货api模型",
+        "path": "vendor-shipments-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 381,
+                "name": "供应商发货量v1",
+                "path": "vendorShipments.json",
+                "desc": "零售采购发货的销售合作伙伴API为供应商提供了对零售发货数据的编程访问。",
+                "children": [
+                    {
+                        "id": 382,
+                        "name": "/vendor/shipping/v1/shipmentConfirmations",
+                        "path": "post",
+                        "desc": "为供应商订单提交一个或多个发货确认。"
+                    },
+                    {
+                        "id": 383,
+                        "name": "/vendor/shipping/v1/shipments",
+                        "path": "post",
+                        "desc": "为供应商订单提交一个或多个发运请求。"
+                    },
+                    {
+                        "id": 384,
+                        "name": "/vendor/shipping/v1/shipments",
+                        "path": "get",
+                        "desc": "根据您指定的筛选参数值，返回有关装运、承运人详细信息、装运状态、集装箱详细信息以及与装运相关的其他详细信息的详细信息。"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 385,
+        "name": "供应商交易状态api模型",
+        "path": "vendor-transaction-status-api-model",
+        "desc": "",
+        "children": [
+            {
+                "id": 386,
+                "name": "零售采购交易状态的销售合作伙伴API",
+                "path": "vendorTransactionStatus.json",
+                "desc": "用于零售采购交易状态的销售合作伙伴API为供应商提供了对有关特定异步过帐交易的状态信息的编程访问。",
+                "children": [
+                    {
+                        "id": 387,
+                        "name": "/vendor/transactions/v1/transactions/{transactionId}",
+                        "path": "get",
+                        "desc": "返回您指定的事务的状态。"
+                    }
+                ]
+            }
+        ]
+    }
+]
