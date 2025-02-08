@@ -1,6 +1,6 @@
 [
     {
-        "name": "亚马逊-仓储-配送-模型",
+        "name": "亚马逊仓储与配送模型",
         "path": "swagger/amazon/models/amazon-warehousing-and-distribution-model",
         "isDirectory": true,
         "children": [
@@ -12,7 +12,7 @@
         ]
     },
     {
-        "name": "aplus-content-api-model",
+        "name": "A+内容API模型",
         "path": "swagger/amazon/models/aplus-content-api-model",
         "isDirectory": true,
         "children": [
@@ -24,7 +24,7 @@
         ]
     },
     {
-        "name": "应用程序-集成-api-模型",
+        "name": "应用集成API模型",
         "path": "swagger/amazon/models/application-integrations-api-model",
         "isDirectory": true,
         "children": [
@@ -36,7 +36,7 @@
         ]
     },
     {
-        "name": "应用程序-管理-api-模型",
+        "name": "应用管理API模型",
         "path": "swagger/amazon/models/application-management-api-model",
         "isDirectory": true,
         "children": [
@@ -48,7 +48,7 @@
         ]
     },
     {
-        "name": "目录-项目-api-模型",
+        "name": "目录商品API模型",
         "path": "swagger/amazon/models/catalog-items-api-model",
         "isDirectory": true,
         "children": [
@@ -70,7 +70,7 @@
         ]
     },
     {
-        "name": "数据-信息亭-api-模型",
+        "name": "数据服务亭API模型",
         "path": "swagger/amazon/models/data-kiosk-api-model",
         "isDirectory": true,
         "children": [
@@ -82,7 +82,7 @@
         ]
     },
     {
-        "name": "easy-ship-model",
+        "name": "快捷配送模型",
         "path": "swagger/amazon/models/easy-ship-model",
         "isDirectory": true,
         "children": [
@@ -94,7 +94,7 @@
         ]
     },
     {
-        "name": "fba-入站-资格-api-模型",
+        "name": "FBA入库资格API模型",
         "path": "swagger/amazon/models/fba-inbound-eligibility-api-model",
         "isDirectory": true,
         "children": [
@@ -106,7 +106,7 @@
         ]
     },
     {
-        "name": "fba-库存-api-模型",
+        "name": "FBA库存API模型",
         "path": "swagger/amazon/models/fba-inventory-api-model",
         "isDirectory": true,
         "children": [
@@ -118,7 +118,7 @@
         ]
     },
     {
-        "name": "feeds-api-model",
+        "name": "feeds 数据提交API模型",
         "path": "swagger/amazon/models/feeds-api-model",
         "isDirectory": true,
         "children": [
@@ -135,7 +135,7 @@
         ]
     },
     {
-        "name": "财务-api-模型",
+        "name": "财务API模型",
         "path": "swagger/amazon/models/finances-api-model",
         "isDirectory": true,
         "children": [
@@ -152,12 +152,12 @@
         ]
     },
     {
-        "name": "履行-入站-api-模型",
+        "name": "物流入库API模型",
         "path": "swagger/amazon/models/fulfillment-inbound-api-model",
         "isDirectory": true,
         "children": [
             {
-                "name": "实现inboundv0.json",
+                "name": "fulfillmentInboundV0.json",
                 "path": "swagger/amazon/models/fulfillment-inbound-api-model/fulfillmentInboundV0.json",
                 "isDirectory": false
             },
@@ -169,7 +169,7 @@
         ]
     },
     {
-        "name": "履行-出站-api-模型",
+        "name": "物流出库API模型",
         "path": "swagger/amazon/models/fulfillment-outbound-api-model",
         "isDirectory": true,
         "children": [
@@ -181,7 +181,7 @@
         ]
     },
     {
-        "name": "发票-api-模型",
+        "name": "发票API模型",
         "path": "swagger/amazon/models/invoices-api-model",
         "isDirectory": true,
         "children": [
@@ -193,7 +193,7 @@
         ]
     },
     {
-        "name": "清单-项目-api-模型",
+        "name": "商品列表API模型",
         "path": "swagger/amazon/models/listings-items-api-model",
         "isDirectory": true,
         "children": [
@@ -210,7 +210,7 @@
         ]
     },
     {
-        "name": "清单-限制-api-模型",
+        "name": "商品限制API模型",
         "path": "swagger/amazon/models/listings-restrictions-api-model",
         "isDirectory": true,
         "children": [
@@ -222,43 +222,43 @@
         ]
     },
     {
-        "name": "商户-履行-api-模型",
+        "name": "商家配送API模型",
         "path": "swagger/amazon/models/merchant-fulfillment-api-model",
         "isDirectory": true,
         "children": [
             {
-                "name": "Merchant履行v0.json",
+                "name": "merchantFulfillmentV0.json",
                 "path": "swagger/amazon/models/merchant-fulfillment-api-model/merchantFulfillmentV0.json",
                 "isDirectory": false
             }
         ]
     },
     {
-        "name": "消息传递-api-模型",
+        "name": "消息服务API模型",
         "path": "swagger/amazon/models/messaging-api-model",
         "isDirectory": true,
         "children": [
             {
-                "name": "消息传递.json",
+                "name": "messaging.json",
                 "path": "swagger/amazon/models/messaging-api-model/messaging.json",
                 "isDirectory": false
             }
         ]
     },
     {
-        "name": "通知-api-模型",
+        "name": "通知API模型",
         "path": "swagger/amazon/models/notifications-api-model",
         "isDirectory": true,
         "children": [
             {
-                "name": "通知.json",
+                "name": "notifications.json",
                 "path": "swagger/amazon/models/notifications-api-model/notifications.json",
                 "isDirectory": false
             }
         ]
     },
     {
-        "name": "订单-api-模型",
+        "name": "订单API模型",
         "path": "swagger/amazon/models/orders-api-model",
         "isDirectory": true,
         "children": [
@@ -270,7 +270,7 @@
         ]
     },
     {
-        "name": "产品-费用-api-模型",
+        "name": "产品费用API模型",
         "path": "swagger/amazon/models/product-fees-api-model",
         "isDirectory": true,
         "children": [
@@ -282,7 +282,7 @@
         ]
     },
     {
-        "name": "产品-定价-api-模型",
+        "name": "产品定价API模型",
         "path": "swagger/amazon/models/product-pricing-api-model",
         "isDirectory": true,
         "children": [
@@ -299,7 +299,7 @@
         ]
     },
     {
-        "name": "产品-类型-定义-api-模型",
+        "name": "产品类型定义API模型",
         "path": "swagger/amazon/models/product-type-definitions-api-model",
         "isDirectory": true,
         "children": [
@@ -311,7 +311,7 @@
         ]
     },
     {
-        "name": "补货-api-模型",
+        "name": "补货API模型",
         "path": "swagger/amazon/models/replenishment-api-model",
         "isDirectory": true,
         "children": [
@@ -323,7 +323,7 @@
         ]
     },
     {
-        "name": "报告-api-模型",
+        "name": "报告API模型",
         "path": "swagger/amazon/models/reports-api-model",
         "isDirectory": true,
         "children": [
@@ -340,43 +340,43 @@
         ]
     },
     {
-        "name": "销售-api-模型",
+        "name": "销售API模型",
         "path": "swagger/amazon/models/sales-api-model",
         "isDirectory": true,
         "children": [
             {
-                "name": "销售.json",
+                "name": "sales.json",
                 "path": "swagger/amazon/models/sales-api-model/sales.json",
                 "isDirectory": false
             }
         ]
     },
     {
-        "name": "卖家-api-模型",
+        "name": "卖家API模型",
         "path": "swagger/amazon/models/sellers-api-model",
         "isDirectory": true,
         "children": [
             {
-                "name": "卖家.json",
+                "name": "sellers.json",
                 "path": "swagger/amazon/models/sellers-api-model/sellers.json",
                 "isDirectory": false
             }
         ]
     },
     {
-        "name": "服务-api-模型",
+        "name": "服务API模型",
         "path": "swagger/amazon/models/services-api-model",
         "isDirectory": true,
         "children": [
             {
-                "name": "服务.json",
+                "name": "services.json",
                 "path": "swagger/amazon/models/services-api-model/services.json",
                 "isDirectory": false
             }
         ]
     },
     {
-        "name": "发货-开票-api-模型",
+        "name": "货运发票API模型",
         "path": "swagger/amazon/models/shipment-invoicing-api-model",
         "isDirectory": true,
         "children": [
@@ -388,12 +388,12 @@
         ]
     },
     {
-        "name": "运输-api-模型",
+        "name": "物流API模型",
         "path": "swagger/amazon/models/shipping-api-model",
         "isDirectory": true,
         "children": [
             {
-                "name": "航运.json",
+                "name": "shipping.json",
                 "path": "swagger/amazon/models/shipping-api-model/shipping.json",
                 "isDirectory": false
             },
@@ -405,19 +405,19 @@
         ]
     },
     {
-        "name": "征集-api-模型",
+        "name": "请求API模型",
         "path": "swagger/amazon/models/solicitations-api-model",
         "isDirectory": true,
         "children": [
             {
-                "name": "征集.json",
+                "name": "solicitations.json",
                 "path": "swagger/amazon/models/solicitations-api-model/solicitations.json",
                 "isDirectory": false
             }
         ]
     },
     {
-        "name": "供应-来源-api-模型",
+        "name": "供应源API模型",
         "path": "swagger/amazon/models/supply-sources-api-model",
         "isDirectory": true,
         "children": [
@@ -429,7 +429,7 @@
         ]
     },
     {
-        "name": "令牌-api-模型",
+        "name": "令牌API模型",
         "path": "swagger/amazon/models/tokens-api-model",
         "isDirectory": true,
         "children": [
@@ -441,7 +441,7 @@
         ]
     },
     {
-        "name": "上传-api-模型",
+        "name": "上传API模型",
         "path": "swagger/amazon/models/uploads-api-model",
         "isDirectory": true,
         "children": [
@@ -453,7 +453,7 @@
         ]
     },
     {
-        "name": "供应商-直接-履行-库存-api-模型",
+        "name": "供应商直接配送库存API模型",
         "path": "swagger/amazon/models/vendor-direct-fulfillment-inventory-api-model",
         "isDirectory": true,
         "children": [
@@ -465,7 +465,7 @@
         ]
     },
     {
-        "name": "供应商-直接-履行-订单-api-模型",
+        "name": "供应商直接配送订单API模型",
         "path": "swagger/amazon/models/vendor-direct-fulfillment-orders-api-model",
         "isDirectory": true,
         "children": [
@@ -482,7 +482,7 @@
         ]
     },
     {
-        "name": "供应商-直接-履行-付款-api-模型",
+        "name": "供应商直接配送支付API模型",
         "path": "swagger/amazon/models/vendor-direct-fulfillment-payments-api-model",
         "isDirectory": true,
         "children": [
@@ -494,7 +494,7 @@
         ]
     },
     {
-        "name": "供应商-直接-履行-沙盒-测试-数据-api-模型",
+        "name": "供应商直接配送沙盒测试数据API模型",
         "path": "swagger/amazon/models/vendor-direct-fulfillment-sandbox-test-data-api-model",
         "isDirectory": true,
         "children": [
@@ -506,7 +506,7 @@
         ]
     },
     {
-        "name": "供应商-直接-履行-发货-api-模型",
+        "name": "供应商直接配送物流API模型",
         "path": "swagger/amazon/models/vendor-direct-fulfillment-shipping-api-model",
         "isDirectory": true,
         "children": [
@@ -523,7 +523,7 @@
         ]
     },
     {
-        "name": "供应商-直接-履行-交易-api-模型",
+        "name": "供应商直接配送交易API模型",
         "path": "swagger/amazon/models/vendor-direct-fulfillment-transactions-api-model",
         "isDirectory": true,
         "children": [
@@ -540,7 +540,7 @@
         ]
     },
     {
-        "name": "供应商-发票-api-模型",
+        "name": "供应商发票API模型",
         "path": "swagger/amazon/models/vendor-invoices-api-model",
         "isDirectory": true,
         "children": [
@@ -552,7 +552,7 @@
         ]
     },
     {
-        "name": "供应商-订单-api-模型",
+        "name": "供应商订单API模型",
         "path": "swagger/amazon/models/vendor-orders-api-model",
         "isDirectory": true,
         "children": [
@@ -564,7 +564,7 @@
         ]
     },
     {
-        "name": "供应商-出货-api-模型",
+        "name": "供应商货运API模型",
         "path": "swagger/amazon/models/vendor-shipments-api-model",
         "isDirectory": true,
         "children": [
@@ -576,7 +576,7 @@
         ]
     },
     {
-        "name": "供应商-交易-状态-api-模型",
+        "name": "供应商交易状态API模型",
         "path": "swagger/amazon/models/vendor-transaction-status-api-model",
         "isDirectory": true,
         "children": [
